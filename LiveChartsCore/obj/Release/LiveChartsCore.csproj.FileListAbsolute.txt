@@ -1,0 +1,38 @@
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\bin\Release\LiveCharts.dll
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\bin\Release\LiveCharts.pdb
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\Tooltip\DefaultIndexedTooltip.g.cs
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\Tooltip\DefaultScatterTooltip.g.cs
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\Legend\PieSeriesViewer.g.cs
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\Legend\ChartLegend.g.cs
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\GeneratedInternalTypeHelper.g.cs
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\LiveCharts_MarkupCompile.cache
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\LiveCharts_MarkupCompile.lref
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\Tooltip\DefaultIndexedTooltip.baml
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\Tooltip\DefaultScatterTooltip.baml
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\Legend\PieSeriesViewer.baml
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\Legend\ChartLegend.baml
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\LiveCharts.g.resources
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\LiveCharts.Properties.Resources.resources
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\LiveChartsCore.csproj.GenerateResource.Cache
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\LiveCharts.dll
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\LiveCharts.pdb
+C:\Users\roman.kosovnenko\Documents\Visual Studio 2015\Projects\StateEvaluation\LiveChartsCore\obj\Release\LiveChartsCore.csprojResolveAssemblyReference.cache
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\bin\Release\LiveCharts.dll
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\bin\Release\LiveCharts.pdb
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\LiveChartsCore.csprojResolveAssemblyReference.cache
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\Tooltip\DefaultIndexedTooltip.g.cs
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\Tooltip\DefaultScatterTooltip.g.cs
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\Legend\PieSeriesViewer.g.cs
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\Legend\ChartLegend.g.cs
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\GeneratedInternalTypeHelper.g.cs
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\LiveCharts_MarkupCompile.cache
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\LiveCharts_MarkupCompile.lref
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\Tooltip\DefaultIndexedTooltip.baml
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\Tooltip\DefaultScatterTooltip.baml
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\Legend\PieSeriesViewer.baml
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\Legend\ChartLegend.baml
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\LiveCharts.g.resources
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\LiveCharts.Properties.Resources.resources
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\LiveChartsCore.csproj.GenerateResource.Cache
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\LiveCharts.dll
+D:\OneDrive\Диплом\StateEvaluation\LiveChartsCore\obj\Release\LiveCharts.pdb

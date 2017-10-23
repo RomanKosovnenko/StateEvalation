@@ -53,7 +53,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\OneDrive\Диплом\StateEvaluation\StateEvaluationDLL1\StateEvaluationDLL.csproj">
+    <ProjectReference Include="..\StateEvaluationDLL1\StateEvaluationDLL.csproj">
       <Project>{2d5ec764-a5d1-4a22-8c2a-52517967c4dc}</Project>
       <Name>StateEvaluationDLL</Name>
     </ProjectReference>

@@ -14,3 +14,8 @@ D:\OneDrive\Диплом\StateEvaluation\StateEvaluationDLL1\obj\Debug\StateEval
 D:\OneDrive\Диплом\StateEvaluation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL1.pdb
 D:\OneDrive\Диплом\StateEvaluation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL.csprojResolveAssemblyReference.cache
 D:\OneDrive\Диплом\StateEvaluation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL.csproj.CoreCompileInputs.cache
+D:\Projects\StateEvaluation\StateEvaluationDLL1\bin\Debug\StateEvaluationDLL1.dll
+D:\Projects\StateEvaluation\StateEvaluationDLL1\bin\Debug\StateEvaluationDLL1.pdb
+D:\Projects\StateEvaluation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL.csproj.CoreCompileInputs.cache
+D:\Projects\StateEvaluation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL1.dll
+D:\Projects\StateEvaluation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL1.pdb

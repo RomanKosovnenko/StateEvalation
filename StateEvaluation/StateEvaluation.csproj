@@ -214,16 +214,6 @@
     <Folder Include="Biocolor\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\OneDrive\Диплом\StateEvaluation\LiveChartsCore\LiveChartsCore.csproj">
-      <Project>{ef235236-364d-4df8-a222-1e74ca0cbad9}</Project>
-      <Name>LiveChartsCore</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\OneDrive\Диплом\StateEvaluation\StateEvaluationDLL1\StateEvaluationDLL.csproj">
-      <Project>{2d5ec764-a5d1-4a22-8c2a-52517967c4dc}</Project>
-      <Name>StateEvaluationDLL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
@@ -268,6 +258,16 @@
     <Resource Include="RelaxTables\Relax2\7.jpg" />
     <Resource Include="RelaxTables\Relax2\8.jpg" />
     <Resource Include="RelaxTables\Relax2\9.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LiveChartsCore\LiveChartsCore.csproj">
+      <Project>{ef235236-364d-4df8-a222-1e74ca0cbad9}</Project>
+      <Name>LiveChartsCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StateEvaluationDLL1\StateEvaluationDLL.csproj">
+      <Project>{2d5ec764-a5d1-4a22-8c2a-52517967c4dc}</Project>
+      <Name>StateEvaluationDLL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
