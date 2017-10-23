@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="StateEvaluationDLL.DataStructures.ColorOperations">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAABAAAAAAAAACAAAAAAAAQ=</HashCode>
+      <FileName>DataStructures\ColorOperations.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateEvaluationDLL.DataStructures.ColorSequence">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAIAAAAIAAAA=</HashCode>
+      <FileName>DataStructures\ColorSequence.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateEvaluationDLL.DataStructures.ColorZone">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAQAAAACAAgACAAAAgEAAAAAAQAAAAAA=</HashCode>
+      <FileName>DataStructures\ColorZone.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateEvaluationDLL.DataStructures.DefineCourseOfPreference" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataStructures\DefineCourseOfPreference.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateEvaluationDLL.DataStructures.Preference">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACAAAAAAAAAggEAAIAAAAAAAABAAAAoSCEACBAAgA=</HashCode>
+      <FileName>DataStructures\Preference.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateEvaluationDLL.DataStructures.PreferenceCompare">
+    <Position X="7.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataStructures\PreferenceCompare.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateEvaluationDLL.DataStructures.TestColorDescription">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAEAAAAAAYAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>DataStructures\TestColorDescription.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateEvaluationDLL.DataStructures.TestSequence" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAQQAUAAAAEIEAgACAAYAAAAAAAAJAQAAAAFgCAA=</HashCode>
+      <FileName>DataStructures\TestSequence.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateEvaluationDLL.DataStructures.Veba_Fehnera">
+    <Position X="6" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataStructures\Veba_Fehnera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StateEvaluationDLL.DataStructures.ReferenceData.Coefficients">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAAAgAIAAAAAAAAAAQAAABCSAAAAAAAQ=</HashCode>
+      <FileName>DataStructures\ReferenceData\Coefficients.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="StateEvaluationDLL.DataStructures.DirectionSelection" Collapsed="true">
+    <Position X="2.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAQAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataStructures\DirectionSelection.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="StateEvaluationDLL.DataStructures.ReferenceData.ColorZones" Collapsed="true">
+    <Position X="0.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>DataStructures\ReferenceData\ColorZones.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="StateEvaluationDLL.DataStructures.ReferenceData.Factor" Collapsed="true">
+    <Position X="4.25" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAAAAAAAAAAAQAAAIAAAAAAAAAAAA=</HashCode>
+      <FileName>DataStructures\ReferenceData\Factor.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="StateEvaluationDLL.DataStructures.ReferenceData.TemperamentType">
+    <Position X="4.25" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAQAAAAAAAAAAAAAABAAEAIAAAAAA=</HashCode>
+      <FileName>DataStructures\ReferenceData\TemperamentType.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="StateEvaluationDLL.DataStructures.ReferenceData.TestColors" Collapsed="true">
+    <Position X="0.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAGAARAAACAAhAAABAAAAAAEAAAAAAAAAAAADAAAAA=</HashCode>
+      <FileName>DataStructures\ReferenceData\TestColors.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="StateEvaluationDLL.DataStructures.ReferenceData.TypePreference" Collapsed="true">
+    <Position X="2.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgQAAAAAACAAAAgAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>DataStructures\ReferenceData\TypePreference.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
