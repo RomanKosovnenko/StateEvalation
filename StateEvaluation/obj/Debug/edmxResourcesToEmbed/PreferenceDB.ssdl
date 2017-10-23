@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PreferenceDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Colors">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Color" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="wavelengthmin" Type="int" Nullable="false" />
+    <Property Name="wavelengthmax" Type="int" Nullable="false" />
+    <Property Name="intensity" Type="float" Nullable="false" />
+    <Property Name="ColorNumber" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DemboRubin">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserID" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Results" Type="nchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Depresion">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserID" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="Results" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NormalPreference">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="Age" Type="int" Nullable="false" />
+    <Property Name="order" Type="nchar" MaxLength="27" Nullable="false" />
+    <Property Name="Pol" Type="nchar" MaxLength="1" Nullable="false" />
+  </EntityType>
+  <EntityType Name="People">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserID" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Firstname" Type="nchar" MaxLength="20" />
+    <Property Name="Lastname" Type="nchar" MaxLength="30" Nullable="false" />
+    <Property Name="Birthday" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Expedition" Type="int" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="Workposition" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Preference">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserID" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="FavoriteColor" Type="int" Nullable="false" />
+    <Property Name="ShortOder1" Type="nchar" MaxLength="6" Nullable="false" />
+    <Property Name="Oder1" Type="nchar" MaxLength="26" Nullable="false" />
+    <Property Name="Preference1" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="ShortOder2" Type="nchar" MaxLength="6" />
+    <Property Name="Oder2" Type="nchar" MaxLength="26" />
+    <Property Name="Preference2" Type="nchar" MaxLength="10" />
+    <Property Name="Compare" Type="nchar" MaxLength="10" />
+    <Property Name="RelaxTable1" Type="int" />
+    <Property Name="RelaxTable2" Type="int" />
+  </EntityType>
+  <EntityType Name="RelaxTable1">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="Table" Type="image" />
+  </EntityType>
+  <EntityType Name="RelaxTable2">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="Table" Type="image" />
+  </EntityType>
+  <EntityType Name="SubjectiveFeelings">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="UserID" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Date" Type="date" Nullable="false" />
+    <Property Name="GeneralWeaknes" Type="bit" Nullable="false" />
+    <Property Name="PoorAppetite" Type="bit" Nullable="false" />
+    <Property Name="PoorSleep" Type="bit" Nullable="false" />
+    <Property Name="BadMood" Type="bit" Nullable="false" />
+    <Property Name="HeavyHead" Type="bit" Nullable="false" />
+    <Property Name="SlowThink" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_DemboRubin_People">
+    <End Role="People" Type="Self.People" Multiplicity="1" />
+    <End Role="DemboRubin" Type="Self.DemboRubin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="People">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="DemboRubin">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Depresion_People">
+    <End Role="People" Type="Self.People" Multiplicity="1" />
+    <End Role="Depresion" Type="Self.Depresion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="People">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Depresion">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Preference_RelaxTable1">
+    <End Role="RelaxTable1" Type="Self.RelaxTable1" Multiplicity="0..1" />
+    <End Role="Preference" Type="Self.Preference" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RelaxTable1">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Preference">
+        <PropertyRef Name="RelaxTable1" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Preference_RelaxTable2">
+    <End Role="RelaxTable2" Type="Self.RelaxTable2" Multiplicity="0..1" />
+    <End Role="Preference" Type="Self.Preference" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RelaxTable2">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Preference">
+        <PropertyRef Name="RelaxTable2" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubjectiveFeelings_People">
+    <End Role="People" Type="Self.People" Multiplicity="1" />
+    <End Role="SubjectiveFeelings" Type="Self.SubjectiveFeelings" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="People">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="SubjectiveFeelings">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PreferenceDBModelStoreContainer">
+    <EntitySet Name="Colors" EntityType="Self.Colors" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DemboRubin" EntityType="Self.DemboRubin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Depresion" EntityType="Self.Depresion" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NormalPreference" EntityType="Self.NormalPreference" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Preference" EntityType="Self.Preference" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RelaxTable1" EntityType="Self.RelaxTable1" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RelaxTable2" EntityType="Self.RelaxTable2" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubjectiveFeelings" EntityType="Self.SubjectiveFeelings" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DemboRubin_People" Association="Self.FK_DemboRubin_People">
+      <End Role="People" EntitySet="People" />
+      <End Role="DemboRubin" EntitySet="DemboRubin" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Depresion_People" Association="Self.FK_Depresion_People">
+      <End Role="People" EntitySet="People" />
+      <End Role="Depresion" EntitySet="Depresion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Preference_RelaxTable1" Association="Self.FK_Preference_RelaxTable1">
+      <End Role="RelaxTable1" EntitySet="RelaxTable1" />
+      <End Role="Preference" EntitySet="Preference" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Preference_RelaxTable2" Association="Self.FK_Preference_RelaxTable2">
+      <End Role="RelaxTable2" EntitySet="RelaxTable2" />
+      <End Role="Preference" EntitySet="Preference" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubjectiveFeelings_People" Association="Self.FK_SubjectiveFeelings_People">
+      <End Role="People" EntitySet="People" />
+      <End Role="SubjectiveFeelings" EntitySet="SubjectiveFeelings" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

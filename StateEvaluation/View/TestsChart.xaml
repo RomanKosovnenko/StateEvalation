@@ -1,0 +1,31 @@
+﻿<Window x:Class="StateEvaluation.View.TestsChart"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:barExamples="clr-namespace:StateEvaluation.View"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:StateEvaluation.View"
+        xmlns:lvc="clr-namespace:LiveCharts;assembly=LiveCharts"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="График преференций"
+        d:DataContext="{d:DesignInstance barExamples:TestsChart}"
+        d:DesignHeight="300"
+        d:DesignWidth="300"
+        Loaded="MvvmExample_OnLoaded"
+        mc:Ignorable="d">
+    <Grid>
+        <lvc:BarChart Name="Chart"
+                      Grid.Row="2"
+                      Grid.Column="0"
+                      LegendLocation="Right"
+                      Series="{Binding Sales.SalesmenSeries}">
+            <lvc:BarChart.AxisY>
+                <lvc:Axis Title="Количество человек" LabelFormatter="{Binding YFormatter}" />
+            </lvc:BarChart.AxisY>
+            <lvc:BarChart.AxisX>
+                <lvc:Axis Name="SecondaryAxis"
+                          Title="Месяц"
+                          Labels="{Binding Sales.AvailableMonths}" />
+            </lvc:BarChart.AxisX>
+        </lvc:BarChart>
+    </Grid>
+</Window>

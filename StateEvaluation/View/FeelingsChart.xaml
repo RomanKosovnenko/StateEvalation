@@ -1,0 +1,31 @@
+﻿<Window x:Class="StateEvaluation.View.FeelingsChart"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:StateEvaluation.View"
+        xmlns:lvc="clr-namespace:LiveCharts;assembly=LiveCharts"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="График ощущений"
+        Width="700"
+        Height="700"
+        mc:Ignorable="d">
+    <Grid>
+        <lvc:LineChart Name="Chart"
+                       Grid.Row="2"
+                       LineSmoothness="0"
+                       Series="{Binding Series}">
+            <lvc:LineChart.AxisY>
+                <lvc:Axis Title="Количество обращений"
+                          Foreground="Black"
+                          IsMerged="False"
+                          Position="LeftBottom"
+                          ShowLabels="True" />
+            </lvc:LineChart.AxisY>
+            <lvc:LineChart.AxisX>
+                <lvc:Axis Name="SecondaryAxis"
+                          Title="Месяц"
+                          Labels="{Binding AvailableMonths}" />
+            </lvc:LineChart.AxisX>
+        </lvc:LineChart>
+    </Grid>
+</Window>

@@ -1,0 +1,8 @@
+D:\Projects\StateEvaluation\ConsoleApp1\bin\Debug\ConsoleApp1.exe.config
+D:\Projects\StateEvaluation\ConsoleApp1\bin\Debug\ConsoleApp1.exe
+D:\Projects\StateEvaluation\ConsoleApp1\bin\Debug\ConsoleApp1.pdb
+D:\Projects\StateEvaluation\ConsoleApp1\obj\Debug\ConsoleApp1.csprojResolveAssemblyReference.cache
+D:\Projects\StateEvaluation\ConsoleApp1\obj\Debug\ConsoleApp1.exe
+D:\Projects\StateEvaluation\ConsoleApp1\obj\Debug\ConsoleApp1.pdb
+D:\Projects\StateEvaluation\ConsoleApp1\bin\Debug\StateEvaluationDLL1.dll
+D:\Projects\StateEvaluation\ConsoleApp1\bin\Debug\StateEvaluationDLL1.pdb

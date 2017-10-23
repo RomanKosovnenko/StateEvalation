@@ -1,0 +1,1079 @@
+﻿<Window x:Class="StateEvaluation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StateEvaluation"
+        xmlns:view="clr-namespace:StateEvaluation.View"
+        xmlns:helpers="clr-namespace:StateEvaluation.Helpers"
+        xmlns:p="clr-namespace:StateEvaluation.Properties"
+        xmlns:model="clr-namespace:StateEvaluation.Model"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="768" Width="1376">
+    <Window.Resources>
+        <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllPeople"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllTests"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllSubjecriveFeelings"></ObjectDataProvider>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helpers:StringToListConverter x:Key="StringToListConverter" />
+        <helpers:NameToBrushConverter x:Key="NameToBrushConverter" />
+        <helpers:TextColorNumberToBrushConverter x:Key="TextColorNumberToBrushConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <TabControl x:Name="tabControl" Height="150" VerticalAlignment="Top">
+            <!--<TabItem Header="{x:Static p:Resources.AddDataHeader}">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>-->
+            <TabItem x:Name="tabItem" IsSelected="True" Header="{x:Static p:Resources.PersonsTabHeader}">
+                <Grid x:Name="PersonAddFormGrid" Background="#FFE5E5E5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Firstname" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0"/>
+                    <Label Content="Lastname" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="1"/>
+                    <Label Content="Birthday date" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="2"/>
+                    <Label Content="Proffession" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="3"/>
+                    <Label Content="Expedition" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="4"/>
+                    <Label Content="Number" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="5"/>
+                    <TextBox x:Name="FirstnameTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" FontSize="20" LostFocus="Textbox_LostFocus"/>
+                    <TextBox x:Name="LastnameTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="1" FontSize="20" LostFocus="Textbox_LostFocus"/>
+                    <DatePicker x:Name="BirthdayDatePicker" Grid.Row="1" Grid.Column="2" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" LostFocus="DatePicker_LostFocus"/>
+                    <TextBox x:Name="ProfessionTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="3" FontSize="20" LostFocus="Textbox_LostFocus"/>
+                    <TextBox x:Name="ExpeditionTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="4" FontSize="20" LostFocus="NumberTextbox_LostFocus"/>
+                    <TextBox x:Name="NumberTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="5" FontSize="20" LostFocus="NumberTextbox_LostFocus"/>
+                    <Button x:Name="AddPersonBtn" Content="Add" Grid.Row="1" Grid.Column="6" HorizontalContentAlignment="Center" Margin="3" Click="AddPersonBtn_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItem1" Header="{x:Static p:Resources.TestsTabHeader}">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="0"
+                               HorizontalAlignment="Center"
+                               Text="UID" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="2"
+                               HorizontalAlignment="Center"
+                               Text="Дата" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="4"
+                               HorizontalAlignment="Center"
+                               Text="1" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="6"
+                               HorizontalAlignment="Center"
+                               Text="2" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="8"
+                               HorizontalAlignment="Center"
+                               Text="3" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="12"
+                               HorizontalAlignment="Center"
+                               Text="1" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="14"
+                               HorizontalAlignment="Center"
+                               Text="2" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="16"
+                               HorizontalAlignment="Center"
+                               Text="3" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="18"
+                               HorizontalAlignment="Center"
+                               Text="4" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="20"
+                               HorizontalAlignment="Center"
+                               Text="5" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="22"
+                               HorizontalAlignment="Center"
+                               Text="6" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="24"
+                               HorizontalAlignment="Center"
+                               Text="7" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="26"
+                               HorizontalAlignment="Center"
+                               Text="8" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="28"
+                               HorizontalAlignment="Center"
+                               Text="9" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="30"
+                               HorizontalAlignment="Center"
+                               Text="10" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="32"
+                               HorizontalAlignment="Center"
+                               Text="11" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="34"
+                               HorizontalAlignment="Center"
+                               Text="12" />
+                    <Button Grid.Row="1"
+                            Grid.Column="36"
+                            Margin="0,0,0,-1"
+                            Command="{Binding SaveTestCommand}"
+                            Content="Добавить запись" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="38"
+                               HorizontalAlignment="Center"
+                               Text="Красная" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="40"
+                               HorizontalAlignment="Center"
+                               Text="Желтая" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="42"
+                               HorizontalAlignment="Center"
+                               Text="Синяя" />
+                    <TextBlock Grid.Row="1"
+                               Grid.Column="44"
+                               HorizontalAlignment="Center"
+                               Text="Смешанная" />
+
+                    <ComboBox x:Name="comboBox"
+                              Grid.Row="2"
+                              Grid.Column="0"
+                              Width="80"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Top"
+                              SelectedIndex="{Binding SelectedCodeIndex}" />
+                    <DatePicker Grid.Row="2"
+                                Grid.Column="2"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                SelectedDate="{Binding TestDate}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="4"
+                              Width="40"
+                              ItemsSource="{Binding ShortColorsNumbersList}"
+                              SelectedValue="{Binding C1in3}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="6"
+                              Width="40"
+                              ItemsSource="{Binding ShortColorsNumbersList}"
+                              SelectedValue="{Binding C2in3}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="8"
+                              Width="40"
+                              ItemsSource="{Binding ShortColorsNumbersList}"
+                              SelectedValue="{Binding C3in3}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="12"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList}"
+                              SelectedValue="{Binding C1in12}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="14"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList}"
+                              SelectedValue="{Binding C2in12}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="16"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList}"
+                              SelectedValue="{Binding C3in12}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="18"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList}"
+                              SelectedValue="{Binding C4in12}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="20"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList}"
+                              SelectedValue="{Binding C5in12}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="22"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList}"
+                              SelectedValue="{Binding C6in12}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="24"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList}"
+                              SelectedValue="{Binding C7in12}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="26"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList}"
+                              SelectedValue="{Binding C8in12}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="28"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList}"
+                              SelectedValue="{Binding C9in12}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="30"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList}"
+                              SelectedValue="{Binding C10in12}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="32"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList}"
+                              SelectedValue="{Binding C11in12}" />
+                    <ComboBox Grid.Row="2"
+                              Grid.Column="34"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList}"
+                              SelectedValue="{Binding C12in12}" />
+                    <Button Grid.Row="2"
+                            Grid.Column="36"
+                            Margin="0,0,0,-1"
+                            Command="{Binding ClearTestFormCommand}"
+                            Content="Сброс выбора"  />
+                    <TextBox x:Name="RedStat"
+                             Grid.Row="2"
+                             Grid.Column="38"
+                             Width="30"
+                             IsEnabled="False"
+                             Text="{Binding Red}" />
+                    <TextBox x:Name="YellowStat"
+                             Grid.Row="2"
+                             Grid.Column="40"
+                             Width="30"
+                             IsEnabled="False"
+                             Text="{Binding Yellow}" />
+                    <TextBox x:Name="BlueStat"
+                             Grid.Row="2"
+                             Grid.Column="42"
+                             Width="30"
+                             IsEnabled="False"
+                             Text="{Binding Blue}" />
+                    <TextBox x:Name="GrayStat"
+                             Grid.Row="2"
+                             Grid.Column="44"
+                             Width="30"
+                             IsEnabled="False"
+                             Text="{Binding Gray}" />
+
+
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="12"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList2}"
+                              SelectedValue="{Binding C21in12}" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="14"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList2}"
+                              SelectedValue="{Binding C22in12}" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="16"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList2}"
+                              SelectedValue="{Binding C23in12}" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="18"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList2}"
+                              SelectedValue="{Binding C24in12}" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="20"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList2}"
+                              SelectedValue="{Binding C25in12}" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="22"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList2}"
+                              SelectedValue="{Binding C26in12}" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="24"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList2}"
+                              SelectedValue="{Binding C27in12}" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="26"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList2}"
+                              SelectedValue="{Binding C28in12}" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="28"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList2}"
+                              SelectedValue="{Binding C29in12}" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="30"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList2}"
+                              SelectedValue="{Binding C210in12}" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="32"
+                              Width="40"
+                              ItemsSource="{Binding ColorsNumbersList2}"
+                              SelectedValue="{Binding C211in12}" />
+                    <ComboBox Grid.Row="3"
+                              Grid.Column="34"
+                              Width="40"
+                              Height="20"
+                              ItemsSource="{Binding ColorsNumbersList2}"
+                              SelectedValue="{Binding C212in12}" />
+                    <Button Grid.Row="3"
+                            Grid.RowSpan="2"
+                            Grid.Column="36"
+                            Margin="0,0,0,-1"
+                            Command="{Binding ChangeColors}"
+                            Content="Сменить раскраску" />
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tabItem2" Header="{x:Static p:Resources.SubjectiveFeelingsTabHeader}">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="10" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Button Grid.RowSpan="2"
+                            Grid.Column="16"
+                            Margin="0,0,0,-11"
+                            Command="{Binding SaveFeelingsCommand}"
+                            Content="Добавить запись" />
+
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="0"
+                               HorizontalAlignment="Center"
+                               Text="UID" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="2"
+                               HorizontalAlignment="Center"
+                               Text="Дата" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="4"
+                               HorizontalAlignment="Center"
+                               Text="Общая слабость" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="6"
+                               HorizontalAlignment="Center"
+                               Text="Плохой аппетит" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="8"
+                               HorizontalAlignment="Center"
+                               Text="Плохой сон" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="10"
+                               HorizontalAlignment="Center"
+                               Text="Плохое настроение" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="12"
+                               HorizontalAlignment="Center"
+                               Text="Тяжесть в голове" />
+                    <TextBlock Grid.Row="0"
+                               Grid.Column="14"
+                               HorizontalAlignment="Center"
+                               Text="Замедленное мышление" />
+
+                    <ComboBox x:Name="combobox1"
+                              Grid.Row="1"
+                              Grid.Column="0"
+                              Width="80"
+                              HorizontalAlignment="Left"
+                              VerticalAlignment="Top"
+                              ItemsSource="{Binding Codes}"
+                              SelectedIndex="{Binding SelectedCodeIndex}" />
+                    <DatePicker Grid.Row="1"
+                                Grid.Column="2"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Top"
+                                SelectedDate="{Binding FealingsDate}" />
+                    <CheckBox Grid.Row="1"
+                              Grid.Column="4"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              IsChecked="{Binding GeneralWeaknes}" />
+                    <CheckBox Grid.Row="1"
+                              Grid.Column="6"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              IsChecked="{Binding PoorAppetite}" />
+                    <CheckBox Grid.Row="1"
+                              Grid.Column="8"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              IsChecked="{Binding PoorSleep}" />
+                    <CheckBox Grid.Row="1"
+                              Grid.Column="10"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              IsChecked="{Binding BadMood}" />
+                    <CheckBox Grid.Row="1"
+                              Grid.Column="12"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              IsChecked="{Binding HeavyHead}" />
+                    <CheckBox Grid.Row="1"
+                              Grid.Column="14"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              IsChecked="{Binding SlowThink}" />
+
+                </Grid>
+            </TabItem>
+            <!--<TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>-->
+        </TabControl>
+        <Grid Margin="0" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition MaxWidth="250" MinWidth="30" Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <DataGrid x:Name="PersonDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetPeople}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.LastnameHeader}" Binding="{Binding Lastname}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.FirstnameHeader}" Binding="{Binding Firstname}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.BirthdayHeader}" Binding="{Binding Birthday, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.ProfessionHeader}" Binding="{Binding Workposition, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.ExpeditionHeader}" Binding="{Binding Expedition}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.NumberHeader}" Binding="{Binding Number}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="RemovePersonBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemovePersonBtn_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid x:Name="TestsDataGrid" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="{x:Static p:Resources.ChartColumnHeader}" ClipboardContentBinding="{x:Null}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button
+                                Command="{Binding MakeIndividualChartCommand}"
+                                Content="&#xE929;"
+                                FontFamily="Segoe MDL2 Assets"
+                                ToolTip="{x:Static p:Resources.MakeChartToolTip}" Click="Button_Click" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}" FontSize="14"/>
+                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding ShortOder1, Converter={StaticResource StringToListConverter}}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"></StackPanel>
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                </ListView>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" MinWidth="280">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding Oder1, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"></StackPanel>
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                </ListView>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding ShortOder2, Converter={StaticResource StringToListConverter}}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"></StackPanel>
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                </ListView>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" MinWidth="280">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"></StackPanel>
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                </ListView>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="/StateEvaluation;component/RelaxTables/Relax2/6.jpg"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="/StateEvaluation;component/RelaxTables/Relax2/1.jpg" Stretch="UniformToFill">
+                                            <ImageBrush.RelativeTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </ImageBrush.RelativeTransform>
+                                        </ImageBrush>
+                                    </Border.Background>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="RemovePreferenceBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemovePreferenceBtn_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <DataGrid x:Name="SubjectiveFeelDataGrid" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetFeelings}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridCheckBoxColumn Header="{x:Static p:Resources.GeneralWeaknesColumnHeader}" Binding="{Binding GeneralWeaknes}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridCheckBoxColumn Header="{x:Static p:Resources.PoorAppetiteColumnHeader}" Binding="{Binding PoorAppetite}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridCheckBoxColumn Header="{x:Static p:Resources.PoorSleepColumnHeader}" Binding="{Binding PoorSleep}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridCheckBoxColumn Header="{x:Static p:Resources.BadMoodColumnHeader}" Binding="{Binding BadMood}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridCheckBoxColumn Header="{x:Static p:Resources.HeavyHeadColumnHeader}" Binding="{Binding HeavyHead}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridCheckBoxColumn Header="{x:Static p:Resources.SlowThinkColumnHeader}" Binding="{Binding SlowThink}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="RemoveFeelingsBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemoveFeelingsBtn_Click"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Grid.Column="1" Width="250" ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Filters" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFE5E5E5"/>
+
+                <Grid Grid.Row="1" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="UID" Margin="0,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <ComboBox
+                                  Grid.Column="1"
+                                  ItemsSource="{Binding Codes}"
+                                  SelectedValue="{Binding FilterCodeSelected}" Margin="5" />
+                </Grid>
+                <Grid Grid.Row="2" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label Content="Date" Grid.ColumnSpan="2" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,0"/>
+                    <Label Content="From" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Padding="0"/>
+                    <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Padding="0"/>
+                    <DatePicker Grid.Row="2"
+                                    SelectedDate="{Binding FilterSelectedDateFrom}" Margin="0,2,5,2" Padding="5,2,2,2" />
+                    <DatePicker Grid.Row="2"
+                                    Grid.Column="1"
+                                    SelectedDate="{Binding FilterSelectedDateTo}" Margin="5,2,0,2" VerticalAlignment="Bottom" Padding="2" />
+                    <Grid Grid.ColumnSpan="2" Margin="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <CheckBox
+                            IsChecked="{Binding CheckYear}" Content="Учитывать год" Padding="0" Margin="0" BorderThickness="1"/>
+                    </Grid>
+                </Grid>
+                <Grid Visibility="{Binding FilterExpeditionAndNumberVisibility}" Grid.Row="3" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <TextBlock
+                                   HorizontalAlignment="Center"
+                                   Padding="0"
+                                   Text="Экспедиция" Grid.ColumnSpan="2" />
+                    <Label Content="From" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="1"/>
+                    <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="1" Grid.Column="1"/>
+                    <ComboBox Grid.Row="2"
+                                  ItemsSource="{Binding Expeditions}"
+                                  SelectedValue="{Binding FilterSelectedExpeditionFrom}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,2,0" />
+                    <ComboBox Grid.Row="2"
+                                  Grid.Column="1"
+                                  ItemsSource="{Binding Numbers}"
+                                  SelectedValue="{Binding FilterSelectedNumberFrom}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,0,0,0" />
+
+                    <TextBlock Grid.Row="3"
+                                   HorizontalAlignment="Center"
+                                   Padding="0"
+                                   Text="Номер" Grid.ColumnSpan="2" />
+                    <Label Content="From" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="4"/>
+                    <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="4" Grid.Column="1"/>
+                    <ComboBox Grid.Row="5"
+                                  SelectedValue="{Binding FilterSelectedExpeditionTo}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,2,0" />
+                    <ComboBox Grid.Row="5"
+                                  Grid.Column="1"
+                                  ItemsSource="{Binding Numbers}"
+                                  SelectedValue="{Binding FilterSelectedNumberTo}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,0,0,0" />
+                </Grid>
+
+                <Grid Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}" Grid.Row="4" Margin="5" UseLayoutRounding="False">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Center"
+                                   Text="1" />
+                    <TextBlock
+                                   Grid.Column="1"
+                                   HorizontalAlignment="Center"
+                                   Text="2" />
+                    <TextBlock
+                                   Grid.Column="2"
+                                   HorizontalAlignment="Center"
+                                   Text="3" />
+                    <TextBox Grid.Row="1"
+                                 Grid.Column="0"
+                                 Width="40"
+                                 Height="22"
+                                 Text="{Binding C1in3Filter}" />
+                    <TextBox Grid.Row="1"
+                                 Grid.Column="1"
+                                 Width="40"
+                                 Text="{Binding C2in3Filter}" />
+                    <TextBox Grid.Row="1"
+                                 Grid.Column="2"
+                                 Width="40" />
+                </Grid>
+                <Grid Grid.Row="5" Margin="5" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                                       Grid.Column="0"
+                                       HorizontalAlignment="Center"
+                                       Padding="0"
+                                       Text="1" VerticalAlignment="Center" />
+                    <TextBlock
+                                       Grid.Column="1"
+                                       HorizontalAlignment="Center"
+                                       Padding="0"
+                                       Text="2" VerticalAlignment="Center" />
+                    <TextBlock
+                                       Grid.Column="2"
+                                       HorizontalAlignment="Center"
+                                       Padding="0"
+                                       Text="3" VerticalAlignment="Center" />
+                    <TextBlock
+                                       Grid.Column="3"
+                                       HorizontalAlignment="Center"
+                                       Padding="0"
+                                       Text="4" VerticalAlignment="Center" />
+                    <TextBlock
+                                       Grid.Column="4"
+                                       HorizontalAlignment="Center"
+                                       Padding="0"
+                                       Text="5" VerticalAlignment="Center" />
+                    <TextBlock
+                                       Grid.Column="5"
+                                       HorizontalAlignment="Center"
+                                       Padding="0"
+                                       Text="6" VerticalAlignment="Center" />
+                    <TextBlock
+                                       Grid.Column="6"
+                                       HorizontalAlignment="Center"
+                                       Padding="0"
+                                       Text="7" VerticalAlignment="Center" />
+                    <TextBlock
+                                       Grid.Column="7"
+                                       HorizontalAlignment="Center"
+                                       Padding="0"
+                                       Text="8" VerticalAlignment="Center" />
+                    <TextBlock
+                                       Grid.Column="8"
+                                       HorizontalAlignment="Center"
+                                       Padding="0"
+                                       Text="9" VerticalAlignment="Center" />
+                    <TextBlock
+                                       Grid.Column="9"
+                                       HorizontalAlignment="Center"
+                                       Padding="0"
+                                       Text="10" VerticalAlignment="Center" />
+                    <TextBlock
+                                       Grid.Column="10"
+                                       HorizontalAlignment="Center"
+                                       Padding="0"
+                                       Text="11" VerticalAlignment="Center" />
+                    <TextBlock
+                                       Grid.Column="11"
+                                       HorizontalAlignment="Center"
+                                       Padding="0"
+                                       Text="12" VerticalAlignment="Center" />
+
+
+
+                    <TextBox Grid.Row="1"
+                                     Grid.Column="0"
+                                     Width="20"
+                                     Text="{Binding C1in12Filter}" />
+                    <TextBox Grid.Row="1"
+                                     Grid.Column="1"
+                                     Width="20"
+                                     Text="{Binding C2in12Filter}" />
+                    <TextBox Grid.Row="1"
+                                     Grid.Column="2"
+                                     Width="20"
+                                     Text="{Binding C3in12Filter}" />
+                    <TextBox Grid.Row="1"
+                                     Grid.Column="3"
+                                     Width="20"
+                                     Text="{Binding C4in12Filter}" />
+                    <TextBox Grid.Row="1"
+                                     Grid.Column="4"
+                                     Width="20"
+                                     Text="{Binding C5in12Filter}" />
+                    <TextBox Grid.Row="1"
+                                     Grid.Column="5"
+                                     Width="20"
+                                     Text="{Binding C6in12Filter}" />
+                    <TextBox Grid.Row="1"
+                                     Grid.Column="6"
+                                     Width="20"
+                                     Text="{Binding C7in12Filter}" />
+                    <TextBox Grid.Row="1"
+                                     Grid.Column="7"
+                                     Width="20"
+                                     Text="{Binding C8in12Filter}" />
+                    <TextBox Grid.Row="1"
+                                     Grid.Column="8"
+                                     Width="20"
+                                     Text="{Binding C9in12Filter}" />
+                    <TextBox Grid.Row="1"
+                                     Grid.Column="9"
+                                     Width="20"
+                                     Text="{Binding C10in12Filter}" />
+                    <TextBox Grid.Row="1"
+                                     Grid.Column="10"
+                                     Width="20"
+                                     Text="{Binding C11in12Filter}" />
+                    <TextBox Grid.Row="1"
+                                     Grid.Column="11"
+                                     Width="20"
+                                     Text="{Binding C12in12Filter}" />
+                </Grid>
+
+                <Grid Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}" Grid.Row="6" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                                   Grid.Column="0"
+                                   Padding="0"
+                                   Text="Общая слабость" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock
+                                   Grid.Column="1"
+                                   Padding="0"
+                                   Text="Плохой аппетит" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Row="2"
+                                   Grid.Column="0"
+                                   Padding="0"
+                                   Text="Плохой сон" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Padding="0"
+                                   Text="Плохое настроение" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Row="4"
+                                   Grid.Column="0"
+                                   Padding="2,0,0,0"
+                                   Text="Тяжесть в голове" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBlock Grid.Row="4"
+                                   Grid.Column="1"
+                                   Padding="0"
+                                   Text="Замедленное мышление" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
+
+                    <CheckBox Grid.Row="1"
+                                  Grid.Column="0"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding FilterGeneralWeakness}" />
+                    <CheckBox Grid.Row="1"
+                                  Grid.Column="1"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding FilterPoorAppetite}" />
+                    <CheckBox Grid.Row="3"
+                                  Grid.Column="0"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding FilterPoorSleep}" />
+                    <CheckBox Grid.Row="3"
+                                  Grid.Column="1"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding FilterBadMood}" />
+                    <CheckBox Grid.Row="5"
+                                  Grid.Column="0"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding FilterHeavyHead}" />
+                    <CheckBox Grid.Row="5"
+                                  Grid.Column="1"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding FilterLowThinking}" />
+                </Grid>
+
+                <Grid Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}" Grid.Row="7" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Label Content="Преференция" Margin="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,0"/>
+
+                    <ComboBox Grid.Row="0"
+                                  Grid.Column="1"
+                                  ItemsSource="{Binding Preferences}"
+                                  SelectedValue="{Binding FilterPreferenceSelected}" HorizontalContentAlignment="Center" Margin="2" />
+                </Grid>
+
+                <Grid Grid.Row="8" Margin="5">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="2"
+                                Command="{Binding RemoveFiltersCommand}"
+                                Content="Сбосить фильтр" Padding="0" />
+                    <Button Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="2"
+                        Command="{Binding RemoveFiltersCommand}"
+                        Content="Сбосить фильтр" Padding="0" />
+                    <Button Grid.Row="1"
+                            Click="ButtonBase_OnClick"
+                            Margin="2"
+                            Command="{Binding RemoveFiltersCommand}"
+                            Content="Chart" Padding="0" Grid.ColumnSpan="2" />
+                    <!--<Button Grid.Row="2"
+                        Click="AddData_OnClick"
+                        Margin="2"
+                        Command="{Binding RemoveFiltersCommand}"
+                        Content="Chart" Padding="0" Grid.ColumnSpan="2" />-->
+                </Grid>
+            </Grid>
+        </Grid>
+        <StatusBar Height="30" VerticalAlignment="Bottom" Grid.Row="2"/>
+
+    </Grid>
+</Window>

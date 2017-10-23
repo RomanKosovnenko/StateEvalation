@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PublishUrlHistory>D:\Projects\StateEvaluation\WebApplication1\install\|C:\Users\Roman\Desktop\SE\|http://stateevaluationinstall.azurewebsites.net/|ftp://waws-prod-am2-069.ftp.azurewebsites.windows.net/|ftps://waws-prod-am2-069.ftp.azurewebsites.windows.net/</PublishUrlHistory>
+    <InstallUrlHistory>http://stateevaluationinstall.azurewebsites.net/install/|http://stateevaluationinstall.azurewebsites.net/site/wwwroot/|http://stateevaluationinstall.azurewebsites.net/</InstallUrlHistory>
+    <SupportUrlHistory />
+    <UpdateUrlHistory />
+    <BootstrapperUrlHistory />
+    <ErrorReportUrlHistory />
+    <FallbackCulture>en-US</FallbackCulture>
+    <VerifyUploadedFiles>true</VerifyUploadedFiles>
+    <ProjectView>ShowAllFiles</ProjectView>
+  </PropertyGroup>
+  <PropertyGroup>
+    <EnableSecurityDebugging>false</EnableSecurityDebugging>
+  </PropertyGroup>
+</Project>
