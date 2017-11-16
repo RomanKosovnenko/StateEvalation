@@ -19,3 +19,9 @@ D:\Projects\StateEvaluation\StateEvaluationDLL1\bin\Debug\StateEvaluationDLL1.pd
 D:\Projects\StateEvaluation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL.csproj.CoreCompileInputs.cache
 D:\Projects\StateEvaluation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL1.dll
 D:\Projects\StateEvaluation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL1.pdb
+C:\Users\Andriy2\StateEvalation\StateEvaluationDLL1\bin\Debug\StateEvaluationDLL1.dll
+C:\Users\Andriy2\StateEvalation\StateEvaluationDLL1\bin\Debug\StateEvaluationDLL1.pdb
+C:\Users\Andriy2\StateEvalation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL.csprojResolveAssemblyReference.cache
+C:\Users\Andriy2\StateEvalation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL.csproj.CoreCompileInputs.cache
+C:\Users\Andriy2\StateEvalation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL1.dll
+C:\Users\Andriy2\StateEvalation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL1.pdb

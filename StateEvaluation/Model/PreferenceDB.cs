@@ -8,7 +8,7 @@ namespace StateEvaluation.Model
     [Database]
     public class PreferenceDB : DataContext
     {
-        public PreferenceDB() : base("Data Source=roman-kosovnenko-sql1.database.windows.net;Initial Catalog=PreferenceDB;User ID=roma.kosovnenko;Password=80962275494Kr18;Encrypt=True;TrustServerCertificate=False") { }
+        public PreferenceDB() : base("Data Source=mssql1.gear.host;Initial Catalog=PreferenceDB;User ID=preferencedb;Password=Qwe!23;Encrypt=True;TrustServerCertificate=False") { }
         public Table<People> People;
         public Table<Preference> Preference;
         public Table<RelaxTable1> RelaxTable1;

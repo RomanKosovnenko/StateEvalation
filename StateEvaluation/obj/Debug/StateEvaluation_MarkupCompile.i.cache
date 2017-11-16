@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-D:\Projects\StateEvaluation\StateEvaluation\obj\Debug\
+C:\Users\Andriy2\StateEvalation\StateEvaluation\obj\Debug\
 StateEvaluation
 none
 false
 DEBUG;TRACE
-D:\Projects\StateEvaluation\StateEvaluation\App.xaml
+C:\Users\Andriy2\StateEvalation\StateEvaluation\App.xaml
 71402367913
 
-33-1758668575
-23-315770224
+33-708861669
+23-1205949662
 View\FeelingsChart.xaml;View\IndividualChart.xaml;View\MainWindow.xaml;View\PeopleDataGrid.xaml;View\PreferenceDataGrid.xaml;View\SubjectiveFeelingsTestsDataGrid.xaml;View\TestsChart.xaml;
 
 True

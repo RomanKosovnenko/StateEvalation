@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Projects\StateEvaluation\StateEvaluation\obj\Release\
+C:\Users\Andriy2\StateEvalation\StateEvaluation\obj\Release\
 StateEvaluation
 none
 false
 TRACE
-D:\Projects\StateEvaluation\StateEvaluation\App.xaml
-1-1711142684
+C:\Users\Andriy2\StateEvalation\StateEvaluation\App.xaml
+71402367913
 
-14-274870095
-16772254172
-View\MainWindow.xaml;
+29326978329
+23314550286
+View\FeelingsChart.xaml;View\IndividualChart.xaml;View\MainWindow.xaml;View\PeopleDataGrid.xaml;View\PreferenceDataGrid.xaml;View\SubjectiveFeelingsTestsDataGrid.xaml;View\TestsChart.xaml;
 
-False
+True
 
