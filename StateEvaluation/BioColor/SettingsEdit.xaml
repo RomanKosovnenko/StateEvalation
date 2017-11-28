@@ -1,0 +1,24 @@
+﻿<Window x:Class="StateEvaluation.BioColor.SettingsEdit"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StateEvaluation.BioColor"
+        mc:Ignorable="d"
+        Title="Settings" Height="139" Width="301"
+        ResizeMode="NoResize">
+    <Grid>
+        <TextBlock Width="100" Height="25" Name="tr"     VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0, 0,0,0"  Text="File: [red]  " ToolTip="Physical"/>
+        <TextBlock Width="100" Height="25" Name="tg"     VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,25,0,0"  Text="File: [green]" ToolTip="Emotions"/>
+        <TextBlock Width="100" Height="25" Name="tb"     VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,50,0,0"  Text="File: [blue] " ToolTip="Intelect"/>
+        <TextBox Width="160" Height="25" Name="pr"     VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100, 0,0,0" />
+        <TextBox Width="160" Height="25" Name="pg"     VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,25,0,0" />
+        <TextBox Width="160" Height="25" Name="pb"     VerticalAlignment="Top" HorizontalAlignment="Left" Margin="100,50,0,0" />
+        <Button  Width="25"  Height="25" Name="br" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="260, 0,0,0" Click="Br_click">...</Button>
+        <Button  Width="25"  Height="25" Name="bg" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="260,25,0,0" Click="Bg_click">...</Button>
+        <Button  Width="25"  Height="25" Name="bb" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="260,50,0,0" Click="Bb_click">...</Button>
+
+        <Button  Width="285"  Height="25" Name="opcolor" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,75,0,0" Click="Open_color">Open Colors settings</Button>
+
+    </Grid>
+</Window>

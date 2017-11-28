@@ -84,3 +84,7 @@ C:\Users\Andriy2\StateEvalation\StateEvaluation\obj\Debug\StateEvaluation.csproj
 C:\Users\Andriy2\StateEvalation\StateEvaluation\obj\Debug\ru\StateEvaluation.resources.dll
 C:\Users\Andriy2\StateEvalation\StateEvaluation\obj\Debug\StateEvaluation.exe.manifest
 C:\Users\Andriy2\StateEvalation\StateEvaluation\obj\Debug\StateEvaluation.application
+C:\Users\Andriy2\StateEvalation\StateEvaluation\obj\Debug\BioColor\Colors.g.cs
+C:\Users\Andriy2\StateEvalation\StateEvaluation\obj\Debug\BioColor\Colors.baml
+C:\Users\Andriy2\StateEvalation\StateEvaluation\obj\Debug\BioColor\SettingsEdit.g.cs
+C:\Users\Andriy2\StateEvalation\StateEvaluation\obj\Debug\BioColor\SettingsEdit.baml

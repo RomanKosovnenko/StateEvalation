@@ -314,5 +314,12 @@ namespace StateEvaluation
                 string values = sh.Cells[i, 2].ToString();
             }
         }
+
+        private const int STEP = 7;
+        private void Prew(object sender, RoutedEventArgs e) => BioColor.Main.MakeStep(DateNow, -STEP);
+        private void Next(object sender, RoutedEventArgs e) => BioColor.Main.MakeStep(DateNow, +STEP);
+        private void Menu(object sender, RoutedEventArgs e) => BioColor.Main.Menu();
+        private void Generate(object sender, RoutedEventArgs e) => BioColor.Main.Generate(sender, e);
+        private void DrawGraphs(object sender, RoutedEventArgs e) => BioColor.Main.DrawGraphs(sender, e);
     }
 }

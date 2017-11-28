@@ -73,19 +73,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>lL44ews/Rq6b8AmCxBgAJuc3CATOk1j43aoLqPWuwkw=</dsig:DigestValue>
+        <dsig:DigestValue>PcX1JbIxy77zjePtJdOHWmTUBcSuxOdfYbr1U0pVJso=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StateEvaluation.exe" size="5188064">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StateEvaluation.exe" size="5215200">
       <assemblyIdentity name="StateEvaluation" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Eyv57pGcNki/R6wxLtGAUabLe1XmzvXwiXVYMqN4JgA=</dsig:DigestValue>
+        <dsig:DigestValue>eOaCdb9H36Pzt+v4ZS++JR7ZoT4cEsH8w1snzvsm2iM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -97,7 +97,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Xu5VLXGZRmKm9Cpn3C9gbK8HwFM3D227dwVM7wbMiS0=</dsig:DigestValue>
+        <dsig:DigestValue>Gyol548BFYwycAqMoypCuxiae8s2jeZYg/4V8UxxcxU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -109,7 +109,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>pN3YgJMMmFbo/zCvi7/7BEA0hFEUeqcJmIc5L+aNUI4=</dsig:DigestValue>
+        <dsig:DigestValue>OkajhUBtkiHVZMTeB6LsJOQZ1Eddr7fIeMw3GEjlrco=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

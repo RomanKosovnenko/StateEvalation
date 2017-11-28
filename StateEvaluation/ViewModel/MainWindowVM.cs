@@ -11,6 +11,5 @@ namespace StateEvaluation.ViewModel
     public partial class MainWindowVM : INotifyPropertyChanged
     {
 
-
     }
 }

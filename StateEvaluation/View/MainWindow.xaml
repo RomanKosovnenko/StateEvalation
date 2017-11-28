@@ -8,6 +8,7 @@
         xmlns:helpers="clr-namespace:StateEvaluation.Helpers"
         xmlns:p="clr-namespace:StateEvaluation.Properties"
         xmlns:model="clr-namespace:StateEvaluation.Model"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="768" Width="1376">
     <Window.Resources>
@@ -506,10 +507,22 @@
 
                 </Grid>
             </TabItem>
-            <!--<TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem x:Name="tabItem3" Header="BioColor">
+                <Grid Background="#FFE5E5E5">
+                    <Label  Height="25" VerticalAlignment="Top" Width="150" HorizontalAlignment="Left">Введите дату рождения:</Label>
+                    <DatePicker Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="150,0,0,0" Name="Date"     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <Label   Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="300,0,0,0">Введите дату рассчета:</Label>
+
+                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Prew" Margin="750,0,0,0" >Prew</Button>
+                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Next" Margin="825,0,0,0" >Next</Button>
+                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Menu" Margin="900,0,0,0" >Menu</Button>
+
+                    <DatePicker Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="450,0,0,0" Name="DateNow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}"/>
+                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="600,0,0,0" Click="DrawGraphs">Построить графики</Button>
+                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1000,0,0,0" Click="Generate">Создать изображение</Button>
+                </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
+            <!--<TabItem Header="TabItem">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <TabItem Header="TabItem">
@@ -688,6 +701,9 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
+
+            <Grid x:Name="BioColorGraph" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem3}">
+            </Grid>
 
             <Grid Grid.Column="1" Width="250" ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <Grid.RowDefinitions>

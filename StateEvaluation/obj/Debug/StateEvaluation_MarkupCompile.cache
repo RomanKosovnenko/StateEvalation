@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Andriy2\StateEvalation\StateEvaluation\App.xaml
-71402367913
+91624384576
 
-29326978329
+34122218761
 23-1205949662
-View\FeelingsChart.xaml;View\IndividualChart.xaml;View\MainWindow.xaml;View\PeopleDataGrid.xaml;View\PreferenceDataGrid.xaml;View\SubjectiveFeelingsTestsDataGrid.xaml;View\TestsChart.xaml;
+BioColor\Colors.xaml;BioColor\SettingsEdit.xaml;View\FeelingsChart.xaml;View\IndividualChart.xaml;View\MainWindow.xaml;View\PeopleDataGrid.xaml;View\PreferenceDataGrid.xaml;View\SubjectiveFeelingsTestsDataGrid.xaml;View\TestsChart.xaml;
 
 False
 

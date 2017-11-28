@@ -1,0 +1,78 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WpfAppPS.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Path_Red" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Red-23.png</Value>
+    </Setting>
+    <Setting Name="Path_Green" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Green-28.png</Value>
+    </Setting>
+    <Setting Name="Path_Blue" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D:\Blue-33.png</Value>
+    </Setting>
+    <Setting Name="Init_date" Type="System.String" Scope="User">
+      <Value Profile="(Default)">26.12.1997</Value>
+    </Setting>
+    <Setting Name="Int_Red" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">23</Value>
+    </Setting>
+    <Setting Name="Int_Green" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">28</Value>
+    </Setting>
+    <Setting Name="Int_Blue" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">33</Value>
+    </Setting>
+    <Setting Name="mid" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">375</Value>
+    </Setting>
+    <Setting Name="square" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">20</Value>
+    </Setting>
+    <Setting Name="topline" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">25</Value>
+    </Setting>
+    <Setting Name="step" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="alpha" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">1</Value>
+    </Setting>
+    <Setting Name="p1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">EE8728</Value>
+    </Setting>
+    <Setting Name="p2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">EF5029</Value>
+    </Setting>
+    <Setting Name="p3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">E71D25</Value>
+    </Setting>
+    <Setting Name="p4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">E21383</Value>
+    </Setting>
+    <Setting Name="e1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0FAB56</Value>
+    </Setting>
+    <Setting Name="e2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">8BC543</Value>
+    </Setting>
+    <Setting Name="e3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">FBEC0E</Value>
+    </Setting>
+    <Setting Name="e4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">FABF25</Value>
+    </Setting>
+    <Setting Name="i1" Type="System.String" Scope="User">
+      <Value Profile="(Default)">493C93</Value>
+    </Setting>
+    <Setting Name="i2" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2A4695</Value>
+    </Setting>
+    <Setting Name="i3" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1F5EA8</Value>
+    </Setting>
+    <Setting Name="i4" Type="System.String" Scope="User">
+      <Value Profile="(Default)">00AAE0</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
