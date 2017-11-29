@@ -3,13 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="Path_Red" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Red-23.png</Value>
+      <Value Profile="(Default)">D:\Image-23.png</Value>
     </Setting>
     <Setting Name="Path_Green" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Green-28.png</Value>
+      <Value Profile="(Default)">D:\Image-28.png</Value>
     </Setting>
     <Setting Name="Path_Blue" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\Blue-33.png</Value>
+      <Value Profile="(Default)">D:\Image-33.png</Value>
     </Setting>
     <Setting Name="Init_date" Type="System.String" Scope="User">
       <Value Profile="(Default)">26.12.1997</Value>
