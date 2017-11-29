@@ -1,9 +1,8 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace StateEvaluation.BioColor
 {
-    static class ImageGenerator
+    internal static class ImageGenerator
     {
         private static readonly int SquareSize = Settings.Default.square;
         private static Graphics _graphics;

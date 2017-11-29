@@ -2,10 +2,11 @@
 
 namespace StateEvaluation.BioColor
 {
+    /// <inheritdoc cref="Window" />
     /// <summary>
     /// Interaction logic for Colors.xaml
     /// </summary>
-    public partial class Colors : Window
+    public partial class Colors
     {
 
         public Colors()
