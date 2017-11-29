@@ -36,6 +36,7 @@ namespace StateEvaluation
             this.DataContext = this;
             PersonCodes = _preferenceDb.People.Select(s => s.UserId).ToList();
             comboBox.ItemsSource = PersonCodes;
+            BioColor.Main.InitBioColor(BioColorGraph, Date, DateNow);
         }
 
         private void AddPersonBtn_Click(object sender, RoutedEventArgs e)
@@ -316,10 +317,10 @@ namespace StateEvaluation
         }
 
         private const int STEP = 7;
-        private void Prew(object sender, RoutedEventArgs e) => BioColor.Main.MakeStep(DateNow, -STEP);
-        private void Next(object sender, RoutedEventArgs e) => BioColor.Main.MakeStep(DateNow, +STEP);
+        private void Prew(object sender, RoutedEventArgs e) => BioColor.Main.MakeStep(-STEP);
+        private void Next(object sender, RoutedEventArgs e) => BioColor.Main.MakeStep(+STEP);
         private void Menu(object sender, RoutedEventArgs e) => BioColor.Main.Menu();
-        private void Generate(object sender, RoutedEventArgs e) => BioColor.Main.Generate(sender, e);
-        private void DrawGraphs(object sender, RoutedEventArgs e) => BioColor.Main.DrawGraphs(sender, e);
+        private void Generate(object sender, RoutedEventArgs e) => BioColor.Main.Generate();
+        private void DrawGraphs(object sender, RoutedEventArgs e) => BioColor.Main.DrawGraphs();
     }
 }

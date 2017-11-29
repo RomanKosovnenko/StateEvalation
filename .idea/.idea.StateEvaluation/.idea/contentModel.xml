@@ -116,7 +116,17 @@
         <e p="App.xaml" t="Include" />
         <e p="App.xaml.cs" t="Include" />
         <e p="bin" t="ExcludeRecursive" />
-        <e p="Biocolor" t="Include" />
+        <e p="Biocolor" t="Include">
+          <e p="Colors.xaml" t="Include" />
+          <e p="Colors.xaml.cs" t="Include" />
+          <e p="Function.cs" t="Include" />
+          <e p="ImageGenerator.cs" t="Include" />
+          <e p="Main.cs" t="Include" />
+          <e p="Settings.Designer.cs" t="Include" />
+          <e p="Settings.settings" t="Include" />
+          <e p="SettingsEdit.xaml" t="Include" />
+          <e p="SettingsEdit.xaml.cs" t="Include" />
+        </e>
         <e p="Helpers" t="Include">
           <e p="NameToBrushConverter.cs" t="Include" />
           <e p="PropertyChangedBase.cs" t="Include" />

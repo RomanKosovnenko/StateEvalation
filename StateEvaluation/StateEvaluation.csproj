@@ -99,6 +99,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BioColor\Function.cs" />
     <Compile Include="BioColor\Main.cs" />
     <Compile Include="BioColor\Colors.xaml.cs">
       <DependentUpon>Colors.xaml</DependentUpon>

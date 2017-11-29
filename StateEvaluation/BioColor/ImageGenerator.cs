@@ -3,24 +3,11 @@ using System.Drawing;
 
 namespace StateEvaluation.BioColor
 {
-    class ImageGenerator
+    static class ImageGenerator
     {
-        private static int squareSize = Settings.Default.square;
-        private static Graphics graphics;
-        private static String[] colors = new String[] {
-                "#" + Settings.Default.i1,
-                "#" + Settings.Default.i2,
-                "#" + Settings.Default.i3,
-                "#" + Settings.Default.i4,
-                "#" + Settings.Default.e1,
-                "#" + Settings.Default.e2,
-                "#" + Settings.Default.e3,
-                "#" + Settings.Default.e4,
-                "#" + Settings.Default.p1,
-                "#" + Settings.Default.p2,
-                "#" + Settings.Default.p3,
-                "#" + Settings.Default.p4
-            };
+        private static readonly int SquareSize = Settings.Default.square;
+        private static Graphics _graphics;
+        private static string[] _colors;
         /*
 new String[] {
 "#FF2317F5",
@@ -37,16 +24,16 @@ new String[] {
 "#FFF603EB"
 };
         */
-        private static void DrawSquare(Point upperLeft, String color, bool reverse = false)
+        private static void DrawSquare(Point upperLeft, string color, bool reverse = false)
         {
-            graphics.FillRectangle(
+            _graphics.FillRectangle(
                 new SolidBrush(ColorTranslator.FromHtml(color)),
                 new Rectangle
                 {
-                    Y = upperLeft.Y - (reverse ? squareSize : 0),
+                    Y = upperLeft.Y - (reverse ? SquareSize : 0),
                     X = upperLeft.X,
-                    Width = squareSize,
-                    Height = squareSize
+                    Width = SquareSize,
+                    Height = SquareSize
                 }
             );
         }
@@ -57,8 +44,8 @@ new String[] {
                 DrawSquare(new Point
                 {
                     X = point.X,
-                    Y = reverse ? point.Y - i * squareSize : point.Y + i * squareSize
-                }, colors[(startIndex + i + colors.Length) % colors.Length], reverse);
+                    Y = reverse ? point.Y - i * SquareSize : point.Y + i * SquareSize
+                }, _colors[(startIndex + i + _colors.Length) % _colors.Length], reverse);
             }
         }
         private static void DrawTriangle(Point point, int startIndex, bool reverse = false)
@@ -67,25 +54,42 @@ new String[] {
             {
                 DrawColumn(new Point
                 {
-                    X = point.X + j * squareSize,
-                    Y = reverse ? point.Y - j * squareSize : point.Y + j * squareSize
+                    X = point.X + j * SquareSize,
+                    Y = reverse ? point.Y - j * SquareSize : point.Y + j * SquareSize
                 }, startIndex, 12 - j, reverse);
                 if (j == 0) continue;
                 DrawColumn(new Point
                 {
-                    X = point.X - j * squareSize,
-                    Y = reverse ? point.Y - j * squareSize : point.Y + j * squareSize
+                    X = point.X - j * SquareSize,
+                    Y = reverse ? point.Y - j * SquareSize : point.Y + j * SquareSize
                 }, startIndex, 12 - j, reverse);
             }
         }
+        private static void RestoreColors() {
+            _colors = new[] {
+                "#" + Settings.Default.i1,
+                "#" + Settings.Default.i2,
+                "#" + Settings.Default.i3,
+                "#" + Settings.Default.i4,
+                "#" + Settings.Default.e1,
+                "#" + Settings.Default.e2,
+                "#" + Settings.Default.e3,
+                "#" + Settings.Default.e4,
+                "#" + Settings.Default.p1,
+                "#" + Settings.Default.p2,
+                "#" + Settings.Default.p3,
+                "#" + Settings.Default.p4
+            };
+        }
         public static void Generate(int width)
         {
-            Bitmap image = new Bitmap(width * squareSize, 24 * squareSize);
-            graphics = Graphics.FromImage(image);
+            RestoreColors();
+            Bitmap image = new Bitmap(width * SquareSize, 24 * SquareSize);
+            _graphics = Graphics.FromImage(image);
 
 
-            Point topPoint = new Point((int)((width / 4.0 * 3 - 0.5) * squareSize), 0);
-            Point bottomPoint = new Point((int)((width / 4.0 * 1 - 0.5) * squareSize), image.Height);
+            Point topPoint = new Point((int)((width / 4.0 * 3 - 0.5) * SquareSize), 0);
+            Point bottomPoint = new Point((int)((width / 4.0 * 1 - 0.5) * SquareSize), image.Height);
             int startIndex = 0;
 
             switch (width)
