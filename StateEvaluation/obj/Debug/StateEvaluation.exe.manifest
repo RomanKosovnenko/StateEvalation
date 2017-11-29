@@ -78,14 +78,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StateEvaluation.exe" size="5218272">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StateEvaluation.exe" size="5218784">
       <assemblyIdentity name="StateEvaluation" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>bIwJs36y4aMRMyH7mP605vkMSjGRQmGyfRQzT3J+ynM=</dsig:DigestValue>
+        <dsig:DigestValue>hbHTDMX9moXXwkr5QtuFm9yHyK9/H9ViCbCV2MQUHCQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -97,7 +97,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>rU+YBorVvGlqBqP1SIig7rFoahd/KAGIvPHXB/RGYkc=</dsig:DigestValue>
+        <dsig:DigestValue>dXU+pdZ5vai3ePBpPHgV4aFXb1V39Q9KZ3z2X6CqYaM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -109,7 +109,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>OkajhUBtkiHVZMTeB6LsJOQZ1Eddr7fIeMw3GEjlrco=</dsig:DigestValue>
+        <dsig:DigestValue>T0Q03l7E7e7lqr3UG6WgYQUMNMSw8a/RcIq4vFgytIc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

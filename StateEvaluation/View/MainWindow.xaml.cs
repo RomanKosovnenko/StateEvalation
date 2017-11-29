@@ -293,7 +293,7 @@ namespace StateEvaluation
                     ShortOder1 = shorder1,
                     ShortOder2 = shorder2,
                     Preference2 = pref2[index] ?? "null",
-                    Compare = pref1[index] == (pref2[index] ?? "") ? "true":"false",
+                    Compare = pref1[index] == (pref2[index] ?? "") ? "true" : "false",
                     UserId = $"Ex21#{number[index]}"
                 });
             }

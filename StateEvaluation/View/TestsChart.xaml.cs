@@ -163,7 +163,7 @@ namespace StateEvaluation.View
                                     (SalesmenSeries[1].Values[i] as SalesData).Count += 1;
                                 }
                                 break;
-                            case "желтая":
+                            case "Желтая":
                                 if (SalesmenSeries[2].Values.Count == i)
                                 {
                                     SalesmenSeries[2].Values.Add(new SalesData { Count = 1 });
@@ -207,11 +207,6 @@ namespace StateEvaluation.View
                 ++i;
             }
         }
-
-
-
-
-
 
     }
 }

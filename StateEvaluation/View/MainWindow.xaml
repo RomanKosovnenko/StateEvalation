@@ -10,7 +10,7 @@
         xmlns:model="clr-namespace:StateEvaluation.Model"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="768" Width="1376">
+        Title="MainWindow" Height="768" Width="1366" WindowState="Maximized">
     <Window.Resources>
         <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllPeople"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllTests"></ObjectDataProvider>
@@ -587,7 +587,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" MinWidth="280">
+                    <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding Oder1, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
@@ -605,8 +605,9 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    <!-- Цвет -->
                     <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}">
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding ShortOder2, Converter={StaticResource StringToListConverter}}">
@@ -624,7 +625,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" MinWidth="280">
+                    <DataGridTemplateColumn  Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
@@ -1051,6 +1052,29 @@
                                   Grid.Column="1"
                                   ItemsSource="{Binding Preferences}"
                                   SelectedValue="{Binding FilterPreferenceSelected}" HorizontalContentAlignment="Center" Margin="2" />
+                </Grid>
+
+                <Grid Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}" Grid.Row="6" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="125" />
+                        <ColumnDefinition Width="125"  />
+                    </Grid.ColumnDefinitions>
+
+                    <CheckBox 
+                        Name="BioColorI"
+                        Grid.Column="0"
+                        HorizontalAlignment="Center"
+                        IsChecked="True">
+                        BioColor I
+                    </CheckBox>
+                    <CheckBox
+                        Name="BioColorII"
+                        Grid.Column="1"
+                        HorizontalAlignment="Center"
+                        IsChecked="True"
+                        Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=BioColorI}">
+                        BioColor II
+                    </CheckBox>
                 </Grid>
 
                 <Grid Grid.Row="8" Margin="5">
