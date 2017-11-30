@@ -18,6 +18,7 @@
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <helpers:StringToListConverter x:Key="StringToListConverter" />
         <helpers:NameToBrushConverter x:Key="NameToBrushConverter" />
+        <helpers:NameToImageConverter x:Key="NameToImageConverter" />
         <helpers:TextColorNumberToBrushConverter x:Key="TextColorNumberToBrushConverter"/>
     </Window.Resources>
     <Grid>
@@ -631,7 +632,9 @@
                                 <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+                                            <!-- Картинки NameToBrushConverter -->
+                                            <!-- <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content, Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label> -->
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content, Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.ItemsPanel>

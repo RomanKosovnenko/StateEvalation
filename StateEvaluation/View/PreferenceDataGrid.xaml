@@ -72,10 +72,10 @@
                 <DataGridTextColumn Header="{x:Static p:Resources.RedValueColumnHeader}" Binding="{Binding R}" ClipboardContentBinding="{x:Null}"/>
                 <DataGridTextColumn Header="{x:Static p:Resources.YellowValueColumnHeader}" Binding="{Binding Y}" ClipboardContentBinding="{x:Null}"/>
                 <DataGridTextColumn Header="{x:Static p:Resources.BlueValueColumnHeader}" Binding="{Binding B}" ClipboardContentBinding="{x:Null}"/>
-                <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference}" ClipboardContentBinding="{x:Null}"/>
+<!--                <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference}" ClipboardContentBinding="{x:Null}"/> -->
                 <DataGridTemplateColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" ClipboardContentBinding="{x:Null}"/>
                 <DataGridTemplateColumn Header="{x:Static p:Resources.LongColorsArrayColumnHeader}" ClipboardContentBinding="{x:Null}"/>
-                <DataGridTemplateColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" ClipboardContentBinding="{x:Null}"/>
+<!--                <DataGridTemplateColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" ClipboardContentBinding="{x:Null}"/> -->
                 <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"/>
                 <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"/>
             </DataGrid.Columns>
