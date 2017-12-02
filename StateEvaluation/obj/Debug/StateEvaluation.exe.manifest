@@ -78,14 +78,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StateEvaluation.exe" size="5220320">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StateEvaluation.exe" size="5219808">
       <assemblyIdentity name="StateEvaluation" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>xKjNi2kIIWvAIixwJfgA4/SRdoFFvk7drdjON8avXGI=</dsig:DigestValue>
+        <dsig:DigestValue>s9sMRa1m4BXM3noj310p0HNxYt+Tuji1AQ2eRNFOpEk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -97,7 +97,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>1o8cvdiFjR3dyCUJtgGrA2bli1p7WZBPHR1Cjf3azrE=</dsig:DigestValue>
+        <dsig:DigestValue>79L2RALTsnOZL7q1d5Cy5QKIqp8hC5A319G3NESpML4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -113,6 +113,114 @@
       </hash>
     </dependentAssembly>
   </dependency>
+  <file name="RelaxTables\Relax3\1.png" size="6766">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>amraC2VDZKSbUJtJbLs8hr9G13AwM/4ESVKOJfuTy8U=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="RelaxTables\Relax3\10.png" size="6769">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>8jy9QRk+drBT2aF8j6nhJOvcP3R1/jMrGg7s3wP/ma8=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="RelaxTables\Relax3\11.png" size="6771">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ceUU6DC+t7PILQOdOWVcqYYBL4dK+UvKGoy1k4ig2Q4=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="RelaxTables\Relax3\12.png" size="6769">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>KPZoeQoQeug7C/G1AwsR3yq9oslA9fFne8p2EwIYA3Q=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="RelaxTables\Relax3\2.png" size="6768">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>DsfO/n8uZHiPUw+npstl04c+aSgXKGQTIR8rqDok8Ys=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="RelaxTables\Relax3\3.png" size="6773">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>N9cb9j4dyg49FDeuV6H2lDp302DPQgf6KBbC8KC63Og=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="RelaxTables\Relax3\4.png" size="6772">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>Yv6W4cik5Qmq5KVHeG9m0aKN1Nxp0K/A67W1h/Lu8JE=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="RelaxTables\Relax3\5.png" size="6772">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>7I2NXiCXG4h1PY+Hb9Id/94y67iC4DphwhmJKU9uYlA=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="RelaxTables\Relax3\6.png" size="6767">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>+0CTEZrF+NpQ0LdfQbVaM+/R1X0SLEI+iU7E+jKiZ6Q=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="RelaxTables\Relax3\7.png" size="6770">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>H06IzedqkFfV3mnp6JBqKWR0CGTUAEf3h27BKndnHxc=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="RelaxTables\Relax3\8.png" size="6768">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>kH7gBH67r24u/hngDAgqQrMigrqlHfxF88QMU0LQEFw=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="RelaxTables\Relax3\9.png" size="6768">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>Edf7527QiZlwGbPyt6msKlFIREiy/wIkVX0ZRMCGB0Q=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="StateEvaluation.exe.config" size="2074">
     <hash>
       <dsig:Transforms>

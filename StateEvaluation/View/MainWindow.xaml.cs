@@ -287,7 +287,7 @@ namespace StateEvaluation
                     Date = DateTime.Parse(dates[index]),
                     //FavoriteColor = int.Parse(favcolor[index]),
                     Id = Guid.NewGuid(),
-                    Preference1 = pref1[index],
+                    Preference1 = "Золотая",
                     Oder1 = order1,
                     Oder2 = order2,
                     ShortOder1 = shorder1,

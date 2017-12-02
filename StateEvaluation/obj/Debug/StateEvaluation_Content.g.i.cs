@@ -8,17 +8,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax2/1.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax2/10.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax2/11.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax2/12.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax2/2.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax2/3.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax2/4.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax2/5.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax2/6.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax2/7.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax2/8.jpg")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax2/9.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax3/1.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax3/10.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax3/11.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax3/12.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax3/2.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax3/3.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax3/4.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax3/5.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax3/6.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax3/7.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax3/8.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("relaxtables/relax3/9.png")]
 
 

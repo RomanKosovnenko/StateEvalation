@@ -1,2 +1,6 @@
+# Local development
+*.env
+*.dev
 .idea
 .vs
+.DS_Store
