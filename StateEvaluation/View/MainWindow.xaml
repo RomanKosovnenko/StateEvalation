@@ -570,7 +570,9 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}" FontSize="14"/>
-                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}">
+                    <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
+                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorI}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding ShortOder1, Converter={StaticResource StringToListConverter}}">
@@ -588,8 +590,8 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280">
+                    <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
+                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorI}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding Oder1, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
@@ -608,8 +610,10 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <!-- Цвет -->
-                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
+                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorI}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"
+                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorII}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding ShortOder2, Converter={StaticResource StringToListConverter}}">
@@ -629,7 +633,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280" 
-                                             Visibility="Visible">
+                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorII}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
@@ -656,8 +660,9 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn  Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280" 
+                    <DataGridTemplateColumn  Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                              Visibility="Hidden">
+
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
@@ -684,7 +689,8 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
+                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorII}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"/>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50">
                         <DataGridTemplateColumn.CellTemplate>
