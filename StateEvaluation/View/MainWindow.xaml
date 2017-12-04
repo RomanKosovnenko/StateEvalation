@@ -19,6 +19,7 @@
         <helpers:StringToListConverter x:Key="StringToListConverter" />
         <helpers:NameToBrushConverter x:Key="NameToBrushConverter" />
         <helpers:NameToImageConverter x:Key="NameToImageConverter" />
+        <helpers:ButtonToVisibilityConverter x:Key="ButtonToVisibilityConverter" />
         <helpers:TextColorNumberToBrushConverter x:Key="TextColorNumberToBrushConverter"/>
     </Window.Resources>
     <Grid>
@@ -555,7 +556,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid x:Name="TestsDataGrid" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
+            <DataGrid x:Name="TestsDataGrid" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}" SelectionChanged="TestsDataGrid_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="{x:Static p:Resources.ChartColumnHeader}" ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
@@ -627,7 +628,8 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn  Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280">
+                    <DataGridTemplateColumn Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280" 
+                                             Visibility="Visible">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
@@ -654,7 +656,8 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn  Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280">
+                    <DataGridTemplateColumn  Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280" 
+                                             Visibility="Hidden">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
@@ -1109,8 +1112,7 @@
                         Name="BioColorII"
                         Grid.Column="1"
                         HorizontalAlignment="Center"
-                        IsChecked="True"
-                        Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=BioColorI}">
+                        IsChecked="True">
                         BioColor II
                     </CheckBox>
                 </Grid>

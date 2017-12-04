@@ -322,5 +322,10 @@ namespace StateEvaluation
         private void Menu(object sender, RoutedEventArgs e) => BioColor.Main.Menu();
         private void Generate(object sender, RoutedEventArgs e) => BioColor.Main.Generate();
         private void DrawGraphs(object sender, RoutedEventArgs e) => BioColor.Main.DrawGraphs();
+
+        private void TestsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
