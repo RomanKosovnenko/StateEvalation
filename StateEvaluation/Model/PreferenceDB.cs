@@ -27,7 +27,7 @@ namespace StateEvaluation.Model
 
         public IEnumerable<Preference> GetAllTests()
         {
-            var items = this.Preference.Select(item => item).OrderBy(item => item.Date);
+            var items = this.Preference.Select(item => item).Where((item) => item.UserId.StartsWith("Ex20")).OrderBy(item => item.Date);
             return items;
         }
 
