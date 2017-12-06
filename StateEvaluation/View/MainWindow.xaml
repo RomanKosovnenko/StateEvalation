@@ -19,6 +19,7 @@
         <helpers:StringToListConverter x:Key="StringToListConverter" />
         <helpers:NameToBrushConverter x:Key="NameToBrushConverter" />
         <helpers:NameToImageConverter x:Key="NameToImageConverter" />
+        <helpers:NameToMultiBrushConverter x:Key="NameToMultiBrushConverter" />
         <helpers:ButtonToVisibilityConverter x:Key="ButtonToVisibilityConverter" />
         <helpers:TextColorNumberToBrushConverter x:Key="TextColorNumberToBrushConverter"/>
     </Window.Resources>
@@ -571,33 +572,56 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}" FontSize="14"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
-                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorI}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <ListView ItemsSource="{Binding ShortOder1, Converter={StaticResource StringToListConverter}}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                    <ListView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <StackPanel Orientation="Horizontal"></StackPanel>
-                                        </ItemsPanelTemplate>
-                                    </ListView.ItemsPanel>
-                                </ListView>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                    <!-- BioColor I START -->    
+                    <!-- BioColor I (Three) -->
+                        <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListView ItemsSource="{Binding ShortOder1, Converter={StaticResource StringToListConverter}}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"></StackPanel>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                    </ListView>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <!-- BioColor I (ThreeColor) -->
+                        <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIThree}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListView ItemsSource="{Binding Oder1, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"></StackPanel>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                    </ListView>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    <!-- BioColor I (TwelveColor) -->
                     <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
-                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorI}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding Oder1, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" 
+											Background="{Binding Content,Converter={StaticResource NameToMultiBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.ItemsPanel>
@@ -609,18 +633,20 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <!-- Цвет -->
-                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
-                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorI}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"
-                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorII}, Converter={StaticResource BooleanToVisibilityConverter}}">
+
+                    <!-- Preference1 -->
+                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"/>
+                    <!-- BioColor I END -->
+                    
+                    <!-- BioColor II START -->
+                    <!-- BioColor II (Three) -->
+                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding ShortOder2, Converter={StaticResource StringToListConverter}}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <!-- Картинки тройные -->
-                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToMultiBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.ItemsPanel>
@@ -632,23 +658,15 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280" 
-                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorII}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                    <!-- BioColor II (TwelveColor) -->
+                    <DataGridTemplateColumn Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280"
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <!-- Картинки NameToBrushConverter -->
-                                            <!-- <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content, Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label> -->
-                                            <!-- <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content, Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label> -->
-                                            <Label Content="{Binding}" 
-                                                   Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" 
-                                                   Background="{Binding Content, Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" 
-                                                   BorderBrush="Black" 
-                                                   BorderThickness="1" 
-                                                   MinWidth="20">
-                                            </Label>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToMultiBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.ItemsPanel>
@@ -660,23 +678,16 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn  Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280"
->
+                    <!-- BioColor II (TwelvePictures) -->
+                    <DataGridTemplateColumn Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280"
+                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIPictures}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <!-- Картинки NameToBrushConverter -->
-                                            <!-- <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content, Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label> -->
-                                            <!-- <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content, Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label> -->
-                                            <Label Content="{Binding}" 
-                                                   Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" 
-                                                   Background="{Binding Content, Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" 
-                                                   BorderBrush="Black" 
-                                                   BorderThickness="1" 
-                                                   MinWidth="20">
-                                            </Label>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" 
+											Background="{Binding Content,Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.ItemsPanel>
@@ -688,8 +699,11 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
-                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorII}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+                    <!-- Preference2 -->
+                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"/>
+                    <!-- BioColor II END -->
+
                     <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"/>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50">
                         <DataGridTemplateColumn.CellTemplate>
@@ -1100,26 +1114,58 @@
                                   SelectedValue="{Binding FilterPreferenceSelected}" HorizontalContentAlignment="Center" Margin="2" />
                 </Grid>
 
-                <Grid Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}" Grid.Row="6" Margin="5">
+                <Grid Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}" 
+                      Grid.Row="6" Margin="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="125" />
                         <ColumnDefinition Width="125"  />
                     </Grid.ColumnDefinitions>
 
-                    <CheckBox 
-                        Name="BioColorI"
-                        Grid.Column="0"
-                        HorizontalAlignment="Center"
-                        IsChecked="True">
-                        BioColor I
-                    </CheckBox>
-                    <CheckBox
-                        Name="BioColorII"
-                        Grid.Column="1"
-                        HorizontalAlignment="Center"
-                        IsChecked="True">
-                        BioColor II
-                    </CheckBox>
+                    <ListBox Padding="5,0,0,0" Grid.Column="0">
+                        <TextBlock TextAlignment="Center" HorizontalAlignment="Center">BioColor I</TextBlock>
+                        <RadioButton
+                            Name="BioColorIHide"
+                            Grid.Column="0"
+                            HorizontalAlignment="Center">
+                            Hide
+                        </RadioButton>
+                        <RadioButton
+                            Name="BioColorIThree"
+                            Grid.Column="0"
+                            HorizontalAlignment="Center"
+                            IsChecked="True">
+                            Three colors
+                        </RadioButton>
+                        <RadioButton
+                            Name="BioColorITwelve"
+                            Grid.Column="0"
+                            HorizontalAlignment="Center">
+                            Twelve colors
+                        </RadioButton>
+                    </ListBox>
+
+                    <ListBox Padding="5,0,0,0" Grid.Column="1">
+                        <TextBlock TextAlignment="Center" HorizontalAlignment="Center">BioColor II</TextBlock>
+                        <RadioButton
+                            Name="BioColorIIHide"
+                            Grid.Column="0"
+                            HorizontalAlignment="Center">
+                            Hide
+                        </RadioButton>
+                        <RadioButton
+                            Name="BioColorIITwelve"
+                            Grid.Column="0"
+                            HorizontalAlignment="Center"
+                            IsChecked="True">
+                            Twelve colors
+                        </RadioButton>
+                        <RadioButton
+                            Name="BioColorIIPictures"
+                            Grid.Column="0"
+                            HorizontalAlignment="Center">
+                            Pictures
+                        </RadioButton>
+                    </ListBox>
                 </Grid>
 
                 <Grid Grid.Row="8" Margin="5">

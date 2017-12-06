@@ -115,6 +115,7 @@
     </Compile>
     <Compile Include="Helpers\ButtonToVisibilityConverter.cs" />
     <Compile Include="Helpers\NameToImageConverter.cs" />
+    <Compile Include="Helpers\NameToMultiBrushConverter.cs" />
     <Compile Include="View\FeelingsChart.xaml.cs">
       <DependentUpon>FeelingsChart.xaml</DependentUpon>
     </Compile>
