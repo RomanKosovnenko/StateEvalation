@@ -21,6 +21,7 @@
         <helpers:NameToImageConverter x:Key="NameToImageConverter" />
         <helpers:NameToMultiBrushConverter x:Key="NameToMultiBrushConverter" />
         <helpers:ButtonToVisibilityConverter x:Key="ButtonToVisibilityConverter" />
+        <helpers:BooleanToNOTVisibilityConverter x:Key="BooleanToNOTVisibilityConverter" />
         <helpers:TextColorNumberToBrushConverter x:Key="TextColorNumberToBrushConverter"/>
     </Window.Resources>
     <Grid>
@@ -574,7 +575,8 @@
                     <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor I START -->    
                     <!-- BioColor I (Three) -->
-                        <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}">
+                        <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <ListView ItemsSource="{Binding ShortOder1, Converter={StaticResource StringToListConverter}}">
@@ -635,18 +637,40 @@
                     </DataGridTemplateColumn>
 
                     <!-- Preference1 -->
-                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}"/>
                     <!-- BioColor I END -->
-                    
+
                     <!-- BioColor II START -->
                     <!-- BioColor II (Three) -->
-                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}">
+                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding ShortOder2, Converter={StaticResource StringToListConverter}}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToMultiBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"></StackPanel>
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                </ListView>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!-- BioColor II (ThreePictures) -->
+                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIPictures}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding ShortOder2, Converter={StaticResource StringToListConverter}}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.ItemsPanel>
@@ -701,7 +725,8 @@
                     </DataGridTemplateColumn>
 
                     <!-- Preference2 -->
-                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}"/>
                     <!-- BioColor II END -->
 
                     <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"/>
