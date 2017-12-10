@@ -128,8 +128,11 @@
           <e p="SettingsEdit.xaml.cs" t="Include" />
         </e>
         <e p="Helpers" t="Include">
+          <e p="BooleanToNOTVisibilityConverter.cs" t="Include" />
+          <e p="ButtonToVisibilityConverter.cs" t="Include" />
           <e p="NameToBrushConverter.cs" t="Include" />
           <e p="NameToImageConverter.cs" t="Include" />
+          <e p="NameToMultiBrushConverter.cs" t="Include" />
           <e p="PropertyChangedBase.cs" t="Include" />
           <e p="StringToListConverter.cs" t="Include" />
           <e p="TextColorNumberToBrushConverter.cs" t="Include" />

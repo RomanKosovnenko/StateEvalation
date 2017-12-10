@@ -36,5 +36,16 @@ namespace StateEvaluation.Model
             var items = this.SubjectiveFeeling.Select(item => item).OrderBy(item => item.Date);
             return items;
         }
+        public IEnumerable<string> Codes()
+        {
+            var items = this.Preference.Select(item => item.UserId).Distinct().OrderByDescending(item => item);
+            return items;
+        }
+        public IEnumerable<Preference> FilterCodes(string s)
+        {
+            var items = this.Preference.Select(item => item).Where(item => item.UserId.StartsWith("Ex20")).OrderByDescending(item => item);
+            return items;
+        }
+
     }
 }

@@ -15,6 +15,7 @@
         <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllPeople"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllTests"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllSubjecriveFeelings"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="Codes"></ObjectDataProvider>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <helpers:StringToListConverter x:Key="StringToListConverter" />
         <helpers:NameToBrushConverter x:Key="NameToBrushConverter" />
@@ -814,7 +815,7 @@
                     <Label Content="UID" Margin="0,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <ComboBox
                                   Grid.Column="1"
-                                  ItemsSource="{Binding Codes}"
+                                  ItemsSource="{Binding Source={StaticResource GetCodes}}"
                                   SelectedValue="{Binding FilterCodeSelected}" Margin="5" />
                 </Grid>
                 <Grid Grid.Row="2" Margin="5">
