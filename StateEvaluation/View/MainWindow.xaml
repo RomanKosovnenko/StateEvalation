@@ -16,6 +16,8 @@
         <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllTests"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllSubjecriveFeelings"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="Codes"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="PeopleCodes"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="ExpeditionCodes"></ObjectDataProvider>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <helpers:StringToListConverter x:Key="StringToListConverter" />
         <helpers:NameToBrushConverter x:Key="NameToBrushConverter" />
@@ -865,11 +867,16 @@
                     <Label Content="From" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="1"/>
                     <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="1" Grid.Column="1"/>
                     <ComboBox Grid.Row="2"
-                                  ItemsSource="{Binding Expeditions}"
-                                  SelectedValue="{Binding FilterSelectedExpeditionFrom}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,2,0" />
+                              x:Name="ExFrom"
+                        SelectionChanged="FilterUIDs"
+                                  ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
+                                  SelectedValue="{Binding FilterSelectedExpeditionFrom}" 
+                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,2,0" />
                     <ComboBox Grid.Row="2"
+                              x:Name="ExTo"
                                   Grid.Column="1"
-                                  ItemsSource="{Binding Numbers}"
+                        SelectionChanged="FilterUIDs"
+                                  ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
                                   SelectedValue="{Binding FilterSelectedNumberFrom}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,0,0,0" />
 
                     <TextBlock Grid.Row="3"
@@ -879,10 +886,16 @@
                     <Label Content="From" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="4"/>
                     <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="4" Grid.Column="1"/>
                     <ComboBox Grid.Row="5"
-                                  SelectedValue="{Binding FilterSelectedExpeditionTo}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,2,0" />
+                              x:Name="PeopleFrom"
+                        SelectionChanged="FilterUIDs"
+                              SelectedValue="{Binding FilterSelectedExpeditionTo}"
+                              ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
+                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,2,0" />
                     <ComboBox Grid.Row="5"
+                              x:Name="PeopleTo"
+                        SelectionChanged="FilterUIDs"
                                   Grid.Column="1"
-                                  ItemsSource="{Binding Numbers}"
+                                  ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}"
                                   SelectedValue="{Binding FilterSelectedNumberTo}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,0,0,0" />
                 </Grid>
 

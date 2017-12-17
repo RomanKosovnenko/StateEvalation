@@ -53,7 +53,8 @@ namespace StateEvaluation
                 MessageBox.Show("Error! Try edit fields in form!");
                 return;
             }
-            People person = new People() {
+            People person = new People()
+            {
                 Firstname = (PersonAddFormGrid.FindName("FirstnameTextbox") as TextBox).Text,
                 Lastname = (PersonAddFormGrid.FindName("LastnameTextbox") as TextBox).Text,
                 Expedition = int.Parse((PersonAddFormGrid.FindName("ExpeditionTextbox") as TextBox).Text),
@@ -151,7 +152,7 @@ namespace StateEvaluation
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             PreferenceDB _preferenceDb = new PreferenceDB();
-            var subWindow = new TestsChart(_preferenceDb.Preference.Select(x=>x).OrderBy(x=>x.Date).ToList());
+            var subWindow = new TestsChart(_preferenceDb.Preference.Select(x => x).OrderBy(x => x.Date).ToList());
         }
 
         private void AddData_OnClick(object sender, RoutedEventArgs e)
@@ -189,7 +190,7 @@ namespace StateEvaluation
             List<string> tabl1 = new List<string>();
             List<string> tabl2 = new List<string>();
             List<string> fornames = new List<string>();
-            for (int i = i0; i < i0+12; ++i)
+            for (int i = i0; i < i0 + 12; ++i)
             {
                 fornames.Add(xlRng[i, 2].Value2);
             }
@@ -297,7 +298,7 @@ namespace StateEvaluation
                     UserId = $"Ex21#{number[index]}"
                 });
             }
-            
+
             foreach (var pref in prefinTable)
             {
                 _preferenceDb.Preference.InsertOnSubmit(pref);
@@ -327,17 +328,50 @@ namespace StateEvaluation
         {
 
         }
+        private string GenerateRange(string f, string t)
+        {
+            int from = 0;
+            int to = 0;
+            if (!int.TryParse(f, out from) || !int.TryParse(t, out to))
+            {
+                return "([0-9]+)";
+            }
+            else
+            {
+                string re = "(";
+                if (from > to) {
+                    int temp = from;
+                    from = to;
+                    to = temp;
+                };
+                for(int i = from; i <= to; ++i)
+                {
+                    re += i;
+                    if (i != to) re += "|";
+                }
+                re += ")";
+                return re;
+            }
+        }
         private void FilterUIDs(object sender, SelectionChangedEventArgs e)
         {
-            string s = (sender as ComboBox).SelectedItem.ToString();
-            if(s == "All")
+
+            string id = UID.SelectedItem?.ToString();
+            string exfrom = ExFrom.SelectedItem?.ToString()?.Trim();
+            string exto = ExTo.SelectedItem?.ToString()?.Trim();
+            string peoplefrom = PeopleFrom.SelectedItem?.ToString()?.Trim();
+            string peopleto = PeopleTo.SelectedItem?.ToString()?.Trim();
+            
+            if(id == "All" || id == null)
             {
-                TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
+                var re = new System.Text.RegularExpressions.Regex("Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto));
+                TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests()
+                    .Where(item => re.IsMatch(item.UserId));
             }
             else
             {
                 TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests()
-                    .Where(item => item.UserId == s);
+                       .Where(item => item.UserId == id);
             }
         }
     }

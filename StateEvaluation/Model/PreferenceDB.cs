@@ -43,5 +43,23 @@ namespace StateEvaluation.Model
             list.Insert(0, "All");
             return list;
         }
+        public IEnumerable<string> ExpeditionCodes()
+        {
+            var regex = new System.Text.RegularExpressions.Regex(@"Ex([0-9]+)#([0-9]+)");
+            var items = this.Preference.Select(item => item.UserId).Distinct().OrderByDescending(item => item).Select(x => regex.Match(x.ToString()).Groups[1].Value);
+            var list = items.ToList().Distinct().ToList();
+
+            list.Insert(0, "All");
+            return list;
+        }
+        public IEnumerable<string> PeopleCodes()
+        {
+            var regex = new System.Text.RegularExpressions.Regex(@"Ex([0-9]+)#([0-9]+)");
+            var items = this.Preference.Select(item => item.UserId).OrderByDescending(item => item).Select(x => regex.Match(x.ToString()).Groups[2].Value);
+            var list = items.ToList().Distinct().ToList();
+
+            list.Insert(0, "All");
+            return list;
+        }
     }
 }
