@@ -41,9 +41,9 @@ namespace StateEvaluation.Model
             var items = this.Preference.Select(item => item.UserId).Distinct().OrderByDescending(item => item);
             return items;
         }
-        public IEnumerable<Preference> FilterCodes(string s)
+        public IEnumerable<Preference> GetAllTests(string s)
         {
-            var items = this.Preference.Select(item => item).Where(item => item.UserId.StartsWith("Ex20")).OrderByDescending(item => item);
+            var items = this.GetAllTests().Where(item => item.UserId == s);
             return items;
         }
 

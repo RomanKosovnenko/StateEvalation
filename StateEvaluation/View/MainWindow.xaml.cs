@@ -327,5 +327,11 @@ namespace StateEvaluation
         {
 
         }
+        private void FilterUIDs(object sender, SelectionChangedEventArgs e)
+        {
+            var s = (sender as ComboBox).SelectedItem.ToString();
+            var find = s == "All" ? "" : s;
+            TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests(find);
+        }
     }
 }

@@ -814,9 +814,11 @@
                     </Grid.ColumnDefinitions>
                     <Label Content="UID" Margin="0,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <ComboBox
+                        x:Name="UID"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Source={StaticResource GetCodes}}"
-                                  SelectedValue="{Binding FilterCodeSelected}" Margin="5" />
+                                  SelectedValue="{Binding FilterCodeSelected}" Margin="5"
+                        SelectionChanged="FilterUIDs"/>
                 </Grid>
                 <Grid Grid.Row="2" Margin="5">
                     <Grid.ColumnDefinitions>
