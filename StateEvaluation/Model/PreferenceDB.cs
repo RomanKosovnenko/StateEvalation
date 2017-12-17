@@ -39,13 +39,9 @@ namespace StateEvaluation.Model
         public IEnumerable<string> Codes()
         {
             var items = this.Preference.Select(item => item.UserId).Distinct().OrderByDescending(item => item);
-            return items;
+            var list = items.ToList();
+            list.Insert(0, "All");
+            return list;
         }
-        public IEnumerable<Preference> GetAllTests(string s)
-        {
-            var items = this.GetAllTests().Where(item => item.UserId == s);
-            return items;
-        }
-
     }
 }
