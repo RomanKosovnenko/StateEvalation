@@ -363,12 +363,12 @@ namespace StateEvaluation
             string peopleto = PeopleTo.SelectedItem?.ToString()?.Trim();
             DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
             DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
-            
+
             if (id == "All" || id == null)
             {
                 var re = new System.Text.RegularExpressions.Regex("Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto));
                 TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests()
-                    .Where(item => re.IsMatch(item.UserId)).Where(item => item.Date >= datefrom && item.Date <= dateto);
+                    .Where(item => re.IsMatch(item.UserId)).Where(item => (datefrom.Ticks == 0 || item.Date >= datefrom) && (item.Date <= dateto || dateto.Ticks == 0));
             }
             else
             {
