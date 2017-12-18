@@ -838,8 +838,12 @@
                     <Label Content="From" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Padding="0"/>
                     <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Padding="0"/>
                     <DatePicker Grid.Row="2"
+                                x:Name="DateFrom"
+                                SelectedDateChanged="FilterUIDs"
                                     SelectedDate="{Binding FilterSelectedDateFrom}" Margin="0,2,5,2" Padding="5,2,2,2" />
                     <DatePicker Grid.Row="2"
+                                x:Name="DateTo"
+                                SelectedDateChanged="FilterUIDs"
                                     Grid.Column="1"
                                     SelectedDate="{Binding FilterSelectedDateTo}" Margin="5,2,0,2" VerticalAlignment="Bottom" Padding="2" />
                     <Grid Grid.ColumnSpan="2" Margin="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
