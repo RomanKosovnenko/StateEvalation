@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -324,10 +325,11 @@ namespace StateEvaluation
         private void Generate(object sender, RoutedEventArgs e) => BioColor.Main.Generate();
         private void DrawGraphs(object sender, RoutedEventArgs e) => BioColor.Main.DrawGraphs();
 
-        private void TestsDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void WindowRendered(object sender, EventArgs e)
         {
-
+            ClearFilters();
         }
+
         private string GenerateRange(string f, string t)
         {
             int from = 0;
@@ -339,12 +341,13 @@ namespace StateEvaluation
             else
             {
                 string re = "(";
-                if (from > to) {
+                if (from > to)
+                {
                     int temp = from;
                     from = to;
                     to = temp;
                 };
-                for(int i = from; i <= to; ++i)
+                for (int i = from; i <= to; ++i)
                 {
                     re += i;
                     if (i != to) re += "|";
@@ -353,7 +356,50 @@ namespace StateEvaluation
                 return re;
             }
         }
-        private void FilterUIDs(object sender, SelectionChangedEventArgs e)
+        private void ClearFilters()
+        {
+            Pref.SelectedIndex = 0;
+            ExFrom.SelectedIndex = 0;
+            ExTo.SelectedIndex = 0;
+            PeopleFrom.SelectedIndex = 0;
+            PeopleTo.SelectedIndex = 0;
+            UID.SelectedIndex = 0;
+            DateFrom.Text = "";
+            DateTo.Text = "";
+            PreferenceFilter1.Text = "";
+            PreferenceFilter2.Text = "";
+            PreferenceFilter3.Text = "";
+            PreferenceFilter4.Text = "";
+            PreferenceFilter5.Text = "";
+            PreferenceFilter6.Text = "";
+            PreferenceFilter7.Text = "";
+            PreferenceFilter8.Text = "";
+            PreferenceFilter9.Text = "";
+            PreferenceFilter10.Text = "";
+            PreferenceFilter11.Text = "";
+            PreferenceFilter12.Text = "";
+        }
+        private void ClearUIDs(object sender, RoutedEventArgs e)
+        {
+            TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
+            ClearFilters();
+        }
+        private bool CompareOrder(string order, params string[] prefs)
+        {
+            var orders = order.Split(',');
+            if (orders.Length != prefs.Length)
+            {
+                throw new IndexOutOfRangeException("Order lenght is not the same as prefs lengts");
+            }
+
+            var comparer = new bool[orders.Length];
+            for (int i = 0; i < comparer.Length; ++i)
+            {
+                comparer[i] = prefs[i] == "" || prefs[i] == orders[i];
+            }
+            return comparer.All(x => x);
+        }
+        private void FilterUIDs(object sender, RoutedEventArgs e)
         {
 
             string id = UID.SelectedItem?.ToString();
@@ -361,20 +407,21 @@ namespace StateEvaluation
             string exto = ExTo.SelectedItem?.ToString()?.Trim();
             string peoplefrom = PeopleFrom.SelectedItem?.ToString()?.Trim();
             string peopleto = PeopleTo.SelectedItem?.ToString()?.Trim();
+            string preference = Pref.SelectedItem?.ToString();
             DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
             DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
 
-            if (id == "All" || id == null)
-            {
-                var re = new System.Text.RegularExpressions.Regex("Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto));
-                TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests()
-                    .Where(item => re.IsMatch(item.UserId)).Where(item => (datefrom.Ticks == 0 || item.Date >= datefrom) && (item.Date <= dateto || dateto.Ticks == 0));
-            }
-            else
-            {
-                TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests()
-                       .Where(item => item.UserId == id);
-            }
+            Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
+
+            TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests()
+                .Where(item =>
+/* UserID     */   (re.IsMatch(item.UserId)) && 
+/* DatePicker */   ((datefrom.Ticks == 0 || item.Date >= datefrom) && (item.Date <= dateto || dateto.Ticks == 0)) &&
+/* ShortOder  */   (CompareOrder(item.ShortOder1, PreferenceShortFilter1.Text, PreferenceShortFilter2.Text, PreferenceShortFilter3.Text)) &&
+/* Oder       */   (CompareOrder(item.Oder1, PreferenceFilter1.Text, PreferenceFilter2.Text, PreferenceFilter3.Text, PreferenceFilter4.Text, PreferenceFilter5.Text, PreferenceFilter6.Text, PreferenceFilter7.Text, PreferenceFilter8.Text, PreferenceFilter9.Text, PreferenceFilter10.Text, PreferenceFilter11.Text, PreferenceFilter12.Text)) &&
+/* Preference */   (item.Preference1 == preference || preference == "All")
+                );
+
         }
     }
 }

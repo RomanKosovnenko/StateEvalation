@@ -10,12 +10,14 @@
         xmlns:model="clr-namespace:StateEvaluation.Model"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
+        ContentRendered="WindowRendered"
         Title="MainWindow" Height="768" Width="1366" WindowState="Maximized">
     <Window.Resources>
         <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllPeople"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllTests"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllSubjecriveFeelings"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="Codes"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Preferences"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="PeopleCodes"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="ExpeditionCodes"></ObjectDataProvider>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -561,7 +563,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid x:Name="TestsDataGrid" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}" SelectionChanged="TestsDataGrid_SelectionChanged">
+            <DataGrid x:Name="TestsDataGrid" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="{x:Static p:Resources.ChartColumnHeader}" ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
@@ -819,8 +821,7 @@
                         x:Name="UID"
                         Grid.Column="1"
                         ItemsSource="{Binding Source={StaticResource GetCodes}}"
-                        SelectedValue="{Binding FilterCodeSelected}" Margin="5"
-                        SelectionChanged="FilterUIDs"/>
+                        SelectedValue="{Binding FilterCodeSelected}" Margin="5"/>
                 </Grid>
                 <Grid Grid.Row="2" Margin="5">
                     <Grid.ColumnDefinitions>
@@ -839,16 +840,12 @@
                     <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Padding="0"/>
                     <DatePicker Grid.Row="2"
                                 x:Name="DateFrom"
-                                SelectedDateChanged="FilterUIDs"
                                     SelectedDate="{Binding FilterSelectedDateFrom}" Margin="0,2,5,2" Padding="5,2,2,2" />
                     <DatePicker Grid.Row="2"
                                 x:Name="DateTo"
-                                SelectedDateChanged="FilterUIDs"
                                     Grid.Column="1"
                                     SelectedDate="{Binding FilterSelectedDateTo}" Margin="5,2,0,2" VerticalAlignment="Bottom" Padding="2" />
                     <Grid Grid.ColumnSpan="2" Margin="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-                        <CheckBox
-                            IsChecked="{Binding CheckYear}" Content="Учитывать год" Padding="0" Margin="0" BorderThickness="1"/>
                     </Grid>
                 </Grid>
                 <Grid Visibility="{Binding FilterExpeditionAndNumberVisibility}" Grid.Row="3" Margin="5">
@@ -872,14 +869,12 @@
                     <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="1" Grid.Column="1"/>
                     <ComboBox Grid.Row="2"
                               x:Name="ExFrom"
-                        SelectionChanged="FilterUIDs"
                                   ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
                                   SelectedValue="{Binding FilterSelectedExpeditionFrom}" 
                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,2,0" />
                     <ComboBox Grid.Row="2"
                               x:Name="ExTo"
                                   Grid.Column="1"
-                        SelectionChanged="FilterUIDs"
                                   ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
                                   SelectedValue="{Binding FilterSelectedNumberFrom}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,0,0,0" />
 
@@ -891,13 +886,11 @@
                     <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="4" Grid.Column="1"/>
                     <ComboBox Grid.Row="5"
                               x:Name="PeopleFrom"
-                        SelectionChanged="FilterUIDs"
                               SelectedValue="{Binding FilterSelectedExpeditionTo}"
                               ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,2,0" />
                     <ComboBox Grid.Row="5"
                               x:Name="PeopleTo"
-                        SelectionChanged="FilterUIDs"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}"
                                   SelectedValue="{Binding FilterSelectedNumberTo}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,0,0,0" />
@@ -928,17 +921,20 @@
                                    HorizontalAlignment="Center"
                                    Text="3" />
                     <TextBox Grid.Row="1"
+                             x:Name="PreferenceShortFilter1"
                                  Grid.Column="0"
-                                 Width="40"
+                                 Width="50"
                                  Height="22"
-                                 Text="{Binding C1in3Filter}" />
+                                 Text="{Binding Path=C1in3Filter}" />
                     <TextBox Grid.Row="1"
+                             x:Name="PreferenceShortFilter2"
                                  Grid.Column="1"
-                                 Width="40"
+                                 Width="50"
                                  Text="{Binding C2in3Filter}" />
                     <TextBox Grid.Row="1"
+                             x:Name="PreferenceShortFilter3"
                                  Grid.Column="2"
-                                 Width="40" />
+                                 Width="50" />
                 </Grid>
                 <Grid Grid.Row="5" Margin="5" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
                     <Grid.ColumnDefinitions>
@@ -1025,50 +1021,62 @@
 
 
                     <TextBox Grid.Row="1"
+                                    x:Name="PreferenceFilter1"
                                      Grid.Column="0"
                                      Width="20"
                                      Text="{Binding C1in12Filter}" />
                     <TextBox Grid.Row="1"
+                                    x:Name="PreferenceFilter2"
                                      Grid.Column="1"
                                      Width="20"
                                      Text="{Binding C2in12Filter}" />
                     <TextBox Grid.Row="1"
+                                    x:Name="PreferenceFilter3"
                                      Grid.Column="2"
                                      Width="20"
                                      Text="{Binding C3in12Filter}" />
                     <TextBox Grid.Row="1"
+                                    x:Name="PreferenceFilter4"
                                      Grid.Column="3"
                                      Width="20"
                                      Text="{Binding C4in12Filter}" />
                     <TextBox Grid.Row="1"
+                                    x:Name="PreferenceFilter5"
                                      Grid.Column="4"
                                      Width="20"
                                      Text="{Binding C5in12Filter}" />
                     <TextBox Grid.Row="1"
+                                    x:Name="PreferenceFilter6"
                                      Grid.Column="5"
                                      Width="20"
                                      Text="{Binding C6in12Filter}" />
                     <TextBox Grid.Row="1"
+                                    x:Name="PreferenceFilter7"
                                      Grid.Column="6"
                                      Width="20"
                                      Text="{Binding C7in12Filter}" />
                     <TextBox Grid.Row="1"
+                                    x:Name="PreferenceFilter8"
                                      Grid.Column="7"
                                      Width="20"
                                      Text="{Binding C8in12Filter}" />
                     <TextBox Grid.Row="1"
+                                    x:Name="PreferenceFilter9"
                                      Grid.Column="8"
                                      Width="20"
                                      Text="{Binding C9in12Filter}" />
                     <TextBox Grid.Row="1"
+                                    x:Name="PreferenceFilter10"
                                      Grid.Column="9"
                                      Width="20"
                                      Text="{Binding C10in12Filter}" />
                     <TextBox Grid.Row="1"
+                                    x:Name="PreferenceFilter11"
                                      Grid.Column="10"
                                      Width="20"
                                      Text="{Binding C11in12Filter}" />
                     <TextBox Grid.Row="1"
+                                    x:Name="PreferenceFilter12"
                                      Grid.Column="11"
                                      Width="20"
                                      Text="{Binding C12in12Filter}" />
@@ -1154,8 +1162,9 @@
                     <Label Content="Преференция" Margin="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,0"/>
 
                     <ComboBox Grid.Row="0"
+                                  x:Name="Pref"
                                   Grid.Column="1"
-                                  ItemsSource="{Binding Preferences}"
+                                  ItemsSource="{Binding Source={StaticResource GetPreferencesList}}" 
                                   SelectedValue="{Binding FilterPreferenceSelected}" HorizontalContentAlignment="Center" Margin="2" />
                 </Grid>
 
@@ -1227,15 +1236,16 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Row="0"
+                            x:Name="ClearBTN"
                                 Grid.Column="0"
                                 Margin="2"
-                                Command="{Binding RemoveFiltersCommand}"
+                                Click="ClearUIDs"
                                 Content="Сбосить фильтр" Padding="0" />
                     <Button Grid.Row="0"
                         Grid.Column="1"
                         Margin="2"
-                        Command="{Binding RemoveFiltersCommand}"
-                        Content="Сбосить фильтр" Padding="0" />
+                        Click="FilterUIDs"
+                        Content="Применить фильтр" Padding="0" />
                     <Button Grid.Row="1"
                             Click="ButtonBase_OnClick"
                             Margin="2"

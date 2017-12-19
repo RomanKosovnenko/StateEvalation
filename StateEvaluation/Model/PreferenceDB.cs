@@ -43,6 +43,13 @@ namespace StateEvaluation.Model
             list.Insert(0, "All");
             return list;
         }
+        public IEnumerable<string> Preferences()
+        {
+            var items = this.Preference.Select(item => item.Preference1).Distinct().OrderByDescending(item => item);
+            var list = items.ToList();
+            list.Insert(0, "All");
+            return list;
+        }
         public IEnumerable<string> ExpeditionCodes()
         {
             var regex = new System.Text.RegularExpressions.Regex(@"Ex([0-9]+)#([0-9]+)");
