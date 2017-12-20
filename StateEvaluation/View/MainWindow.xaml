@@ -24,7 +24,11 @@
         <helpers:StringToListConverter x:Key="StringToListConverter" />
         <helpers:NameToBrushConverter x:Key="NameToBrushConverter" />
         <helpers:NameToImageConverter x:Key="NameToImageConverter" />
+        <helpers:BooleanToChecker x:Key="BooleanToChecker" />
+        <helpers:NumberToRelax1Converter x:Key="NumberToRelax1Converter" />
+        <helpers:NumberToRelax2Converter x:Key="NumberToRelax2Converter" />
         <helpers:NameToMultiBrushConverter x:Key="NameToMultiBrushConverter" />
+        <helpers:PreferenceToBrushConverter x:Key="PreferenceToBrushConverter" />
         <helpers:ButtonToVisibilityConverter x:Key="ButtonToVisibilityConverter" />
         <helpers:BooleanToNOTVisibilityConverter x:Key="BooleanToNOTVisibilityConverter" />
         <helpers:TextColorNumberToBrushConverter x:Key="TextColorNumberToBrushConverter"/>
@@ -643,7 +647,13 @@
 
                     <!-- Preference1 -->
                     <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
-                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}"/>
+                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Background" Value="{Binding Preference1, Converter={StaticResource PreferenceToBrushConverter}}" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                     <!-- BioColor I END -->
 
                     <!-- BioColor II START -->
@@ -731,17 +741,41 @@
 
                     <!-- Preference2 -->
                     <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
-                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}"/>
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Background" Value="{Binding Preference2, Converter={StaticResource PreferenceToBrushConverter}}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                     <!-- BioColor II END -->
 
-                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50">
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="Compare" Binding="{Binding Compare, Converter={StaticResource BooleanToChecker}}" ClipboardContentBinding="{x:Null}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
+                                <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+                                <Setter Property="TextBlock.FontSize" Value="20" />
+                                
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50" Header="Relax1">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="/StateEvaluation;component/RelaxTables/Relax2/6.jpg"/>
+                                <Image Source="{Binding RelaxTable1, Converter={StaticResource NumberToRelax1Converter}}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50" Header="Relax2">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Image Source="{Binding RelaxTable2, Converter={StaticResource NumberToRelax2Converter}}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!-- 
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -762,6 +796,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    -->
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -769,7 +804,6 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-
                 </DataGrid.Columns>
             </DataGrid>
 

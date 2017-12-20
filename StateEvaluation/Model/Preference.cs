@@ -31,6 +31,10 @@ namespace StateEvaluation.Model
         public string Preference2 { get; set; }
         [Column]
         public string Compare { get; set; }
+        [Column]
+        public int? RelaxTable1 { get; set; }
+        [Column]
+        public int? RelaxTable2 { get; set; }
 
         [Column(Name = "UserID")] public string UserId { get; set; }
     //    private EntityRef<People> _people = new EntityRef<People>();
