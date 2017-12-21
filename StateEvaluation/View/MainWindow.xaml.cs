@@ -153,7 +153,7 @@ namespace StateEvaluation
         private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
         {
             PreferenceDB _preferenceDb = new PreferenceDB();
-            var subWindow = new TestsChart(_preferenceDb.Preference.Select(x => x).OrderBy(x => x.Date).ToList());
+            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList());
         }
 
         private void AddData_OnClick(object sender, RoutedEventArgs e)
@@ -413,15 +413,52 @@ namespace StateEvaluation
 
             Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
 
-            TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests()
+            TestsDataGrid.ItemsSource = GetUIDs();
+            PersonDataGrid.ItemsSource = GetPeople();
+
+        }
+        private IEnumerable<Preference> GetUIDs()
+        {
+
+            string id = UID.SelectedItem?.ToString();
+            string exfrom = ExFrom.SelectedItem?.ToString()?.Trim();
+            string exto = ExTo.SelectedItem?.ToString()?.Trim();
+            string peoplefrom = PeopleFrom.SelectedItem?.ToString()?.Trim();
+            string peopleto = PeopleTo.SelectedItem?.ToString()?.Trim();
+            string preference = Pref.SelectedItem?.ToString();
+            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
+            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
+
+            Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
+
+            return _preferenceDb.GetAllTests()
                 .Where(item =>
-/* UserID     */   (re.IsMatch(item.UserId)) && 
+/* UserID     */   (re.IsMatch(item.UserId)) &&
 /* DatePicker */   ((datefrom.Ticks == 0 || item.Date >= datefrom) && (item.Date <= dateto || dateto.Ticks == 0)) &&
 /* ShortOder  */   (CompareOrder(item.ShortOder1, PreferenceShortFilter1.Text, PreferenceShortFilter2.Text, PreferenceShortFilter3.Text)) &&
 /* Oder       */   (CompareOrder(item.Oder1, PreferenceFilter1.Text, PreferenceFilter2.Text, PreferenceFilter3.Text, PreferenceFilter4.Text, PreferenceFilter5.Text, PreferenceFilter6.Text, PreferenceFilter7.Text, PreferenceFilter8.Text, PreferenceFilter9.Text, PreferenceFilter10.Text, PreferenceFilter11.Text, PreferenceFilter12.Text)) &&
 /* Preference */   (item.Preference1 == preference || preference == "All")
                 );
+        }
+        private IEnumerable<People> GetPeople()
+        {
 
+            string id = UID.SelectedItem?.ToString();
+            string exfrom = ExFrom.SelectedItem?.ToString()?.Trim();
+            string exto = ExTo.SelectedItem?.ToString()?.Trim();
+            string peoplefrom = PeopleFrom.SelectedItem?.ToString()?.Trim();
+            string peopleto = PeopleTo.SelectedItem?.ToString()?.Trim();
+            string preference = Pref.SelectedItem?.ToString();
+            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
+            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
+
+            Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
+
+            return _preferenceDb.GetAllPeople()
+                .Where(item =>
+    /* UserID     */   (re.IsMatch(item.UserId))
+                );
         }
     }
 }
+
