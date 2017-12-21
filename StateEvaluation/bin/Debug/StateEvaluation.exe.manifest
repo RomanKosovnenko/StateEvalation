@@ -14,16 +14,16 @@
       </applicationRequestMinimum>
       <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
         <!--
-          UAC Manifest Options
-          If you want to change the Windows User Account Control level replace the 
-          requestedExecutionLevel node with one of the following.
+          Параметры манифеста UAC
+          При необходимости изменить уровень контроля учетных записей Windows замените узел 
+          requestedExecutionLevel одним из следующих значений.
 
         <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
         <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
         <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
 
-         If you want to utilize File and Registry Virtualization for backward 
-         compatibility then delete the requestedExecutionLevel node.
+         Если вы хотите использовать виртуализацию файлов и реестра для обратной 
+         совместимости, удалите узел requestedExecutionLevel.
     -->
         <requestedExecutionLevel level="asInvoker" uiAccess="false" />
       </requestedPrivileges>
@@ -85,7 +85,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>i+QRSq5i4yXl+qIx/cmLk69uenad+/3a1o2nkRn8K0U=</dsig:DigestValue>
+        <dsig:DigestValue>7/eMCiiAGAiGMTwzsQv6RDdlVdSSx7xxk65toSl0wMc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -97,7 +97,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>ovXC5BoCx63C6fFRlueYPSQncjfGPFQROTY8a46mCUE=</dsig:DigestValue>
+        <dsig:DigestValue>k6nTM1yL0AmrA4K3S78sZFEP2bwzmYe33qNwWbnOtXY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -401,20 +401,9 @@ namespace StateEvaluation
         }
         private void FilterUIDs(object sender, RoutedEventArgs e)
         {
-
-            string id = UID.SelectedItem?.ToString();
-            string exfrom = ExFrom.SelectedItem?.ToString()?.Trim();
-            string exto = ExTo.SelectedItem?.ToString()?.Trim();
-            string peoplefrom = PeopleFrom.SelectedItem?.ToString()?.Trim();
-            string peopleto = PeopleTo.SelectedItem?.ToString()?.Trim();
-            string preference = Pref.SelectedItem?.ToString();
-            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
-            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
-
-            Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
-
             TestsDataGrid.ItemsSource = GetUIDs();
             PersonDataGrid.ItemsSource = GetPeople();
+            SubjectiveFeelDataGrid.ItemsSource = GetSubjectiveFeel();
 
         }
         private IEnumerable<Preference> GetUIDs()
@@ -459,6 +448,39 @@ namespace StateEvaluation
     /* UserID     */   (re.IsMatch(item.UserId))
                 );
         }
+        private IEnumerable<SubjectiveFeeling> GetSubjectiveFeel()
+        {
+            string id = UID.SelectedItem?.ToString();
+            string exfrom = ExFrom.SelectedItem?.ToString()?.Trim();
+            string exto = ExTo.SelectedItem?.ToString()?.Trim();
+            string peoplefrom = PeopleFrom.SelectedItem?.ToString()?.Trim();
+            string peopleto = PeopleTo.SelectedItem?.ToString()?.Trim();
+            string preference = Pref.SelectedItem?.ToString();
+            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
+            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
+
+            bool gWeakness = generalWeakness.IsChecked.Value;
+            bool bAppetite = badAppetite.IsChecked.Value;
+            bool bDream = badDream.IsChecked.Value;
+            bool bMood = badMood.IsChecked.Value;
+            bool hHead = heavyHead.IsChecked.Value;
+            bool sThink = slowThink.IsChecked.Value;
+            bool aFeelings = true;//allFeelings.IsChecked.Value;
+
+            Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
+
+            return _preferenceDb.GetAllSubjecriveFeelings()
+                .Where(item =>
+    /* UserID     */   (re.IsMatch(item.UserId))&&
+                       (item.GeneralWeaknes == gWeakness || aFeelings) &&
+                       (item.PoorAppetite == bAppetite || aFeelings) &&
+                       (item.PoorSleep == bDream || aFeelings) &&
+                       (item.BadMood == bMood || aFeelings) &&
+                       (item.HeavyHead == hHead || aFeelings) &&
+                       (item.SlowThink == sThink || aFeelings) 
+                );
+        }
     }
 }
+    
 

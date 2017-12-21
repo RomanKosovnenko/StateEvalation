@@ -19,7 +19,7 @@ namespace StateEvaluation.Helpers
                 {
                     
               //      var uri = new Uri("C:/Users/Andriy2/StateEvalation/StateEvaluation/RelaxTables/Relax3/" + input + ".png", UriKind.Relative);
-                    var uri = new Uri("/StateEvaluation;component/RelaxTables/Relax3/" + input + ".png", UriKind.Relative);
+                    var uri = new Uri("C:/Users/Віталій/Documents/GitHub/StateEvalation/StateEvaluation/RelaxTables/Relax3/" + input + ".png", UriKind.Relative);
                     var bitmap = new BitmapImage(uri);
                     var brush = new ImageBrush(bitmap);
                     return brush;

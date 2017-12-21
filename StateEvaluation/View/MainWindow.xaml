@@ -1156,31 +1156,37 @@
                                    Text="Замедленное мышление" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
 
                     <CheckBox Grid.Row="1"
+                                  x:Name="generalWeakness"
                                   Grid.Column="0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding FilterGeneralWeakness}" />
                     <CheckBox Grid.Row="1"
+                                  x:Name="badAppetite"
                                   Grid.Column="1"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding FilterPoorAppetite}" />
                     <CheckBox Grid.Row="3"
+                              x:Name="badDream"
                                   Grid.Column="0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding FilterPoorSleep}" />
                     <CheckBox Grid.Row="3"
+                              x:Name="badMood"
                                   Grid.Column="1"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding FilterBadMood}" />
                     <CheckBox Grid.Row="5"
+                              x:Name="heavyHead"
                                   Grid.Column="0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding FilterHeavyHead}" />
                     <CheckBox Grid.Row="5"
+                              x:Name="slowThink"
                                   Grid.Column="1"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
