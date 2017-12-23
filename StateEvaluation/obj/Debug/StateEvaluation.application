@@ -14,14 +14,14 @@
     <framework targetVersion="4.5.2" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="StateEvaluation.exe.manifest" size="11909">
+    <dependentAssembly dependencyType="install" codebase="StateEvaluation.exe.manifest" size="11711">
       <assemblyIdentity name="StateEvaluation.exe" version="1.0.0.8" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>tLLaEHh5wbhunoQYfbddBwF43G6Ew6e7qWN0DigAi/I=</dsig:DigestValue>
+        <dsig:DigestValue>7A0hobl4q9LyMMz90oJpk245tg3plTVJZeJQtE7H9n8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

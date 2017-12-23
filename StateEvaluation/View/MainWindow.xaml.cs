@@ -404,7 +404,6 @@ namespace StateEvaluation
             TestsDataGrid.ItemsSource = GetUIDs();
             PersonDataGrid.ItemsSource = GetPeople();
             SubjectiveFeelDataGrid.ItemsSource = GetSubjectiveFeel();
-
         }
         private IEnumerable<Preference> GetUIDs()
         {

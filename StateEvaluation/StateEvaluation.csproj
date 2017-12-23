@@ -116,6 +116,7 @@
     <Compile Include="Helpers\BooleanToChecker.cs" />
     <Compile Include="Helpers\BooleanToNOTVisibilityConverter.cs" />
     <Compile Include="Helpers\ButtonToVisibilityConverter.cs" />
+    <Compile Include="Helpers\DateToSin.cs" />
     <Compile Include="Helpers\NameToImageConverter.cs" />
     <Compile Include="Helpers\NameToMultiBrushConverter.cs" />
     <Compile Include="Helpers\NumberToRelax1Converter.cs" />
