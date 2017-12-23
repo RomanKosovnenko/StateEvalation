@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
 using System.Linq;
@@ -23,6 +24,22 @@ namespace StateEvaluation.Model
         {
             var items = this.People.Select(item => item).OrderBy(item => item.UserId);
             return items;
+        }
+        public People GetPerson(string tempUID)
+        {
+            var items = this.People.Select(item => item).Where(item => item.UserId == tempUID);
+            People person = new People()
+            {
+                Id = items.First().Id,
+                Firstname = items.First().Firstname,
+                Lastname = items.First().Lastname,
+                Number = items.First().Number,
+                UserId = items.First().UserId,
+                Workposition = items.First().Workposition,
+                Expedition = items.First().Expedition,
+                Birthday = items.First().Birthday
+            };
+            return person;
         }
 
         public IEnumerable<Preference> GetAllTests()
@@ -66,6 +83,21 @@ namespace StateEvaluation.Model
             var list = items.ToList().Distinct().ToList();
 
             list.Insert(0, "All");
+            return list;
+        }
+        public IEnumerable<string> ShortColorsNumbersList()
+        {
+            string[] list = { "3", "7","11" };
+            return list;
+        }
+        public IEnumerable<string> ShortColorsNumbersList(string x1, string x2)
+        {
+            string[] list = {x1, x2};
+            return list;
+        }
+        public IEnumerable<string> ShortColorsNumbersList(string x1)
+        {
+            string[] list = { x1 };
             return list;
         }
     }

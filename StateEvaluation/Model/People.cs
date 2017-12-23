@@ -27,5 +27,10 @@ namespace StateEvaluation.Model
         public int Number { get; set; }
         [Column]
         public string Workposition { get; set; }
+
+        internal object Substring(int v1, int v2)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

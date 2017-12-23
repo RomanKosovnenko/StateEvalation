@@ -20,11 +20,11 @@
         <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Preferences"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="PeopleCodes"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="ExpeditionCodes"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetShortColorsNumbersList" ObjectType="{x:Type model:PreferenceDB}" MethodName="ShortColorsNumbersList"></ObjectDataProvider>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <helpers:StringToListConverter x:Key="StringToListConverter" />
         <helpers:NameToBrushConverter x:Key="NameToBrushConverter" />
         <helpers:NameToImageConverter x:Key="NameToImageConverter" />
-        <helpers:DateToSin x:Key="DateToSin" />
         <helpers:BooleanToChecker x:Key="BooleanToChecker" />
         <helpers:NumberToRelax1Converter x:Key="NumberToRelax1Converter" />
         <helpers:NumberToRelax2Converter x:Key="NumberToRelax2Converter" />
@@ -238,18 +238,21 @@
                     <ComboBox Grid.Row="2"
                               Grid.Column="4"
                               Width="40"
-                              ItemsSource="{Binding ShortColorsNumbersList}"
-                              SelectedValue="{Binding C1in3}" />
+                              x:Name="ShortColorsNumbersList1_Biocolor1"
+                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
+                              />
                     <ComboBox Grid.Row="2"
                               Grid.Column="6"
                               Width="40"
-                              ItemsSource="{Binding ShortColorsNumbersList}"
-                              SelectedValue="{Binding C2in3}" />
+                             x:Name="ShortColorsNumbersList2_Biocolor1"
+                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
+                              />
                     <ComboBox Grid.Row="2"
                               Grid.Column="8"
                               Width="40"
-                              ItemsSource="{Binding ShortColorsNumbersList}"
-                              SelectedValue="{Binding C3in3}" />
+                              x:Name="ShortColorsNumbersList3_Biocolor1"
+                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
+                            />
                     <ComboBox Grid.Row="2"
                               Grid.Column="12"
                               Width="40"
@@ -411,11 +414,11 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItem2" Header="{x:Static p:Resources.SubjectiveFeelingsTabHeader}">
-                <Grid Background="#FFE5E5E5">
+                <Grid x:Name="DataFridSubjectiveFeelings" Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="50*" />
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="10" />
@@ -430,7 +433,7 @@
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="10" />
                         <ColumnDefinition Width="auto" />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="207*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
@@ -439,6 +442,7 @@
                     <Button Grid.RowSpan="2"
                             Grid.Column="16"
                             Margin="0,0,0,-11"
+                            Click="AddFeelingPeople"
                             Command="{Binding SaveFeelingsCommand}"
                             Content="Добавить запись" />
 
@@ -475,48 +479,55 @@
                                HorizontalAlignment="Center"
                                Text="Замедленное мышление" />
 
-                    <ComboBox x:Name="combobox1"
+                    <ComboBox x:Name="selectedUIDInSubjectiveFeeling"
                               Grid.Row="1"
                               Grid.Column="0"
                               Width="80"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
-                              ItemsSource="{Binding Codes}"
+                              ItemsSource="{Binding Source={StaticResource GetCodes}}"
                               SelectedIndex="{Binding SelectedCodeIndex}" />
                     <DatePicker Grid.Row="1"
                                 Grid.Column="2"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
+                                x:Name="selectedDateInSubjectiveFeeling"
                                 SelectedDate="{Binding FealingsDate}" />
                     <CheckBox Grid.Row="1"
                               Grid.Column="4"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
+                              x:Name="selectedGeneralWeakness"
                               IsChecked="{Binding GeneralWeaknes}" />
                     <CheckBox Grid.Row="1"
                               Grid.Column="6"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
+                              x:Name="selectedBadAppetite"
                               IsChecked="{Binding PoorAppetite}" />
                     <CheckBox Grid.Row="1"
                               Grid.Column="8"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
+                              x:Name="selectedBadDream"
                               IsChecked="{Binding PoorSleep}" />
                     <CheckBox Grid.Row="1"
                               Grid.Column="10"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
+                              x:Name="selectedBadMood"
                               IsChecked="{Binding BadMood}" />
                     <CheckBox Grid.Row="1"
                               Grid.Column="12"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
+                              x:Name="selectedHeavyHead"
                               IsChecked="{Binding HeavyHead}" />
                     <CheckBox Grid.Row="1"
                               Grid.Column="14"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
+                              x:Name="selectedSlowThink"
                               IsChecked="{Binding SlowThink}" />
 
                 </Grid>
@@ -583,47 +594,47 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}" FontSize="14"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
-                    <!-- BioColor I START -->    
+                    <!-- BioColor I START -->
                     <!-- BioColor I (Three) -->
-                        <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
+                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ListView ItemsSource="{Binding ShortOder1, Converter={StaticResource StringToListConverter}}">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                        <ListView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal"></StackPanel>
-                                            </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
-                                    </ListView>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <!-- BioColor I (ThreeColor) -->
-                        <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding ShortOder1, Converter={StaticResource StringToListConverter}}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"></StackPanel>
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                </ListView>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!-- BioColor I (ThreeColor) -->
+                    <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIThree}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ListView ItemsSource="{Binding Oder1, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                        <ListView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal"></StackPanel>
-                                            </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
-                                    </ListView>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListView ItemsSource="{Binding Oder1, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <StackPanel Orientation="Horizontal"></StackPanel>
+                                        </ItemsPanelTemplate>
+                                    </ListView.ItemsPanel>
+                                </ListView>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <!-- BioColor I (TwelveColor) -->
                     <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                              Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -649,11 +660,11 @@
                     <!-- Preference1 -->
                     <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
                                         Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding Preference1, Converter={StaticResource PreferenceToBrushConverter}}" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Background" Value="{Binding Preference1, Converter={StaticResource PreferenceToBrushConverter}}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
                     <!-- BioColor I END -->
 
@@ -752,48 +763,13 @@
                     <!-- BioColor II END -->
 
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn 
-                        ClipboardContentBinding="{x:Null}"
-                        Header="23"
-                        Binding="{Binding Date, Converter={StaticResource DateToSin}, ConverterParameter=23}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style>
-                                <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
-                                <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-                                <Setter Property="TextBlock.FontSize" Value="20" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn 
-                        ClipboardContentBinding="{x:Null}"
-                        Header="28"
-                        Binding="{Binding Date, Converter={StaticResource DateToSin}, ConverterParameter=28}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style>
-                                <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
-                                <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-                                <Setter Property="TextBlock.FontSize" Value="20" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn 
-                        ClipboardContentBinding="{x:Null}"
-                        Header="33"
-                        Binding="{Binding Date, Converter={StaticResource DateToSin}, ConverterParameter=33}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style>
-                                <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
-                                <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-                                <Setter Property="TextBlock.FontSize" Value="20" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
                     <DataGridTextColumn Header="Compare" Binding="{Binding Compare, Converter={StaticResource BooleanToChecker}}" ClipboardContentBinding="{x:Null}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
                                 <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
                                 <Setter Property="TextBlock.FontSize" Value="20" />
+
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>

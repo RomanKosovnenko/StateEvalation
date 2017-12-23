@@ -39,7 +39,46 @@ namespace StateEvaluation
             comboBox.ItemsSource = PersonCodes;
             BioColor.Main.InitBioColor(BioColorGraph, Date, DateNow);
         }
+        private void AddFeelingPeople(object sender, RoutedEventArgs e)
+        {
+            bool gWeakness   = selectedGeneralWeakness.IsChecked.Value;
+            bool bAppetite   = selectedBadAppetite.IsChecked.Value;
+            bool bDream      = selectedBadDream.IsChecked.Value;
+            bool bMood       = selectedBadMood.IsChecked.Value;
+            bool hHead       = selectedHeavyHead.IsChecked.Value;
+            bool sThink      = selectedSlowThink.IsChecked.Value;
+            string insertUID = selectedUIDInSubjectiveFeeling.SelectedItem?.ToString();
+            DateTime insertDate = selectedDateInSubjectiveFeeling.SelectedDate.GetValueOrDefault();
 
+            MessageBox.Show(insertUID);
+             
+            People person = _preferenceDb.GetPerson(insertUID);
+            SubjectiveFeeling subjectiveFeeling = new SubjectiveFeeling()
+            {
+                Id = Guid.NewGuid(),
+                Date = insertDate,
+                GeneralWeaknes = gWeakness,
+                PoorAppetite = bAppetite,
+                PoorSleep = bDream,
+                BadMood = bMood,
+                HeavyHead = hHead,
+                SlowThink = sThink,
+                UserId = insertUID,
+                People = person
+            };
+            _preferenceDb.SubjectiveFeeling.InsertOnSubmit(subjectiveFeeling);
+            _preferenceDb.SubmitChanges();
+            SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
+
+            selectedGeneralWeakness.IsChecked = false;
+            selectedBadAppetite.IsChecked = false;
+            selectedBadDream.IsChecked = false;
+            selectedBadMood.IsChecked = false;
+            selectedHeavyHead.IsChecked = false;
+            selectedSlowThink.IsChecked = false;
+            selectedUIDInSubjectiveFeeling.SelectedIndex = -1;
+            selectedDateInSubjectiveFeeling.Text = "";
+        }
         private void AddPersonBtn_Click(object sender, RoutedEventArgs e)
         {
             if (
@@ -65,6 +104,7 @@ namespace StateEvaluation
                 Birthday = (PersonAddFormGrid.FindName("BirthdayDatePicker") as DatePicker).Text
             };
             person.UserId = $"EX{person.Expedition}#{person.Number}";
+            //MessageBox.Show(person.UserId.GetType().ToString());
             PreferenceDB _preferenceDb = new PreferenceDB();
             _preferenceDb.People.InsertOnSubmit(person);
             _preferenceDb.SubmitChanges();
@@ -479,6 +519,12 @@ namespace StateEvaluation
                        (item.SlowThink == sThink || aFeelings) 
                 );
         }
+        /* private IEnumerable<string> ExeptValue()
+         {
+             string ShortColorsNumbersList1_Bio1 = ShortColorsNumbersList1_Biocolor1.SelectedItem?.ToString();
+             MessageBox.Show(ShortColorsNumbersList1_Bio1);
+             return "";   
+         }*/
     }
 }
     
