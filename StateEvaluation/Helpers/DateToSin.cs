@@ -9,6 +9,14 @@ namespace StateEvaluation.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+            {
+                return "-//-";
+            }
+            if (value == null || parameter == null)
+            {
+                return "-//-";
+            }
             //    DateTime nw = DateTime.Today;
             string userid = value.ToString().Trim();
 

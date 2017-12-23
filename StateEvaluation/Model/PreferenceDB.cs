@@ -87,7 +87,7 @@ namespace StateEvaluation.Model
         }
         public IEnumerable<string> ShortColorsNumbersList()
         {
-            string[] list = { "3", "7","11" };
+            string[] list = { "3", "7", "11" };
             return list;
         }
         public IEnumerable<string> ShortColorsNumbersList(string x1, string x2)

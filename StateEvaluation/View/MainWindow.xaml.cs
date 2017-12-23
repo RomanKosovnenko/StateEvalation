@@ -29,6 +29,8 @@ namespace StateEvaluation
     /// </summary>
     public partial class MainWindow : Window
     {
+        
+
         public static Dictionary<string, string> people;
         private PreferenceDB _preferenceDb = new PreferenceDB();
         public List<string> PersonCodes = new List<string>();
