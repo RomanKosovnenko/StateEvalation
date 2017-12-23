@@ -29,6 +29,7 @@ namespace StateEvaluation
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static Dictionary<string, string> people;
         private PreferenceDB _preferenceDb = new PreferenceDB();
         public List<string> PersonCodes = new List<string>();
         public MainWindow()
@@ -367,6 +368,10 @@ namespace StateEvaluation
 
         private void WindowRendered(object sender, EventArgs e)
         {
+            people = _preferenceDb
+                .GetAllPeople()
+                .Select(item => new { UserId = item.UserId.ToString().Trim(), item.Birthday })
+                .ToDictionary(i => i.UserId, i => i.Birthday);
             ClearFilters();
         }
 

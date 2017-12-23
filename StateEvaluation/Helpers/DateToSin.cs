@@ -10,13 +10,19 @@ namespace StateEvaluation.Helpers
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             //    DateTime nw = DateTime.Today;
-            if (value == null)
+            string userid = value.ToString().Trim();
+
+
+            MainWindow.people.TryGetValue(userid, out string birthday);
+
+            if (birthday == null || birthday.Trim().Length == 0)
             {
-                return "--";
+                return "---";
             }
 
+//            MessageBox.Show(userid + " (" + birthday + ")");
             DateTime nw = DateTime.Now;
-            DateTime dt = (DateTime) value;
+            DateTime dt = System.Convert.ToDateTime(birthday);
             double Delta = (int)((nw.Subtract(dt)).TotalDays);
 
             int.TryParse(parameter.ToString(), out int DAYS);
