@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StateEvaluation.Model
 {
@@ -28,7 +24,9 @@ namespace StateEvaluation.Model
         [Column]
         public bool SlowThink { get; set; }
 
-        [Column(Name = "UserID")] public string UserId { get; set; }
+        [Column(Name = "UserID")]
+        public string UserId { get; set; }
+
         private EntityRef<People> _people = new EntityRef<People>();
         [Association(Name = "FK_SubjectiveFeelings_People", IsForeignKey = true, Storage = "_people", ThisKey = "UserId")]
         public People People
