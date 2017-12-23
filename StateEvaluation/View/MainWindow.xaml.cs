@@ -66,9 +66,10 @@ namespace StateEvaluation
                 UserId = insertUID,
                 People = person
             };
-            _preferenceDb.SubjectiveFeeling.InsertOnSubmit(subjectiveFeeling);
-            _preferenceDb.SubmitChanges();
-            SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
+            PreferenceDB _preferenceDbNew = new PreferenceDB();
+            _preferenceDbNew.SubjectiveFeeling.InsertOnSubmit(subjectiveFeeling);
+            _preferenceDbNew.SubmitChanges();
+            SubjectiveFeelDataGrid.ItemsSource = _preferenceDbNew.GetAllSubjecriveFeelings();
 
             selectedGeneralWeakness.IsChecked = false;
             selectedBadAppetite.IsChecked = false;

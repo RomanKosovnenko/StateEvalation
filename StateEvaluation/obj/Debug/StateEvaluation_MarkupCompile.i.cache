@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Andriy2\StateEvalation\StateEvaluation\obj\Debug\
+C:\Users\Віталій\Documents\GitHub\StateEvalation\StateEvaluation\obj\Debug\
 StateEvaluation
 none
 false
 DEBUG;TRACE
-C:\Users\Andriy2\StateEvalation\StateEvaluation\App.xaml
+C:\Users\Віталій\Documents\GitHub\StateEvalation\StateEvaluation\App.xaml
 91624384576
 12-939500239
-48-359412839
-23-1205949662
+48-1900396996
+23-2097072839
 BioColor\Colors.xaml;BioColor\SettingsEdit.xaml;View\FeelingsChart.xaml;View\IndividualChart.xaml;View\MainWindow.xaml;View\PeopleDataGrid.xaml;View\PreferenceDataGrid.xaml;View\SubjectiveFeelingsTestsDataGrid.xaml;View\TestsChart.xaml;
 
-False
+True
 
