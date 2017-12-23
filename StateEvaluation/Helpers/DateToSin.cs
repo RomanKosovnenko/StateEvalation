@@ -23,7 +23,7 @@ namespace StateEvaluation.Helpers
 
             double sta = -Math.Sin((0.0 + Delta / DAYS * 360) / 180 * Math.PI);
             double now = -Math.Sin((0.1 + Delta / DAYS * 360) / 180 * Math.PI);
-            return now > sta ? "↗":"↘";
+            return String.Format("{0} ({1})", now > sta ? "↗" : "↘", (int)Delta % DAYS);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
