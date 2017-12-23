@@ -767,7 +767,7 @@
                     <DataGridTextColumn 
                         ClipboardContentBinding="{x:Null}"
                         Header="23"
-                        Binding="{Binding Date, Converter={StaticResource DateToSin}, ConverterParameter=23}">
+                        Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=23}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
@@ -779,7 +779,7 @@
                     <DataGridTextColumn 
                         ClipboardContentBinding="{x:Null}"
                         Header="28"
-                        Binding="{Binding Date, Converter={StaticResource DateToSin}, ConverterParameter=28}">
+                        Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=28}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
@@ -791,7 +791,7 @@
                     <DataGridTextColumn 
                         ClipboardContentBinding="{x:Null}"
                         Header="33"
-                        Binding="{Binding Date, Converter={StaticResource DateToSin}, ConverterParameter=33}">
+                        Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=33}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
