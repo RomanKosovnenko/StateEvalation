@@ -15,6 +15,23 @@ namespace StateEvaluation.Helpers
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             string input = value?.ToString()?.Trim();
+            if (parameter != null)
+            {
+                switch (input)
+                {
+                    case "Красная":
+                        return Brushes.White;
+                    case "Синяя":
+                        return Brushes.White;
+                    case "Желтая":
+                        return Brushes.Black;
+                    case "Смешанная":
+                        return Brushes.Black;
+
+                    default:
+                        return Brushes.Black; //DependencyProperty.UnsetValue;
+                }
+            }
             switch (input)
             {
                 case "Красная":
