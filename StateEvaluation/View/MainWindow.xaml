@@ -16,7 +16,8 @@
         <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllPeople"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllTests"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllSubjecriveFeelings"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="Codes"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetCodesForInsert" ObjectType="{x:Type model:PreferenceDB}" MethodName="CodesForInsert"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type model:PreferenceDB}" MethodName="CodesForFilter"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Preferences"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="PeopleCodes"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="ExpeditionCodes"></ObjectDataProvider>
@@ -224,12 +225,13 @@
                                HorizontalAlignment="Center"
                                Text="Смешанная" />
 
-                    <ComboBox x:Name="comboBox"
+                    <ComboBox x:Name="selectedUIDInTests"
                               Grid.Row="2"
                               Grid.Column="0"
                               Width="80"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
+                              ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
                               SelectedIndex="{Binding SelectedCodeIndex}" />
                     <DatePicker Grid.Row="2"
                                 Grid.Column="2"
@@ -486,7 +488,7 @@
                               Width="80"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
-                              ItemsSource="{Binding Source={StaticResource GetCodes}}"
+                               ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
                               SelectedIndex="{Binding SelectedCodeIndex}" />
                     <DatePicker Grid.Row="1"
                                 Grid.Column="2"
@@ -498,37 +500,37 @@
                               Grid.Column="4"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
-                              x:Name="selectedGeneralWeakness"
+                              x:Name="markGeneralWeakness"
                               IsChecked="{Binding GeneralWeaknes}" />
                     <CheckBox Grid.Row="1"
                               Grid.Column="6"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
-                              x:Name="selectedBadAppetite"
+                              x:Name="markBadAppetite"
                               IsChecked="{Binding PoorAppetite}" />
                     <CheckBox Grid.Row="1"
                               Grid.Column="8"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
-                              x:Name="selectedBadDream"
+                              x:Name="markBadDream"
                               IsChecked="{Binding PoorSleep}" />
                     <CheckBox Grid.Row="1"
                               Grid.Column="10"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
-                              x:Name="selectedBadMood"
+                              x:Name="markBadMood"
                               IsChecked="{Binding BadMood}" />
                     <CheckBox Grid.Row="1"
                               Grid.Column="12"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
-                              x:Name="selectedHeavyHead"
+                              x:Name="markHeavyHead"
                               IsChecked="{Binding HeavyHead}" />
                     <CheckBox Grid.Row="1"
                               Grid.Column="14"
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
-                              x:Name="selectedSlowThink"
+                              x:Name="markSlowThink"
                               IsChecked="{Binding SlowThink}" />
 
                 </Grid>
@@ -903,7 +905,7 @@
                     <ComboBox
                         x:Name="UID"
                         Grid.Column="1"
-                        ItemsSource="{Binding Source={StaticResource GetCodes}}"
+                        ItemsSource="{Binding Source={StaticResource GetCodesForFilter}}"
                         SelectedValue="{Binding FilterCodeSelected}" Margin="5"/>
                 </Grid>
                 <Grid Grid.Row="2" Margin="5">
@@ -1336,10 +1338,15 @@
                         Click="FilterUIDs"
                         Content="Применить фильтр" Padding="0" />
                     <Button Grid.Row="1"
-                            Click="ButtonBase_OnClick"
+                            Click="BildChartOnPreference1"
                             Margin="2"
                             Command="{Binding RemoveFiltersCommand}"
-                            Content="Chart" Padding="0" Grid.ColumnSpan="2" />
+                            Content="Диаграма преф.1" Padding="0" />
+                    <Button Grid.Row="1"
+                        Click="BildChartOnPreference2"
+                        Margin="2"
+                        Command="{Binding RemoveFiltersCommand}"
+                        Content="Диаграма преф.2" Padding="0" Grid.Column="1" />
                     <!--<Button Grid.Row="2"
                         Click="AddData_OnClick"
                         Margin="2"
