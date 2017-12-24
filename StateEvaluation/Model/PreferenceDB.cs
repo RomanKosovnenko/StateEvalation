@@ -90,6 +90,11 @@ namespace StateEvaluation.Model
             string[] list = { "3", "7", "11" };
             return list;
         }
+        public IEnumerable<string> ColorsNumbersList()
+        {
+            string[] list = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
+            return list;
+        }
         public IEnumerable<string> ShortColorsNumbersList(string x1, string x2)
         {
             string[] list = {x1, x2};

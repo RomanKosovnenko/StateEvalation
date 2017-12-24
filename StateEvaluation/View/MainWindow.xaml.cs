@@ -29,8 +29,6 @@ namespace StateEvaluation
     /// </summary>
     public partial class MainWindow : Window
     {
-        
-
         public static Dictionary<string, string> people;
         private PreferenceDB _preferenceDb = new PreferenceDB();
         public List<string> PersonCodes = new List<string>();
@@ -82,6 +80,52 @@ namespace StateEvaluation
             selectedSlowThink.IsChecked = false;
             selectedUIDInSubjectiveFeeling.SelectedIndex = -1;
             selectedDateInSubjectiveFeeling.Text = "";
+        }
+
+        private void SaveTestCommand(object sender, RoutedEventArgs e)
+        {
+            var Cin3s = new List<string> { C1in3, C2in3, C3in3 };
+            var C2in3s = new List<string> { C21in3, C22in3, C23in3 };
+            var Cin12s = new List<string> { C1in12, C2in12, C3in12, C4in12, C5in12, C6in12, C7in12, C8in12, C9in12, C10in12, C11in12, C12in12 };
+            var C2in12s = new List<string> { C21in12, C22in12, C23in12, C24in12, C25in12, C26in12, C27in12, C28in12, C29in12, C210in12, C211in12, C212in12 };
+            var Pref1 = new List<RadioButton> { RedStat, YellowStat, BlueStat, GrayStat };
+            var Pref2 = new List<RadioButton> { Red2Stat, Yellow2Stat, Blue2Stat, Gray2Stat };
+            var Prefs = new List<string> { "Красная", "Желтая", "Синяя", "Смешанная" };
+
+            var inputs = new List<string> { SelectedCode };
+
+            if (new List<List<string>> { inputs, Cin3s, C2in3s, Cin12s, C2in12s }.Any(x => x.Any(y => y == null) || x.Count != x.Distinct().Count())
+                || new List<List<RadioButton>> { Pref1, Pref2 }.Any(x => x.All(y => y.IsChecked != true))
+                || TestDate == null)
+            {
+                MessageBox.Show("Not all fields is filled!");
+            }
+            else
+            {
+                MessageBox.Show(SelectedCode);
+
+                Preference preference = new Preference()
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = SelectedCode,
+                    Date = (DateTime)TestDate,
+                    FavoriteColor = 0,
+                    ShortOder1 = String.Join(",", Cin3s),
+                    Oder1 = String.Join(",", Cin12s),
+                    Preference1 = Prefs[Pref1.Select(x => x.IsChecked).ToList().IndexOf(true)],
+                    ShortOder2 = String.Join(",", C2in3s),
+                    Oder2 = String.Join(",", C2in12s),
+                    Preference2 = Prefs[Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)],
+                    Compare = (Pref1.Select(x => x.IsChecked).ToList().IndexOf(true) == Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)).ToString().ToLower(),
+                    RelaxTable1 = CRelax1,
+                    RelaxTable2 = CRelax2
+                };
+                PreferenceDB _preferenceDbNew = new PreferenceDB();
+                _preferenceDbNew.Preference.InsertOnSubmit(preference);
+                _preferenceDbNew.SubmitChanges();
+                TestsDataGrid.ItemsSource = _preferenceDbNew.GetAllTests();
+                ClearInputs();
+            }
         }
         private void AddPersonBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -404,6 +448,51 @@ namespace StateEvaluation
                 return re;
             }
         }
+        private void ClearInputs()
+        {
+            comboBox.SelectedIndex = -1;
+            dateTimeForTest.Text = "";
+            selectorC1in3    .SelectedIndex = -1 ;
+            selectorC2in3    .SelectedIndex = -1 ;
+            selectorC3in3    .SelectedIndex = -1 ;
+            selectorC21in3   .SelectedIndex = -1 ;
+            selectorC22in3   .SelectedIndex = -1 ;
+            selectorC23in3   .SelectedIndex = -1 ;
+            selectorC1in12   .SelectedIndex = -1 ;
+            selectorC2in12   .SelectedIndex = -1 ;
+            selectorC3in12   .SelectedIndex = -1 ;
+            selectorC4in12   .SelectedIndex = -1 ;
+            selectorC5in12   .SelectedIndex = -1 ;
+            selectorC6in12   .SelectedIndex = -1 ;
+            selectorC7in12   .SelectedIndex = -1 ;
+            selectorC8in12   .SelectedIndex = -1 ;
+            selectorC9in12   .SelectedIndex = -1 ;
+            selectorC10in12  .SelectedIndex = -1 ;
+            selectorC11in12  .SelectedIndex = -1 ;
+            selectorC12in12  .SelectedIndex = -1 ;
+            selectorC21in12  .SelectedIndex = -1 ;
+            selectorC22in12  .SelectedIndex = -1 ;
+            selectorC23in12  .SelectedIndex = -1 ;
+            selectorC24in12  .SelectedIndex = -1 ;
+            selectorC25in12  .SelectedIndex = -1 ;
+            selectorC26in12  .SelectedIndex = -1 ;
+            selectorC27in12  .SelectedIndex = -1 ;
+            selectorC28in12  .SelectedIndex = -1 ;
+            selectorC29in12  .SelectedIndex = -1 ;
+            selectorC210in12 .SelectedIndex = -1 ;
+            selectorC211in12 .SelectedIndex = -1 ;
+            selectorC212in12 .SelectedIndex = -1 ;
+            selectorRelax1   .SelectedIndex = -1 ;
+            selectorRelax2   .SelectedIndex = -1 ;
+            RedStat     .IsChecked = false;
+            YellowStat  .IsChecked = false;
+            BlueStat    .IsChecked = false;
+            GrayStat    .IsChecked = false;
+            Red2Stat    .IsChecked = false;
+            Yellow2Stat .IsChecked = false;
+            Blue2Stat   .IsChecked = false;
+            Gray2Stat   .IsChecked = false;
+        }
         private void ClearFilters()
         {
             Pref.SelectedIndex = 0;
@@ -426,6 +515,11 @@ namespace StateEvaluation
             PreferenceFilter10.Text = "";
             PreferenceFilter11.Text = "";
             PreferenceFilter12.Text = "";
+        }
+
+        private void ClearTestAdds(object sender, RoutedEventArgs e)
+        {
+            ClearInputs();
         }
         private void ClearUIDs(object sender, RoutedEventArgs e)
         {
@@ -527,12 +621,54 @@ namespace StateEvaluation
                        (item.SlowThink == sThink || aFeelings) 
                 );
         }
+
+        public string SelectedCode { get; set; }
+        public DateTime? TestDate { get; set; }
+
+        public string C1in3 { get; set; }
+        public string C2in3 { get; set; }
+        public string C3in3 { get; set; }
+
+        public string C21in3 { get; set; }
+        public string C22in3 { get; set; }
+        public string C23in3 { get; set; }
+
+        public string C1in12 { get; set; }
+        public string C2in12 { get; set; }
+        public string C3in12 { get; set; }
+        public string C4in12 { get; set; }
+        public string C5in12 { get; set; }
+        public string C6in12 { get; set; }
+        public string C7in12 { get; set; }
+        public string C8in12 { get; set; }
+        public string C9in12 { get; set; }
+        public string C10in12 { get; set; }
+        public string C11in12 { get; set; }
+        public string C12in12 { get; set; }
+
+        public string C21in12 { get; set; }
+        public string C22in12 { get; set; }
+        public string C23in12 { get; set; }
+        public string C24in12 { get; set; }
+        public string C25in12 { get; set; }
+        public string C26in12 { get; set; }
+        public string C27in12 { get; set; }
+        public string C28in12 { get; set; }
+        public string C29in12 { get; set; }
+        public string C210in12 { get; set; }
+        public string C211in12 { get; set; }
+        public string C212in12 { get; set; }
+
+        public int? CRelax1 { get; set; }
+        public int? CRelax2 { get; set; }
+
+
         /* private IEnumerable<string> ExeptValue()
-         {
-             string ShortColorsNumbersList1_Bio1 = ShortColorsNumbersList1_Biocolor1.SelectedItem?.ToString();
-             MessageBox.Show(ShortColorsNumbersList1_Bio1);
-             return "";   
-         }*/
+{
+    string ShortColorsNumbersList1_Bio1 = ShortColorsNumbersList1_Biocolor1.SelectedItem?.ToString();
+    MessageBox.Show(ShortColorsNumbersList1_Bio1);
+    return "";   
+}*/
     }
 }
     
