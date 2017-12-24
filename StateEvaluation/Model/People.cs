@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StateEvaluation.Model
 {
@@ -31,6 +27,14 @@ namespace StateEvaluation.Model
         internal object Substring(int v1, int v2)
         {
             throw new NotImplementedException();
+        }
+
+        private EntitySet<SubjectiveFeeling> _subjectiveFeelings = new EntitySet<SubjectiveFeeling>();
+        [Association(Storage = "_subjectiveFeelings", OtherKey = "UserId")]
+        public EntitySet<SubjectiveFeeling> SubjectiveFeelings
+        {
+            get { return this._subjectiveFeelings; }
+            set { this._subjectiveFeelings.Assign(value); }
         }
     }
 }

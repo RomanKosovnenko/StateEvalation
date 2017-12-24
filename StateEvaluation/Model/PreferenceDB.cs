@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
+using System.Data.SqlClient;
 using System.Linq;
+using System.Windows;
 
 namespace StateEvaluation.Model
 {
@@ -28,20 +30,34 @@ namespace StateEvaluation.Model
         public People GetPerson(string tempUID)
         {
             var items = this.People.Select(item => item).Where(item => item.UserId == tempUID);
-            People person = new People()
-            {
-                Id = items.First().Id,
-                Firstname = items.First().Firstname,
-                Lastname = items.First().Lastname,
-                Number = items.First().Number,
-                UserId = items.First().UserId,
-                Workposition = items.First().Workposition,
-                Expedition = items.First().Expedition,
-                Birthday = items.First().Birthday
-            };
+            People person = new People();
+            person = items.Single();
             return person;
         }
-
+        public void InsertEntityInSubjectiveFeeling(SubjectiveFeeling sf)
+        {
+            try
+            {
+                SubjectiveFeeling.InsertOnSubmit(sf);
+                SubmitChanges();
+            }
+            catch (SqlException)
+            {
+                MessageBox.Show("Error!Try edit fields in form with less date!");
+            }
+        }
+        public void InsertEntityInPeople(People person)
+        {
+            try
+            {
+                People.InsertOnSubmit(person);
+                SubmitChanges();
+            }
+            catch(SqlException)
+            {
+                MessageBox.Show("Error!Try edit fields in form with less date!");
+            }
+        }
         public IEnumerable<Preference> GetAllTests()
         { //.Where(item => item.UserId.StartsWith("Ex20"))
             var items = this.Preference.Select(item => item).OrderByDescending(item => item.Date);
@@ -53,11 +69,16 @@ namespace StateEvaluation.Model
             var items = this.SubjectiveFeeling.Select(item => item).OrderBy(item => item.Date);
             return items;
         }
-        public IEnumerable<string> Codes()
+        public IEnumerable<string> CodesForFilter()
         {
-            var items = this.Preference.Select(item => item.UserId).Distinct().OrderByDescending(item => item);
-            var list = items.ToList();
+            var list = CodesForInsert().ToList();
             list.Insert(0, "All");
+            return list;
+        }
+        public IEnumerable<string> CodesForInsert()
+        {
+            var items = this.People.Select(item => item.UserId).Distinct().OrderByDescending(item => item);
+            var list = items.ToList();
             return list;
         }
         public IEnumerable<string> Preferences()
@@ -70,16 +91,17 @@ namespace StateEvaluation.Model
         public IEnumerable<string> ExpeditionCodes()
         {
             var regex = new System.Text.RegularExpressions.Regex(@"Ex([0-9]+)#([0-9]+)");
-            var items = this.Preference.Select(item => item.UserId).Distinct().OrderByDescending(item => item).Select(x => regex.Match(x.ToString()).Groups[1].Value);
+            var items = this.People.Select(item => item.UserId).Distinct().OrderByDescending(item => item).Select(x => regex.Match(x.ToString()).Groups[1].Value);
             var list = items.ToList().Distinct().ToList();
 
             list.Insert(0, "All");
             return list;
         }
+        
         public IEnumerable<string> PeopleCodes()
         {
             var regex = new System.Text.RegularExpressions.Regex(@"Ex([0-9]+)#([0-9]+)");
-            var items = this.Preference.Select(item => item.UserId).OrderByDescending(item => item).Select(x => regex.Match(x.ToString()).Groups[2].Value);
+            var items = this.People.Select(item => item.UserId).OrderByDescending(item => item).Select(x => regex.Match(x.ToString()).Groups[2].Value);
             var list = items.ToList().Distinct().ToList();
 
             list.Insert(0, "All");

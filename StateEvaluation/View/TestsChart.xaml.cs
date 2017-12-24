@@ -20,13 +20,14 @@ namespace StateEvaluation.View
     {
 
 
-        public TestsChart(List<Preference> Tests)
+        public TestsChart(List<Preference> Tests, bool isPreference1)
         {
             InitializeComponent();
 
-            Sales = new SalesViewModel(Tests);
+            Sales = new SalesViewModel(Tests, isPreference1);
             DataContext = this;
             YFormatter = x => x + "";
+            this.Title = isPreference1 ? "Диаграма преференций 1" : "Диаграма преференций 2";
             this.Show();
         }
 
@@ -71,7 +72,7 @@ namespace StateEvaluation.View
         public List<string> AvailableMonthsList = new List<string>();
         public string[] AvailableMonths { get; set; }
 
-        public SalesViewModel(List<Preference> Tests)
+        public SalesViewModel(List<Preference> Tests, bool isPreference1)
         {
             //AvailableMonths = _months1;
             foreach (var item in Tests)
@@ -123,7 +124,8 @@ namespace StateEvaluation.View
 
                     if (_months1[item.Date.Month - 1] + " " + item.Date.Year.ToString() == month)
                     {
-                        switch (item.Preference1.TrimEnd((' ')))
+                        string itemPreference = isPreference1 ? item.Preference1 : itemPreference = item.Preference2;
+                        switch (itemPreference.TrimEnd((' ')))
                         {
                             case "Синяя":
                                 if (SalesmenSeries[0].Values.Count == i)

@@ -1,23 +1,14 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Excel;
+using StateEvaluation.Model;
+using StateEvaluation.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Microsoft.Office.Interop.Excel;
-using StateEvaluation.Model;
-using StateEvaluation.View;
-using StateEvaluation.ViewModel;
 using Button = System.Windows.Controls.Button;
 using TextBox = System.Windows.Controls.TextBox;
 using Window = System.Windows.Window;
@@ -36,52 +27,62 @@ namespace StateEvaluation
         {
             InitializeComponent();
             this.DataContext = this;
-            PersonCodes = _preferenceDb.People.Select(s => s.UserId).ToList();
-            comboBox.ItemsSource = PersonCodes;
             BioColor.Main.InitBioColor(BioColorGraph, Date, DateNow);
         }
+
         private void AddFeelingPeople(object sender, RoutedEventArgs e)
         {
-            bool gWeakness   = selectedGeneralWeakness.IsChecked.Value;
-            bool bAppetite   = selectedBadAppetite.IsChecked.Value;
-            bool bDream      = selectedBadDream.IsChecked.Value;
-            bool bMood       = selectedBadMood.IsChecked.Value;
-            bool hHead       = selectedHeavyHead.IsChecked.Value;
-            bool sThink      = selectedSlowThink.IsChecked.Value;
-            string insertUID = selectedUIDInSubjectiveFeeling.SelectedItem?.ToString();
-            DateTime insertDate = selectedDateInSubjectiveFeeling.SelectedDate.GetValueOrDefault();
+            if (!DateTime.TryParse((PersonAddFormGrid.FindName("selectedDateInSubjectiveFeeling") as DatePicker).Text, out DateTime obj1)||
+                string.IsNullOrEmpty((PersonAddFormGrid.FindName("selectedUIDInSubjectiveFeeling") as ComboBox).Text))
+            {
+                MessageBox.Show("Error! Try edit fields in form!");
+                return;
+            }
+            SubjectiveFeeling sf = GetNewSubjectiveFeeling();
+            _preferenceDb.InsertEntityInSubjectiveFeeling(sf);
+            RefreshSubjectiveFeelDataGrid();
+            ClearSelected();
+            RefreshUIDInTabs();
+        }
+        private void RefreshSubjectiveFeelDataGrid()
+        {
+            SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
+        }
+        /// <summary>
+        /// Получение из интерфейса новых данных для субъективных ощущений
+        /// </summary>
+        /// <returns> Заданные пользователем субъективные ощущения </returns>
+        private SubjectiveFeeling GetNewSubjectiveFeeling()
+        {
+            string userId = selectedUIDInSubjectiveFeeling.SelectedItem?.ToString();
 
-            MessageBox.Show(insertUID);
-             
-            People person = _preferenceDb.GetPerson(insertUID);
             SubjectiveFeeling subjectiveFeeling = new SubjectiveFeeling()
             {
                 Id = Guid.NewGuid(),
-                Date = insertDate,
-                GeneralWeaknes = gWeakness,
-                PoorAppetite = bAppetite,
-                PoorSleep = bDream,
-                BadMood = bMood,
-                HeavyHead = hHead,
-                SlowThink = sThink,
-                UserId = insertUID,
-                People = person
+                UserId = userId,
+                Date = selectedDateInSubjectiveFeeling.SelectedDate.GetValueOrDefault(),
+                GeneralWeaknes = markGeneralWeakness.IsChecked.Value,
+                PoorAppetite = markBadAppetite.IsChecked.Value,
+                PoorSleep = markBadDream.IsChecked.Value,
+                BadMood = markBadMood.IsChecked.Value,
+                HeavyHead = markHeavyHead.IsChecked.Value,
+                SlowThink = markSlowThink.IsChecked.Value
             };
-            PreferenceDB _preferenceDbNew = new PreferenceDB();
-            _preferenceDbNew.SubjectiveFeeling.InsertOnSubmit(subjectiveFeeling);
-            _preferenceDbNew.SubmitChanges();
-            SubjectiveFeelDataGrid.ItemsSource = _preferenceDbNew.GetAllSubjecriveFeelings();
-
-            selectedGeneralWeakness.IsChecked = false;
-            selectedBadAppetite.IsChecked = false;
-            selectedBadDream.IsChecked = false;
-            selectedBadMood.IsChecked = false;
-            selectedHeavyHead.IsChecked = false;
-            selectedSlowThink.IsChecked = false;
+            return subjectiveFeeling;
+        }
+        private void ClearSelected()
+        {
+            markGeneralWeakness.IsChecked = false;
+            markBadAppetite.IsChecked = false;
+            markBadDream.IsChecked = false;
+            markBadMood.IsChecked = false;
+            markHeavyHead.IsChecked = false;
+            markSlowThink.IsChecked = false;
             selectedUIDInSubjectiveFeeling.SelectedIndex = -1;
             selectedDateInSubjectiveFeeling.Text = "";
         }
 
+<<<<<<< HEAD
         private void SaveTestCommand(object sender, RoutedEventArgs e)
         {
             var Cin3s = new List<string> { C1in3, C2in3, C3in3 };
@@ -127,6 +128,8 @@ namespace StateEvaluation
                 ClearInputs();
             }
         }
+=======
+>>>>>>> 302a6431c3f0b1c07801c8f94dd7cd694ae8ab72
         private void AddPersonBtn_Click(object sender, RoutedEventArgs e)
         {
             if (
@@ -141,6 +144,33 @@ namespace StateEvaluation
                 MessageBox.Show("Error! Try edit fields in form!");
                 return;
             }
+            People person = GetNewPeople();
+            _preferenceDb.InsertEntityInPeople(person);
+            RefreshPersonDataGrid();
+            ClearSelectedInPeople();
+            RefreshUIDInTabs();
+        }
+        private void RefreshUIDInTabs()
+        {
+            UID.ItemsSource = _preferenceDb.CodesForFilter();
+            selectedUIDInSubjectiveFeeling.ItemsSource = _preferenceDb.CodesForInsert();
+            selectedUIDInTests.ItemsSource = _preferenceDb.CodesForInsert();
+        }
+        private void ClearSelectedInPeople()
+        {
+            (PersonAddFormGrid.FindName("FirstnameTextbox") as TextBox).Text = string.Empty;
+            (PersonAddFormGrid.FindName("LastnameTextbox") as TextBox).Text = string.Empty;
+            (PersonAddFormGrid.FindName("BirthdayDatePicker") as DatePicker).Text = string.Empty;
+            (PersonAddFormGrid.FindName("ProfessionTextbox") as TextBox).Text = string.Empty;
+            (PersonAddFormGrid.FindName("ExpeditionTextbox") as TextBox).Text = string.Empty;
+            (PersonAddFormGrid.FindName("NumberTextbox") as TextBox).Text = string.Empty;
+        }
+        private void RefreshPersonDataGrid()
+        {
+            PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
+        }
+        private People GetNewPeople()
+        {
             People person = new People()
             {
                 Firstname = (PersonAddFormGrid.FindName("FirstnameTextbox") as TextBox).Text,
@@ -152,19 +182,8 @@ namespace StateEvaluation
                 Birthday = (PersonAddFormGrid.FindName("BirthdayDatePicker") as DatePicker).Text
             };
             person.UserId = $"EX{person.Expedition}#{person.Number}";
-            //MessageBox.Show(person.UserId.GetType().ToString());
-            PreferenceDB _preferenceDb = new PreferenceDB();
-            _preferenceDb.People.InsertOnSubmit(person);
-            _preferenceDb.SubmitChanges();
-            PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
-            (PersonAddFormGrid.FindName("FirstnameTextbox") as TextBox).Text = string.Empty;
-            (PersonAddFormGrid.FindName("LastnameTextbox") as TextBox).Text = string.Empty;
-            (PersonAddFormGrid.FindName("BirthdayDatePicker") as DatePicker).Text = string.Empty;
-            (PersonAddFormGrid.FindName("ProfessionTextbox") as TextBox).Text = string.Empty;
-            (PersonAddFormGrid.FindName("ExpeditionTextbox") as TextBox).Text = string.Empty;
-            (PersonAddFormGrid.FindName("NumberTextbox") as TextBox).Text = string.Empty;
+            return person;
         }
-
         private void RemovePersonBtn_Click(object sender, RoutedEventArgs e)
         {
             PreferenceDB _preferenceDb = new PreferenceDB();
@@ -172,6 +191,7 @@ namespace StateEvaluation
             _preferenceDb.People.DeleteOnSubmit(person);
             _preferenceDb.SubmitChanges();
             PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
+            RefreshUIDInTabs();
         }
 
         private void RemovePreferenceBtn_Click(object sender, RoutedEventArgs e)
@@ -181,6 +201,7 @@ namespace StateEvaluation
             _preferenceDb.Preference.DeleteOnSubmit(pref);
             _preferenceDb.SubmitChanges();
             TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
+            RefreshUIDInTabs();
         }
 
         private void RemoveFeelingsBtn_Click(object sender, RoutedEventArgs e)
@@ -190,6 +211,7 @@ namespace StateEvaluation
             _preferenceDb.SubjectiveFeeling.DeleteOnSubmit(feelings);
             _preferenceDb.SubmitChanges();
             SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
+            RefreshUIDInTabs();
         }
 
         private void NumberTextbox_LostFocus(object sender, RoutedEventArgs e)
@@ -238,10 +260,15 @@ namespace StateEvaluation
             var subWindow = new IndividualChart(pref, _preferenceDb);
         }
 
-        private void ButtonBase_OnClick(object sender, RoutedEventArgs e)
+        private void BildChartOnPreference1(object sender, RoutedEventArgs e)
         {
             PreferenceDB _preferenceDb = new PreferenceDB();
-            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList());
+            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(),true);
+        }
+        private void BildChartOnPreference2(object sender, RoutedEventArgs e)
+        {
+            PreferenceDB _preferenceDb = new PreferenceDB();
+            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(),false);
         }
 
         private void AddData_OnClick(object sender, RoutedEventArgs e)
@@ -515,17 +542,30 @@ namespace StateEvaluation
             PreferenceFilter10.Text = "";
             PreferenceFilter11.Text = "";
             PreferenceFilter12.Text = "";
+
+            generalWeakness.IsChecked = false;
+            badAppetite.IsChecked = false;
+            badDream.IsChecked = false;
+            badMood.IsChecked = false;
+            heavyHead.IsChecked = false;
+            slowThink.IsChecked = false;
         }
 
+<<<<<<< HEAD
         private void ClearTestAdds(object sender, RoutedEventArgs e)
         {
             ClearInputs();
         }
+=======
+>>>>>>> 302a6431c3f0b1c07801c8f94dd7cd694ae8ab72
         private void ClearUIDs(object sender, RoutedEventArgs e)
         {
             TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
+            SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
+            PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
             ClearFilters();
         }
+
         private bool CompareOrder(string order, params string[] prefs)
         {
             var orders = order.Split(',');
@@ -541,12 +581,14 @@ namespace StateEvaluation
             }
             return comparer.All(x => x);
         }
+
         private void FilterUIDs(object sender, RoutedEventArgs e)
         {
             TestsDataGrid.ItemsSource = GetUIDs();
             PersonDataGrid.ItemsSource = GetPeople();
             SubjectiveFeelDataGrid.ItemsSource = GetSubjectiveFeel();
         }
+        
         private IEnumerable<Preference> GetUIDs()
         {
 
@@ -602,23 +644,22 @@ namespace StateEvaluation
 
             bool gWeakness = generalWeakness.IsChecked.Value;
             bool bAppetite = badAppetite.IsChecked.Value;
-            bool bDream = badDream.IsChecked.Value;
-            bool bMood = badMood.IsChecked.Value;
-            bool hHead = heavyHead.IsChecked.Value;
-            bool sThink = slowThink.IsChecked.Value;
-            bool aFeelings = true;//allFeelings.IsChecked.Value;
+            bool bDream    = badDream.IsChecked.Value;
+            bool bMood     = badMood.IsChecked.Value;
+            bool hHead     = heavyHead.IsChecked.Value;
+            bool sThink    = slowThink.IsChecked.Value;
 
             Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
 
             return _preferenceDb.GetAllSubjecriveFeelings()
                 .Where(item =>
-    /* UserID     */   (re.IsMatch(item.UserId))&&
-                       (item.GeneralWeaknes == gWeakness || aFeelings) &&
-                       (item.PoorAppetite == bAppetite || aFeelings) &&
-                       (item.PoorSleep == bDream || aFeelings) &&
-                       (item.BadMood == bMood || aFeelings) &&
-                       (item.HeavyHead == hHead || aFeelings) &&
-                       (item.SlowThink == sThink || aFeelings) 
+    /* UserID     */   (re.IsMatch(item.UserId)) &&
+                       (item.GeneralWeaknes == gWeakness) &&
+                       (item.PoorAppetite == bAppetite) &&
+                       (item.PoorSleep == bDream) &&
+                       (item.BadMood == bMood) &&
+                       (item.HeavyHead == hHead) &&
+                       (item.SlowThink == sThink)
                 );
         }
 
@@ -671,5 +712,5 @@ namespace StateEvaluation
 }*/
     }
 }
-    
+
 
