@@ -227,26 +227,16 @@
                                HorizontalAlignment="Center"
                                Text="Relax" />
 
-<<<<<<< HEAD
-                    <!-- Start -->
-                    <ComboBox x:Name="comboBox"
-=======
                     <ComboBox x:Name="selectedUIDInTests"
->>>>>>> 302a6431c3f0b1c07801c8f94dd7cd694ae8ab72
                               Grid.Row="2"
                               Grid.Column="0"
                               Width="80"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
-<<<<<<< HEAD
+                              ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
                               SelectedItem="{Binding SelectedCode}" />
                     <DatePicker x:Name="dateTimeForTest"
                                 Grid.Row="2"
-=======
-                              ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
-                              SelectedIndex="{Binding SelectedCodeIndex}" />
-                    <DatePicker Grid.Row="2"
->>>>>>> 302a6431c3f0b1c07801c8f94dd7cd694ae8ab72
                                 Grid.Column="2"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"

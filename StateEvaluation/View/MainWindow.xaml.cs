@@ -81,8 +81,7 @@ namespace StateEvaluation
             selectedUIDInSubjectiveFeeling.SelectedIndex = -1;
             selectedDateInSubjectiveFeeling.Text = "";
         }
-
-<<<<<<< HEAD
+        
         private void SaveTestCommand(object sender, RoutedEventArgs e)
         {
             var Cin3s = new List<string> { C1in3, C2in3, C3in3 };
@@ -128,8 +127,6 @@ namespace StateEvaluation
                 ClearInputs();
             }
         }
-=======
->>>>>>> 302a6431c3f0b1c07801c8f94dd7cd694ae8ab72
         private void AddPersonBtn_Click(object sender, RoutedEventArgs e)
         {
             if (
@@ -477,7 +474,7 @@ namespace StateEvaluation
         }
         private void ClearInputs()
         {
-            comboBox.SelectedIndex = -1;
+            selectedUIDInTests.SelectedIndex = -1;
             dateTimeForTest.Text = "";
             selectorC1in3    .SelectedIndex = -1 ;
             selectorC2in3    .SelectedIndex = -1 ;
@@ -550,14 +547,11 @@ namespace StateEvaluation
             heavyHead.IsChecked = false;
             slowThink.IsChecked = false;
         }
-
-<<<<<<< HEAD
+        
         private void ClearTestAdds(object sender, RoutedEventArgs e)
         {
             ClearInputs();
         }
-=======
->>>>>>> 302a6431c3f0b1c07801c8f94dd7cd694ae8ab72
         private void ClearUIDs(object sender, RoutedEventArgs e)
         {
             TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
