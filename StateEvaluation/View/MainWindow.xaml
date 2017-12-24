@@ -84,9 +84,9 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="5" />
-                        <ColumnDefinition Width="auto" MinWidth="171" />
-                        <ColumnDefinition Width="0" />
-                        <ColumnDefinition Width="auto" MinWidth="45" />
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="5" />
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="5" />
@@ -141,91 +141,91 @@
                     <TextBlock Grid.Row="1"
                                Grid.Column="0"
                                HorizontalAlignment="Center"
-                               Text="UID" Margin="30,0" Width="20" />
+                               Text="UID" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="2"
                                HorizontalAlignment="Center"
-                               Text="Дата" Margin="30,0,124,0" Width="28" />
+                               Text="Дата" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="4"
                                HorizontalAlignment="Center"
-                               Text="1" Margin="20,0,19,0" Width="6" />
+                               Text="1" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="6"
                                HorizontalAlignment="Center"
-                               Text="2" Margin="17,0" Width="6" />
+                               Text="2" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="8"
                                HorizontalAlignment="Center"
-                               Text="3" Margin="17,0" Width="6" />
+                               Text="3" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="12"
                                HorizontalAlignment="Center"
-                               Text="1" Margin="17,0" Width="6" />
+                               Text="1" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="14"
                                HorizontalAlignment="Center"
-                               Text="2" Margin="17,0" Width="6" />
+                               Text="2" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="16"
                                HorizontalAlignment="Center"
-                               Text="3" Margin="17,0" Width="6" />
+                               Text="3" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="18"
                                HorizontalAlignment="Center"
-                               Text="4" Margin="17,0" Width="6" />
+                               Text="4" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="20"
                                HorizontalAlignment="Center"
-                               Text="5" Margin="17,0" Width="6" />
+                               Text="5" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="22"
                                HorizontalAlignment="Center"
-                               Text="6" Margin="17,0" Width="6" />
+                               Text="6" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="24"
                                HorizontalAlignment="Center"
-                               Text="7" Margin="17,0" Width="6" />
+                               Text="7" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="26"
                                HorizontalAlignment="Center"
-                               Text="8" Margin="17,0" Width="6" />
+                               Text="8" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="28"
                                HorizontalAlignment="Center"
-                               Text="9" Margin="17,0" Width="6" />
+                               Text="9" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="30"
                                HorizontalAlignment="Center"
-                               Text="10" Margin="14,0" Width="12" />
+                               Text="10" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="32"
                                HorizontalAlignment="Center"
-                               Text="11" Margin="13,0" Width="14" />
+                               Text="11" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="34"
                                HorizontalAlignment="Center"
-                               Text="12" Margin="14,0" Width="12" />
+                               Text="12" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="38"
                                HorizontalAlignment="Center"
-                               Text="Красная" Width="45" />
+                               Text="Красная" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="40"
                                HorizontalAlignment="Center"
-                               Text="Желтая" Width="40" />
+                               Text="Желтая" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="42"
                                HorizontalAlignment="Center"
-                               Text="Синяя" Width="33" />
+                               Text="Синяя" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="44"
                                HorizontalAlignment="Center"
-                               Text="Смешанная" Width="64" />
+                               Text="Смешанная" />
                     <TextBlock Grid.Row="1"
                                Grid.Column="46"
                                HorizontalAlignment="Center"
-                               Text="Relax" Margin="6,0" Width="28" />
+                               Text="Relax" />
 
                     <ComboBox x:Name="selectedUIDInTests"
                               Grid.Row="2"
@@ -234,114 +234,135 @@
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
                               ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
-                              SelectedItem="{Binding SelectedCode}" Height="22" />
+                              SelectedItem="{Binding SelectedCode}" />
                     <DatePicker x:Name="dateTimeForTest"
                                 Grid.Row="2"
                                 Grid.Column="2"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                SelectedDate="{Binding TestDate}" Height="24" HorizontalAlignment="Left" Width="100" />
+                                SelectedDate="{Binding TestDate}" />
                     <!-- Bio1 - 3 -->
                     <ComboBox x:Name="selectorC1in3" 
                               Grid.Row="2"
                               Grid.Column="4"
+                              Width="40"
                               SelectedValue="{Binding C1in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,0,0,4"
+                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
                               />
                     <ComboBox x:Name="selectorC2in3" 
                               Grid.Row="2"
                               Grid.Column="6"
+                              Width="40"
                               SelectedValue="{Binding C2in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,0,0,4"
+                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
                               />
                     <ComboBox x:Name="selectorC3in3" 
                               Grid.Row="2"
                               Grid.Column="8"
+                              Width="40"
                               SelectedValue="{Binding C3in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,0,0,4"
+                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
                             />
 
                     <!-- Bio1 - 12 -->
                     <ComboBox x:Name="selectorC1in12" 
                               Grid.Row="2"
                               Grid.Column="12"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C1in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding C1in12}" />
                     <ComboBox x:Name="selectorC2in12" 
                               Grid.Row="2"
                               Grid.Column="14"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C2in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding C2in12}" />
                     <ComboBox x:Name="selectorC3in12" 
                               Grid.Row="2"
                               Grid.Column="16"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C3in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding C3in12}" />
                     <ComboBox x:Name="selectorC4in12" 
                               Grid.Row="2"
                               Grid.Column="18"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C4in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding C4in12}" />
                     <ComboBox x:Name="selectorC5in12" 
                               Grid.Row="2"
                               Grid.Column="20"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C5in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding C5in12}" />
                     <ComboBox x:Name="selectorC6in12" 
                               Grid.Row="2"
                               Grid.Column="22"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C6in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding C6in12}" />
                     <ComboBox x:Name="selectorC7in12" 
                               Grid.Row="2"
                               Grid.Column="24"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C7in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding C7in12}" />
                     <ComboBox x:Name="selectorC8in12" 
                               Grid.Row="2"
                               Grid.Column="26"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C8in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding C8in12}" />
                     <ComboBox x:Name="selectorC9in12" 
                               Grid.Row="2"
                               Grid.Column="28"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C9in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding C9in12}" />
                     <ComboBox x:Name="selectorC10in12" 
                               Grid.Row="2"
                               Grid.Column="30"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C10in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding C10in12}" />
                     <ComboBox x:Name="selectorC11in12" 
                               Grid.Row="2"
                               Grid.Column="32"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C11in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding C11in12}" />
                     <ComboBox x:Name="selectorC12in12" 
                               Grid.Row="2"
                               Grid.Column="34"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C12in12}" Margin="0,0,0,4"/>
+                              SelectedValue="{Binding C12in12}"/>
                     <!-- Bio1 - Pref -->
                     <RadioButton x:Name="RedStat"
                              Grid.Row="2"
                              Grid.Column="38"
-                             GroupName="Pref1" Margin="8,4,7,19" Grid.RowSpan="2"/>
+                             Width="30"
+                             GroupName="Pref1"/>
                     <RadioButton x:Name="YellowStat"
                              Grid.Row="2"
                              Grid.Column="40"
-                             GroupName="Pref1" Margin="6,4,4,19" Grid.RowSpan="2" />
+                             Width="30"
+                             GroupName="Pref1" />
                     <RadioButton x:Name="BlueStat"
                              Grid.Row="2"
                              Grid.Column="42"
-                             GroupName="Pref1" Margin="3,4,0,19" Grid.RowSpan="2" />
+                             Width="30"
+                             GroupName="Pref1" />
                     <RadioButton x:Name="GrayStat"
                              Grid.Row="2"
                              Grid.Column="44"
-                             GroupName="Pref1" Margin="18,4,16,19" Grid.RowSpan="2"/>
+                             Width="30"
+                             GroupName="Pref1"/>
                     <!-- Bio1 - R -->
                     <ComboBox x:Name="selectorRelax1" 
                               Grid.Row="2"
                               Grid.Column="46"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding CRelax1}"/>
 
@@ -349,18 +370,21 @@
                     <ComboBox x:Name="selectorC21in3" 
                               Grid.Row="3"
                               Grid.Column="4"
+                              Width="40"
                               SelectedValue="{Binding C21in3}"
                               ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
                               />
                     <ComboBox x:Name="selectorC22in3" 
                               Grid.Row="3"
                               Grid.Column="6"
+                              Width="40"
                               SelectedValue="{Binding C22in3}"
                               ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
                               />
                     <ComboBox x:Name="selectorC23in3" 
                               Grid.Row="3"
                               Grid.Column="8"
+                              Width="40"
                               SelectedValue="{Binding C23in3}"
                               ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
                             />
@@ -369,114 +393,124 @@
                     <ComboBox x:Name="selectorC21in12" 
                               Grid.Row="3"
                               Grid.Column="12"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding C21in12}" />
                     <ComboBox x:Name="selectorC22in12" 
                               Grid.Row="3"
                               Grid.Column="14"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding C22in12}" />
                     <ComboBox x:Name="selectorC23in12" 
                               Grid.Row="3"
                               Grid.Column="16"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding C23in12}" />
                     <ComboBox x:Name="selectorC24in12" 
                               Grid.Row="3"
                               Grid.Column="18"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding C24in12}" />
                     <ComboBox x:Name="selectorC25in12" 
                               Grid.Row="3"
                               Grid.Column="20"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding C25in12}" />
                     <ComboBox x:Name="selectorC26in12" 
                               Grid.Row="3"
                               Grid.Column="22"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding C26in12}" />
                     <ComboBox x:Name="selectorC27in12" 
                               Grid.Row="3"
                               Grid.Column="24"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding C27in12}" />
                     <ComboBox x:Name="selectorC28in12" 
                               Grid.Row="3"
                               Grid.Column="26"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding C28in12}" />
                     <ComboBox x:Name="selectorC29in12" 
                               Grid.Row="3"
                               Grid.Column="28"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding C29in12}" />
                     <ComboBox x:Name="selectorC210in12" 
                               Grid.Row="3"
                               Grid.Column="30"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding C210in12}" />
                     <ComboBox x:Name="selectorC211in12" 
                               Grid.Row="3"
                               Grid.Column="32"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding C211in12}" />
                     <ComboBox x:Name="selectorC212in12" 
                               Grid.Row="3"
                               Grid.Column="34"
+                              Width="40"
+                              Height="20"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding C212in12}" />
                     <!-- Bio2 - Pref -->
                     <RadioButton x:Name="Red2Stat"
                              Grid.Row="3"
                              Grid.Column="38"
-                             GroupName="Pref2" Margin="8,4,7,-4"/>
+                             Width="30"
+                             GroupName="Pref2"/>
                     <RadioButton x:Name="Yellow2Stat"
                              Grid.Row="3"
                              Grid.Column="40"
-                             GroupName="Pref2" Margin="6,4,4,-4"/>
+                             Width="30"
+                             GroupName="Pref2"/>
                     <RadioButton x:Name="Blue2Stat"
                              Grid.Row="3"
                              Grid.Column="42"
-                             GroupName="Pref2" Margin="3,4,0,-4" />
+                             Width="30"
+                             GroupName="Pref2" />
                     <RadioButton x:Name="Gray2Stat"
                              Grid.Row="3"
                              Grid.Column="44"
-                             GroupName="Pref2" Margin="18,4,16,-4"/>
+                             Width="30"
+                             GroupName="Pref2"/>
                     <!-- Bio2 - R -->
                     <ComboBox x:Name="selectorRelax2" 
                               Grid.Row="3"
                               Grid.Column="46"
+                              Width="40"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
                               SelectedValue="{Binding CRelax2}"/>
                     <!-- End -->
                     <Button Grid.Row="1"
-                            Grid.RowSpan="3"
+                            Grid.RowSpan="2"
                             Grid.Column="36"
-                            Margin="0,0,0,22"
+                            Margin="0,0,0,-1"
                             Visibility="Hidden"
                             Command="{Binding ChangeColors}"
                             Content="Сменить раскраску" />
-
+                    
                     <Button Grid.Row="2"
                             Grid.Column="36"
-                            Margin="0,0,0,22"
+                            Margin="0,0,0,-1"
                             Click="SaveTestCommand"
-                            Content="Добавить запись" Grid.RowSpan="2" />
-
+                            Content="Добавить запись" />
+                    
                     <Button Grid.Row="3"
                             Grid.Column="36"
                             Margin="0,0,0,-1"
                             Click="ClearTestAdds"
                             Content="Сброс выбора"  />
-                    <TextBlock
-                        Grid.Column="2"
-                        HorizontalAlignment="Center"
-                        Text="Biocolor1" Margin="123,6,5,5" Width="54" Grid.Row="2" />
-                    <TextBlock
-                        Grid.Column="2"
-                        HorizontalAlignment="Center"
-                        Margin="123,4,10,-7" Width="49" Grid.Row="3" Text="Biocolor2" />
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItem2" Header="{x:Static p:Resources.SubjectiveFeelingsTabHeader}">
@@ -600,21 +634,17 @@
             </TabItem>
             <TabItem x:Name="tabItem3" Header="BioColor">
                 <Grid Background="#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0*"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Label  Height="25" VerticalAlignment="Top" Width="150" HorizontalAlignment="Left" Margin="26,26,0,0" Grid.ColumnSpan="2">Введите дату рождения:</Label>
-                    <DatePicker Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="176,26,0,0" Name="Date"     VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.ColumnSpan="2"/>
-                    <Label   Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="326,26,0,0" Grid.ColumnSpan="2">Введите дату рассчета:</Label>
+                    <Label  Height="25" VerticalAlignment="Top" Width="150" HorizontalAlignment="Left">Введите дату рождения:</Label>
+                    <DatePicker Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="150,0,0,0" Name="Date"     VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                    <Label   Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="300,0,0,0">Введите дату рассчета:</Label>
 
-                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Prew" Margin="776,26,0,0" Grid.ColumnSpan="2" >Prew</Button>
-                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Next" Margin="851,26,0,0" Grid.ColumnSpan="2" >Next</Button>
-                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Menu" Margin="926,26,0,0" Grid.ColumnSpan="2" >Menu</Button>
+                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Prew" Margin="750,0,0,0" >Prew</Button>
+                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Next" Margin="825,0,0,0" >Next</Button>
+                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Menu" Margin="900,0,0,0" >Menu</Button>
 
-                    <DatePicker Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="476,26,0,0" Name="DateNow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}" Grid.ColumnSpan="2"/>
-                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="626,26,0,0" Click="DrawGraphs" Grid.ColumnSpan="2">Построить графики</Button>
-                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1026,26,0,0" Click="Generate" Grid.ColumnSpan="2">Создать изображение</Button>
+                    <DatePicker Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="450,0,0,0" Name="DateNow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}"/>
+                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="600,0,0,0" Click="DrawGraphs">Построить графики</Button>
+                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1000,0,0,0" Click="Generate">Создать изображение</Button>
                 </Grid>
             </TabItem>
             <!--<TabItem Header="TabItem">
@@ -961,15 +991,14 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Filters" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFE5E5E5"/>
+                <Label Content="Filters" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFE5E5E5"/>
 
                 <Grid Grid.Row="1" Margin="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Label Content="UID" 
-                        FontWeight="Bold" Margin="0,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                    <Label Content="UID" Margin="0,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <ComboBox
                         x:Name="UID"
                         Grid.Column="1"
@@ -988,7 +1017,7 @@
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
-                    <Label Content="Дата" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,0"/>
+                    <Label Content="Date" Grid.ColumnSpan="2" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,0"/>
                     <Label Content="From" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Padding="0"/>
                     <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Padding="0"/>
                     <DatePicker Grid.Row="2"
@@ -1017,9 +1046,7 @@
                     <TextBlock
                                    HorizontalAlignment="Center"
                                    Padding="0"
-                                   Text="Экспедиция" Grid.ColumnSpan="2"
-                                   FontWeight="Bold"
-                        />
+                                   Text="Экспедиция" Grid.ColumnSpan="2" />
                     <Label Content="From" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="1"/>
                     <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="1" Grid.Column="1"/>
                     <ComboBox Grid.Row="2"
@@ -1036,8 +1063,7 @@
                     <TextBlock Grid.Row="3"
                                    HorizontalAlignment="Center"
                                    Padding="0"
-                                   Text="Номер" Grid.ColumnSpan="2" 
-                                    FontWeight="Bold"/>
+                                   Text="Номер" Grid.ColumnSpan="2" />
                     <Label Content="From" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="4"/>
                     <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="4" Grid.Column="1"/>
                     <ComboBox Grid.Row="5"
@@ -1384,7 +1410,7 @@
                     </ListBox>
                 </Grid>
 
-                <Grid Grid.Row="8" Margin="5,5,5,-27">
+                <Grid Grid.Row="8" Margin="5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
