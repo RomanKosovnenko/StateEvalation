@@ -36,14 +36,14 @@ namespace StateEvaluation.Model
         }
         public void InsertEntityInSubjectiveFeeling(SubjectiveFeeling sf)
         {
-            if (sf.Date.ToString() == "" || sf.UserId == null)
-            {
-                MessageBox.Show("Error! Some fields are empty");
-            }
-            else
+            try
             {
                 SubjectiveFeeling.InsertOnSubmit(sf);
                 SubmitChanges();
+            }
+            catch (SqlException)
+            {
+                MessageBox.Show("Error!Try edit fields in form with less data.");
             }
         }
         public void InsertEntityInPeople(People person)
@@ -55,7 +55,7 @@ namespace StateEvaluation.Model
             }
             catch(SqlException)
             {
-                MessageBox.Show("Error, when inserting in data base! May be such an UserID already exists");
+                MessageBox.Show("Error!Try edit fields in form with less data.");
             }
         }
         public IEnumerable<Preference> GetAllTests()

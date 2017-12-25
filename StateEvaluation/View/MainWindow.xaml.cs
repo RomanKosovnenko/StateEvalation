@@ -85,9 +85,16 @@ namespace StateEvaluation
         private void SetValueInTabsCommand(object sender, RoutedEventArgs e)
         {
             string tag = ((Button)sender).Tag.ToString();
-            var items = _preferenceDb.Preference.Select(item => item).Where(item => item.Id.ToString() == tag);
-            Preference preference = items.Single();
-            SetValueInTabs(preference);
+            try
+            {
+                var items = _preferenceDb.Preference.Select(item => item).Where(item => item.Id.ToString() == tag);
+                Preference preference = items.Single();
+                SetValueInTabs(preference);
+            }
+            catch (InvalidOperationException)
+            {
+                MessageBox.Show("Such an entry was not found!");
+            }
         }
         private void SeveChangesTestCommand(object sender, RoutedEventArgs e)
         {
@@ -251,8 +258,6 @@ namespace StateEvaluation
                 _preferenceDbNew.SubmitChanges();
                 TestsDataGrid.ItemsSource = _preferenceDbNew.GetAllTests();
                 ClearInputs();
-
-                ApplyChangesBTN.Visibility = Visibility.Hidden;
             }
         }
         private void AddPersonBtn_Click(object sender, RoutedEventArgs e)
@@ -270,40 +275,12 @@ namespace StateEvaluation
                 return;
             }
             People person = GetNewPeople();
-            if (CheckFildAddedPersonOnLenght(person))
-            {
-                _preferenceDb.InsertEntityInPeople(person);
-                RefreshPersonDataGrid();
-                ClearSelectedInPeople();
-                RefreshUIDInTabs();
-                RefreshExpeditionInTabs();
-                RefreshUsersNumberInTabs();
-            }
-        }
-        private bool CheckFildAddedPersonOnLenght(People person)
-        {
-            if (person.UserId.Length > 11)
-            {
-                MessageBox.Show("Error! The Number and Expedition in the amount must be no more then 7");
-                return false;
-            }
-            else if (person.Lastname.Length > 21)
-            {
-                MessageBox.Show("Error! The Lastname must be no more then 20 symbols");
-                return false;
-            }
-            else if (person.Firstname.Length > 21)
-            {
-                MessageBox.Show("Error! The Firstname must be no more then 20 symbols");
-                return false;
-            }
-            else if (person.Workposition.Length > 21)
-            {
-                MessageBox.Show("Error! The Workposition must be no more then 20 symbols");
-                return false;
-            }
-
-            return true;
+            _preferenceDb.InsertEntityInPeople(person);
+            RefreshPersonDataGrid();
+            ClearSelectedInPeople();
+            RefreshUIDInTabs();
+            RefreshExpeditionInTabs();
+            RefreshUsersNumberInTabs();
         }
 
         private void RefreshUsersNumberInTabs()
@@ -349,28 +326,24 @@ namespace StateEvaluation
                 Workposition = (PersonAddFormGrid.FindName("LastnameTextbox") as TextBox).Text,
                 Birthday = (PersonAddFormGrid.FindName("BirthdayDatePicker") as DatePicker).Text
             };
-            person.UserId = $"Ex{person.Expedition}#{person.Number}";
+            person.UserId = $"EX{person.Expedition}#{person.Number}";
             return person;
         }
         private void RemovePersonBtn_Click(object sender, RoutedEventArgs e)
         {
-            var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
-            if (dialogResult == MessageBoxResult.Yes)
+            PreferenceDB _preferenceDb = new PreferenceDB();
+            People person = _preferenceDb.People.Single(c => c == ((Button)(e.Source)).BindingGroup.Items[0]);
+            try
             {
-                PreferenceDB _preferenceDb = new PreferenceDB();
-                People person = _preferenceDb.People.Single(c => c == ((Button)(e.Source)).BindingGroup.Items[0]);
-                try
-                {
-                    _preferenceDb.People.DeleteOnSubmit(person);
-                    _preferenceDb.SubmitChanges();
-                }
-                catch (SqlException)
-                {
-                    MessageBox.Show("Error! You can not delete this record because it has associated entries in other tables.");
-                }
-                PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
-                RefreshUIDInTabs();
+                _preferenceDb.People.DeleteOnSubmit(person);
+                _preferenceDb.SubmitChanges();
             }
+            catch (SqlException)
+            {
+                MessageBox.Show("Error! You can not delete this record because it has associated entries in other tables.");
+            }
+            PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
+            RefreshUIDInTabs();
         }
 
         private void RemovePreferenceBtn_Click(object sender, RoutedEventArgs e)
@@ -389,16 +362,12 @@ namespace StateEvaluation
 
         private void RemoveFeelingsBtn_Click(object sender, RoutedEventArgs e)
         {
-            var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
-            if (dialogResult == MessageBoxResult.Yes)
-            {
-                PreferenceDB _preferenceDb = new PreferenceDB();
-                SubjectiveFeeling feelings = _preferenceDb.SubjectiveFeeling.Single(c => c == ((Button)(e.Source)).BindingGroup.Items[0]);
-                _preferenceDb.SubjectiveFeeling.DeleteOnSubmit(feelings);
-                _preferenceDb.SubmitChanges();
-                SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
-                RefreshUIDInTabs();
-            }
+            PreferenceDB _preferenceDb = new PreferenceDB();
+            SubjectiveFeeling feelings = _preferenceDb.SubjectiveFeeling.Single(c => c == ((Button)(e.Source)).BindingGroup.Items[0]);
+            _preferenceDb.SubjectiveFeeling.DeleteOnSubmit(feelings);
+            _preferenceDb.SubmitChanges();
+            SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
+            RefreshUIDInTabs();
         }
 
         private void NumberTextbox_LostFocus(object sender, RoutedEventArgs e)
@@ -706,8 +675,6 @@ namespace StateEvaluation
             Yellow2Stat.IsChecked = false;
             Blue2Stat.IsChecked = false;
             Gray2Stat.IsChecked = false;
-
-            ApplyChangesBTN.Visibility = Visibility.Hidden;
         }
         private void ClearFilters()
         {
