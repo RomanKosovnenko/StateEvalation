@@ -240,6 +240,13 @@
                                 Grid.Column="2"
                                 VerticalAlignment="Top"
                                 SelectedDate="{Binding TestDate}" Height="24" HorizontalAlignment="Left" Width="100" />
+                    <TextBlock x:Name="TestID"
+                                Grid.Row="3"
+                                Grid.Column="2"
+                                VerticalAlignment="Top"
+                                Height="24" HorizontalAlignment="Left" Width="100" 
+                               Text=""
+                               Visibility="Hidden"/>
                     <!-- Bio1 - 3 -->
                     <ComboBox x:Name="selectorC1in3" 
                               Grid.Row="2"
@@ -477,16 +484,13 @@
                         Grid.Column="2"
                         HorizontalAlignment="Center"
                         Margin="123,4,10,-7" Width="49" Grid.Row="3" Text="Biocolor2" />
-                    <Button Grid.Row="3"
+                    <Button x:Name="ApplyChangesBTN"
+                        Grid.Row="3"
                         Grid.Column="36"
-                        Margin="0,23,0,-24"
-                        Click="SetValueInTabsCommand"
-                        Content="Выбрать запись" />
-                    <Button Grid.Row="3"
-                        Grid.Column="36"
-                        Margin="0,46,0,-47"
+                        Margin="0,25,0,-25"
                         Click="SeveChangesTestCommand"
-                        Content="Применить" />
+                        Content="Применить"
+                        Visibility="Hidden"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItem2" Header="{x:Static p:Resources.SubjectiveFeelingsTabHeader}">
@@ -925,6 +929,13 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     -->
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="EditPreferenceBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="SetValueInTabsCommand" Tag="{Binding Id}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

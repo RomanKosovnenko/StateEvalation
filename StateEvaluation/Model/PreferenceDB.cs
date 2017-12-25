@@ -107,7 +107,7 @@ namespace StateEvaluation.Model
         }
         public void UpdateTestInPreference( Preference person)
         {
-            var items = this.Preference.Where(item => (item.UserId == person.UserId) && (item.Date == person.Date)).Single<Preference>();
+            var items = this.Preference.Where(item => item.Id == person.Id).Single<Preference>();
             items.Oder1 = person.Oder1;
             items.Oder2 = person.Oder2;
             items.Preference1 = person.Preference1;

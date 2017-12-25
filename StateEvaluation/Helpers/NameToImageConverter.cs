@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -17,8 +18,11 @@ namespace StateEvaluation.Helpers
             {
                 if (input?.Trim().Length != 0)
                 {
-                    
-                    var uri = new Uri("C:/Users/Віталій/Documents/GitHub/StateEvalation/StateEvaluation/RelaxTables/Relax3/" + input + ".png", UriKind.Relative);
+                    if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject()))
+                    {
+                        return Brushes.Black;
+                    }
+                    var uri = new Uri("../../RelaxTables/Relax3/" + input + ".png", UriKind.Relative);
               //      var uri = new Uri("C:/Users/Віталій/Documents/GitHub/StateEvalation/StateEvaluation/RelaxTables/Relax3/" + input + ".png", UriKind.Relative);
                     var bitmap = new BitmapImage(uri);
                     var brush = new ImageBrush(bitmap);

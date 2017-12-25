@@ -33,7 +33,7 @@ namespace StateEvaluation
 
         private void AddFeelingPeople(object sender, RoutedEventArgs e)
         {
-            if (!DateTime.TryParse((PersonAddFormGrid.FindName("selectedDateInSubjectiveFeeling") as DatePicker).Text, out DateTime obj1)||
+            if (!DateTime.TryParse((PersonAddFormGrid.FindName("selectedDateInSubjectiveFeeling") as DatePicker).Text, out DateTime obj1) ||
                 string.IsNullOrEmpty((PersonAddFormGrid.FindName("selectedUIDInSubjectiveFeeling") as ComboBox).Text))
             {
                 MessageBox.Show("Error! Try edit fields in form!");
@@ -84,23 +84,16 @@ namespace StateEvaluation
         }
         private void SetValueInTabsCommand(object sender, RoutedEventArgs e)
         {
-            if ( !(selectedUIDInTests.SelectedIndex == -1 || dateTimeForTest.Text == ""))
+            string tag = ((Button)sender).Tag.ToString();
+            try
             {
-                try
-                {
-                    var items = _preferenceDb.Preference.Select(item => item).Where(item => (item.UserId == selectedUIDInTests.SelectedItem.ToString()) &&
-                    (item.Date == dateTimeForTest.SelectedDate));
-                    Preference preference = items.First();
-                    SetValueInTabs(preference);
-                }
-                catch(InvalidOperationException)
-                {
-                    MessageBox.Show("Such an entry was not found!");
-                }
+                var items = _preferenceDb.Preference.Select(item => item).Where(item => item.Id.ToString() == tag);
+                Preference preference = items.Single();
+                SetValueInTabs(preference);
             }
-            else
+            catch (InvalidOperationException)
             {
-                MessageBox.Show("Select UID and date!");
+                MessageBox.Show("Such an entry was not found!");
             }
         }
         private void SeveChangesTestCommand(object sender, RoutedEventArgs e)
@@ -125,6 +118,7 @@ namespace StateEvaluation
             {
                 Preference preference = new Preference()
                 {
+                    Id = new Guid(TestID.Text),
                     UserId = SelectedCode,
                     Date = (DateTime)TestDate,
                     FavoriteColor = 0,
@@ -141,16 +135,22 @@ namespace StateEvaluation
                 _preferenceDb.UpdateTestInPreference(preference);
                 TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
                 ClearInputs();
+                ApplyChangesBTN.Visibility = Visibility.Hidden;
             }
         }
 
         private void SetValueInTabs(Preference preference)
         {
+            ApplyChangesBTN.Visibility = Visibility.Visible;
+
             var shortOrder1List = preference.ShortOder1.ToString().Split(',');
             var shortOrder2List = preference.ShortOder2.ToString().Split(',');
             var order1List = preference.Oder1.ToString().Split(',');
             var order2List = preference.Oder2.ToString().Split(',');
 
+            TestID.Text = preference.Id.ToString();
+            selectedUIDInTests.SelectedValue = preference.UserId;
+            dateTimeForTest.SelectedDate = preference.Date;
             selectorC1in3.SelectedValue = shortOrder1List[0];
             selectorC2in3.SelectedValue = shortOrder1List[1];
             selectorC3in3.SelectedValue = shortOrder1List[2];
@@ -181,8 +181,8 @@ namespace StateEvaluation
             selectorC210in12.SelectedValue = order2List[9];
             selectorC211in12.SelectedValue = order2List[10];
             selectorC212in12.SelectedValue = order2List[11];
-            selectorRelax1.SelectedIndex = Convert.ToInt32(preference.RelaxTable1)-1;
-            selectorRelax2.SelectedIndex = Convert.ToInt32(preference.RelaxTable2)-1;
+            selectorRelax1.SelectedIndex = Convert.ToInt32(preference.RelaxTable1) - 1;
+            selectorRelax2.SelectedIndex = Convert.ToInt32(preference.RelaxTable2) - 1;
             switch (preference.Preference1.Trim())
             {
                 case "Красная":
@@ -193,7 +193,7 @@ namespace StateEvaluation
                     break;
                 case "Синяя":
                     BlueStat.IsChecked = true;
-                    break; 
+                    break;
                 case "Смешанная":
                     GrayStat.IsChecked = true;
                     break;
@@ -415,12 +415,12 @@ namespace StateEvaluation
         private void BildChartOnPreference1(object sender, RoutedEventArgs e)
         {
             PreferenceDB _preferenceDb = new PreferenceDB();
-            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(),true);
+            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(), true);
         }
         private void BildChartOnPreference2(object sender, RoutedEventArgs e)
         {
             PreferenceDB _preferenceDb = new PreferenceDB();
-            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(),false);
+            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(), false);
         }
 
         private void AddData_OnClick(object sender, RoutedEventArgs e)
@@ -631,46 +631,46 @@ namespace StateEvaluation
         {
             selectedUIDInTests.SelectedIndex = -1;
             dateTimeForTest.Text = "";
-            selectorC1in3    .SelectedIndex = -1 ;
-            selectorC2in3    .SelectedIndex = -1 ;
-            selectorC3in3    .SelectedIndex = -1 ;
-            selectorC21in3   .SelectedIndex = -1 ;
-            selectorC22in3   .SelectedIndex = -1 ;
-            selectorC23in3   .SelectedIndex = -1 ;
-            selectorC1in12   .SelectedIndex = -1 ;
-            selectorC2in12   .SelectedIndex = -1 ;
-            selectorC3in12   .SelectedIndex = -1 ;
-            selectorC4in12   .SelectedIndex = -1 ;
-            selectorC5in12   .SelectedIndex = -1 ;
-            selectorC6in12   .SelectedIndex = -1 ;
-            selectorC7in12   .SelectedIndex = -1 ;
-            selectorC8in12   .SelectedIndex = -1 ;
-            selectorC9in12   .SelectedIndex = -1 ;
-            selectorC10in12  .SelectedIndex = -1 ;
-            selectorC11in12  .SelectedIndex = -1 ;
-            selectorC12in12  .SelectedIndex = -1 ;
-            selectorC21in12  .SelectedIndex = -1 ;
-            selectorC22in12  .SelectedIndex = -1 ;
-            selectorC23in12  .SelectedIndex = -1 ;
-            selectorC24in12  .SelectedIndex = -1 ;
-            selectorC25in12  .SelectedIndex = -1 ;
-            selectorC26in12  .SelectedIndex = -1 ;
-            selectorC27in12  .SelectedIndex = -1 ;
-            selectorC28in12  .SelectedIndex = -1 ;
-            selectorC29in12  .SelectedIndex = -1 ;
-            selectorC210in12 .SelectedIndex = -1 ;
-            selectorC211in12 .SelectedIndex = -1 ;
-            selectorC212in12 .SelectedIndex = -1 ;
-            selectorRelax1   .SelectedIndex = -1 ;
-            selectorRelax2   .SelectedIndex = -1 ;
-            RedStat     .IsChecked = false;
-            YellowStat  .IsChecked = false;
-            BlueStat    .IsChecked = false;
-            GrayStat    .IsChecked = false;
-            Red2Stat    .IsChecked = false;
-            Yellow2Stat .IsChecked = false;
-            Blue2Stat   .IsChecked = false;
-            Gray2Stat   .IsChecked = false;
+            selectorC1in3.SelectedIndex = -1;
+            selectorC2in3.SelectedIndex = -1;
+            selectorC3in3.SelectedIndex = -1;
+            selectorC21in3.SelectedIndex = -1;
+            selectorC22in3.SelectedIndex = -1;
+            selectorC23in3.SelectedIndex = -1;
+            selectorC1in12.SelectedIndex = -1;
+            selectorC2in12.SelectedIndex = -1;
+            selectorC3in12.SelectedIndex = -1;
+            selectorC4in12.SelectedIndex = -1;
+            selectorC5in12.SelectedIndex = -1;
+            selectorC6in12.SelectedIndex = -1;
+            selectorC7in12.SelectedIndex = -1;
+            selectorC8in12.SelectedIndex = -1;
+            selectorC9in12.SelectedIndex = -1;
+            selectorC10in12.SelectedIndex = -1;
+            selectorC11in12.SelectedIndex = -1;
+            selectorC12in12.SelectedIndex = -1;
+            selectorC21in12.SelectedIndex = -1;
+            selectorC22in12.SelectedIndex = -1;
+            selectorC23in12.SelectedIndex = -1;
+            selectorC24in12.SelectedIndex = -1;
+            selectorC25in12.SelectedIndex = -1;
+            selectorC26in12.SelectedIndex = -1;
+            selectorC27in12.SelectedIndex = -1;
+            selectorC28in12.SelectedIndex = -1;
+            selectorC29in12.SelectedIndex = -1;
+            selectorC210in12.SelectedIndex = -1;
+            selectorC211in12.SelectedIndex = -1;
+            selectorC212in12.SelectedIndex = -1;
+            selectorRelax1.SelectedIndex = -1;
+            selectorRelax2.SelectedIndex = -1;
+            RedStat.IsChecked = false;
+            YellowStat.IsChecked = false;
+            BlueStat.IsChecked = false;
+            GrayStat.IsChecked = false;
+            Red2Stat.IsChecked = false;
+            Yellow2Stat.IsChecked = false;
+            Blue2Stat.IsChecked = false;
+            Gray2Stat.IsChecked = false;
         }
         private void ClearFilters()
         {
@@ -702,7 +702,7 @@ namespace StateEvaluation
             heavyHead.IsChecked = false;
             slowThink.IsChecked = false;
         }
-        
+
         private void ClearTestAdds(object sender, RoutedEventArgs e)
         {
             ClearInputs();
@@ -737,7 +737,7 @@ namespace StateEvaluation
             PersonDataGrid.ItemsSource = GetPeople();
             SubjectiveFeelDataGrid.ItemsSource = GetSubjectiveFeel();
         }
-        
+
         private IEnumerable<Preference> GetUIDs()
         {
 
@@ -793,10 +793,10 @@ namespace StateEvaluation
 
             bool gWeakness = generalWeakness.IsChecked.Value;
             bool bAppetite = badAppetite.IsChecked.Value;
-            bool bDream    = badDream.IsChecked.Value;
-            bool bMood     = badMood.IsChecked.Value;
-            bool hHead     = heavyHead.IsChecked.Value;
-            bool sThink    = slowThink.IsChecked.Value;
+            bool bDream = badDream.IsChecked.Value;
+            bool bMood = badMood.IsChecked.Value;
+            bool hHead = heavyHead.IsChecked.Value;
+            bool sThink = slowThink.IsChecked.Value;
 
             Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
 
