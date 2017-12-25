@@ -3,7 +3,6 @@ using StateEvaluation.Model;
 using StateEvaluation.View;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -82,139 +81,7 @@ namespace StateEvaluation
             selectedUIDInSubjectiveFeeling.SelectedIndex = -1;
             selectedDateInSubjectiveFeeling.Text = "";
         }
-        private void SetValueInTabsCommand(object sender, RoutedEventArgs e)
-        {
-            if ( !(selectedUIDInTests.SelectedIndex == -1 || dateTimeForTest.Text == ""))
-            {
-                try
-                {
-                    var items = _preferenceDb.Preference.Select(item => item).Where(item => (item.UserId == selectedUIDInTests.SelectedItem.ToString()) &&
-                    (item.Date == dateTimeForTest.SelectedDate));
-                    Preference preference = items.First();
-                    SetValueInTabs(preference);
-                }
-                catch(InvalidOperationException)
-                {
-                    MessageBox.Show("Such an entry was not found!");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Select UID and date!");
-            }
-        }
-        private void SeveChangesTestCommand(object sender, RoutedEventArgs e)
-        {
-            var Cin3s = new List<string> { C1in3, C2in3, C3in3 };
-            var C2in3s = new List<string> { C21in3, C22in3, C23in3 };
-            var Cin12s = new List<string> { C1in12, C2in12, C3in12, C4in12, C5in12, C6in12, C7in12, C8in12, C9in12, C10in12, C11in12, C12in12 };
-            var C2in12s = new List<string> { C21in12, C22in12, C23in12, C24in12, C25in12, C26in12, C27in12, C28in12, C29in12, C210in12, C211in12, C212in12 };
-            var Pref1 = new List<RadioButton> { RedStat, YellowStat, BlueStat, GrayStat };
-            var Pref2 = new List<RadioButton> { Red2Stat, Yellow2Stat, Blue2Stat, Gray2Stat };
-            var Prefs = new List<string> { "Красная", "Желтая", "Синяя", "Смешанная" };
-
-            var inputs = new List<string> { SelectedCode };
-
-            if (new List<List<string>> { inputs, Cin3s, C2in3s, Cin12s, C2in12s }.Any(x => x.Any(y => y == null) || x.Count != x.Distinct().Count())
-                || new List<List<RadioButton>> { Pref1, Pref2 }.Any(x => x.All(y => y.IsChecked != true))
-                || TestDate == null)
-            {
-                MessageBox.Show("Not all fields is filled!");
-            }
-            else
-            {
-                Preference preference = new Preference()
-                {
-                    UserId = SelectedCode,
-                    Date = (DateTime)TestDate,
-                    FavoriteColor = 0,
-                    ShortOder1 = String.Join(",", Cin3s),
-                    Oder1 = String.Join(",", Cin12s),
-                    Preference1 = Prefs[Pref1.Select(x => x.IsChecked).ToList().IndexOf(true)],
-                    ShortOder2 = String.Join(",", C2in3s),
-                    Oder2 = String.Join(",", C2in12s),
-                    Preference2 = Prefs[Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)],
-                    Compare = (Pref1.Select(x => x.IsChecked).ToList().IndexOf(true) == Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)).ToString().ToLower(),
-                    RelaxTable1 = CRelax1,
-                    RelaxTable2 = CRelax2
-                };
-                _preferenceDb.UpdateTestInPreference(preference);
-                TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
-                ClearInputs();
-            }
-        }
-
-        private void SetValueInTabs(Preference preference)
-        {
-            var shortOrder1List = preference.ShortOder1.ToString().Split(',');
-            var shortOrder2List = preference.ShortOder2.ToString().Split(',');
-            var order1List = preference.Oder1.ToString().Split(',');
-            var order2List = preference.Oder2.ToString().Split(',');
-
-            selectorC1in3.SelectedValue = shortOrder1List[0];
-            selectorC2in3.SelectedValue = shortOrder1List[1];
-            selectorC3in3.SelectedValue = shortOrder1List[2];
-            selectorC21in3.SelectedValue = shortOrder2List[0];
-            selectorC22in3.SelectedValue = shortOrder2List[1];
-            selectorC23in3.SelectedValue = shortOrder2List[2];
-            selectorC1in12.SelectedValue = order1List[0];
-            selectorC2in12.SelectedValue = order1List[1];
-            selectorC3in12.SelectedValue = order1List[2];
-            selectorC4in12.SelectedValue = order1List[3];
-            selectorC5in12.SelectedValue = order1List[4];
-            selectorC6in12.SelectedValue = order1List[5];
-            selectorC7in12.SelectedValue = order1List[6];
-            selectorC8in12.SelectedValue = order1List[7];
-            selectorC9in12.SelectedValue = order1List[8];
-            selectorC10in12.SelectedValue = order1List[9];
-            selectorC11in12.SelectedValue = order1List[10];
-            selectorC12in12.SelectedValue = order1List[11];
-            selectorC21in12.SelectedValue = order2List[0];
-            selectorC22in12.SelectedValue = order2List[1];
-            selectorC23in12.SelectedValue = order2List[2];
-            selectorC24in12.SelectedValue = order2List[3];
-            selectorC25in12.SelectedValue = order2List[4];
-            selectorC26in12.SelectedValue = order2List[5];
-            selectorC27in12.SelectedValue = order2List[6];
-            selectorC28in12.SelectedValue = order2List[7];
-            selectorC29in12.SelectedValue = order2List[8];
-            selectorC210in12.SelectedValue = order2List[9];
-            selectorC211in12.SelectedValue = order2List[10];
-            selectorC212in12.SelectedValue = order2List[11];
-            selectorRelax1.SelectedIndex = Convert.ToInt32(preference.RelaxTable1)-1;
-            selectorRelax2.SelectedIndex = Convert.ToInt32(preference.RelaxTable2)-1;
-            switch (preference.Preference1.Trim())
-            {
-                case "Красная":
-                    RedStat.IsChecked = true;
-                    break;
-                case "Желтая":
-                    YellowStat.IsChecked = true;
-                    break;
-                case "Синяя":
-                    BlueStat.IsChecked = true;
-                    break; 
-                case "Смешанная":
-                    GrayStat.IsChecked = true;
-                    break;
-            }
-            switch (preference.Preference2.Trim())
-            {
-                case "Красная":
-                    Red2Stat.IsChecked = true;
-                    break;
-                case "Желтая":
-                    Yellow2Stat.IsChecked = true;
-                    break;
-                case "Синяя":
-                    Blue2Stat.IsChecked = true;
-                    break;
-                case "Смешанная":
-                    Gray2Stat.IsChecked = true;
-                    break;
-            }
-        }
-
+        
         private void SaveTestCommand(object sender, RoutedEventArgs e)
         {
             var Cin3s = new List<string> { C1in3, C2in3, C3in3 };
@@ -279,22 +146,7 @@ namespace StateEvaluation
             RefreshPersonDataGrid();
             ClearSelectedInPeople();
             RefreshUIDInTabs();
-            RefreshExpeditionInTabs();
-            RefreshUsersNumberInTabs();
         }
-
-        private void RefreshUsersNumberInTabs()
-        {
-            PeopleFrom.ItemsSource = _preferenceDb.PeopleCodes();
-            PeopleTo.ItemsSource = _preferenceDb.PeopleCodes();
-        }
-
-        private void RefreshExpeditionInTabs()
-        {
-            ExFrom.ItemsSource = _preferenceDb.ExpeditionCodes();
-            ExTo.ItemsSource = _preferenceDb.ExpeditionCodes();
-        }
-
         private void RefreshUIDInTabs()
         {
             UID.ItemsSource = _preferenceDb.CodesForFilter();
@@ -333,15 +185,8 @@ namespace StateEvaluation
         {
             PreferenceDB _preferenceDb = new PreferenceDB();
             People person = _preferenceDb.People.Single(c => c == ((Button)(e.Source)).BindingGroup.Items[0]);
-            try
-            {
-                _preferenceDb.People.DeleteOnSubmit(person);
-                _preferenceDb.SubmitChanges();
-            }
-            catch (SqlException)
-            {
-                MessageBox.Show("Error! You can not delete this record because it has associated entries in other tables.");
-            }
+            _preferenceDb.People.DeleteOnSubmit(person);
+            _preferenceDb.SubmitChanges();
             PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
             RefreshUIDInTabs();
         }

@@ -477,16 +477,6 @@
                         Grid.Column="2"
                         HorizontalAlignment="Center"
                         Margin="123,4,10,-7" Width="49" Grid.Row="3" Text="Biocolor2" />
-                    <Button Grid.Row="3"
-                        Grid.Column="36"
-                        Margin="0,23,0,-24"
-                        Click="SetValueInTabsCommand"
-                        Content="Выбрать запись" />
-                    <Button Grid.Row="3"
-                        Grid.Column="36"
-                        Margin="0,46,0,-47"
-                        Click="SeveChangesTestCommand"
-                        Content="Применить" />
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItem2" Header="{x:Static p:Resources.SubjectiveFeelingsTabHeader}">
