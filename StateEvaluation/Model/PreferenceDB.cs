@@ -43,7 +43,7 @@ namespace StateEvaluation.Model
             }
             catch (SqlException)
             {
-                MessageBox.Show("Error!Try edit fields in form with less date!");
+                MessageBox.Show("Error!Try edit fields in form with less data.");
             }
         }
         public void InsertEntityInPeople(People person)
@@ -55,7 +55,7 @@ namespace StateEvaluation.Model
             }
             catch(SqlException)
             {
-                MessageBox.Show("Error!Try edit fields in form with less date!");
+                MessageBox.Show("Error!Try edit fields in form with less data.");
             }
         }
         public IEnumerable<Preference> GetAllTests()
@@ -90,9 +90,8 @@ namespace StateEvaluation.Model
         }
         public IEnumerable<string> ExpeditionCodes()
         {
-            var regex = new System.Text.RegularExpressions.Regex(@"Ex([0-9]+)#([0-9]+)");
-            var items = this.People.Select(item => item.UserId).Distinct().OrderByDescending(item => item).Select(x => regex.Match(x.ToString()).Groups[1].Value);
-            var list = items.ToList().Distinct().ToList();
+            IEnumerable<string> items = this.People.Select(item => item.Expedition.ToString()).Distinct().OrderByDescending(item => Convert.ToInt32(item));
+            List<string> list = items.ToList().ToList();
 
             list.Insert(0, "All");
             return list;
@@ -100,12 +99,25 @@ namespace StateEvaluation.Model
         
         public IEnumerable<string> PeopleCodes()
         {
-            var regex = new System.Text.RegularExpressions.Regex(@"Ex([0-9]+)#([0-9]+)");
-            var items = this.People.Select(item => item.UserId).OrderByDescending(item => item).Select(x => regex.Match(x.ToString()).Groups[2].Value);
-            var list = items.ToList().Distinct().ToList();
+            IEnumerable<string> items = this.People.Select(item => item.Number.ToString()).Distinct().OrderBy(item => Convert.ToInt32(item));
+            List<string> list = items.ToList().ToList();
 
             list.Insert(0, "All");
             return list;
+        }
+        public void UpdateTestInPreference( Preference person)
+        {
+            var items = this.Preference.Where(item => (item.UserId == person.UserId) && (item.Date == person.Date)).Single<Preference>();
+            items.Oder1 = person.Oder1;
+            items.Oder2 = person.Oder2;
+            items.Preference1 = person.Preference1;
+            items.Preference2 = person.Preference2;
+            items.RelaxTable1 = person.RelaxTable1;
+            items.RelaxTable2 = person.RelaxTable2;
+            items.ShortOder1 = person.ShortOder1;
+            items.ShortOder2 = person.ShortOder2;
+            items.Compare = person.Preference1 == person.Preference2 ? "true" : "false";
+            SubmitChanges();
         }
         public IEnumerable<string> ShortColorsNumbersList()
         {
