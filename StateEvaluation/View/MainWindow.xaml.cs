@@ -348,12 +348,16 @@ namespace StateEvaluation
 
         private void RemovePreferenceBtn_Click(object sender, RoutedEventArgs e)
         {
-            PreferenceDB _preferenceDb = new PreferenceDB();
-            Preference pref = _preferenceDb.Preference.Single(c => c == ((Button)(e.Source)).BindingGroup.Items[0]);
-            _preferenceDb.Preference.DeleteOnSubmit(pref);
-            _preferenceDb.SubmitChanges();
-            TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
-            RefreshUIDInTabs();
+            var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                PreferenceDB _preferenceDb = new PreferenceDB();
+                Preference pref = _preferenceDb.Preference.Single(c => c == ((Button)(e.Source)).BindingGroup.Items[0]);
+                _preferenceDb.Preference.DeleteOnSubmit(pref);
+                _preferenceDb.SubmitChanges();
+                TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
+                RefreshUIDInTabs();
+            }
         }
 
         private void RemoveFeelingsBtn_Click(object sender, RoutedEventArgs e)
