@@ -15,8 +15,8 @@ namespace StateEvaluation.BioColor
                step = Settings.Default.step,
                range = 2;
         static double alpha = Settings.Default.alpha,
-               screen_W = SystemParameters.VirtualScreenWidth,
-               screen_H = SystemParameters.VirtualScreenHeight;
+               screen_W = SystemParameters.PrimaryScreenWidth,
+               screen_H = SystemParameters.PrimaryScreenHeight;
         internal static Color ColorMix(Color c1, Color c2, Color c3)
         {
             const int DIVIDER_3 = 4;
@@ -53,6 +53,8 @@ namespace StateEvaluation.BioColor
 
         static public void DrawClear(Grid myGrid)
         {
+            // myGrid.Children.Clear();
+            /*
             System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle
             {
                 Fill = System.Windows.Media.Brushes.White,
@@ -60,6 +62,12 @@ namespace StateEvaluation.BioColor
                 HorizontalAlignment = HorizontalAlignment.Left
             };
             Thickness margin = rectangle.Margin;
+            margin.Top = topline;
+            rectangle.Margin = margin;
+            rectangle.Width = screen_W;
+            rectangle.Height = screen_H;
+            myGrid.Children.Add(rectangle);
+            */
             Line myLine = new Line
             {
                 Stroke = System.Windows.Media.Brushes.Black,
@@ -69,22 +77,23 @@ namespace StateEvaluation.BioColor
                 Y2 = screen_H,
                 StrokeThickness = 1
             };
-            margin.Top = topline;
-            rectangle.Margin = margin;
-            rectangle.Width = screen_W;
-            rectangle.Height = screen_H;
-            myGrid.Children.Add(rectangle);
             myGrid.Children.Add(myLine);
 
         }
    
         public static void GetCanvasImage(String a, int x, int Delta, Grid myGrid)
         {
-            BitmapImage theImage = new BitmapImage(new Uri(a, UriKind.Relative));
-
-            System.Windows.Media.ImageBrush myImageBrush = new System.Windows.Media.ImageBrush(theImage);
             try
             {
+                BitmapImage theImage = new BitmapImage();
+
+                theImage.BeginInit();
+                theImage.CacheOption = BitmapCacheOption.OnLoad;
+                theImage.UriSource = new Uri(a, UriKind.Relative);
+                theImage.EndInit();
+
+                System.Windows.Media.ImageBrush myImageBrush = new System.Windows.Media.ImageBrush(theImage);
+
                 for (int i = -range; i <= range; ++i)
                 {
                     myGrid.Children.Add( new Canvas
@@ -98,9 +107,15 @@ namespace StateEvaluation.BioColor
                     });
                 }
             }
+
             catch (System.IO.FileNotFoundException)
             {
-                MessageBox.Show("Error_" + x + "_File!");
+                Main.Generate();
+                GetCanvasImage(a, x, Delta, myGrid);
+            }
+            finally
+            {
+                
             }
         }
         

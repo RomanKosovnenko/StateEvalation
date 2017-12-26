@@ -628,7 +628,7 @@
 
                     <DatePicker Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="476,26,0,0" Name="DateNow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}" Grid.ColumnSpan="2"/>
                     <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="626,26,0,0" Click="DrawGraphs" Grid.ColumnSpan="2">Построить графики</Button>
-                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1026,26,0,0" Click="Generate" Grid.ColumnSpan="2">Создать изображение</Button>
+                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1026,26,0,0" Click="Generate" Grid.ColumnSpan="2" Visibility="Hidden">Создать изображение</Button>
                 </Grid>
             </TabItem>
             <!--<TabItem Header="TabItem">
@@ -969,7 +969,8 @@
             <Grid x:Name="BioColorGraph" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem3}">
             </Grid>
 
-            <Grid Grid.Column="1" Width="250" ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <Grid Grid.Column="1" Width="250" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToNOTVisibilityConverter}, ElementName=tabItem3}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>

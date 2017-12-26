@@ -12,7 +12,7 @@ namespace StateEvaluation.BioColor {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.3.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,37 +25,13 @@ namespace StateEvaluation.BioColor {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Red-23.png")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Image-23.png")]
         public string Path_Red {
             get {
                 return ((string)(this["Path_Red"]));
             }
             set {
                 this["Path_Red"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Green-28.png")]
-        public string Path_Green {
-            get {
-                return ((string)(this["Path_Green"]));
-            }
-            set {
-                this["Path_Green"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\Blue-33.png")]
-        public string Path_Blue {
-            get {
-                return ((string)(this["Path_Blue"]));
-            }
-            set {
-                this["Path_Blue"] = value;
             }
         }
         
@@ -118,7 +94,7 @@ namespace StateEvaluation.BioColor {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("25")]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
         public int topline {
             get {
                 return ((int)(this["topline"]));
@@ -290,6 +266,30 @@ namespace StateEvaluation.BioColor {
             }
             set {
                 this["i4"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Image-28.png")]
+        public string Path_Green {
+            get {
+                return ((string)(this["Path_Green"]));
+            }
+            set {
+                this["Path_Green"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Image-33.png")]
+        public string Path_Blue {
+            get {
+                return ((string)(this["Path_Blue"]));
+            }
+            set {
+                this["Path_Blue"] = value;
             }
         }
     }

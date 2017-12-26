@@ -246,6 +246,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="BioColor\template\base_23.png" />
+    <Resource Include="BioColor\template\base_28.png" />
+    <Resource Include="BioColor\template\base_33.png" />
     <Content Include="RelaxTables\Relax3\1.png" />
     <Content Include="RelaxTables\Relax3\10.png" />
     <Content Include="RelaxTables\Relax3\11.png" />

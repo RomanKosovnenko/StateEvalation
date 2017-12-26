@@ -228,8 +228,6 @@ namespace StateEvaluation
             }
             else
             {
-                MessageBox.Show(SelectedCode);
-
                 Preference preference = new Preference()
                 {
                     Id = Guid.NewGuid(),
