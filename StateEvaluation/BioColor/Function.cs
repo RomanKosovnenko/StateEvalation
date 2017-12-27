@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
@@ -15,8 +16,8 @@ namespace StateEvaluation.BioColor
                step = Settings.Default.step,
                range = 2;
         static double alpha = Settings.Default.alpha,
-               screen_W = SystemParameters.PrimaryScreenWidth,
-               screen_H = SystemParameters.PrimaryScreenHeight;
+               screen_W = 1920,
+               screen_H = 1080;
         internal static Color ColorMix(Color c1, Color c2, Color c3)
         {
             const int DIVIDER_3 = 4;
@@ -86,15 +87,15 @@ namespace StateEvaluation.BioColor
             try
             {
                 BitmapImage theImage = new BitmapImage();
-
+                
                 theImage.BeginInit();
                 theImage.CacheOption = BitmapCacheOption.OnLoad;
-                theImage.UriSource = new Uri(a, UriKind.Relative);
+                theImage.UriSource = new Uri(a, UriKind.Absolute);
                 theImage.EndInit();
-
+                
                 System.Windows.Media.ImageBrush myImageBrush = new System.Windows.Media.ImageBrush(theImage);
 
-                for (int i = -range; i <= range; ++i)
+                for (int i = -range; i <= range * 3; ++i)
                 {
                     myGrid.Children.Add( new Canvas
                     {
@@ -107,11 +108,9 @@ namespace StateEvaluation.BioColor
                     });
                 }
             }
-
             catch (System.IO.FileNotFoundException)
             {
                 Main.Generate();
-                GetCanvasImage(a, x, Delta, myGrid);
             }
             finally
             {

@@ -69,41 +69,67 @@ namespace StateEvaluation.BioColor
             {
                 DateTime dt = Convert.ToDateTime(_birthDate.Text);
                 DateTime nw = Convert.ToDateTime(_nowDate.Text);
-                if(dt > nw)
+                if (dt > nw)
                 {
                     MessageBox.Show("Birthday greater than date!");
                     return;
                 }
                 int delta = (int)((nw.Subtract(dt)).TotalDays);
 
-                int width = 1000 + Mid;
-
-                _myGrid.Children.Clear();
-                Function.GetCanvasImage(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed, IntRed, delta, _myGrid);
-                Function.GetCanvasImage(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathGreen, IntGreen, delta, _myGrid);
-                Function.GetCanvasImage(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathBlue, IntBlue, delta, _myGrid);
-
-                // Bitmap r = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed);
-                // Bitmap g = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathGreen);
-                // Bitmap b = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathBlue);
-                 Bitmap w = new Bitmap(width, Height);
-
+                int width = (int)(SystemParameters.PrimaryScreenWidth) + Mid;
                 Bitmap r;
                 Bitmap g;
                 Bitmap b;
-                using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed,   System.IO.FileMode.Open))
+                Bitmap w;
+                    _myGrid.Children.Clear();
+                    Function.GetCanvasImage(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed, IntRed, delta, _myGrid);
+                    Function.GetCanvasImage(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathGreen, IntGreen, delta, _myGrid);
+                    Function.GetCanvasImage(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathBlue, IntBlue, delta, _myGrid);
+                try
                 {
-                    r = (Bitmap)new Bitmap(fs).Clone();
-                }
-                using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathGreen, System.IO.FileMode.Open))
-                {
-                    g = (Bitmap)new Bitmap(fs).Clone();
-                }
-                using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathBlue,  System.IO.FileMode.Open))
-                {
-                    b = (Bitmap)new Bitmap(fs).Clone();
-                }
+                    /*
+                    r = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed);
+                    g = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathGreen);
+                    b = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathBlue);
+                    */
 
+                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed, System.IO.FileMode.Open))
+                    {
+                        r = (Bitmap)new Bitmap(fs).Clone();
+                    }
+                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathGreen, System.IO.FileMode.Open))
+                    {
+                        g = (Bitmap)new Bitmap(fs).Clone();
+                    }
+                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathBlue, System.IO.FileMode.Open))
+                    {
+                        b = (Bitmap)new Bitmap(fs).Clone();
+                    }
+
+                }
+                catch (System.ArgumentException)
+                {
+                    MessageBox.Show(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed);
+                    return;
+                }
+                w = new Bitmap(width, Height);
+                
+                /*    Bitmap r;
+                    Bitmap g;
+                    Bitmap b;
+                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed,   System.IO.FileMode.Open))
+                    {
+                        r = (Bitmap)new Bitmap(fs).Clone();
+                    }
+                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathGreen, System.IO.FileMode.Open))
+                    {
+                        g = (Bitmap)new Bitmap(fs).Clone();
+                    }
+                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathBlue,  System.IO.FileMode.Open))
+                    {
+                        b = (Bitmap)new Bitmap(fs).Clone();
+                    }
+                    */
                 for (int x = Zero; x < width; ++x)
                 {
                     for (int y = Height / 2 - 1; Zero < y; --y)
@@ -120,7 +146,7 @@ namespace StateEvaluation.BioColor
                         w.SetPixel(x, y, Function.ColorMix(rColor, gColor, bColor));
 
                     }
-                    for (int y = Height / 2 ; y < Height; ++y)
+                    for (int y = Height / 2; y < Height; ++y)
                     {
                         int xPixel = (x + delta * Square - Mid);
                         System.Drawing.Color rColor = r.GetPixel((xPixel + r.Width) % r.Width, y);
@@ -135,7 +161,6 @@ namespace StateEvaluation.BioColor
 
                     }
                 }
-
                 MemoryStream memoryStream = new MemoryStream();
                 w.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
                 BitmapImage theImage = new BitmapImage();
@@ -158,6 +183,7 @@ namespace StateEvaluation.BioColor
 
                 _myGrid.Children.Add(myCanvas);
                 Function.DrawClear(_myGrid);
+
             }
             catch (FormatException)
             {
@@ -167,9 +193,18 @@ namespace StateEvaluation.BioColor
         }
         public static void Menu()
         {
+            Colors c = new Colors();
+            c.ShowDialog();
+            c.Save();
+
+            ImageGenerator.Generate(23);
+            ImageGenerator.Generate(28);
+            ImageGenerator.Generate(33);
+            /*
             SettingsEdit s = new SettingsEdit();
             s.ShowDialog();
             s.Get();
+            */
             Restore();
         }
         public static void Generate()
@@ -177,7 +212,6 @@ namespace StateEvaluation.BioColor
             ImageGenerator.Generate(RangeRed);
             ImageGenerator.Generate(RangeGreen);
             ImageGenerator.Generate(RangeBlue);
-            MessageBox.Show("Generated!");
             // Application.Current.Shutdown(); 
             // myGrid.Children.Add();
         }

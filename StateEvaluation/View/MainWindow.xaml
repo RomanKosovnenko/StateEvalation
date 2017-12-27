@@ -699,6 +699,8 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor I (ThreeColor) -->
                     <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIThree}, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -719,6 +721,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+
                     <!-- BioColor I (TwelveColor) -->
                     <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                              Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -752,6 +755,7 @@
                     </DataGridTextColumn>
                     <!-- BioColor I END -->
 
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor II START -->
                     <!-- BioColor II (Three) -->
                     <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
@@ -773,6 +777,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                   
                     <!-- BioColor II (ThreePictures) -->
                     <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIPictures}, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -793,6 +798,8 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor II (TwelveColor) -->
                     <DataGridTemplateColumn Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">

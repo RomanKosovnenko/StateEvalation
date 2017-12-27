@@ -84,7 +84,7 @@ new String[] {
         {
             RestoreColors();
             Bitmap image = new Bitmap(width * SquareSize, 24 * SquareSize);
-            _graphics = Graphics.FromImage(image);
+			_graphics = Graphics.FromImage(image);
 
 
             Point topPoint = new Point((int)((width / 4.0 * 3 - 0.5) * SquareSize), 0);
@@ -93,9 +93,9 @@ new String[] {
 
             switch (width)
             {
-                case 23: startIndex = 8; break;
-                case 28: startIndex = 4; break;
-                case 33: startIndex = 0; break;
+                case 23: startIndex = 8 +2 ; break;
+                case 28: startIndex = 4 +2 ; break;
+                case 33: startIndex = 0 +2 ; break;
 
             }
 
