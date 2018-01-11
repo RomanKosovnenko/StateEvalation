@@ -20,6 +20,8 @@ namespace StateEvaluation.BioColor
                screen_H = 1080;
         internal static Color ColorMix(Color c1, Color c2, Color c3)
         {
+
+    //        return Color.Black;
             const int DIVIDER_3 = 4;
             const int DIVIDER_2 = 4;
             const int SPLACER = 128;
@@ -87,11 +89,13 @@ namespace StateEvaluation.BioColor
             try
             {
                 BitmapImage theImage = new BitmapImage();
-                
+                var stream = File.OpenRead(a);
                 theImage.BeginInit();
                 theImage.CacheOption = BitmapCacheOption.OnLoad;
-                theImage.UriSource = new Uri(a, UriKind.Absolute);
+                theImage.StreamSource = stream;
                 theImage.EndInit();
+                stream.Close();
+                stream.Dispose();
                 
                 System.Windows.Media.ImageBrush myImageBrush = new System.Windows.Media.ImageBrush(theImage);
 
