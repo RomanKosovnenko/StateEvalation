@@ -7,22 +7,6 @@ namespace StateEvaluation.BioColor
         private static readonly int SquareSize = Settings.Default.square;
         private static Graphics _graphics;
         private static string[] _colors;
-        /*
-new String[] {
-"#FF2317F5",
-"#FF0F2BEB",
-"#FF1855F7",
-"#FF3DDEFB",
-"#FF31F715",
-"#FF7EFE07",
-"#FFF4FE09",
-"#FFFBBC0C",
-"#FFF96F0A",
-"#FFFE280C",
-"#FFFA0006",
-"#FFF603EB"
-};
-        */
         private static void DrawSquare(Point upperLeft, string color, bool reverse = false)
         {
             _graphics.FillRectangle(

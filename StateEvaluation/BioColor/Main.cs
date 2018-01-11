@@ -26,7 +26,6 @@ namespace StateEvaluation.BioColor
             IntBlue = Settings.Default.Int_Blue;
 
         private static string _pathRed, _pathGreen, _pathBlue;
-        private static string _initDate;
 
         public static void InitBioColor(Grid myGrid, DatePicker birthDate, DatePicker nowDate)
         {
@@ -41,7 +40,6 @@ namespace StateEvaluation.BioColor
             Settings.Default.Path_Red = _pathRed;
             Settings.Default.Path_Green = _pathGreen;
             Settings.Default.Path_Blue = _pathBlue;
-            Settings.Default.Init_date = _initDate;
             Settings.Default.Save();
         }
 
@@ -50,7 +48,6 @@ namespace StateEvaluation.BioColor
             _pathRed = Settings.Default.Path_Red;
             _pathGreen = Settings.Default.Path_Green;
             _pathBlue = Settings.Default.Path_Blue;
-            _initDate = Settings.Default.Init_date;
         }
         public static void MakeStep(int step)
         {

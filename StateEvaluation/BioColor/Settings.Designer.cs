@@ -35,18 +35,6 @@ namespace StateEvaluation.BioColor {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("26.12.1997")]
-        public string Init_date {
-            get {
-                return ((string)(this["Init_date"]));
-            }
-            set {
-                this["Init_date"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("23")]

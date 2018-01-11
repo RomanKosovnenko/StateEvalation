@@ -5,9 +5,6 @@
     <Setting Name="Path_Red" Type="System.String" Scope="User">
       <Value Profile="(Default)">Image_23.png</Value>
     </Setting>
-    <Setting Name="Init_date" Type="System.String" Scope="User">
-      <Value Profile="(Default)">26.12.1997</Value>
-    </Setting>
     <Setting Name="Int_Red" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">23</Value>
     </Setting>

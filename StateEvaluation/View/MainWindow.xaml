@@ -43,7 +43,7 @@
             <RowDefinition/>
             <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
-        <TabControl x:Name="tabControl" Height="150" VerticalAlignment="Top">
+        <TabControl x:Name="tabControl" Height="150" VerticalAlignment="Top" SelectionChanged="SetFilterVisibility">
             <!--<TabItem Header="{x:Static p:Resources.AddDataHeader}">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>-->
@@ -631,12 +631,17 @@
                     <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1026,26,0,0" Click="Generate" Grid.ColumnSpan="2" Visibility="Hidden">Создать изображение</Button>
                 </Grid>
             </TabItem>
-            <!--<TabItem Header="TabItem">
+            <TabItem x:Name="ColorSettingsTab" Header="Colors">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <!--
+            <TabItem Header="TabItem">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <TabItem Header="TabItem">
                 <Grid Background="#FFE5E5E5"/>
-            </TabItem>-->
+            </TabItem>
+            -->
         </TabControl>
         <Grid Margin="0" Grid.Row="1">
             <Grid.ColumnDefinitions>
@@ -976,8 +981,325 @@
             <Grid x:Name="BioColorGraph" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem3}">
             </Grid>
 
-            <Grid Grid.Column="1" Width="250" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToNOTVisibilityConverter}, ElementName=tabItem3}">
+            <Grid x:Name="ColorSettings" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=ColorSettingsTab}">
+
+                <Image Width="200" Height="200" Margin="25,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                    <Image.Source>
+                        <DrawingImage>
+                            <DrawingImage.Drawing>
+                                <DrawingGroup>
+                                    <GeometryDrawing Brush="#F603EB">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Black"/>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="100,100">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment Point="200.0,100.0"/>
+                                                        <ArcSegment Point="186.6,50.0" SweepDirection="Counterclockwise" Size="100,100"/>
+                                                        <LineSegment Point="100,100"/>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+
+                                    <GeometryDrawing Brush="#FA0006">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Black"/>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="100,100">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment Point="186.6,50.0"/>
+                                                        <ArcSegment Point="150.0,13.4" SweepDirection="Counterclockwise" Size="100,100"/>
+                                                        <LineSegment Point="100,100"/>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+
+                                    <GeometryDrawing Brush="#FE280C">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Black"/>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="100,100">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment Point="150.0,13.4"/>
+                                                        <ArcSegment Point="100.0,0.0" SweepDirection="Counterclockwise" Size="100,100"/>
+                                                        <LineSegment Point="100,100"/>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+
+                                    <GeometryDrawing Brush="#F96F0A">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Black"/>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="100,100">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment Point="100.0,0.0"/>
+                                                        <ArcSegment Point="50.0,13.4" SweepDirection="Counterclockwise" Size="100,100"/>
+                                                        <LineSegment Point="100,100"/>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+
+                                    <GeometryDrawing Brush="#FBBC0C">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Black"/>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="100,100">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment Point="50.0,13.4"/>
+                                                        <ArcSegment Point="13.4,50.0" SweepDirection="Counterclockwise" Size="100,100"/>
+                                                        <LineSegment Point="100,100"/>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+
+                                    <GeometryDrawing Brush="#F4FE09">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Black"/>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="100,100">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment Point="13.4,50.0"/>
+                                                        <ArcSegment Point="0.0,100.0" SweepDirection="Counterclockwise" Size="100,100"/>
+                                                        <LineSegment Point="100,100"/>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+
+                                    <GeometryDrawing Brush="#7EFE07">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Black"/>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="100,100">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment Point="0.0,100.0"/>
+                                                        <ArcSegment Point="13.4,150.0" SweepDirection="Counterclockwise" Size="100,100"/>
+                                                        <LineSegment Point="100,100"/>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+
+                                    <GeometryDrawing Brush="#31F715">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Black"/>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="100,100">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment Point="13.4,150.0"/>
+                                                        <ArcSegment Point="50.0,186.6" SweepDirection="Counterclockwise" Size="100,100"/>
+                                                        <LineSegment Point="100,100"/>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+
+                                    <GeometryDrawing Brush="#3DDEFB">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Black"/>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="100,100">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment Point="50.0,186.6"/>
+                                                        <ArcSegment Point="100.0,200.0" SweepDirection="Counterclockwise" Size="100,100"/>
+                                                        <LineSegment Point="100,100"/>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+
+                                    <GeometryDrawing Brush="#1855F7">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Black"/>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="100,100">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment Point="100.0,200.0"/>
+                                                        <ArcSegment Point="150.0,186.6" SweepDirection="Counterclockwise" Size="100,100"/>
+                                                        <LineSegment Point="100,100"/>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+
+                                    <GeometryDrawing Brush="#0F2BEB">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Black"/>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="100,100">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment Point="150.0,186.6"/>
+                                                        <ArcSegment Point="186.6,150.0" SweepDirection="Counterclockwise" Size="100,100"/>
+                                                        <LineSegment Point="100,100"/>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+
+                                    <GeometryDrawing Brush="#2317F5">
+                                        <GeometryDrawing.Pen>
+                                            <Pen Brush="Black"/>
+                                        </GeometryDrawing.Pen>
+                                        <GeometryDrawing.Geometry>
+                                            <PathGeometry>
+                                                <PathFigure StartPoint="100,100">
+                                                    <PathFigure.Segments>
+                                                        <LineSegment Point="186.6,150.0"/>
+                                                        <ArcSegment Point="200.0,100.0" SweepDirection="Counterclockwise" Size="100,100"/>
+                                                        <LineSegment Point="100,100"/>
+                                                    </PathFigure.Segments>
+                                                </PathFigure>
+                                            </PathGeometry>
+                                        </GeometryDrawing.Geometry>
+                                    </GeometryDrawing>
+
+                                </DrawingGroup>
+                            </DrawingImage.Drawing>
+                        </DrawingImage>
+                    </Image.Source>
+                </Image>
+
+
+                <TextBlock Width="100" Height="25" Name="pt1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,  0,0,0"  Text="Physical: [1]"/>
+                <TextBlock Width="100" Height="25" Name="pt2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250, 25,0,0"  Text="Physical: [2]"/>
+                <TextBlock Width="100" Height="25" Name="pt3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250, 50,0,0"  Text="Physical: [3]"/>
+                <TextBlock Width="100" Height="25" Name="pt4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250, 75,0,0"  Text="Physical: [4]"/>
+
+                <TextBlock Width="100" Height="25" Name="et1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,100,0,0"  Text="Emotions: [1]"/>
+                <TextBlock Width="100" Height="25" Name="et2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,125,0,0"  Text="Emotions: [2]"/>
+                <TextBlock Width="100" Height="25" Name="et3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,150,0,0"  Text="Emotions: [3]"/>
+                <TextBlock Width="100" Height="25" Name="et4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,175,0,0"  Text="Emotions: [4]"/>
+
+                <TextBlock Width="100" Height="25" Name="it1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,200,0,0"  Text="Intelect: [1]"/>
+                <TextBlock Width="100" Height="25" Name="it2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,225,0,0"  Text="Intelect: [2]"/>
+                <TextBlock Width="100" Height="25" Name="it3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,250,0,0"  Text="Intelect: [3]"/>
+                <TextBlock Width="100" Height="25" Name="it4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,275,0,0"  Text="Intelect: [4]"/>
+
+
+
+                <TextBox Width="160" Height="25" Name="pc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,  0,0,0" />
+                <TextBox Width="50" Height="25" Name="cpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,  0,0,0" />
+                <TextBox Width="50" Height="25" Name="mpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,  0,0,0" />
+                <TextBox Width="50" Height="25" Name="ypc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,  0,0,0" />
+                <TextBox Width="50" Height="25" Name="kpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,  0,0,0" />
+                <TextBox Width="160" Height="25" Name="pc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350, 25,0,0" />
+                <TextBox Width="50" Height="25" Name="cpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575, 25,0,0" />
+                <TextBox Width="50" Height="25" Name="mpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625, 25,0,0" />
+                <TextBox Width="50" Height="25" Name="ypc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675, 25,0,0" />
+                <TextBox Width="50" Height="25" Name="kpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725, 25,0,0" />
+                <TextBox Width="160" Height="25" Name="pc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350, 50,0,0" />
+                <TextBox Width="50" Height="25" Name="cpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575, 50,0,0" />
+                <TextBox Width="50" Height="25" Name="mpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625, 50,0,0" />
+                <TextBox Width="50" Height="25" Name="ypc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675, 50,0,0" />
+                <TextBox Width="50" Height="25" Name="kpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725, 50,0,0" />
+                <TextBox Width="160" Height="25" Name="pc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350, 75,0,0" />
+                <TextBox Width="50" Height="25" Name="cpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575, 75,0,0" />
+                <TextBox Width="50" Height="25" Name="mpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625, 75,0,0" />
+                <TextBox Width="50" Height="25" Name="ypc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675, 75,0,0" />
+                <TextBox Width="50" Height="25" Name="kpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725, 75,0,0" />
+                <TextBox Width="160" Height="25" Name="ec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,100,0,0" />
+                <TextBox Width="50" Height="25" Name="cec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,100,0,0" />
+                <TextBox Width="50" Height="25" Name="mec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,100,0,0" />
+                <TextBox Width="50" Height="25" Name="yec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,100,0,0" />
+                <TextBox Width="50" Height="25" Name="kec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,100,0,0" />
+                <TextBox Width="160" Height="25" Name="ec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,125,0,0" />
+                <TextBox Width="50" Height="25" Name="cec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,125,0,0" />
+                <TextBox Width="50" Height="25" Name="mec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,125,0,0" />
+                <TextBox Width="50" Height="25" Name="yec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,125,0,0" />
+                <TextBox Width="50" Height="25" Name="kec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,125,0,0" />
+                <TextBox Width="160" Height="25" Name="ec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,150,0,0" />
+                <TextBox Width="50" Height="25" Name="cec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,150,0,0" />
+                <TextBox Width="50" Height="25" Name="mec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,150,0,0" />
+                <TextBox Width="50" Height="25" Name="yec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,150,0,0" />
+                <TextBox Width="50" Height="25" Name="kec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,150,0,0" />
+                <TextBox Width="160" Height="25" Name="ec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,175,0,0" />
+                <TextBox Width="50" Height="25" Name="cec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,175,0,0" />
+                <TextBox Width="50" Height="25" Name="mec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,175,0,0" />
+                <TextBox Width="50" Height="25" Name="yec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,175,0,0" />
+                <TextBox Width="50" Height="25" Name="kec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,175,0,0" />
+                <TextBox Width="160" Height="25" Name="ic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,200,0,0" />
+                <TextBox Width="50" Height="25" Name="cic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,200,0,0" />
+                <TextBox Width="50" Height="25" Name="mic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,200,0,0" />
+                <TextBox Width="50" Height="25" Name="yic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,200,0,0" />
+                <TextBox Width="50" Height="25" Name="kic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,200,0,0" />
+                <TextBox Width="160" Height="25" Name="ic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,225,0,0" />
+                <TextBox Width="50" Height="25" Name="cic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,225,0,0" />
+                <TextBox Width="50" Height="25" Name="mic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,225,0,0" />
+                <TextBox Width="50" Height="25" Name="yic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,225,0,0" />
+                <TextBox Width="50" Height="25" Name="kic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,225,0,0" />
+                <TextBox Width="160" Height="25" Name="ic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,250,0,0" />
+                <TextBox Width="50" Height="25" Name="cic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,250,0,0" />
+                <TextBox Width="50" Height="25" Name="mic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,250,0,0" />
+                <TextBox Width="50" Height="25" Name="yic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,250,0,0" />
+                <TextBox Width="50" Height="25" Name="kic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,250,0,0" />
+                <TextBox Width="160" Height="25" Name="ic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,275,0,0" />
+                <TextBox Width="50" Height="25" Name="cic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,275,0,0" />
+                <TextBox Width="50" Height="25" Name="mic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,275,0,0" />
+                <TextBox Width="50" Height="25" Name="yic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,275,0,0" />
+                <TextBox Width="50" Height="25" Name="kic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,275,0,0" />
+
+                <Button Width="65"  Height="25" Name="pb1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,  0,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="pb2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510, 25,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="pb3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510, 50,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="pb4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510, 75,0,0" Click="CMYK2RGB">&lt;--</Button>
+
+                <Button    Width="65"  Height="25" Name="eb1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,100,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="eb2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,125,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="eb3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,150,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="eb4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,175,0,0" Click="CMYK2RGB">&lt;--</Button>
+
+                <Button    Width="65"  Height="25" Name="ib1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,200,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="ib2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,225,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="ib3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,250,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="ib4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,275,0,0" Click="CMYK2RGB">&lt;--</Button>
+
+
+                <Button Width="65"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="800,250,0,0" Click="RestoreColors">Restore</Button>
+                <Button Width="65"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="800,275,0,0" Click="SaveColors">Save</Button>
+
+
+            </Grid>
+
+            <Grid Grid.Column="1" Width="250" ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="Filter">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>

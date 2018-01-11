@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using StateEvaluation.BioColor;
 using StateEvaluation.ViewModel;
 
 namespace StateEvaluation.Helpers
@@ -15,36 +16,50 @@ namespace StateEvaluation.Helpers
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             string input = value?.ToString();
+            string color;
             switch (input)
             {
                 case "1":
-                    return Brushes.Violet;
+                    color = Settings.Default.i1; // Brushes.Violet;
+                    break;
                 case "2":
-                    return Brushes.DarkBlue;
+                    color = Settings.Default.i2; // Brushes.DarkBlue;
+                    break;
                 case "3":
-                    return Brushes.Blue;
+                    color = Settings.Default.i3; // Brushes.Blue;
+                    break;
                 case "4":
-                    return Brushes.Cyan;
+                    color = Settings.Default.i4; // Brushes.Cyan;
+                    break;
                 case "5":
-                    return Brushes.Green;
+                    color = Settings.Default.e1; // Brushes.Green;
+                    break;
                 case "6":
-                    return Brushes.LightGreen;
+                    color = Settings.Default.e2; // Brushes.LightGreen;
+                    break;
                 case "7":
-                    return Brushes.Yellow;
+                    color = Settings.Default.e3; // Brushes.Yellow;
+                    break;
                 case "8":
-                    return Brushes.Orange;
+                    color = Settings.Default.e4; // Brushes.Orange;
+                    break;
                 case "9":
-                    return Brushes.DarkOrange;
+                    color = Settings.Default.p1; // Brushes.DarkOrange;
+                    break;
                 case "10":
-                    return Brushes.OrangeRed;
+                    color = Settings.Default.p2; // Brushes.OrangeRed;
+                    break;
                 case "11":
-                    return Brushes.Red;
+                    color = Settings.Default.p3; // Brushes.Red;
+                    break;
                 case "12":
-                    return Brushes.Magenta;
+                    color = Settings.Default.p4; // Brushes.Magenta;
+                    break;
 
                 default:
                     return Brushes.Black; //DependencyProperty.UnsetValue;
             }
+            return new BrushConverter().ConvertFromString("#"+color);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

@@ -1,9 +1,11 @@
 ﻿using Microsoft.Office.Interop.Excel;
+using StateEvaluation.BioColor;
 using StateEvaluation.Model;
 using StateEvaluation.View;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -21,6 +23,7 @@ namespace StateEvaluation
     /// </summary>
     public partial class MainWindow : Window
     {
+        const float MAX = 0xFF;
         public static Dictionary<string, string> people;
         private PreferenceDB _preferenceDb = new PreferenceDB();
         public List<string> PersonCodes = new List<string>();
@@ -632,6 +635,7 @@ namespace StateEvaluation
                 .Select(item => new { UserId = item.UserId.ToString().Trim(), item.Birthday })
                 .ToDictionary(i => i.UserId, i => i.Birthday);
             ClearFilters();
+            RestoreColors();
         }
 
         private string GenerateRange(string f, string t)
@@ -887,12 +891,113 @@ namespace StateEvaluation
         public int? CRelax1 { get; set; }
         public int? CRelax2 { get; set; }
 
+        public Visibility HideFilter { get; set; }
 
+        private void SetFilterVisibility(object sender, SelectionChangedEventArgs e)
+        {
+            if(Filter != null)
+            {
+                Filter.Visibility = tabControl.SelectedIndex > 2 ? Visibility.Hidden : Visibility.Visible;
+            }
+        }
+
+        private void CMYK2RGB(object sender, RoutedEventArgs e)
+        {
+            string name = (sender as Button).Name;
+            string id = name.Substring(name.Length - 1);
+            string factor = name.Substring(0, 1);
+
+            int.TryParse((FindName("c" + factor + "c" + id) as TextBox).Text.ToString(), out int C);
+            int.TryParse((FindName("m" + factor + "c" + id) as TextBox).Text.ToString(), out int M);
+            int.TryParse((FindName("y" + factor + "c" + id) as TextBox).Text.ToString(), out int Y);
+            int.TryParse((FindName("k" + factor + "c" + id) as TextBox).Text.ToString(), out int K);
+
+            // R = 255 * (1 - C) * (1 - K);
+            int R = (int)((MAX - C) * (MAX - K) / MAX);
+            int G = (int)((MAX - M) * (MAX - K) / MAX);
+            int B = (int)((MAX - Y) * (MAX - K) / MAX);
+            // MessageBox.Show(String.Format("{0}{1}\nC: {2}, M: {3}, Y: {4}, K: {5}\nR: {6}, G: {7}, B: {8}", factor, id, C, M, Y, K, R, G, B));
+            (FindName(factor + "c" + id) as TextBox).Text = String.Format("{0:X2}{1:X2}{2:X2}", R, G, B);
+        }
+
+        private void RestoreColors(object sender, RoutedEventArgs e) {
+            RestoreColors();
+        }
+        internal void RestoreColors()
+        {
+            InitializeComponent(); ;
+            ic1.Text = Settings.Default.i1;
+            ic2.Text = Settings.Default.i2;
+            ic3.Text = Settings.Default.i3;
+            ic4.Text = Settings.Default.i4;
+            ec1.Text = Settings.Default.e1;
+            ec2.Text = Settings.Default.e2;
+            ec3.Text = Settings.Default.e3;
+            ec4.Text = Settings.Default.e4;
+            pc1.Text = Settings.Default.p1;
+            pc2.Text = Settings.Default.p2;
+            pc3.Text = Settings.Default.p3;
+            pc4.Text = Settings.Default.p4;
+            var re = new Regex(@"([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})");
+            foreach(var element in new TextBox[] { ic1, ic2, ic3, ic4, ec1, ec2, ec3, ec4, pc1, pc2, pc3, pc4 })
+            {
+                var name = element.Name;
+                var factor = name.Substring(0, 1);
+                var id = name.Substring(name.Length - 1);
+
+                var match = re.Match(element.Text);
+                int R = int.Parse(match.Groups[1].Value, NumberStyles.HexNumber);
+                int G = int.Parse(match.Groups[2].Value, NumberStyles.HexNumber);
+                int B = int.Parse(match.Groups[3].Value, NumberStyles.HexNumber);
+
+                // R' = R / 255;
+                // K = 1 - max(r,g,b);
+                // C = (1 - R' - K) / (1 / K);
+                // C = (255 - R - K) / (255 / K);
+                int C, M, Y, K;
+                if (R == 0 && G == 0 && B == 0) {
+                    C = M = Y = 0;
+                    K = 1;
+                }
+                else
+                {
+                    K = (int)(MAX - Math.Max(R, Math.Max(G, B)));
+                    C = (int)(MAX * (MAX - R - K) / (MAX - K));
+                    M = (int)(MAX * (MAX - G - K) / (MAX - K));
+                    Y = (int)(MAX * (MAX - B - K) / (MAX - K));
+                }
+                // m e c 4;
+                (FindName("c" + factor + "c" + id) as TextBox).Text = C.ToString();
+                (FindName("m" + factor + "c" + id) as TextBox).Text = M.ToString();
+                (FindName("y" + factor + "c" + id) as TextBox).Text = Y.ToString();
+                (FindName("k" + factor + "c" + id) as TextBox).Text = K.ToString();
+            }
+        }
+
+        private void SaveColors(object sender, RoutedEventArgs e)
+        {
+            SaveColors();
+        }
+        internal void SaveColors()
+        {
+            Settings.Default.i1 = ic1.Text;
+            Settings.Default.i2 = ic2.Text;
+            Settings.Default.i3 = ic3.Text;
+            Settings.Default.i4 = ic4.Text;
+            Settings.Default.e1 = ec1.Text;
+            Settings.Default.e2 = ec2.Text;
+            Settings.Default.e3 = ec3.Text;
+            Settings.Default.e4 = ec4.Text;
+            Settings.Default.p1 = pc1.Text;
+            Settings.Default.p2 = pc2.Text;
+            Settings.Default.p3 = pc3.Text;
+            Settings.Default.p4 = pc4.Text;
+        }
         /* private IEnumerable<string> ExeptValue()
 {
-    string ShortColorsNumbersList1_Bio1 = ShortColorsNumbersList1_Biocolor1.SelectedItem?.ToString();
-    MessageBox.Show(ShortColorsNumbersList1_Bio1);
-    return "";   
+string ShortColorsNumbersList1_Bio1 = ShortColorsNumbersList1_Biocolor1.SelectedItem?.ToString();
+MessageBox.Show(ShortColorsNumbersList1_Bio1);
+return "";   
 }*/
     }
 }
