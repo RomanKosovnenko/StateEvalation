@@ -105,7 +105,7 @@ namespace StateEvaluation.Model
             list.Insert(0, "All");
             return list;
         }
-        public void UpdateTestInPreference( Preference person)
+        public void UpdateTestInPreference(Preference person)
         {
             var items = this.Preference.Where(item => item.Id == person.Id).Single<Preference>();
             items.Oder1 = person.Oder1;
@@ -117,6 +117,31 @@ namespace StateEvaluation.Model
             items.ShortOder1 = person.ShortOder1;
             items.ShortOder2 = person.ShortOder2;
             items.Compare = person.Preference1 == person.Preference2 ? "true" : "false";
+            SubmitChanges();
+        }
+        public void UpdateTestInPreference(People people)
+        {
+            var items = this.People.Where(item => item.Id == people.Id).Single<People>();
+            items.Id = people.Id;
+            items.Firstname = people.Firstname;
+            items.Lastname = people.Lastname;
+            items.Birthday = people.Birthday;
+            items.Workposition = people.Workposition;
+            items.Expedition = people.Expedition;
+            items.Number = people.Number;
+            SubmitChanges();
+        }
+        public void UpdateTestInPreference(SubjectiveFeeling feeling)
+        {
+            var items = this.SubjectiveFeeling.Where(item => item.Id == feeling.Id).Single<SubjectiveFeeling>();
+            items.GeneralWeaknes = feeling.GeneralWeaknes;
+            items.PoorAppetite = feeling.PoorAppetite;
+            items.PoorSleep = feeling.PoorSleep;
+            items.BadMood = feeling.BadMood;
+            items.HeavyHead = feeling.HeavyHead;
+            items.SlowThink = feeling.SlowThink;
+            items.UserId = feeling.UserId;
+            items.Date = feeling.Date;
             SubmitChanges();
         }
         public IEnumerable<string> ShortColorsNumbersList()

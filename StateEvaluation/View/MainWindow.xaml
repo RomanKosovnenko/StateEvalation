@@ -32,6 +32,7 @@
         <helpers:NumberToRelax1Converter x:Key="NumberToRelax1Converter" />
         <helpers:NumberToRelax2Converter x:Key="NumberToRelax2Converter" />
         <helpers:NameToMultiBrushConverter x:Key="NameToMultiBrushConverter" />
+        <helpers:PreferenceSameAsRelax x:Key="PreferenceSameAsRelax" />
         <helpers:PreferenceToBrushConverter x:Key="PreferenceToBrushConverter" />
         <helpers:ButtonToVisibilityConverter x:Key="ButtonToVisibilityConverter" />
         <helpers:BooleanToNOTVisibilityConverter x:Key="BooleanToNOTVisibilityConverter" />
@@ -77,6 +78,7 @@
                     <TextBox x:Name="ExpeditionTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="4" FontSize="20" LostFocus="NumberTextbox_LostFocus"/>
                     <TextBox x:Name="NumberTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="5" FontSize="20" LostFocus="NumberTextbox_LostFocus"/>
                     <Button x:Name="AddPersonBtn" Content="Add" Grid.Row="1" Grid.Column="6" HorizontalContentAlignment="Center" Margin="3" Click="AddPersonBtn_Click"/>
+                    <Button x:Name="ApplyPeopleChangesBTN" Content="Save" Grid.Row="2" Grid.Column="6" HorizontalContentAlignment="Center" Margin="3" Click="SavePersonBtn_Click" Visibility="Hidden"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItem1" Header="{x:Static p:Resources.TestsTabHeader}">
@@ -488,7 +490,7 @@
                         Grid.Row="3"
                         Grid.Column="36"
                         Margin="0,25,0,-25"
-                        Click="SeveChangesTestCommand"
+                        Click="SaveChangesTestCommand"
                         Content="Применить"
                         Visibility="Hidden"/>
                 </Grid>
@@ -523,8 +525,14 @@
                             Grid.Column="16"
                             Margin="0,0,0,-11"
                             Click="AddFeelingPeople"
-                            Command="{Binding SaveFeelingsCommand}"
                             Content="Добавить запись" />
+                    <Button
+                        x:Name="ApplyFeelingChangesBTN"
+                            Grid.Column="16"
+                            Margin="0,40,0,-40"
+                            Click="SaveFeelingPeople"
+                            Content="Применить" Grid.Row="1" 
+                        Visibility="Hidden"/>
 
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
@@ -624,7 +632,7 @@
 
                     <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Prew" Margin="776,26,0,0" Grid.ColumnSpan="2" >Prew</Button>
                     <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Next" Margin="851,26,0,0" Grid.ColumnSpan="2" >Next</Button>
-                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Menu" Margin="926,26,0,0" Grid.ColumnSpan="2" >Menu</Button>
+                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Menu" Margin="926,26,0,0" Grid.ColumnSpan="2" Visibility="Hidden">Menu</Button>
 
                     <DatePicker Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="476,26,0,0" Name="DateNow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}" Grid.ColumnSpan="2"/>
                     <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="626,26,0,0" Click="DrawGraphs" Grid.ColumnSpan="2">Построить графики</Button>
@@ -658,6 +666,13 @@
                     <DataGridTextColumn Header="{x:Static p:Resources.ProfessionHeader}" Binding="{Binding Workposition, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.ExpeditionHeader}" Binding="{Binding Expedition}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.NumberHeader}" Binding="{Binding Number}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="EditPersonBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="EditPersonBtn_Click" Tag="{Binding Id}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -750,7 +765,7 @@
                     </DataGridTemplateColumn>
 
                     <!-- Preference1 -->
-                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
+                    <DataGridTextColumn x:Name="Pre1" Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
                                         Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
@@ -782,7 +797,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                   
+
                     <!-- BioColor II (ThreePictures) -->
                     <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIPictures}, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -803,7 +818,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    
+
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor II (TwelveColor) -->
                     <DataGridTemplateColumn Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280"
@@ -955,6 +970,67 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="200"/>
+                    <!-- Preference1 -->
+                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
+                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Background" Value="{Binding Preference1, Converter={StaticResource PreferenceToBrushConverter}}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <!-- Preference2 -->
+                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
+                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Background" Value="{Binding Preference2, Converter={StaticResource PreferenceToBrushConverter}}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <!-- Compare Pref1 + Relax1-->
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50"/>
+                    <DataGridTextColumn Header="1" ClipboardContentBinding="{x:Null}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
+                                <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+                                <Setter Property="TextBlock.FontSize" Value="20"/>
+                                <Setter Property="TextBlock.Text">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource PreferenceSameAsRelax}">
+                                            <Binding Path="Preference1"/>
+                                            <Binding Path="RelaxTable1"/>
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <!-- Compare Pref2 + Relax2-->
+                    <DataGridTextColumn Header="2" ClipboardContentBinding="{x:Null}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
+                                <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+                                <Setter Property="TextBlock.FontSize" Value="20"/>
+                                <Setter Property="TextBlock.Text">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource PreferenceSameAsRelax}">
+                                            <Binding Path="Preference2"/>
+                                            <Binding Path="RelaxTable2"/>
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+
                 </DataGrid.Columns>
             </DataGrid>
 
@@ -968,6 +1044,13 @@
                     <DataGridCheckBoxColumn Header="{x:Static p:Resources.BadMoodColumnHeader}" Binding="{Binding BadMood}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridCheckBoxColumn Header="{x:Static p:Resources.HeavyHeadColumnHeader}" Binding="{Binding HeavyHead}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridCheckBoxColumn Header="{x:Static p:Resources.SlowThinkColumnHeader}" Binding="{Binding SlowThink}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="EditFeelingsBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="EditFeelingsBtn_Click" Tag="{Binding Id}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

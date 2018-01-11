@@ -121,6 +121,7 @@
     <Compile Include="Helpers\NameToMultiBrushConverter.cs" />
     <Compile Include="Helpers\NumberToRelax1Converter.cs" />
     <Compile Include="Helpers\NumberToRelax2Converter.cs" />
+    <Compile Include="Helpers\PreferenceSameAsRelax.cs" />
     <Compile Include="Helpers\PreferenceToBrushConverter.cs" />
     <Compile Include="View\FeelingsChart.xaml.cs">
       <DependentUpon>FeelingsChart.xaml</DependentUpon>

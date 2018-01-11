@@ -85,6 +85,20 @@ namespace StateEvaluation
             selectedUIDInSubjectiveFeeling.SelectedIndex = -1;
             selectedDateInSubjectiveFeeling.Text = "";
         }
+        private void EditPersonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string tag = ((Button)sender).Tag.ToString();
+            var items = _preferenceDb.People.Select(item => item).Where(item => item.Id.ToString() == tag);
+            People people = items.Single();
+            SetValueInTabs(people);
+        }
+        private void EditFeelingsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string tag = ((Button)sender).Tag.ToString();
+            var items = _preferenceDb.SubjectiveFeeling.Select(item => item).Where(item => item.Id.ToString() == tag);
+            SubjectiveFeeling feeling = items.Single();
+            SetValueInTabs(feeling);
+        }
         private void SetValueInTabsCommand(object sender, RoutedEventArgs e)
         {
             string tag = ((Button)sender).Tag.ToString();
@@ -92,7 +106,45 @@ namespace StateEvaluation
             Preference preference = items.Single();
             SetValueInTabs(preference);
         }
-        private void SeveChangesTestCommand(object sender, RoutedEventArgs e)
+        private void SavePersonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (TestID.Text.Trim().Length == 0) return;
+            People people = new People()
+            {
+                Id = new Guid(TestID.Text),
+                Firstname = FirstnameTextbox.Text,
+                Lastname = LastnameTextbox.Text,
+                Birthday = BirthdayDatePicker.Text,
+                Workposition = ProfessionTextbox.Text,
+                Expedition = int.Parse(ExpeditionTextbox.Text),
+                Number = int.Parse(NumberTextbox.Text),
+
+
+            };
+            _preferenceDb.UpdateTestInPreference(people);
+            PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
+            ClearInputs();
+        }
+        private void SaveFeelingPeople(object sender, RoutedEventArgs e)
+        {
+            if (TestID.Text.Trim().Length == 0) return;
+            SubjectiveFeeling feeling = new SubjectiveFeeling()
+            {
+                Id = new Guid(TestID.Text),
+                GeneralWeaknes = (bool)markGeneralWeakness.IsChecked,
+                PoorAppetite = (bool)markBadAppetite.IsChecked,
+                PoorSleep = (bool)markBadDream.IsChecked,
+                BadMood = (bool)markBadMood.IsChecked,
+                HeavyHead = (bool)markHeavyHead.IsChecked,
+                SlowThink = (bool)markSlowThink.IsChecked,
+                UserId = selectedUIDInSubjectiveFeeling.SelectedValue.ToString(),
+                Date = (DateTime)selectedDateInSubjectiveFeeling.SelectedDate
+            };
+            _preferenceDb.UpdateTestInPreference(feeling);
+            SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
+            ClearInputs();
+        }
+        private void SaveChangesTestCommand(object sender, RoutedEventArgs e)
         {
             var Cin3s = new List<string> { C1in3, C2in3, C3in3 };
             var C2in3s = new List<string> { C21in3, C22in3, C23in3 };
@@ -132,9 +184,34 @@ namespace StateEvaluation
                 TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
                 ClearInputs();
                 ApplyChangesBTN.Visibility = Visibility.Hidden;
+                TestID.Text = "";
             }
         }
 
+        private void SetValueInTabs(SubjectiveFeeling feeling)
+        {
+            TestID.Text = feeling.Id.ToString();
+            markGeneralWeakness.IsChecked = feeling.GeneralWeaknes;
+            markBadAppetite.IsChecked = feeling.PoorAppetite;
+            markBadDream.IsChecked = feeling.PoorSleep;
+            markBadMood.IsChecked = feeling.BadMood;
+            markHeavyHead.IsChecked = feeling.HeavyHead;
+            markSlowThink.IsChecked = feeling.SlowThink;
+            selectedUIDInSubjectiveFeeling.SelectedValue = feeling.UserId;
+            selectedDateInSubjectiveFeeling.Text = feeling.Date.ToString();
+            ApplyFeelingChangesBTN.Visibility = Visibility.Visible;
+        }
+        private void SetValueInTabs(People people)
+        {
+            FirstnameTextbox.Text = people.Firstname.Trim();
+            LastnameTextbox.Text = people.Lastname.Trim();
+            BirthdayDatePicker.Text = people.Birthday.Trim();
+            ProfessionTextbox.Text = people.Workposition.Trim();
+            ExpeditionTextbox.Text = people.Expedition.ToString().Trim();
+            NumberTextbox.Text = people.Number.ToString().Trim();
+            TestID.Text = people.Id.ToString().Trim();
+            ApplyPeopleChangesBTN.Visibility = Visibility.Visible;
+        }
         private void SetValueInTabs(Preference preference)
         {
             ApplyChangesBTN.Visibility = Visibility.Visible;
@@ -708,7 +785,24 @@ namespace StateEvaluation
             Yellow2Stat.IsChecked = false;
             Blue2Stat.IsChecked = false;
             Gray2Stat.IsChecked = false;
+            FirstnameTextbox.Text = "";
+            LastnameTextbox.Text = "";
+            BirthdayDatePicker.Text = "";
+            ProfessionTextbox.Text = "";
+            ExpeditionTextbox.Text = "";
+            NumberTextbox.Text = "";
+            markGeneralWeakness.IsChecked = false;
+            markBadAppetite.IsChecked = false;
+            markBadDream.IsChecked = false;
+            markBadMood.IsChecked = false;
+            markHeavyHead.IsChecked = false;
+            markSlowThink.IsChecked = false;
+            selectedUIDInSubjectiveFeeling.SelectedIndex = -1;
+            selectedDateInSubjectiveFeeling.Text = "";
+            TestID.Text = "";
 
+            ApplyFeelingChangesBTN.Visibility = Visibility.Hidden;
+            ApplyPeopleChangesBTN.Visibility = Visibility.Hidden;
             ApplyChangesBTN.Visibility = Visibility.Hidden;
         }
         private void ClearFilters()
@@ -992,6 +1086,10 @@ namespace StateEvaluation
             Settings.Default.p2 = pc2.Text;
             Settings.Default.p3 = pc3.Text;
             Settings.Default.p4 = pc4.Text;
+
+            ImageGenerator.Generate(23);
+            ImageGenerator.Generate(28);
+            ImageGenerator.Generate(33);
         }
         /* private IEnumerable<string> ExeptValue()
 {
