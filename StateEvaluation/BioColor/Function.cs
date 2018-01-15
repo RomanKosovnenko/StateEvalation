@@ -137,7 +137,7 @@ namespace StateEvaluation.BioColor
             myGrid.Children.Add(myLine);
 
         }
-   
+
         public static void GetCanvasImage(String a, int x, int Delta, Grid myGrid)
         {
             try
@@ -150,12 +150,12 @@ namespace StateEvaluation.BioColor
                 theImage.EndInit();
                 stream.Close();
                 stream.Dispose();
-                
+
                 System.Windows.Media.ImageBrush myImageBrush = new System.Windows.Media.ImageBrush(theImage);
 
                 for (int i = -range; i <= range * 3; ++i)
                 {
-                    myGrid.Children.Add( new Canvas
+                    myGrid.Children.Add(new Canvas
                     {
                         Width = theImage.Width,
                         Height = theImage.Height,
@@ -172,9 +172,9 @@ namespace StateEvaluation.BioColor
             }
             finally
             {
-                
+
             }
         }
-        
+
     }
 }

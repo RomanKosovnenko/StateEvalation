@@ -78,14 +78,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StateEvaluation.exe" size="5328896">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StateEvaluation.exe" size="5328384">
       <assemblyIdentity name="StateEvaluation" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>u2jjU3NRLAOgQzFfqe/VnZGy1SK41OcHR5uVADwIrSU=</dsig:DigestValue>
+        <dsig:DigestValue>bWvWVR9daQklt0Wo20EkLOAI1BdTf9OLFgdqRYXrz8s=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -97,7 +97,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>RBBUtNik84yMgPgViEDjj1J9Vm91tMP9jgocUBYVb9w=</dsig:DigestValue>
+        <dsig:DigestValue>eZlZjPCoS/CHwKBmfRfcUPgVJ8sirAovXsD9cIHU2zY=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -221,13 +221,13 @@
       <dsig:DigestValue>Edf7527QiZlwGbPyt6msKlFIREiy/wIkVX0ZRMCGB0Q=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="StateEvaluation.exe.config" size="5441">
+  <file name="StateEvaluation.exe.config" size="5111">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>kiHALsXXewF6hgy8gK12IwFNqi91+PiX4aswJvBsxVs=</dsig:DigestValue>
+      <dsig:DigestValue>uJJhMwfan8bwC5hQxYpvO8zlI0oXcZnsccNNZ+n5nTQ=</dsig:DigestValue>
     </hash>
   </file>
 </asmv1:assembly>

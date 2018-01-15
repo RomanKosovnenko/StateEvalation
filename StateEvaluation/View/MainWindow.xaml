@@ -1379,6 +1379,7 @@
                 <Button    Width="65"  Height="25" Name="ib4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,275,0,0" Click="CMYK2RGB">&lt;--</Button>
 
 
+                <Button Width="65"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="800,200,0,0" Click="ResetColors">Reset</Button>
                 <Button Width="65"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="800,250,0,0" Click="RestoreColors">Restore</Button>
                 <Button Width="65"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="800,275,0,0" Click="SaveColors">Save</Button>
 

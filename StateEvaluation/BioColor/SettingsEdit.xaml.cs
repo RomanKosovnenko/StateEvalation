@@ -11,9 +11,6 @@ namespace StateEvaluation.BioColor
         public SettingsEdit()
         {
             InitializeComponent();
-            pr.Text = Settings.Default.Path_Red;
-            pg.Text = Settings.Default.Path_Green;
-            pb.Text = Settings.Default.Path_Blue;
         }
         private string FilePicker()
         {
@@ -74,13 +71,6 @@ namespace StateEvaluation.BioColor
             ImageGenerator.Generate(23);
             ImageGenerator.Generate(28);
             ImageGenerator.Generate(33);
-        }
-        public void Get()
-        {
-            Settings.Default.Path_Red = pr.Text;
-            Settings.Default.Path_Green = pg.Text;
-            Settings.Default.Path_Blue = pb.Text;
-            Settings.Default.Save();
         }
     }
 }

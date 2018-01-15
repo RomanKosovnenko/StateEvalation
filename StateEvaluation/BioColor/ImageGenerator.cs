@@ -6,11 +6,12 @@ namespace StateEvaluation.BioColor
 {
     internal static class ImageGenerator
     {
-        public static Regex HEX = new Regex(@"([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})");
+        public static Regex HEX = new Regex(@"^([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$");
         private static readonly int SquareSize = Settings.Default.square;
         private static Graphics _graphics;
         private static string[] _colors;
-        private const float MAX = 255;
+        public const float MAX = 0xFF;
+        public const int MAX_HEX = 0xFF;
         public static int[] RgbToCmyk(string RGB)
         {
             var match = HEX.Match(RGB.ToUpper());
@@ -31,27 +32,26 @@ namespace StateEvaluation.BioColor
         }
         public static int[] RgbToCmyk(int R, int G, int B)
         {
-            int C, M, Y, K;
             if (R == 0 && G == 0 && B == 0)
             {
-                C = M = Y = 0;
-                K = 1;
+                return new int[] { 0, 0, 0, (int)MAX };
             }
             else
             {
-                K = (int)(MAX - System.Math.Max(R, System.Math.Max(G, B)));
+                int K = MAX_HEX - System.Math.Max(R, System.Math.Max(G, B));
+                int k = (int)(MAX * K / MAX_HEX);
                 // K = 0;
-                C = (int)(MAX * (MAX - R - K) / (MAX - K));
-                M = (int)(MAX * (MAX - G - K) / (MAX - K));
-                Y = (int)(MAX * (MAX - B - K) / (MAX - K));
+                int c = (int)(MAX * (MAX_HEX - R - K) / (MAX_HEX - K));
+                int m = (int)(MAX * (MAX_HEX - G - K) / (MAX_HEX - K));
+                int y = (int)(MAX * (MAX_HEX - B - K) / (MAX_HEX - K));
+                return new int[] { c, m, y, k };
             }
-            return new int[] { C, M, Y, K };
         }
         public static int[] CmykToRgb(int C, int M, int Y, int K)
         {
-            int R = (int)((MAX - C) * (MAX - K) / MAX);
-            int G = (int)((MAX - M) * (MAX - K) / MAX);
-            int B = (int)((MAX - Y) * (MAX - K) / MAX);
+            int R = (int)((1 - C / MAX) * (1 - K / MAX) * MAX_HEX);
+            int G = (int)((1 - M / MAX) * (1 - K / MAX) * MAX_HEX);
+            int B = (int)((1 - Y / MAX) * (1 - K / MAX) * MAX_HEX);
             return new int[] { R, G, B };
         }
         private static void DrawSquare(Point upperLeft, string color, bool reverse = false)

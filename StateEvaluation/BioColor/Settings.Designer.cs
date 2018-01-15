@@ -23,18 +23,6 @@ namespace StateEvaluation.BioColor {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Image_23.png")]
-        public string Path_Red {
-            get {
-                return ((string)(this["Path_Red"]));
-            }
-            set {
-                this["Path_Red"] = value;
-            }
-        }
-        
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("23")]
@@ -254,30 +242,6 @@ namespace StateEvaluation.BioColor {
             }
             set {
                 this["i4"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Image_28.png")]
-        public string Path_Green {
-            get {
-                return ((string)(this["Path_Green"]));
-            }
-            set {
-                this["Path_Green"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Image_33.png")]
-        public string Path_Blue {
-            get {
-                return ((string)(this["Path_Blue"]));
-            }
-            set {
-                this["Path_Blue"] = value;
             }
         }
     }

@@ -1006,22 +1006,34 @@ namespace StateEvaluation
             int.TryParse((FindName("y" + factor + "c" + id) as TextBox).Text.ToString(), out int Y);
             int.TryParse((FindName("k" + factor + "c" + id) as TextBox).Text.ToString(), out int K);
 
-            if(new List<int> { C,M,Y,K}.Any(x => x < 0 || x > 255))
+            if (new List<int> { C, M, Y, K }.Any(x => x < 0 || x > ImageGenerator.MAX))
             {
-                MessageBox.Show("Imvalid color");
+                MessageBox.Show("Invalid color");
                 return;
             }
-            // R = 255 * (1 - C) * (1 - K);
+
             int[] RGB = ImageGenerator.CmykToRgb(C, M, Y, K);
-            // MessageBox.Show(String.Format("{0}{1}\nC: {2}, M: {3}, Y: {4}, K: {5}\nR: {6}, G: {7}, B: {8}", factor, id, C, M, Y, K, R, G, B));
             string rgb = String.Format("{0:X2}{1:X2}{2:X2}", RGB[0], RGB[1], RGB[2]);
             (FindName(factor + "c" + id) as TextBox).Text = rgb;
-            (FindName(factor + "cb" + id) as GeometryDrawing).Brush = (Brush)new BrushConverter().ConvertFromString("#" + rgb);
+            if (ImageGenerator.HEX.IsMatch(rgb))
+            {
+                (FindName(factor + "cb" + id) as GeometryDrawing).Brush = (Brush)new BrushConverter().ConvertFromString("#" + rgb);
+            }
         }
 
         private void RestoreColors(object sender, RoutedEventArgs e)
         {
             RestoreColors();
+        }
+        private void ResetColors(object sender, RoutedEventArgs e)
+        {
+            var dialogResult = MessageBox.Show("Do you want to RESET colors settings?", "Reset Settings", MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                Settings.Default.Reset();
+                RestoreColors();
+                SaveColors();
+            }
         }
         internal void RestoreColors()
         {
@@ -1043,18 +1055,14 @@ namespace StateEvaluation
                 var name = element.Name;
                 var factor = name.Substring(0, 1);
                 var id = name.Substring(name.Length - 1);
-
-                // R' = R / 255;
-                // K = 1 - max(r,g,b);
-                // C = (1 - R' - K) / (1 / K);
-                // C = (255 - R - K) / (255 / K);
+                
                 int[] CMYK = ImageGenerator.RgbToCmyk(element.Text);
-                // m e c 4;
+
                 (FindName("c" + factor + "c" + id) as TextBox).Text = CMYK[0].ToString();
                 (FindName("m" + factor + "c" + id) as TextBox).Text = CMYK[1].ToString();
                 (FindName("y" + factor + "c" + id) as TextBox).Text = CMYK[2].ToString();
                 (FindName("k" + factor + "c" + id) as TextBox).Text = CMYK[3].ToString();
-                
+
                 (FindName(factor + "cb" + id) as GeometryDrawing).Brush = (Brush)new BrushConverter().ConvertFromString("#" + element.Text);
 
             }
