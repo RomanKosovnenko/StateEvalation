@@ -989,7 +989,7 @@ namespace StateEvaluation
 
         private void SetFilterVisibility(object sender, SelectionChangedEventArgs e)
         {
-            if(Filter != null)
+            if (Filter != null)
             {
                 Filter.Visibility = tabControl.SelectedIndex > 2 ? Visibility.Hidden : Visibility.Visible;
             }
@@ -1006,15 +1006,21 @@ namespace StateEvaluation
             int.TryParse((FindName("y" + factor + "c" + id) as TextBox).Text.ToString(), out int Y);
             int.TryParse((FindName("k" + factor + "c" + id) as TextBox).Text.ToString(), out int K);
 
+            if(new List<int> { C,M,Y,K}.Any(x => x < 0 || x > 255))
+            {
+                MessageBox.Show("Imvalid color");
+                return;
+            }
             // R = 255 * (1 - C) * (1 - K);
-            int R = (int)((MAX - C) * (MAX - K) / MAX);
-            int G = (int)((MAX - M) * (MAX - K) / MAX);
-            int B = (int)((MAX - Y) * (MAX - K) / MAX);
+            int[] RGB = ImageGenerator.CmykToRgb(C, M, Y, K);
             // MessageBox.Show(String.Format("{0}{1}\nC: {2}, M: {3}, Y: {4}, K: {5}\nR: {6}, G: {7}, B: {8}", factor, id, C, M, Y, K, R, G, B));
-            (FindName(factor + "c" + id) as TextBox).Text = String.Format("{0:X2}{1:X2}{2:X2}", R, G, B);
+            string rgb = String.Format("{0:X2}{1:X2}{2:X2}", RGB[0], RGB[1], RGB[2]);
+            (FindName(factor + "c" + id) as TextBox).Text = rgb;
+            (FindName(factor + "cb" + id) as GeometryDrawing).Brush = (Brush)new BrushConverter().ConvertFromString("#" + rgb);
         }
 
-        private void RestoreColors(object sender, RoutedEventArgs e) {
+        private void RestoreColors(object sender, RoutedEventArgs e)
+        {
             RestoreColors();
         }
         internal void RestoreColors()
@@ -1032,39 +1038,25 @@ namespace StateEvaluation
             pc2.Text = Settings.Default.p2;
             pc3.Text = Settings.Default.p3;
             pc4.Text = Settings.Default.p4;
-            var re = new Regex(@"([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})");
-            foreach(var element in new TextBox[] { ic1, ic2, ic3, ic4, ec1, ec2, ec3, ec4, pc1, pc2, pc3, pc4 })
+            foreach (var element in new TextBox[] { ic1, ic2, ic3, ic4, ec1, ec2, ec3, ec4, pc1, pc2, pc3, pc4 })
             {
                 var name = element.Name;
                 var factor = name.Substring(0, 1);
                 var id = name.Substring(name.Length - 1);
 
-                var match = re.Match(element.Text);
-                int R = int.Parse(match.Groups[1].Value, NumberStyles.HexNumber);
-                int G = int.Parse(match.Groups[2].Value, NumberStyles.HexNumber);
-                int B = int.Parse(match.Groups[3].Value, NumberStyles.HexNumber);
-
                 // R' = R / 255;
                 // K = 1 - max(r,g,b);
                 // C = (1 - R' - K) / (1 / K);
                 // C = (255 - R - K) / (255 / K);
-                int C, M, Y, K;
-                if (R == 0 && G == 0 && B == 0) {
-                    C = M = Y = 0;
-                    K = 1;
-                }
-                else
-                {
-                    K = (int)(MAX - Math.Max(R, Math.Max(G, B)));
-                    C = (int)(MAX * (MAX - R - K) / (MAX - K));
-                    M = (int)(MAX * (MAX - G - K) / (MAX - K));
-                    Y = (int)(MAX * (MAX - B - K) / (MAX - K));
-                }
+                int[] CMYK = ImageGenerator.RgbToCmyk(element.Text);
                 // m e c 4;
-                (FindName("c" + factor + "c" + id) as TextBox).Text = C.ToString();
-                (FindName("m" + factor + "c" + id) as TextBox).Text = M.ToString();
-                (FindName("y" + factor + "c" + id) as TextBox).Text = Y.ToString();
-                (FindName("k" + factor + "c" + id) as TextBox).Text = K.ToString();
+                (FindName("c" + factor + "c" + id) as TextBox).Text = CMYK[0].ToString();
+                (FindName("m" + factor + "c" + id) as TextBox).Text = CMYK[1].ToString();
+                (FindName("y" + factor + "c" + id) as TextBox).Text = CMYK[2].ToString();
+                (FindName("k" + factor + "c" + id) as TextBox).Text = CMYK[3].ToString();
+                
+                (FindName(factor + "cb" + id) as GeometryDrawing).Brush = (Brush)new BrushConverter().ConvertFromString("#" + element.Text);
+
             }
         }
 
@@ -1074,6 +1066,11 @@ namespace StateEvaluation
         }
         internal void SaveColors()
         {
+            if (new List<TextBox> { ic1, ic2, ic3, ic4, ec1, ec2, ec3, ec4, pc1, pc2, pc3, pc4 }.Any(x => !ImageGenerator.HEX.IsMatch(x.Text.ToUpper())))
+            {
+                MessageBox.Show("Invalid color!");
+                return;
+            }
             Settings.Default.i1 = ic1.Text;
             Settings.Default.i2 = ic2.Text;
             Settings.Default.i3 = ic3.Text;
@@ -1086,7 +1083,9 @@ namespace StateEvaluation
             Settings.Default.p2 = pc2.Text;
             Settings.Default.p3 = pc3.Text;
             Settings.Default.p4 = pc4.Text;
+            Settings.Default.Save();
 
+            RestoreColors();
             ImageGenerator.Generate(23);
             ImageGenerator.Generate(28);
             ImageGenerator.Generate(33);

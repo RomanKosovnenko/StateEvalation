@@ -21,7 +21,60 @@ namespace StateEvaluation.BioColor
         internal static Color ColorMix(Color c1, Color c2, Color c3)
         {
 
-    //        return Color.Black;
+            const int DIVIDER_3 = 3;
+            const int DIVIDER_2 = 2;
+            const int SPLACER = 128;
+
+            int[] C1 = ImageGenerator.RgbToCmyk(c1);
+            int[] C2 = ImageGenerator.RgbToCmyk(c2);
+            int[] C3 = ImageGenerator.RgbToCmyk(c3);
+
+            if (c1.A > SPLACER && c2.A > SPLACER && c3.A > SPLACER)
+            {
+                int[] RGB = ImageGenerator.CmykToRgb(
+                    (C1[0] + C2[0] + C3[0]) / DIVIDER_3,
+                    (C1[1] + C2[1] + C3[1]) / DIVIDER_3,
+                    (C1[2] + C2[2] + C3[2]) / DIVIDER_3,
+                    (C1[3] + C2[3] + C3[3]) / DIVIDER_3
+                );
+                return Color.FromArgb(RGB[0], RGB[1], RGB[2]);
+
+                return Color.FromArgb(
+                    (byte)((c1.R + c2.R + c3.R) / DIVIDER_3),
+                    (byte)((c1.G + c2.G + c3.G) / DIVIDER_3),
+                    (byte)((c1.B + c2.B + c3.B) / DIVIDER_3)
+                );
+            }
+            else if (c1.A > SPLACER && c2.A > SPLACER ||
+                    c2.A > SPLACER && c3.A > SPLACER ||
+                    c3.A > SPLACER && c1.A > SPLACER)
+            {
+                int[] RGB = ImageGenerator.CmykToRgb(
+                    (C1[0] + C2[0] + C3[0]) / DIVIDER_2,
+                    (C1[1] + C2[1] + C3[1]) / DIVIDER_2,
+                    (C1[2] + C2[2] + C3[2]) / DIVIDER_2,
+                    (C1[3] + C2[3] + C3[3]) / DIVIDER_2
+                );
+                return Color.FromArgb(RGB[0], RGB[1], RGB[2]);
+
+                return Color.FromArgb(
+                    (byte)((c1.R + c2.R + c3.R) / DIVIDER_2),
+                    (byte)((c1.G + c2.G + c3.G) / DIVIDER_2),
+                    (byte)((c1.B + c2.B + c3.B) / DIVIDER_2)
+                );
+            }
+            else
+            {
+                if (c1.A > SPLACER) return c1;
+                else if (c2.A > SPLACER) return c2;
+                else if (c3.A > SPLACER) return c3;
+                else return Color.FromArgb(0, 0, 0, 0);
+            }
+        }
+        /*
+        internal static Color ColorMix(Color c1, Color c2, Color c3)
+        {
+
             const int DIVIDER_3 = 4;
             const int DIVIDER_2 = 4;
             const int SPLACER = 128;
@@ -52,6 +105,7 @@ namespace StateEvaluation.BioColor
                 else return Color.FromArgb(0, 0, 0, 0);
             }
         }
+        */
 
 
         static public void DrawClear(Grid myGrid)

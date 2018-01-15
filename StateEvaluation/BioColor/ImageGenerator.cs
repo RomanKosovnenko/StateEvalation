@@ -1,12 +1,59 @@
 ﻿using System.Drawing;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace StateEvaluation.BioColor
 {
     internal static class ImageGenerator
     {
+        public static Regex HEX = new Regex(@"([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})");
         private static readonly int SquareSize = Settings.Default.square;
         private static Graphics _graphics;
         private static string[] _colors;
+        private const float MAX = 255;
+        public static int[] RgbToCmyk(string RGB)
+        {
+            var match = HEX.Match(RGB.ToUpper());
+            try
+            {
+                int R = int.Parse(match.Groups[1].Value, NumberStyles.HexNumber);
+                int G = int.Parse(match.Groups[2].Value, NumberStyles.HexNumber);
+                int B = int.Parse(match.Groups[3].Value, NumberStyles.HexNumber);
+                return RgbToCmyk(R, G, B);
+            }
+            catch (System.FormatException) {
+                return new int[] { 0, 0, 0, 0};
+            }
+        }
+        public static int[] RgbToCmyk(Color color)
+        {
+            return RgbToCmyk(color.R, color.G, color.B);
+        }
+        public static int[] RgbToCmyk(int R, int G, int B)
+        {
+            int C, M, Y, K;
+            if (R == 0 && G == 0 && B == 0)
+            {
+                C = M = Y = 0;
+                K = 1;
+            }
+            else
+            {
+                K = (int)(MAX - System.Math.Max(R, System.Math.Max(G, B)));
+                // K = 0;
+                C = (int)(MAX * (MAX - R - K) / (MAX - K));
+                M = (int)(MAX * (MAX - G - K) / (MAX - K));
+                Y = (int)(MAX * (MAX - B - K) / (MAX - K));
+            }
+            return new int[] { C, M, Y, K };
+        }
+        public static int[] CmykToRgb(int C, int M, int Y, int K)
+        {
+            int R = (int)((MAX - C) * (MAX - K) / MAX);
+            int G = (int)((MAX - M) * (MAX - K) / MAX);
+            int B = (int)((MAX - Y) * (MAX - K) / MAX);
+            return new int[] { R, G, B };
+        }
         private static void DrawSquare(Point upperLeft, string color, bool reverse = false)
         {
             _graphics.FillRectangle(

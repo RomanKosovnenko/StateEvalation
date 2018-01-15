@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
+using StateEvaluation.BioColor;
 using StateEvaluation.ViewModel;
 
 namespace StateEvaluation.Helpers
@@ -15,20 +16,25 @@ namespace StateEvaluation.Helpers
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             string input = value?.ToString()?.Trim();
+            string color;
             switch (input)
             {
                 case "Красная":
-                    return Brushes.Red;
+                    color = Settings.Default.p3; // Brushes.Red;
+                    break;
                 case "Синяя":
-                    return Brushes.Blue;
+                    color = Settings.Default.i3; // Brushes.Blue;
+                    break;
                 case "Желтая":
-                    return Brushes.Yellow;
+                    color = Settings.Default.e3; // Brushes.Yellow;
+                    break;
                 case "Смешанная":
                     return Brushes.Gray;
 
                 default:
                     return Brushes.White; //DependencyProperty.UnsetValue;
             }
+            return new BrushConverter().ConvertFromString("#" + color);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

@@ -700,7 +700,7 @@
                     <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor I START -->
                     <!-- BioColor I (Three) -->
-                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
+                    <DataGridTemplateColumn Header="Short 1" ClipboardContentBinding="{x:Null}"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -765,7 +765,7 @@
                     </DataGridTemplateColumn>
 
                     <!-- Preference1 -->
-                    <DataGridTextColumn x:Name="Pre1" Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
+                    <DataGridTextColumn x:Name="Pre1" Header="Preference1" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
                                         Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
@@ -778,7 +778,7 @@
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor II START -->
                     <!-- BioColor II (Three) -->
-                    <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
+                    <DataGridTemplateColumn Header="Short 2" ClipboardContentBinding="{x:Null}"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -863,7 +863,7 @@
                     </DataGridTemplateColumn>
 
                     <!-- Preference2 -->
-                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
+                    <DataGridTextColumn Header="Preference2" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
@@ -876,7 +876,7 @@
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn 
                         ClipboardContentBinding="{x:Null}"
-                        Header="23"
+                        Header="Physical"
                         Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=23}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
@@ -888,7 +888,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn 
                         ClipboardContentBinding="{x:Null}"
-                        Header="28"
+                        Header="Emotions"
                         Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=28}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
@@ -900,7 +900,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn 
                         ClipboardContentBinding="{x:Null}"
-                        Header="33"
+                        Header="Intelect"
                         Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=33}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
@@ -910,7 +910,8 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <DataGridTextColumn Header="Compare" Binding="{Binding Compare, Converter={StaticResource BooleanToChecker}}" ClipboardContentBinding="{x:Null}">
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="Compare P1 P2" Binding="{Binding Compare, Converter={StaticResource BooleanToChecker}}" ClipboardContentBinding="{x:Null}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
@@ -920,6 +921,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50" Header="Relax1">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -934,6 +936,65 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                    <!-- Preference1 -->
+                    <DataGridTextColumn Header="Preference1" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
+                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Background" Value="{Binding Preference1, Converter={StaticResource PreferenceToBrushConverter}}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <!-- Preference2 -->
+                    <DataGridTextColumn Header="Preference2" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
+                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Background" Value="{Binding Preference2, Converter={StaticResource PreferenceToBrushConverter}}" />
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    
+                    <!-- Compare Pref1 + Relax1-->
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="Compare P1 R1" ClipboardContentBinding="{x:Null}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
+                                <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+                                <Setter Property="TextBlock.FontSize" Value="20"/>
+                                <Setter Property="TextBlock.Text">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource PreferenceSameAsRelax}">
+                                            <Binding Path="Preference1"/>
+                                            <Binding Path="RelaxTable1"/>
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+                    <!-- Compare Pref2 + Relax2-->
+                    <DataGridTextColumn Header="Compare P2 R2" ClipboardContentBinding="{x:Null}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
+                                <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+                                <Setter Property="TextBlock.FontSize" Value="20"/>
+                                <Setter Property="TextBlock.Text">
+                                    <Setter.Value>
+                                        <MultiBinding Converter="{StaticResource PreferenceSameAsRelax}">
+                                            <Binding Path="Preference2"/>
+                                            <Binding Path="RelaxTable2"/>
+                                        </MultiBinding>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
                     <!-- 
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50">
                         <DataGridTemplateColumn.CellTemplate>
@@ -971,64 +1032,6 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="200"/>
-                    <!-- Preference1 -->
-                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
-                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Background" Value="{Binding Preference1, Converter={StaticResource PreferenceToBrushConverter}}" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-
-                    <!-- Preference2 -->
-                    <DataGridTextColumn Header="{x:Static p:Resources.PreferenceColumnHeader}" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
-                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Background" Value="{Binding Preference2, Converter={StaticResource PreferenceToBrushConverter}}" />
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-
-                    <!-- Compare Pref1 + Relax1-->
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50"/>
-                    <DataGridTextColumn Header="1" ClipboardContentBinding="{x:Null}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style>
-                                <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
-                                <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-                                <Setter Property="TextBlock.FontSize" Value="20"/>
-                                <Setter Property="TextBlock.Text">
-                                    <Setter.Value>
-                                        <MultiBinding Converter="{StaticResource PreferenceSameAsRelax}">
-                                            <Binding Path="Preference1"/>
-                                            <Binding Path="RelaxTable1"/>
-                                        </MultiBinding>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <!-- Compare Pref2 + Relax2-->
-                    <DataGridTextColumn Header="2" ClipboardContentBinding="{x:Null}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style>
-                                <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
-                                <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-                                <Setter Property="TextBlock.FontSize" Value="20"/>
-                                <Setter Property="TextBlock.Text">
-                                    <Setter.Value>
-                                        <MultiBinding Converter="{StaticResource PreferenceSameAsRelax}">
-                                            <Binding Path="Preference2"/>
-                                            <Binding Path="RelaxTable2"/>
-                                        </MultiBinding>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
 
                 </DataGrid.Columns>
@@ -1071,7 +1074,7 @@
                         <DrawingImage>
                             <DrawingImage.Drawing>
                                 <DrawingGroup>
-                                    <GeometryDrawing Brush="#F603EB">
+                                    <GeometryDrawing x:Name="pcb4" Brush="#F603EB">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1088,7 +1091,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing Brush="#FA0006">
+                                    <GeometryDrawing x:Name="pcb3" Brush="#FA0006">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1105,7 +1108,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing Brush="#FE280C">
+                                    <GeometryDrawing x:Name="pcb2" Brush="#FE280C">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1122,7 +1125,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing Brush="#F96F0A">
+                                    <GeometryDrawing x:Name="pcb1" Brush="#F96F0A">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1139,7 +1142,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing Brush="#FBBC0C">
+                                    <GeometryDrawing x:Name="ecb4" Brush="#FBBC0C">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1156,7 +1159,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing Brush="#F4FE09">
+                                    <GeometryDrawing x:Name="ecb3" Brush="#F4FE09">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1173,7 +1176,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing Brush="#7EFE07">
+                                    <GeometryDrawing x:Name="ecb2" Brush="#7EFE07">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1190,7 +1193,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing Brush="#31F715">
+                                    <GeometryDrawing x:Name="ecb1" Brush="#31F715">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1207,7 +1210,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing Brush="#3DDEFB">
+                                    <GeometryDrawing x:Name="icb4" Brush="#3DDEFB">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1224,7 +1227,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing Brush="#1855F7">
+                                    <GeometryDrawing x:Name="icb3" Brush="#1855F7">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1241,7 +1244,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing Brush="#0F2BEB">
+                                    <GeometryDrawing x:Name="icb2" Brush="#0F2BEB">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1258,7 +1261,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing Brush="#2317F5">
+                                    <GeometryDrawing x:Name="icb1" Brush="#2317F5">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1299,62 +1302,62 @@
 
 
 
-                <TextBox Width="160" Height="25" Name="pc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,  0,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,  0,0,0" />
                 <TextBox Width="50" Height="25" Name="cpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,  0,0,0" />
                 <TextBox Width="50" Height="25" Name="mpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,  0,0,0" />
                 <TextBox Width="50" Height="25" Name="ypc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,  0,0,0" />
                 <TextBox Width="50" Height="25" Name="kpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,  0,0,0" />
-                <TextBox Width="160" Height="25" Name="pc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350, 25,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350, 25,0,0" />
                 <TextBox Width="50" Height="25" Name="cpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575, 25,0,0" />
                 <TextBox Width="50" Height="25" Name="mpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625, 25,0,0" />
                 <TextBox Width="50" Height="25" Name="ypc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675, 25,0,0" />
                 <TextBox Width="50" Height="25" Name="kpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725, 25,0,0" />
-                <TextBox Width="160" Height="25" Name="pc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350, 50,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350, 50,0,0" />
                 <TextBox Width="50" Height="25" Name="cpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575, 50,0,0" />
                 <TextBox Width="50" Height="25" Name="mpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625, 50,0,0" />
                 <TextBox Width="50" Height="25" Name="ypc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675, 50,0,0" />
                 <TextBox Width="50" Height="25" Name="kpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725, 50,0,0" />
-                <TextBox Width="160" Height="25" Name="pc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350, 75,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350, 75,0,0" />
                 <TextBox Width="50" Height="25" Name="cpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575, 75,0,0" />
                 <TextBox Width="50" Height="25" Name="mpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625, 75,0,0" />
                 <TextBox Width="50" Height="25" Name="ypc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675, 75,0,0" />
                 <TextBox Width="50" Height="25" Name="kpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725, 75,0,0" />
-                <TextBox Width="160" Height="25" Name="ec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,100,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,100,0,0" />
                 <TextBox Width="50" Height="25" Name="cec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,100,0,0" />
                 <TextBox Width="50" Height="25" Name="mec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,100,0,0" />
                 <TextBox Width="50" Height="25" Name="yec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,100,0,0" />
                 <TextBox Width="50" Height="25" Name="kec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,100,0,0" />
-                <TextBox Width="160" Height="25" Name="ec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,125,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,125,0,0" />
                 <TextBox Width="50" Height="25" Name="cec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,125,0,0" />
                 <TextBox Width="50" Height="25" Name="mec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,125,0,0" />
                 <TextBox Width="50" Height="25" Name="yec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,125,0,0" />
                 <TextBox Width="50" Height="25" Name="kec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,125,0,0" />
-                <TextBox Width="160" Height="25" Name="ec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,150,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,150,0,0" />
                 <TextBox Width="50" Height="25" Name="cec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,150,0,0" />
                 <TextBox Width="50" Height="25" Name="mec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,150,0,0" />
                 <TextBox Width="50" Height="25" Name="yec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,150,0,0" />
                 <TextBox Width="50" Height="25" Name="kec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,150,0,0" />
-                <TextBox Width="160" Height="25" Name="ec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,175,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,175,0,0" />
                 <TextBox Width="50" Height="25" Name="cec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,175,0,0" />
                 <TextBox Width="50" Height="25" Name="mec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,175,0,0" />
                 <TextBox Width="50" Height="25" Name="yec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,175,0,0" />
                 <TextBox Width="50" Height="25" Name="kec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,175,0,0" />
-                <TextBox Width="160" Height="25" Name="ic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,200,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,200,0,0" />
                 <TextBox Width="50" Height="25" Name="cic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,200,0,0" />
                 <TextBox Width="50" Height="25" Name="mic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,200,0,0" />
                 <TextBox Width="50" Height="25" Name="yic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,200,0,0" />
                 <TextBox Width="50" Height="25" Name="kic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,200,0,0" />
-                <TextBox Width="160" Height="25" Name="ic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,225,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,225,0,0" />
                 <TextBox Width="50" Height="25" Name="cic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,225,0,0" />
                 <TextBox Width="50" Height="25" Name="mic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,225,0,0" />
                 <TextBox Width="50" Height="25" Name="yic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,225,0,0" />
                 <TextBox Width="50" Height="25" Name="kic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,225,0,0" />
-                <TextBox Width="160" Height="25" Name="ic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,250,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,250,0,0" />
                 <TextBox Width="50" Height="25" Name="cic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,250,0,0" />
                 <TextBox Width="50" Height="25" Name="mic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,250,0,0" />
                 <TextBox Width="50" Height="25" Name="yic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,250,0,0" />
                 <TextBox Width="50" Height="25" Name="kic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,250,0,0" />
-                <TextBox Width="160" Height="25" Name="ic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,275,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,275,0,0" />
                 <TextBox Width="50" Height="25" Name="cic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,275,0,0" />
                 <TextBox Width="50" Height="25" Name="mic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,275,0,0" />
                 <TextBox Width="50" Height="25" Name="yic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,275,0,0" />
