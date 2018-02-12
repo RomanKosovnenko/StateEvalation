@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PreferenceDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Anthropometry">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="Date" />
+    </Key>
+    <Property Name="Id" Type="Guid" />
+    <Property Name="UserID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Growth" Type="Int32" />
+    <Property Name="Weight" Type="Int32" />
+    <Property Name="FatContentIn_kg" Type="Int32" />
+    <Property Name="FatContentIn_per" Type="Int32" />
+    <Property Name="VitalCapacityOfTheLungsIn_liters" Type="Int32" />
+  </EntityType>
+  <EntityType Name="ArterialPressuresGeneral">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="InTheMorning" />
+      <PropertyRef Name="Date" />
+    </Key>
+    <Property Name="Id" Type="Guid" />
+    <Property Name="UserID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="InTheMorning" Type="Boolean" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ArterialPressuresUpper" Type="Int32" />
+    <Property Name="ArterialPressuresBottom" Type="Int32" />
+    <Property Name="HeartRate" Type="Int32" />
+    <Property Name="Temperature" Type="Int32" />
+    <Property Name="Time" Type="Time" Precision="7" />
+  </EntityType>
+  <EntityType Name="ArterialPressuresInDay">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="Date" />
+    </Key>
+    <Property Name="Id" Type="Guid" />
+    <Property Name="UserID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ArterialPressuresUpper" Type="Int32" />
+    <Property Name="ArterialPressuresBottom" Type="Int32" />
+    <Property Name="HeartRate" Type="Int32" />
+    <Property Name="Temperature" Type="Int32" />
+    <Property Name="Time" Type="Time" Precision="7" />
+  </EntityType>
+  <EntityType Name="ArterialPressuresInNight">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="Date" />
+    </Key>
+    <Property Name="Id" Type="Guid" />
+    <Property Name="UserID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ArterialPressuresUpper" Type="Int32" />
+    <Property Name="ArterialPressuresBottom" Type="Int32" />
+    <Property Name="HeartRate" Type="Int32" />
+    <Property Name="Temperature" Type="Int32" />
+    <Property Name="Time" Type="Time" Precision="7" />
+  </EntityType>
+  <EntityType Name="BloodTest">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Guid" Nullable="false" />
+    <Property Name="UserID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Date" Type="DateTime" Precision="0" />
+    <Property Name="Hemoglobin" Type="Double" />
+    <Property Name="RedBloodCells" Type="Double" />
+    <Property Name="Hematocrit" Type="Double" />
+    <Property Name="ColorIndicator" Type="Double" />
+    <Property Name="WhiteBloodCells" Type="Double" />
+  </EntityType>
+  <EntityType Name="CycleErgometry">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="Id" Type="Guid" />
+    <Property Name="UserID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="ArterialPressuresUpper" Type="Int32" />
+    <Property Name="ArterialPressuresBottom" Type="Int32" />
+    <Property Name="HeartRate" Type="Int32" />
+  </EntityType>
+  <EntityType Name="CycleErgometryWithLoad">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="Id" Type="Guid" />
+    <Property Name="UserID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="ArterialPressuresUpper" Type="Int32" />
+    <Property Name="ArterialPressuresBottom" Type="Int32" />
+    <Property Name="HeartRate" Type="Int32" />
+    <Property Name="Load" Type="Int32" />
+    <Property Name="LoadTime" Type="Int32" />
+  </EntityType>
+  <EntityType Name="JournalOfAppeal">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="Date" />
+    </Key>
+    <Property Name="Id" Type="Guid" />
+    <Property Name="UserID" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Date" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Diagnosis" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="HelpIsProvided" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="DurationOfTreatment" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="PreferenceDBEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Anthropometries" EntityType="Self.Anthropometry" />
+    <EntitySet Name="ArterialPressuresGenerals" EntityType="Self.ArterialPressuresGeneral" />
+    <EntitySet Name="ArterialPressuresInDays" EntityType="Self.ArterialPressuresInDay" />
+    <EntitySet Name="ArterialPressuresInNights" EntityType="Self.ArterialPressuresInNight" />
+    <EntitySet Name="BloodTests" EntityType="Self.BloodTest" />
+    <EntitySet Name="CycleErgometries" EntityType="Self.CycleErgometry" />
+    <EntitySet Name="CycleErgometryWithLoads" EntityType="Self.CycleErgometryWithLoad" />
+    <EntitySet Name="JournalOfAppeals" EntityType="Self.JournalOfAppeal" />
+  </EntityContainer>
+</Schema>

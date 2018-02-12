@@ -19,6 +19,8 @@
         <ObjectDataProvider x:Key="GetCodesForInsert" ObjectType="{x:Type model:PreferenceDB}" MethodName="CodesForInsert"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type model:PreferenceDB}" MethodName="CodesForFilter"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Preferences"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetProfessionsList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Professions"></ObjectDataProvider>
+        
         <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="PeopleCodes"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="ExpeditionCodes"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetShortColorsNumbersList" ObjectType="{x:Type model:PreferenceDB}" MethodName="ShortColorsNumbersList"></ObjectDataProvider>
@@ -957,7 +959,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    
+
                     <!-- Compare Pref1 + Relax1-->
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Header="Compare P1 R1" ClipboardContentBinding="{x:Null}">
@@ -1426,20 +1428,20 @@
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
-                    <Label Content="Дата" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,0"/>
-                    <Label Content="From" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Padding="0"/>
-                    <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="1" Grid.Column="1" Padding="0"/>
-                    <DatePicker Grid.Row="2"
+                    <Label Content="Дата" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0,-6,0,6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,0"/>
+                    <Label Content="From" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
+                    <Label Content="To" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Padding="0" Grid.RowSpan="2"/>
+                    <DatePicker Grid.Row="1"
                                 x:Name="DateFrom"
-                                    SelectedDate="{Binding FilterSelectedDateFrom}" Margin="0,2,5,2" Padding="5,2,2,2" />
-                    <DatePicker Grid.Row="2"
+                                    SelectedDate="{Binding FilterSelectedDateFrom}" Margin="0,5,5,7" Padding="5,2,2,2" Grid.RowSpan="2" />
+                    <DatePicker Grid.Row="1"
                                 x:Name="DateTo"
                                     Grid.Column="1"
-                                    SelectedDate="{Binding FilterSelectedDateTo}" Margin="5,2,0,2" VerticalAlignment="Bottom" Padding="2" />
+                                    SelectedDate="{Binding FilterSelectedDateTo}" Margin="5,0,0,7" VerticalAlignment="Bottom" Padding="2" Grid.RowSpan="2" />
                     <Grid Grid.ColumnSpan="2" Margin="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
                     </Grid>
                 </Grid>
-                <Grid Visibility="{Binding FilterExpeditionAndNumberVisibility}" Grid.Row="3" Margin="5">
+                <Grid Visibility="{Binding FilterExpeditionAndNumberVisibility}" Grid.Row="3" Margin="5,0,5,10">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -1456,38 +1458,43 @@
                                    HorizontalAlignment="Center"
                                    Padding="0"
                                    Text="Экспедиция" Grid.ColumnSpan="2"
-                                   FontWeight="Bold"
+                                   FontWeight="Bold" Margin="84,-10,84,10"
                         />
-                    <Label Content="From" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="1"/>
-                    <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="1" Grid.Column="1"/>
-                    <ComboBox Grid.Row="2"
+                    <Label Content="From" Margin="0,0,0,16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
+                    <Label Content="To" Margin="0,0,0,16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Column="1" Grid.RowSpan="2"/>
+                    <ComboBox Grid.Row="1"
                               x:Name="ExFrom"
                                   ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
                                   SelectedValue="{Binding FilterSelectedExpeditionFrom}" 
-                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,2,0" />
-                    <ComboBox Grid.Row="2"
+                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,6,2,0" />
+                    <ComboBox Grid.Row="1"
                               x:Name="ExTo"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
-                                  SelectedValue="{Binding FilterSelectedNumberFrom}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,0,0,0" />
+                                  SelectedValue="{Binding FilterSelectedNumberFrom}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,6,0,0" />
 
-                    <TextBlock Grid.Row="3"
+                    <TextBlock Grid.Row="2"
                                    HorizontalAlignment="Center"
                                    Padding="0"
                                    Text="Номер" Grid.ColumnSpan="2" 
-                                    FontWeight="Bold"/>
-                    <Label Content="From" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="4"/>
-                    <Label Content="To" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="4" Grid.Column="1"/>
-                    <ComboBox Grid.Row="5"
+                                    FontWeight="Bold" Margin="100,5,100,14"/>
+                    <Label Content="From" Margin="0,19,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="2"/>
+                    <Label Content="To" Margin="0,18,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="1"/>
+                    <ComboBox Grid.Row="2"
                               x:Name="PeopleFrom"
                               SelectedValue="{Binding FilterSelectedExpeditionTo}"
                               ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
-                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,2,0" />
-                    <ComboBox Grid.Row="5"
+                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,35,2,23" />
+                    <ComboBox Grid.Row="2"
                               x:Name="PeopleTo"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}"
-                                  SelectedValue="{Binding FilterSelectedNumberTo}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,0,0,0" />
+                                  SelectedValue="{Binding FilterSelectedNumberTo}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,35,0,23" />
+                    <Label Content="Профессия" FontWeight="Bold" Margin="18,68,15,-11" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,0" Grid.Row="2" Grid.RowSpan="4"/>
+                    <ComboBox Grid.Row="2"
+                        x:Name="ComdoBoxProfession"
+                        ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" 
+                        SelectedValue="{Binding FilterPreferenceSelected}" HorizontalContentAlignment="Center" Margin="2,70,2,-11" Grid.RowSpan="4" Grid.Column="1" />
                 </Grid>
 
                 <Grid Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}" Grid.Row="4" Margin="5" UseLayoutRounding="False">
@@ -1759,7 +1766,7 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Label Content="Преференция" Margin="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,0"/>
+                    <Label Content="Преференция" FontWeight="bold" Margin="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,0"/>
 
                     <ComboBox Grid.Row="0"
                                   x:Name="Pref"

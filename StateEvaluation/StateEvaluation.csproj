@@ -123,6 +123,14 @@
     <Compile Include="Helpers\NumberToRelax2Converter.cs" />
     <Compile Include="Helpers\PreferenceSameAsRelax.cs" />
     <Compile Include="Helpers\PreferenceToBrushConverter.cs" />
+    <Compile Include="Model\Anthropometry.cs" />
+    <Compile Include="Model\ArterialPressuresGeneral.cs" />
+    <Compile Include="Model\ArterialPressuresInDay.cs" />
+    <Compile Include="Model\ArterialPressuresInNight.cs" />
+    <Compile Include="Model\BloodTest.cs" />
+    <Compile Include="Model\CycleErgometry.cs" />
+    <Compile Include="Model\CycleErgometryWithLoad.cs" />
+    <Compile Include="Model\JournalOfAppeal.cs" />
     <Compile Include="View\FeelingsChart.xaml.cs">
       <DependentUpon>FeelingsChart.xaml</DependentUpon>
     </Compile>
@@ -235,6 +243,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\StateEvaluation.Model.BloodTest.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -318,6 +327,9 @@
       <Project>{2d5ec764-a5d1-4a22-8c2a-52517967c4dc}</Project>
       <Name>StateEvaluationDLL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -32,6 +32,16 @@ namespace StateEvaluation
             InitializeComponent();
             this.DataContext = this;
             BioColor.Main.InitBioColor(BioColorGraph, Date, DateNow);
+            //перевіряю чи працює вибірка та вставка в моделі, які я стоврив
+            
+            //MessageBox.Show("ATNight: "  +_preferenceDb.GetATNght().First().ToString());
+            //MessageBox.Show("Anthropometry: " + _preferenceDb.GetAnthropometry().First().ToString());
+            //Anthropometry anthropometry = new Anthropometry();
+            //anthropometry.Id = new Guid();
+            //anthropometry.UserId = "EX20#2";
+            //anthropometry.Growth = 20;
+            //anthropometry.Date = DateTime.Now;
+            //_preferenceDb.InsertInAnthropometry(anthropometry);
         }
 
         private void AddFeelingPeople(object sender, RoutedEventArgs e)
@@ -807,6 +817,7 @@ namespace StateEvaluation
         }
         private void ClearFilters()
         {
+            ComdoBoxProfession.SelectedIndex = 0;
             Pref.SelectedIndex = 0;
             ExFrom.SelectedIndex = 0;
             ExTo.SelectedIndex = 0;
@@ -882,21 +893,28 @@ namespace StateEvaluation
             string preference = Pref.SelectedItem?.ToString();
             DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
             DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
+            string profession = ComdoBoxProfession.SelectedItem?.ToString();
 
             Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
 
+            var people = _preferenceDb.GetAllPeople().Where(item => (item.Workposition == profession || profession == "All"));
+            List<string> listOfPeople = new List<string>();
+            foreach(var item in people.ToList())
+            {
+                listOfPeople.Add(item.UserId.ToString());
+            }
             return _preferenceDb.GetAllTests()
                 .Where(item =>
 /* UserID     */   (re.IsMatch(item.UserId)) &&
 /* DatePicker */   ((datefrom.Ticks == 0 || item.Date >= datefrom) && (item.Date <= dateto || dateto.Ticks == 0)) &&
 /* ShortOder  */   (CompareOrder(item.ShortOder1, PreferenceShortFilter1.Text, PreferenceShortFilter2.Text, PreferenceShortFilter3.Text)) &&
 /* Oder       */   (CompareOrder(item.Oder1, PreferenceFilter1.Text, PreferenceFilter2.Text, PreferenceFilter3.Text, PreferenceFilter4.Text, PreferenceFilter5.Text, PreferenceFilter6.Text, PreferenceFilter7.Text, PreferenceFilter8.Text, PreferenceFilter9.Text, PreferenceFilter10.Text, PreferenceFilter11.Text, PreferenceFilter12.Text)) &&
-/* Preference */   (item.Preference1 == preference || preference == "All")
+/* Preference */   (item.Preference1 == preference || preference == "All")&&
+                   (listOfPeople.Contains(item.UserId))
                 );
         }
         private IEnumerable<People> GetPeople()
         {
-
             string id = UID.SelectedItem?.ToString();
             string exfrom = ExFrom.SelectedItem?.ToString()?.Trim();
             string exto = ExTo.SelectedItem?.ToString()?.Trim();
@@ -905,12 +923,14 @@ namespace StateEvaluation
             string preference = Pref.SelectedItem?.ToString();
             DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
             DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
+            string profession = ComdoBoxProfession.SelectedItem?.ToString();
 
             Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
 
             return _preferenceDb.GetAllPeople()
                 .Where(item =>
-    /* UserID     */   (re.IsMatch(item.UserId))
+    /* UserID     */   (re.IsMatch(item.UserId)) &&
+                       (item.Workposition == profession || profession == "All")
                 );
         }
         private IEnumerable<SubjectiveFeeling> GetSubjectiveFeel()
@@ -923,6 +943,7 @@ namespace StateEvaluation
             string preference = Pref.SelectedItem?.ToString();
             DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
             DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
+            string profession = ComdoBoxProfession.SelectedItem?.ToString();
 
             bool gWeakness = generalWeakness.IsChecked.Value;
             bool bAppetite = badAppetite.IsChecked.Value;
@@ -931,6 +952,12 @@ namespace StateEvaluation
             bool hHead = heavyHead.IsChecked.Value;
             bool sThink = slowThink.IsChecked.Value;
 
+            var people = _preferenceDb.GetAllPeople().Where(item => (item.Workposition == profession || profession == "All"));
+            List<string> listOfPeople = new List<string>();
+            foreach (var item in people.ToList())
+            {
+                listOfPeople.Add(item.UserId.ToString());
+            }
             Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
 
             return _preferenceDb.GetAllSubjecriveFeelings()
@@ -941,7 +968,8 @@ namespace StateEvaluation
                        (item.PoorSleep == bDream) &&
                        (item.BadMood == bMood) &&
                        (item.HeavyHead == hHead) &&
-                       (item.SlowThink == sThink)
+                       (item.SlowThink == sThink) &&
+                       (listOfPeople.Contains(item.UserId))
                 );
         }
 

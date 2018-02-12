@@ -25,3 +25,9 @@ C:\Users\Andriy2\StateEvalation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL
 C:\Users\Andriy2\StateEvalation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL.csproj.CoreCompileInputs.cache
 C:\Users\Andriy2\StateEvalation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL1.dll
 C:\Users\Andriy2\StateEvalation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL1.pdb
+C:\Users\vetal\Documents\GitHub\StateEvalation\StateEvaluationDLL1\bin\Debug\StateEvaluationDLL1.dll
+C:\Users\vetal\Documents\GitHub\StateEvalation\StateEvaluationDLL1\bin\Debug\StateEvaluationDLL1.pdb
+C:\Users\vetal\Documents\GitHub\StateEvalation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL.csprojResolveAssemblyReference.cache
+C:\Users\vetal\Documents\GitHub\StateEvalation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL.csproj.CoreCompileInputs.cache
+C:\Users\vetal\Documents\GitHub\StateEvalation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL1.dll
+C:\Users\vetal\Documents\GitHub\StateEvalation\StateEvaluationDLL1\obj\Debug\StateEvaluationDLL1.pdb

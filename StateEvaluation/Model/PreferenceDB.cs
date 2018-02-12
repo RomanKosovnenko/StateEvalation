@@ -21,7 +21,31 @@ namespace StateEvaluation.Model
         public Table<DemboRubin> DemboRubin;
         public Table<Depresion> Depresion;
         public Table<NormalPreference> NormalPreference;
+        public Table<ArterialPressuresInNight> ArterialPressuresInNight;
+        public Table<JournalOfAppeal> JournalOfAppeal;
+        public Table<Anthropometry> Anthropometry;
+        
+        public Table<ArterialPressuresInDay> ArterialPressuresInDay;
+        public Table<ArterialPressuresGeneral> ArterialPressuresGeneral;
+        public Table<CycleErgometry> CycleErgometry;
+        public Table<CycleErgometryWithLoad> CycleErgometryWithLoad;
+        public Table<BloodTest> BloodTest;
 
+        public IEnumerable<string> GetAnthropometry()
+        {
+            var items = Anthropometry.Select(item => item.UserId);
+            return items;
+        }
+        public void InsertInAnthropometry( Anthropometry anthropometry)
+        {
+            Anthropometry.InsertOnSubmit(anthropometry);
+            SubmitChanges();
+        }
+        public IEnumerable<string> GetATNght()
+        {
+            var items = BloodTest.Select(item => item.UserId);
+            return items;
+        }
         public IEnumerable<People> GetAllPeople()
         {
             var items = this.People.Select(item => item).OrderBy(item => item.UserId);
@@ -84,6 +108,13 @@ namespace StateEvaluation.Model
         public IEnumerable<string> Preferences()
         {
             var items = this.Preference.Select(item => item.Preference1).Distinct().OrderByDescending(item => item);
+            var list = items.ToList();
+            list.Insert(0, "All");
+            return list;
+        }
+        public IEnumerable<string> Professions()
+        {
+            var items = this.People.Select(item => item.Workposition).Distinct().OrderByDescending(item => item);
             var list = items.ToList();
             list.Insert(0, "All");
             return list;
