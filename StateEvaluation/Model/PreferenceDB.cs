@@ -87,8 +87,12 @@ namespace StateEvaluation.Model
             var items = this.Preference.Select(item => item).OrderByDescending(item => item.Date);
             return items;
         }
-
-        public IEnumerable<SubjectiveFeeling> GetAllSubjecriveFeelings()
+        public IEnumerable<Anthropometry> GetAllAnthropometry()
+        {
+            var items = Anthropometry.Select(item => item).OrderByDescending(item => item.Date);
+            return items;
+        }
+            public IEnumerable<SubjectiveFeeling> GetAllSubjecriveFeelings()
         {
             var items = this.SubjectiveFeeling.Select(item => item).OrderBy(item => item.Date);
             return items;

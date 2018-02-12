@@ -16,6 +16,7 @@
         <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllPeople"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllTests"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllSubjecriveFeelings"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetAnthropometry" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllAnthropometry"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetCodesForInsert" ObjectType="{x:Type model:PreferenceDB}" MethodName="CodesForInsert"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type model:PreferenceDB}" MethodName="CodesForFilter"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Preferences"></ObjectDataProvider>
@@ -642,6 +643,9 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="ColorSettingsTab" Header="Colors">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem x:Name="Anthropometry" Header="Anthropometry">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <!--
@@ -1387,6 +1391,19 @@
 
 
             </Grid>
+
+
+            <DataGrid x:Name="A" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetAnthropometry}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=Anthropometry}" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}"  ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="Growth" Binding="{Binding Growth}"  ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="Weight" Binding="{Binding Weight}"  ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="Fat (kg)" Binding="{Binding FatContentIn_kg}"  ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="Fat (%)" Binding="{Binding FatContentIn_per}"  ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="Lungs (L)" Binding="{Binding VitalCapacityOfTheLungsIn_liters}"  ClipboardContentBinding="{x:Null}"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
             <Grid Grid.Column="1" Width="250" ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="Filter">
                 <Grid.RowDefinitions>
