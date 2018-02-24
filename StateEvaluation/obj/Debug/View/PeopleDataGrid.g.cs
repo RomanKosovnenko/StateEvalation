@@ -9,7 +9,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using StateEvaluation;
 using StateEvaluation.Helpers;
 using StateEvaluation.Model;
 using StateEvaluation.Properties;

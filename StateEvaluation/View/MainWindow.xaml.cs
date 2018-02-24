@@ -856,6 +856,7 @@ namespace StateEvaluation
             TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
             SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
             PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
+            AnthropometryDataGrid.ItemsSource = _preferenceDb.GetAllAnthropometry();
             ClearFilters();
         }
 
@@ -877,9 +878,21 @@ namespace StateEvaluation
 
         private void FilterUIDs(object sender, RoutedEventArgs e)
         {
-            TestsDataGrid.ItemsSource = GetUIDs();
-            PersonDataGrid.ItemsSource = GetPeople();
-            SubjectiveFeelDataGrid.ItemsSource = GetSubjectiveFeel();
+            switch (tabControl.SelectedIndex)
+            {
+                case 0:
+                    PersonDataGrid.ItemsSource = GetPeople();
+                    break;
+                case 1:
+                    TestsDataGrid.ItemsSource = GetUIDs();
+                    break;
+                case 2:
+                    SubjectiveFeelDataGrid.ItemsSource = GetSubjectiveFeel();
+                    break;
+                case 3:
+                    AnthropometryDataGrid.ItemsSource = GetAnthropometry();
+                    break;
+            }
         }
 
         private IEnumerable<Preference> GetUIDs()
@@ -931,6 +944,24 @@ namespace StateEvaluation
                 .Where(item =>
     /* UserID     */   (re.IsMatch(item.UserId)) &&
                        (item.Workposition == profession || profession == "All")
+                );
+        }
+        private IEnumerable<Anthropometry> GetAnthropometry()
+        {
+            string id = UID.SelectedItem?.ToString();
+            string exfrom = ExFrom.SelectedItem?.ToString()?.Trim();
+            string exto = ExTo.SelectedItem?.ToString()?.Trim();
+            string peoplefrom = PeopleFrom.SelectedItem?.ToString()?.Trim();
+            string peopleto = PeopleTo.SelectedItem?.ToString()?.Trim();
+            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
+            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
+
+            Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
+
+            return _preferenceDb.GetAllAnthropometry()
+                .Where(item =>
+/* UserID     */   (re.IsMatch(item.UserId)) &&
+/* DatePicker */   ((datefrom.Ticks == 0 || item.Date >= datefrom) && (item.Date <= dateto || dateto.Ticks == 0))
                 );
         }
         private IEnumerable<SubjectiveFeeling> GetSubjectiveFeel()
@@ -1019,7 +1050,7 @@ namespace StateEvaluation
         {
             if (Filter != null)
             {
-                Filter.Visibility = tabControl.SelectedIndex > 2 ? Visibility.Hidden : Visibility.Visible;
+                Filter.Visibility = tabControl.SelectedIndex > 3 ? Visibility.Hidden : Visibility.Visible;
             }
         }
 
