@@ -434,7 +434,7 @@ namespace StateEvaluation
                 Expedition = int.Parse((PersonAddFormGrid.FindName("ExpeditionTextbox") as TextBox).Text),
                 Number = int.Parse((PersonAddFormGrid.FindName("NumberTextbox") as TextBox).Text),
                 Id = Guid.NewGuid(),
-                Workposition = (PersonAddFormGrid.FindName("LastnameTextbox") as TextBox).Text,
+                Workposition = (PersonAddFormGrid.FindName("ProfessionTextbox") as TextBox).Text,
                 Birthday = (PersonAddFormGrid.FindName("BirthdayDatePicker") as DatePicker).Text
             };
             person.UserId = $"Ex{person.Expedition}#{person.Number}";
@@ -1125,6 +1125,11 @@ namespace StateEvaluation
             ImageGenerator.Generate(23);
             ImageGenerator.Generate(28);
             ImageGenerator.Generate(33);
+        }
+
+        private void FirstnameTextbox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
         /* private IEnumerable<string> ExeptValue()
 {
