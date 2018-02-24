@@ -68,14 +68,16 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="Firstname" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0"/>
+                    <Label Content="Firstname" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <Label Content="Lastname" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="1"/>
+                    <Label Content="Middlename" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="2"/>
                     <Label Content="Birthday date" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="2"/>
                     <Label Content="Proffession" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="3"/>
                     <Label Content="Expedition" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="4"/>
                     <Label Content="Number" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="5"/>
                     <TextBox x:Name="FirstnameTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" FontSize="20" LostFocus="Textbox_LostFocus"/>
                     <TextBox x:Name="LastnameTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="1" FontSize="20" LostFocus="Textbox_LostFocus"/>
+                    <TextBox x:Name="MiddlenameTextbox" TextWrapping="Wrap" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="1" FontSize="20" LostFocus="Textbox_LostFocus"/>
                     <DatePicker x:Name="BirthdayDatePicker" Grid.Row="1" Grid.Column="2" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" LostFocus="DatePicker_LostFocus"/>
                     <TextBox x:Name="ProfessionTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="3" FontSize="20" LostFocus="Textbox_LostFocus"/>
                     <TextBox x:Name="ExpeditionTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="4" FontSize="20" LostFocus="NumberTextbox_LostFocus"/>
@@ -623,6 +625,10 @@
 
                 </Grid>
             </TabItem>
+            
+            <TabItem x:Name="Anthropometry" Header="Anthropometry">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
             <TabItem x:Name="tabItem3" Header="BioColor">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
@@ -645,9 +651,6 @@
             <TabItem x:Name="ColorSettingsTab" Header="Colors">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
-            <TabItem x:Name="Anthropometry" Header="Anthropometry">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
             <!--
             <TabItem Header="TabItem">
                 <Grid Background="#FFE5E5E5"/>
@@ -668,6 +671,7 @@
                     <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.LastnameHeader}" Binding="{Binding Lastname}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.FirstnameHeader}" Binding="{Binding Firstname}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="{x:Static p:Resources.MiddlenameHeader}" Binding="{Binding Middlename}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.BirthdayHeader}" Binding="{Binding Birthday, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.ProfessionHeader}" Binding="{Binding Workposition, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.ExpeditionHeader}" Binding="{Binding Expedition}" ClipboardContentBinding="{x:Null}"/>
@@ -1393,7 +1397,7 @@
             </Grid>
 
 
-            <DataGrid x:Name="A" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetAnthropometry}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=Anthropometry}" >
+            <DataGrid x:Name="AnthropometryDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetAnthropometry}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=Anthropometry}" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}"  ClipboardContentBinding="{x:Null}"/>
@@ -1883,8 +1887,7 @@
                     <!--<Button Grid.Row="2"
                         Click="AddData_OnClick"
                         Margin="2"
-                        Command="{Binding RemoveFiltersCommand}"
-                        Content="Chart" Padding="0" Grid.ColumnSpan="2" />-->
+                        Content="Add" Padding="0" Grid.ColumnSpan="2" /> -->
                 </Grid>
             </Grid>
         </Grid>

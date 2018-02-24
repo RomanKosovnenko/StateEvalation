@@ -198,4 +198,7 @@
   <data name="MakeChartToolTip" xml:space="preserve">
     <value>Make chart</value>
   </data>
+  <data name="MiddlenameHeader" xml:space="preserve">
+    <value>Middlename</value>
+  </data>
 </root>

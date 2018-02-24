@@ -14,6 +14,8 @@ namespace StateEvaluation.Model
         [Column]
         public string Firstname { get; set; }
         [Column]
+        public string Middlename { get; set; }
+        [Column]
         public string Lastname { get; set; }
         [Column]
         public string Birthday { get; set; }
