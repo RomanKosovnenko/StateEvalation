@@ -174,6 +174,13 @@ namespace StateEvaluation
             }
             else
             {
+                List<byte> Cin3sByte = Cin3s.Select(x => Byte.Parse(x)).ToList();
+                List<byte> Cin12sByte = Cin12s.Select(x => Byte.Parse(x)).ToList();
+                List<byte> C2in3sByte = C2in3s.Select(x => Byte.Parse(x)).ToList();
+                List<byte> C2in12sByte = C2in12s.Select(x => Byte.Parse(x)).ToList();
+                
+                var Pref1Index = Pref1.Select(x => x.IsChecked).ToList().IndexOf(true);
+                var Pref2Index = Pref2.Select(x => x.IsChecked).ToList().IndexOf(true);
                 Preference preference = new Preference()
                 {
                     Id = new Guid(TestID.Text),
@@ -182,10 +189,10 @@ namespace StateEvaluation
                     FavoriteColor = 0,
                     ShortOder1 = String.Join(",", Cin3s),
                     Oder1 = String.Join(",", Cin12s),
-                    Preference1 = Prefs[Pref1.Select(x => x.IsChecked).ToList().IndexOf(true)],
+                    Preference1 = new StateEvaluationDLL.DataStructures.Preference(Cin3sByte, Cin12sByte).Type.ToString(), // Prefs[Pref1.Select(x => x.IsChecked).ToList().IndexOf(true)],
                     ShortOder2 = String.Join(",", C2in3s),
                     Oder2 = String.Join(",", C2in12s),
-                    Preference2 = Prefs[Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)],
+                    Preference2 = new StateEvaluationDLL.DataStructures.Preference(C2in3sByte, C2in12sByte).Type.ToString(), // Prefs[Pref1.Select(x => x.IsChecked).ToList().IndexOf(true)],
                     Compare = (Pref1.Select(x => x.IsChecked).ToList().IndexOf(true) == Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)).ToString().ToLower(),
                     RelaxTable1 = CRelax1,
                     RelaxTable2 = CRelax2
@@ -318,6 +325,13 @@ namespace StateEvaluation
             }
             else
             {
+                List<byte> Cin3sByte = Cin3s.Select(x => Byte.Parse(x)).ToList();
+                List<byte> Cin12sByte = Cin12s.Select(x => Byte.Parse(x)).ToList();
+                List<byte> C2in3sByte = C2in3s.Select(x => Byte.Parse(x)).ToList();
+                List<byte> C2in12sByte = C2in12s.Select(x => Byte.Parse(x)).ToList();
+
+                var Pref1Index = Pref1.Select(x => x.IsChecked).ToList().IndexOf(true);
+                var Pref2Index = Pref2.Select(x => x.IsChecked).ToList().IndexOf(true);
                 Preference preference = new Preference()
                 {
                     Id = Guid.NewGuid(),
@@ -326,10 +340,10 @@ namespace StateEvaluation
                     FavoriteColor = 0,
                     ShortOder1 = String.Join(",", Cin3s),
                     Oder1 = String.Join(",", Cin12s),
-                    Preference1 = Prefs[Pref1.Select(x => x.IsChecked).ToList().IndexOf(true)],
+                    Preference1 = new StateEvaluationDLL.DataStructures.Preference(Cin3sByte, Cin12sByte).Type.ToString(), // Prefs[Pref1.Select(x => x.IsChecked).ToList().IndexOf(true)],
                     ShortOder2 = String.Join(",", C2in3s),
                     Oder2 = String.Join(",", C2in12s),
-                    Preference2 = Prefs[Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)],
+                    Preference2 = new StateEvaluationDLL.DataStructures.Preference(C2in3sByte, C2in12sByte).Type.ToString(), // Prefs[Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)],
                     Compare = (Pref1.Select(x => x.IsChecked).ToList().IndexOf(true) == Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)).ToString().ToLower(),
                     RelaxTable1 = CRelax1,
                     RelaxTable2 = CRelax2
