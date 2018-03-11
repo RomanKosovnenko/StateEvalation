@@ -3,6 +3,7 @@ using StateEvaluation.BioColor;
 using StateEvaluation.Model;
 using StateEvaluation.View;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Globalization;
@@ -867,10 +868,26 @@ namespace StateEvaluation
         }
         private void ClearUIDs(object sender, RoutedEventArgs e)
         {
-            TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
-            SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
-            PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
-            AnthropometryDataGrid.ItemsSource = _preferenceDb.GetAllAnthropometry();
+            switch (tabControl.SelectedIndex)
+            {
+                case 0:
+                    PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
+                    break;
+                case 1:
+                    TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
+                    break;
+                case 2:
+                    SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
+                    break;
+                case 3:
+                    AnthropometryDataGrid.ItemsSource = _preferenceDb.GetAllAnthropometry();
+                    break;
+                case 4:
+                    SubjectiveFeelDataGridInComparsion.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
+                    CycleErgonometryDataGridInComparsion.ItemsSource = _preferenceDb.GetAllCycleErgometry();
+                    TestsDataGridInComparsion.ItemsSource = _preferenceDb.GetAllTests();
+                    break;
+            }
             ClearFilters();
         }
 
@@ -906,7 +923,20 @@ namespace StateEvaluation
                 case 3:
                     AnthropometryDataGrid.ItemsSource = GetAnthropometry();
                     break;
+                case 4:
+                    SubjectiveFeelDataGridInComparsion.ItemsSource = GetSubjectiveFeel();
+                    TestsDataGridInComparsion.ItemsSource = GetUIDs();
+                    CycleErgonometryDataGridInComparsion.ItemsSource = GetCycleErgonometry();
+                    break;
             }
+        }
+
+        private IEnumerable<CycleErgometry> GetCycleErgonometry()
+        {
+            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
+            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
+
+            return _preferenceDb.GetAllCycleErgometry().Where(item => (datefrom.Ticks == 0 || item.Date >= datefrom) && (item.Date <= dateto || dateto.Ticks == 0));
         }
 
         private IEnumerable<Preference> GetUIDs()
@@ -1008,6 +1038,8 @@ namespace StateEvaluation
             return _preferenceDb.GetAllSubjecriveFeelings()
                 .Where(item =>
     /* UserID     */   (re.IsMatch(item.UserId)) &&
+                       (datefrom.Ticks == 0 || item.Date >= datefrom) &&
+                       (item.Date <= dateto || dateto.Ticks == 0) &&
                        (item.GeneralWeaknes == gWeakness) &&
                        (item.PoorAppetite == bAppetite) &&
                        (item.PoorSleep == bDream) &&
@@ -1064,7 +1096,7 @@ namespace StateEvaluation
         {
             if (Filter != null)
             {
-                Filter.Visibility = tabControl.SelectedIndex > 3 ? Visibility.Hidden : Visibility.Visible;
+                Filter.Visibility = tabControl.SelectedIndex > 4 ? Visibility.Hidden : Visibility.Visible;
             }
         }
 

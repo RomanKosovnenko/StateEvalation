@@ -14,7 +14,9 @@ namespace StateEvaluation.Model
         public int ArterialPressuresBottom { get; set; }
         [Column]
         public int HeartRate { get; set; }
-        
+        [Column]
+        public DateTime Date { get; set; }
+
         [Column(Name = "UserID")]
         public string UserId { get; set; }
     }

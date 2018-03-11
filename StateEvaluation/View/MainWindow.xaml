@@ -21,6 +21,7 @@
         <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type model:PreferenceDB}" MethodName="CodesForFilter"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Preferences"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetProfessionsList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Professions"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetCycleErgometry" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllCycleErgometry"></ObjectDataProvider>
         
         <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="PeopleCodes"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="ExpeditionCodes"></ObjectDataProvider>
@@ -627,6 +628,9 @@
             </TabItem>
             
             <TabItem x:Name="Anthropometry" Header="Anthropometry">
+                <Grid Background="#FFE5E5E5"/>
+            </TabItem>
+            <TabItem x:Name="Comparison" Header="Comparison">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>
             <TabItem x:Name="tabItem3" Header="BioColor">
@@ -1408,7 +1412,401 @@
                     <DataGridTextColumn Header="Lungs (L)" Binding="{Binding VitalCapacityOfTheLungsIn_liters}"  ClipboardContentBinding="{x:Null}"/>
                 </DataGrid.Columns>
             </DataGrid>
+            <DataGrid x:Name="ComparisonDataGridEmpty" Background="#FFE5E5E5"  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=Comparison}"></DataGrid>
+            <Expander Header="Subjective Feeling" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=Comparison}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="300">
+                <DataGrid x:Name="SubjectiveFeelDataGridInComparsion" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetFeelings}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
+                        <DataGridCheckBoxColumn Header="{x:Static p:Resources.GeneralWeaknesColumnHeader}" Binding="{Binding GeneralWeaknes}" ClipboardContentBinding="{x:Null}"/>
+                        <DataGridCheckBoxColumn Header="{x:Static p:Resources.PoorAppetiteColumnHeader}" Binding="{Binding PoorAppetite}" ClipboardContentBinding="{x:Null}"/>
+                        <DataGridCheckBoxColumn Header="{x:Static p:Resources.PoorSleepColumnHeader}" Binding="{Binding PoorSleep}" ClipboardContentBinding="{x:Null}"/>
+                        <DataGridCheckBoxColumn Header="{x:Static p:Resources.BadMoodColumnHeader}" Binding="{Binding BadMood}" ClipboardContentBinding="{x:Null}"/>
+                        <DataGridCheckBoxColumn Header="{x:Static p:Resources.HeavyHeadColumnHeader}" Binding="{Binding HeavyHead}" ClipboardContentBinding="{x:Null}"/>
+                        <DataGridCheckBoxColumn Header="{x:Static p:Resources.SlowThinkColumnHeader}" Binding="{Binding SlowThink}" ClipboardContentBinding="{x:Null}"/>
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="EditFeelingsBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="EditFeelingsBtn_Click" Tag="{Binding Id}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="RemoveFeelingsBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemoveFeelingsBtn_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Expander>
+            <Expander Header="Tests" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=Comparison}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" Margin="300,0,0,0">
+                <DataGrid x:Name="TestsDataGridInComparsion" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="{x:Static p:Resources.ChartColumnHeader}" ClipboardContentBinding="{x:Null}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button
+                                Command="{Binding MakeIndividualChartCommand}"
+                                Content="&#xE929;"
+                                FontFamily="Segoe MDL2 Assets"
+                                ToolTip="{x:Static p:Resources.MakeChartToolTip}" Click="Button_Click" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}" FontSize="14"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
+                        <!-- BioColor I START -->
+                        <!-- BioColor I (Three) -->
+                        <DataGridTemplateColumn Header="Short 1" ClipboardContentBinding="{x:Null}"
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListView ItemsSource="{Binding ShortOder1, Converter={StaticResource StringToListConverter}}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"></StackPanel>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                    </ListView>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                        <!-- BioColor I (ThreeColor) -->
+                        <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIThree}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListView ItemsSource="{Binding Oder1, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"></StackPanel>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                    </ListView>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <!-- BioColor I (TwelveColor) -->
+                        <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
+                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListView ItemsSource="{Binding Oder1, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" 
+											Background="{Binding Content,Converter={StaticResource NameToMultiBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"></StackPanel>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                    </ListView>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <!-- Preference1 -->
+                        <DataGridTextColumn x:Name="Pre1Incomparsion" Header="Preference1" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
+                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Background" Value="{Binding Preference1, Converter={StaticResource PreferenceToBrushConverter}}" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <!-- BioColor I END -->
+
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                        <!-- BioColor II START -->
+                        <!-- BioColor II (Three) -->
+                        <DataGridTemplateColumn Header="Short 2" ClipboardContentBinding="{x:Null}"
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListView ItemsSource="{Binding ShortOder2, Converter={StaticResource StringToListConverter}}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"></StackPanel>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                    </ListView>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <!-- BioColor II (ThreePictures) -->
+                        <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIPictures}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListView ItemsSource="{Binding ShortOder2, Converter={StaticResource StringToListConverter}}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"></StackPanel>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                    </ListView>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                        <!-- BioColor II (TwelveColor) -->
+                        <DataGridTemplateColumn Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280"
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"></StackPanel>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                    </ListView>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <!-- BioColor II (TwelvePictures) -->
+                        <DataGridTemplateColumn Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280"
+                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIPictures}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" 
+											Background="{Binding Content,Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <ListView.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal"></StackPanel>
+                                            </ItemsPanelTemplate>
+                                        </ListView.ItemsPanel>
+                                    </ListView>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <!-- Preference2 -->
+                        <DataGridTextColumn Header="Preference2" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
+                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Background" Value="{Binding Preference2, Converter={StaticResource PreferenceToBrushConverter}}" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <!-- BioColor II END -->
+
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                        <DataGridTextColumn 
+                        ClipboardContentBinding="{x:Null}"
+                        Header="Physical"
+                        Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=23}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
+                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+                                    <Setter Property="TextBlock.FontSize" Value="20" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn 
+                        ClipboardContentBinding="{x:Null}"
+                        Header="Emotions"
+                        Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=28}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
+                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+                                    <Setter Property="TextBlock.FontSize" Value="20" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTextColumn 
+                        ClipboardContentBinding="{x:Null}"
+                        Header="Intelect"
+                        Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=33}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
+                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+                                    <Setter Property="TextBlock.FontSize" Value="20" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                        <DataGridTextColumn Header="Compare P1 P2" Binding="{Binding Compare, Converter={StaticResource BooleanToChecker}}" ClipboardContentBinding="{x:Null}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
+                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+                                    <Setter Property="TextBlock.FontSize" Value="20" />
+
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50" Header="Relax1">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding RelaxTable1, Converter={StaticResource NumberToRelax1Converter}}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50" Header="Relax2">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding RelaxTable2, Converter={StaticResource NumberToRelax2Converter}}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                        <!-- Preference1 -->
+                        <DataGridTextColumn Header="Preference1" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
+                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Background" Value="{Binding Preference1, Converter={StaticResource PreferenceToBrushConverter}}" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Preference2 -->
+                        <DataGridTextColumn Header="Preference2" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
+                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Background" Value="{Binding Preference2, Converter={StaticResource PreferenceToBrushConverter}}" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+
+                        <!-- Compare Pref1 + Relax1-->
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                        <DataGridTextColumn Header="Compare P1 R1" ClipboardContentBinding="{x:Null}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
+                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+                                    <Setter Property="TextBlock.FontSize" Value="20"/>
+                                    <Setter Property="TextBlock.Text">
+                                        <Setter.Value>
+                                            <MultiBinding Converter="{StaticResource PreferenceSameAsRelax}">
+                                                <Binding Path="Preference1"/>
+                                                <Binding Path="RelaxTable1"/>
+                                            </MultiBinding>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <!-- Compare Pref2 + Relax2-->
+                        <DataGridTextColumn Header="Compare P2 R2" ClipboardContentBinding="{x:Null}">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style>
+                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
+                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+                                    <Setter Property="TextBlock.FontSize" Value="20"/>
+                                    <Setter Property="TextBlock.Text">
+                                        <Setter.Value>
+                                            <MultiBinding Converter="{StaticResource PreferenceSameAsRelax}">
+                                                <Binding Path="Preference2"/>
+                                                <Binding Path="RelaxTable2"/>
+                                            </MultiBinding>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </DataGridTextColumn>
+                        <!-- 
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Border>
+                                    <Border.Background>
+                                        <ImageBrush ImageSource="/StateEvaluation;component/RelaxTables/Relax2/1.jpg" Stretch="UniformToFill">
+                                            <ImageBrush.RelativeTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform/>
+                                                    <SkewTransform/>
+                                                    <RotateTransform/>
+                                                    <TranslateTransform/>
+                                                </TransformGroup>
+                                            </ImageBrush.RelativeTransform>
+                                        </ImageBrush>
+                                    </Border.Background>
+                                </Border>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    -->
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="EditPreferenceBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="SetValueInTabsCommand" Tag="{Binding Id}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="RemovePreferenceBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemovePreferenceBtn_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+
+                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Expander>
+            <Expander Header="Cycle Ergometry" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=Comparison}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Margin="800,0,0,0">
+                <DataGrid x:Name="CycleErgonometryDataGridInComparsion" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetCycleErgometry}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
+                        <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}"  ClipboardContentBinding="{x:Null}"/>
+                        <DataGridTextColumn Header="АТ сист" Binding="{Binding ArterialPressuresUpper}"  ClipboardContentBinding="{x:Null}"/>
+                        <DataGridTextColumn Header="АТ діаст" Binding="{Binding ArterialPressuresBottom}"  ClipboardContentBinding="{x:Null}"/>
+                        <DataGridTextColumn Header="ЧСС" Binding="{Binding HeartRate}"  ClipboardContentBinding="{x:Null}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Expander>
             <Grid Grid.Column="1" Width="250" ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="Filter">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
