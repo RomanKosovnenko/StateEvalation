@@ -73,19 +73,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>3/uny/YIrsZos6N0pbzR4FFZnUJMomMoBdSSVlWjyGk=</dsig:DigestValue>
+        <dsig:DigestValue>IM0Iz+oY+Gx+Be603kIOPRd3xVyaty88acuy5HJpJPE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StateEvaluation.exe" size="5343232">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="StateEvaluation.exe" size="5355520">
       <assemblyIdentity name="StateEvaluation" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>JJNStXuU2Az79JdttegBMDmCFudkICM2IsJYj/2ZJMU=</dsig:DigestValue>
+        <dsig:DigestValue>+CWlUo+eJKmf3g8WydR6LD6QQmpX6HD3yIVIzZPv2sE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -97,7 +97,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>mS9ZIHdcwOK6Ywe6XtKK2h5tkaOwLtZKCHIiy89UKf4=</dsig:DigestValue>
+        <dsig:DigestValue>Vs3SgCdbsKZaeQhxco58DaTW4ZMuu7Tr4fQAN541mV8=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -109,7 +109,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>PFtSpf4yA/osHf3N1JqdiJDm4qD1cIsK+u6XbmlyC3E=</dsig:DigestValue>
+        <dsig:DigestValue>Uh4Si7TDMZzY38kJYqqv+5RrtBnPI7QApIfjKWUHdK4=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

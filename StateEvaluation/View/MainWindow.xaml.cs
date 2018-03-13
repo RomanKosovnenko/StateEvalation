@@ -96,6 +96,12 @@ namespace StateEvaluation
             selectedUIDInSubjectiveFeeling.SelectedIndex = -1;
             selectedDateInSubjectiveFeeling.Text = "";
         }
+
+        private void RefreshPreferenceBtn_Click(object sender, RoutedEventArgs e)
+        {
+            SetValueInTabsCommand(sender, e);
+            SaveChangesTestCommand(sender, e);
+        }
         private void EditPersonBtn_Click(object sender, RoutedEventArgs e)
         {
             string tag = ((Button)sender).Tag.ToString();
@@ -167,21 +173,53 @@ namespace StateEvaluation
 
             var inputs = new List<string> { SelectedCode };
 
-            if (new List<List<string>> { inputs, Cin3s, C2in3s, Cin12s, C2in12s }.Any(x => x.Any(y => y == null) || x.Count != x.Distinct().Count())
+            if (false && (new List<List<string>> { inputs, Cin3s, C2in3s, Cin12s, C2in12s }.Any(x => x.Any(y => y == null) || x.Count != x.Distinct().Count())
                 || new List<List<RadioButton>> { Pref1, Pref2 }.Any(x => x.All(y => y.IsChecked != true))
-                || TestDate == null)
+                || TestDate == null))
             {
                 MessageBox.Show("Not all fields is filled!");
             }
             else
             {
-                List<byte> Cin3sByte = Cin3s.Select(x => Byte.Parse(x)).ToList();
-                List<byte> Cin12sByte = Cin12s.Select(x => Byte.Parse(x)).ToList();
-                List<byte> C2in3sByte = C2in3s.Select(x => Byte.Parse(x)).ToList();
-                List<byte> C2in12sByte = C2in12s.Select(x => Byte.Parse(x)).ToList();
-                
-                var Pref1Index = Pref1.Select(x => x.IsChecked).ToList().IndexOf(true);
-                var Pref2Index = Pref2.Select(x => x.IsChecked).ToList().IndexOf(true);
+                string Preference1, Preference2;
+                // try to get selected Preference2 or calculate by values
+                try
+                {
+                    var Pref1Index = Pref1.Select(x => x.IsChecked).ToList().IndexOf(true);
+                    if (Pref1Index != -1)
+                    {
+                        Preference1 = Prefs[Pref1.Select(x => x.IsChecked).ToList().IndexOf(true)];
+                    }
+                    else
+                    {
+                        List<byte> Cin3sByte = Cin3s.Select(x => Byte.Parse(x)).ToList();
+                        List<byte> Cin12sByte = Cin12s.Select(x => Byte.Parse(x)).ToList();
+                        Preference1 = new StateEvaluationDLL.DataStructures.Preference(Cin3sByte, Cin12sByte).Type.ToString();
+                    }
+                }
+                catch
+                {
+                    Preference1 = "";
+                }
+                // try to get selected Preference2 or calculate by values
+                try
+                {
+                    var Pref2Index = Pref2.Select(x => x.IsChecked).ToList().IndexOf(true);
+                    if (Pref2Index != -1)
+                    {
+                        Preference2= Prefs[Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)];
+                    }
+                    else
+                    {
+                        List<byte> C2in3sByte = C2in3s.Select(x => Byte.Parse(x)).ToList();
+                        List<byte> C2in12sByte = C2in12s.Select(x => Byte.Parse(x)).ToList();
+                        Preference2 = new StateEvaluationDLL.DataStructures.Preference(C2in3sByte, C2in12sByte).Type.ToString();
+                    }
+                }
+                catch
+                {
+                    Preference2 = "";
+                }
                 Preference preference = new Preference()
                 {
                     Id = new Guid(TestID.Text),
@@ -190,16 +228,17 @@ namespace StateEvaluation
                     FavoriteColor = 0,
                     ShortOder1 = String.Join(",", Cin3s),
                     Oder1 = String.Join(",", Cin12s),
-                    Preference1 = new StateEvaluationDLL.DataStructures.Preference(Cin3sByte, Cin12sByte).Type.ToString(), // Prefs[Pref1.Select(x => x.IsChecked).ToList().IndexOf(true)],
+                    Preference1 = Preference1,
                     ShortOder2 = String.Join(",", C2in3s),
                     Oder2 = String.Join(",", C2in12s),
-                    Preference2 = new StateEvaluationDLL.DataStructures.Preference(C2in3sByte, C2in12sByte).Type.ToString(), // Prefs[Pref1.Select(x => x.IsChecked).ToList().IndexOf(true)],
+                    Preference2 = Preference2,
                     Compare = (Pref1.Select(x => x.IsChecked).ToList().IndexOf(true) == Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)).ToString().ToLower(),
                     RelaxTable1 = CRelax1,
                     RelaxTable2 = CRelax2
                 };
                 _preferenceDb.UpdateTestInPreference(preference);
-                TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
+                //                TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
+                MessageBox.Show("Done");
                 ClearInputs();
                 ApplyChangesBTN.Visibility = Visibility.Hidden;
                 TestID.Text = "";
@@ -318,9 +357,9 @@ namespace StateEvaluation
 
             var inputs = new List<string> { SelectedCode };
 
-            if (new List<List<string>> { inputs, Cin3s, C2in3s, Cin12s, C2in12s }.Any(x => x.Any(y => y == null) || x.Count != x.Distinct().Count())
+            if (false && (new List<List<string>> { inputs, Cin3s, C2in3s, Cin12s, C2in12s }.Any(x => x.Any(y => y == null) || x.Count != x.Distinct().Count())
                 || new List<List<RadioButton>> { Pref1, Pref2 }.Any(x => x.All(y => y.IsChecked != true))
-                || TestDate == null)
+                || TestDate == null))
             {
                 MessageBox.Show("Not all fields is filled!");
             }

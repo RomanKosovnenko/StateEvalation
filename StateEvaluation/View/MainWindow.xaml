@@ -1046,6 +1046,13 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
 
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"  Visibility="Hidden">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="RefreshPreferenceBtn" Content="&#xE8B5;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="RefreshPreferenceBtn_Click" Tag="{Binding Id}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
 
                 </DataGrid.Columns>
