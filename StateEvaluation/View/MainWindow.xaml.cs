@@ -237,8 +237,14 @@ namespace StateEvaluation
                     RelaxTable2 = CRelax2
                 };
                 _preferenceDb.UpdateTestInPreference(preference);
-                //                TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
-                MessageBox.Show("Done");
+                var needUpdate = true;
+                if (needUpdate)
+                {
+                    TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
+                } else
+                {
+                    MessageBox.Show("Done");
+                }
                 ClearInputs();
                 ApplyChangesBTN.Visibility = Visibility.Hidden;
                 TestID.Text = "";
