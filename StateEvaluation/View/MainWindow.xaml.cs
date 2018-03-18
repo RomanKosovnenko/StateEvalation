@@ -598,12 +598,12 @@ namespace StateEvaluation
         private void BildChartOnPreference1(object sender, RoutedEventArgs e)
         {
             PreferenceDB _preferenceDb = new PreferenceDB();
-            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(), true);
+            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(), true, DateFrom.SelectedDate != null && DateFrom.Text == DateTo.Text);
         }
         private void BildChartOnPreference2(object sender, RoutedEventArgs e)
         {
             PreferenceDB _preferenceDb = new PreferenceDB();
-            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(), false);
+            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(), false, DateFrom.SelectedDate != null && DateFrom.Text == DateTo.Text);
         }
 
         private void AddData_OnClick(object sender, RoutedEventArgs e)

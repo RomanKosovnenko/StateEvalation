@@ -2282,13 +2282,11 @@
                     <Button Grid.Row="1"
                             Click="BildChartOnPreference1"
                             Margin="2"
-                            Command="{Binding RemoveFiltersCommand}"
                             Content="Диаграма преф.1" Padding="0" />
                     <Button Grid.Row="1"
-                        Click="BildChartOnPreference2"
-                        Margin="2"
-                        Command="{Binding RemoveFiltersCommand}"
-                        Content="Диаграма преф.2" Padding="0" Grid.Column="1" />
+                            Click="BildChartOnPreference2"
+                            Margin="2"
+                            Content="Диаграма преф.2" Padding="0" Grid.Column="1" />
                     <!--<Button Grid.Row="2"
                         Click="AddData_OnClick"
                         Margin="2"

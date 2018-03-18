@@ -30,6 +30,13 @@ namespace StateEvaluation.View
             this.Title = isPreference1 ? "Диаграма преференций 1" : "Диаграма преференций 2";
             this.Show();
         }
+        public TestsChart(List<Preference> Tests, bool isPreference1, bool isOneDay): this(Tests, isPreference1)
+        {
+            if (isOneDay)
+            {
+                AxisY.MaxValue = 12;
+            }
+        }
 
         private List<Preference> MakeTests(List<Preference> Tests)
         {
@@ -48,6 +55,46 @@ namespace StateEvaluation.View
         public SalesViewModel Sales { get; set; }
         public Func<double, string> YFormatter { get; set; }
 
+        private string GetLeedingZero(int x) {
+            if(x < 10)
+            {
+                return "0" + x;
+            }
+            else
+            {
+                return "" + x;
+            }
+        }
+        private void SaveImage(object sender, RoutedEventArgs e)
+        {
+            SaveButton.Visibility = Visibility.Hidden;
+
+            var rtb = new RenderTargetBitmap(
+                (int) Width, 
+                (int) Height, 
+                96d, 
+                96d,
+                PixelFormats.Pbgra32
+                );
+
+            rtb.Render(Chart);
+
+            var currentDate = new DateTime(DateTime.Now.Ticks);
+            SaveRTBAsPNG(rtb, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/Result_" + currentDate.Year + GetLeedingZero(currentDate.Month) + GetLeedingZero(currentDate.Day) + "_" + GetLeedingZero(currentDate.Hour) + GetLeedingZero(currentDate.Minute) + GetLeedingZero(currentDate.Second) + ".png");
+
+            MessageBox.Show("Chart saved!");
+            SaveButton.Visibility = Visibility.Visible;
+        }
+
+        private static void SaveRTBAsPNG(RenderTargetBitmap bmp, string filename)
+        {
+            var enc = new PngBitmapEncoder(); 
+            enc.Frames.Add(BitmapFrame.Create(bmp));
+            using (var stm = System.IO.File.Create(filename))
+            {
+                enc.Save(stm);
+            }
+        }
         private void MvvmExample_OnLoaded(object sender, RoutedEventArgs e)
         {
             //this is just to see animation everytime you click next

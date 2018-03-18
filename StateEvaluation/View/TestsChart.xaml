@@ -12,14 +12,19 @@
         d:DesignWidth="300"
         Loaded="MvvmExample_OnLoaded"
         mc:Ignorable="d">
-    <Grid>
-        <lvc:BarChart Name="Chart"
+    <Grid x:Name="Tests">
+        <lvc:BarChart x:Name="Chart"
+                      Background="White"
                       Grid.Row="2"
                       Grid.Column="0"
                       LegendLocation="Right"
                       Series="{Binding Sales.SalesmenSeries}">
             <lvc:BarChart.AxisY>
-                <lvc:Axis Title="Количество человек" LabelFormatter="{Binding YFormatter}" />
+                <lvc:Axis x:Name="AxisY" Title="Количество человек" LabelFormatter="{Binding YFormatter}" MinValue="0">
+                    <lvc:Axis.Separator>
+                        <lvc:Separator Step="1"></lvc:Separator>
+                    </lvc:Axis.Separator>
+                </lvc:Axis>
             </lvc:BarChart.AxisY>
             <lvc:BarChart.AxisX>
                 <lvc:Axis Name="SecondaryAxis"
@@ -27,5 +32,12 @@
                           Labels="{Binding Sales.AvailableMonths}" />
             </lvc:BarChart.AxisX>
         </lvc:BarChart>
+        <Button
+            x:Name="SaveButton"
+            Width="50"
+            Height="25"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Click="SaveImage">Save</Button>
     </Grid>
 </Window>
