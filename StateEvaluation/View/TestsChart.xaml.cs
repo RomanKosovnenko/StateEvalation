@@ -13,12 +13,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using StateEvaluation.Model;
+using Microsoft.Win32;
 
 namespace StateEvaluation.View
 {
+
     public partial class TestsChart : Window
     {
-
 
         public TestsChart(List<Preference> Tests, bool isPreference1)
         {
@@ -65,6 +66,24 @@ namespace StateEvaluation.View
                 return "" + x;
             }
         }
+        private Tuple<bool, string> GetFullPath() {
+            var currentDate = new DateTime(DateTime.Now.Ticks);
+
+            var sfd = new SaveFileDialog();
+
+            sfd.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            sfd.RestoreDirectory = true;
+            sfd.FileName = "Result_" + currentDate.Year + GetLeedingZero(currentDate.Month) + GetLeedingZero(currentDate.Day) + "_" + GetLeedingZero(currentDate.Hour) + GetLeedingZero(currentDate.Minute) + GetLeedingZero(currentDate.Second) + ".png";
+            sfd.Filter = "Images|*.png;*.jpg";
+            if ((bool)sfd.ShowDialog())
+            {
+                return Tuple.Create(true, sfd.FileName);
+            }
+            else
+            {
+                return Tuple.Create(false, sfd.InitialDirectory + "\\" + sfd.FileName);
+            }
+        }
         private void SaveImage(object sender, RoutedEventArgs e)
         {
             SaveButton.Visibility = Visibility.Hidden;
@@ -79,10 +98,12 @@ namespace StateEvaluation.View
 
             rtb.Render(Chart);
 
-            var currentDate = new DateTime(DateTime.Now.Ticks);
-            SaveRTBAsPNG(rtb, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/Result_" + currentDate.Year + GetLeedingZero(currentDate.Month) + GetLeedingZero(currentDate.Day) + "_" + GetLeedingZero(currentDate.Hour) + GetLeedingZero(currentDate.Minute) + GetLeedingZero(currentDate.Second) + ".png");
+            var path = GetFullPath();
+            if (path.Item1)
+            {
+                SaveRTBAsPNG(rtb, path.Item2);
+            }
 
-            MessageBox.Show("Chart saved!");
             SaveButton.Visibility = Visibility.Visible;
         }
 
