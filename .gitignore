@@ -4,3 +4,9 @@
 .idea
 .vs
 .DS_Store
+LiveChartsCore/bin/
+StateEvaluation/bin/
+StateEvaluation/obj/
+LiveChartsCore/obj/
+StateEvaluationDLL1/obj/
+ConsoleApp1/obj/
