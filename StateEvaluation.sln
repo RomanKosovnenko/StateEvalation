@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StateEvaluationDLL", "State
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiveChartsCore", "LiveChartsCore\LiveChartsCore.csproj", "{EF235236-364D-4DF8-A222-1E74CA0CBAD9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{50FF1186-F5AE-4DDA-8697-1314E631E591}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,6 +80,20 @@ Global
 		{EF235236-364D-4DF8-A222-1E74CA0CBAD9}.r46|Any CPU.Build.0 = r46|Any CPU
 		{EF235236-364D-4DF8-A222-1E74CA0CBAD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EF235236-364D-4DF8-A222-1E74CA0CBAD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.r40|Any CPU.ActiveCfg = Release|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.r40|Any CPU.Build.0 = Release|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.r45|Any CPU.ActiveCfg = Release|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.r45|Any CPU.Build.0 = Release|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.r451|Any CPU.ActiveCfg = Release|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.r451|Any CPU.Build.0 = Release|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.r452|Any CPU.ActiveCfg = Release|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.r452|Any CPU.Build.0 = Release|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.r46|Any CPU.ActiveCfg = Release|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.r46|Any CPU.Build.0 = Release|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50FF1186-F5AE-4DDA-8697-1314E631E591}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace StateEvaluation.BioColor
 {
-    internal static class ImageGenerator
+    public static class ImageGenerator
     {
         public static Regex HEX = new Regex(@"^([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$");
         private static readonly int SquareSize = Settings.Default.square;

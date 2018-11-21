@@ -2,6 +2,7 @@
 using StateEvaluation.BioColor;
 using StateEvaluation.Model;
 using StateEvaluation.View;
+using StateEvaluation.ViewModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -28,25 +29,20 @@ namespace StateEvaluation
         public static Dictionary<string, string> people;
         private PreferenceDB _preferenceDb = new PreferenceDB();
         public List<string> PersonCodes = new List<string>();
+
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = this;
             BioColor.Main.InitBioColor(BioColorGraph, Date, DateNow);
-            //перевіряю чи працює вибірка та вставка в моделі, які я стоврив
-            
-            //MessageBox.Show("ATNight: "  +_preferenceDb.GetATNght().First().ToString());
-            //MessageBox.Show("Anthropometry: " + _preferenceDb.GetAnthropometry().First().ToString());
-            //Anthropometry anthropometry = new Anthropometry();
-            //anthropometry.Id = new Guid();
-            //anthropometry.UserId = "EX20#2";
-            //anthropometry.Growth = 20;
-            //anthropometry.Date = DateTime.Now;
-            //_preferenceDb.InsertInAnthropometry(anthropometry);
         }
 
         private void AddFeelingPeople(object sender, RoutedEventArgs e)
         {
+            var picker = (MainWindowVM)this.Resources["subjectiveFeelingInsertModel"];
+            picker.BadMood = true;
+            /*var a = selectedDateInSubjectiveFeeling.Text;
+
             if (!DateTime.TryParse((PersonAddFormGrid.FindName("selectedDateInSubjectiveFeeling") as DatePicker).Text, out DateTime obj1) ||
                 string.IsNullOrEmpty((PersonAddFormGrid.FindName("selectedUIDInSubjectiveFeeling") as ComboBox).Text))
             {
@@ -57,7 +53,7 @@ namespace StateEvaluation
             _preferenceDb.InsertEntityInSubjectiveFeeling(sf);
             RefreshSubjectiveFeelDataGrid();
             ClearSelected();
-            RefreshUIDInTabs();
+            RefreshUIDInTabs();*/
         }
         private void RefreshSubjectiveFeelDataGrid()
         {
