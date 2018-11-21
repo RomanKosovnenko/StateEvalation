@@ -113,6 +113,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\StringFormarter.cs" />
     <Compile Include="Helpers\BooleanToChecker.cs" />
     <Compile Include="Helpers\BooleanToNOTVisibilityConverter.cs" />
     <Compile Include="Helpers\ButtonToVisibilityConverter.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Helpers\NumberToRelax2Converter.cs" />
     <Compile Include="Helpers\PreferenceSameAsRelax.cs" />
     <Compile Include="Helpers\PreferenceToBrushConverter.cs" />
+    <Compile Include="Helpers\UserIdBuilder.cs" />
     <Compile Include="Model\Anthropometry.cs" />
     <Compile Include="Model\ArterialPressuresGeneral.cs" />
     <Compile Include="Model\ArterialPressuresInDay.cs" />
@@ -131,6 +133,7 @@
     <Compile Include="Model\CycleErgometry.cs" />
     <Compile Include="Model\CycleErgometryWithLoad.cs" />
     <Compile Include="Model\JournalOfAppeal.cs" />
+    <Compile Include="ViewModel\PeopleDataGrid\PeopleDto.cs" />
     <Compile Include="View\FeelingsChart.xaml.cs">
       <DependentUpon>FeelingsChart.xaml</DependentUpon>
     </Compile>

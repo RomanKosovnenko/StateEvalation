@@ -31,6 +31,11 @@ namespace StateEvaluation.Model
         public Table<CycleErgometryWithLoad> CycleErgometryWithLoad;
         public Table<BloodTest> BloodTest;
 
+        public People GetPersonById(string id)
+        {
+            var person = People.Single(item => item.Id.ToString() == id);
+            return person;
+        }
         public IEnumerable<CycleErgometry> GetAllCycleErgometry()
         {
             var items = CycleErgometry.Select(item => item).OrderBy(item => item.UserId);
