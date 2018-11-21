@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:StateEvaluation"
+        xmlns:local="clr-namespace:StateEvaluation.ViewModel"
         xmlns:view="clr-namespace:StateEvaluation.View"
         xmlns:helpers="clr-namespace:StateEvaluation.Helpers"
         xmlns:p="clr-namespace:StateEvaluation.Properties"
         xmlns:model="clr-namespace:StateEvaluation.Model"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:peopleInsert="clr-namespace:StateEvaluation.ViewModel.PeopleDataGrid"
         mc:Ignorable="d"
         ContentRendered="WindowRendered"
         Title="MainWindow" Height="768" Width="1366" WindowState="Maximized">
@@ -22,6 +23,9 @@
         <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Preferences"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetProfessionsList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Professions"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetCycleErgometry" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllCycleErgometry"></ObjectDataProvider>
+        <!--here defined resourses' name for exect model-->
+        <local:MainWindowVM x:Key="subjectiveFeelingInsertModel" />
+        <peopleInsert:PeopleDto x:Key="peopleDto" />
         
         <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="PeopleCodes"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="ExpeditionCodes"></ObjectDataProvider>
@@ -52,7 +56,7 @@
             <!--<TabItem Header="{x:Static p:Resources.AddDataHeader}">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>-->
-            <TabItem x:Name="tabItem" IsSelected="True" Header="{x:Static p:Resources.PersonsTabHeader}">
+            <TabItem x:Name="tabItem" IsSelected="True" DataContext="{StaticResource peopleDto}" Header="{x:Static p:Resources.PersonsTabHeader}">
                 <Grid x:Name="PersonAddFormGrid" Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -76,13 +80,13 @@
                     <Label Content="Proffession" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="3"/>
                     <Label Content="Expedition" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="4"/>
                     <Label Content="Number" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="5"/>
-                    <TextBox x:Name="FirstnameTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" FontSize="20" LostFocus="Textbox_LostFocus"/>
-                    <TextBox x:Name="LastnameTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="1" FontSize="20" LostFocus="Textbox_LostFocus"/>
-                    <TextBox x:Name="MiddlenameTextbox" TextWrapping="Wrap" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="1" FontSize="20" LostFocus="Textbox_LostFocus"/>
-                    <DatePicker x:Name="BirthdayDatePicker" Grid.Row="1" Grid.Column="2" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" LostFocus="DatePicker_LostFocus"/>
-                    <TextBox x:Name="ProfessionTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="3" FontSize="20" LostFocus="Textbox_LostFocus"/>
-                    <TextBox x:Name="ExpeditionTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="4" FontSize="20" LostFocus="NumberTextbox_LostFocus"/>
-                    <TextBox x:Name="NumberTextbox" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="5" FontSize="20" LostFocus="NumberTextbox_LostFocus"/>
+                    <TextBox Text="{Binding FirstName}" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" FontSize="20" LostFocus="Textbox_LostFocus"/>
+                    <TextBox Text="{Binding LastName}" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="1" FontSize="20" LostFocus="Textbox_LostFocus"/>
+                    <TextBox Text="{Binding MiddleName}" TextWrapping="Wrap" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="1" FontSize="20" LostFocus="Textbox_LostFocus"/>
+                    <DatePicker SelectedDate="{Binding Birthday}" Grid.Row="1" Grid.Column="2" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" LostFocus="DatePicker_LostFocus"/>
+                    <TextBox Text="{Binding Workposition}" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="3" FontSize="20" LostFocus="Textbox_LostFocus"/>
+                    <TextBox Text="{Binding Expedition}" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="4" FontSize="20" LostFocus="NumberTextbox_LostFocus"/>
+                    <TextBox Text="{Binding PersonNumber}" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="5" FontSize="20" LostFocus="NumberTextbox_LostFocus"/>
                     <Button x:Name="AddPersonBtn" Content="Add" Grid.Row="1" Grid.Column="6" HorizontalContentAlignment="Center" Margin="3" Click="AddPersonBtn_Click"/>
                     <Button x:Name="ApplyPeopleChangesBTN" Content="Save" Grid.Row="2" Grid.Column="6" HorizontalContentAlignment="Center" Margin="3" Click="SavePersonBtn_Click" Visibility="Hidden"/>
                 </Grid>
@@ -501,7 +505,7 @@
                         Visibility="Hidden"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItem2" Header="{x:Static p:Resources.SubjectiveFeelingsTabHeader}">
+            <TabItem x:Name="tabItem2" DataContext="{StaticResource subjectiveFeelingInsertModel}" Header="{x:Static p:Resources.SubjectiveFeelingsTabHeader}">
                 <Grid x:Name="DataFridSubjectiveFeelings" Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto" />
@@ -579,8 +583,8 @@
                               Width="80"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
-                               ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
-                              SelectedIndex="{Binding SelectedCodeIndex}" />
+                              ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
+                              SelectedValue="{Binding SelectedUser}"/>
                     <DatePicker Grid.Row="1"
                                 Grid.Column="2"
                                 HorizontalAlignment="Left"

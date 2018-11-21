@@ -2,6 +2,8 @@
 using StateEvaluation.BioColor;
 using StateEvaluation.Model;
 using StateEvaluation.View;
+using StateEvaluation.ViewModel;
+using StateEvaluation.ViewModel.PeopleDataGrid;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,9 +15,12 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using StateEvaluation.Extensions;
 using Button = System.Windows.Controls.Button;
 using TextBox = System.Windows.Controls.TextBox;
 using Window = System.Windows.Window;
+using StateEvaluation.Helpers;
+using StateEvaluation.Providers;
 
 namespace StateEvaluation
 {
@@ -28,25 +33,21 @@ namespace StateEvaluation
         public static Dictionary<string, string> people;
         private PreferenceDB _preferenceDb = new PreferenceDB();
         public List<string> PersonCodes = new List<string>();
+        public PeopleDataGridProvider PeopleProvider = new PeopleDataGridProvider();
+
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = this;
             BioColor.Main.InitBioColor(BioColorGraph, Date, DateNow);
-            //перевіряю чи працює вибірка та вставка в моделі, які я стоврив
-            
-            //MessageBox.Show("ATNight: "  +_preferenceDb.GetATNght().First().ToString());
-            //MessageBox.Show("Anthropometry: " + _preferenceDb.GetAnthropometry().First().ToString());
-            //Anthropometry anthropometry = new Anthropometry();
-            //anthropometry.Id = new Guid();
-            //anthropometry.UserId = "EX20#2";
-            //anthropometry.Growth = 20;
-            //anthropometry.Date = DateTime.Now;
-            //_preferenceDb.InsertInAnthropometry(anthropometry);
         }
 
         private void AddFeelingPeople(object sender, RoutedEventArgs e)
         {
+            var picker = (MainWindowVM)this.Resources["subjectiveFeelingInsertModel"];
+            picker.BadMood = true;
+            /*var a = selectedDateInSubjectiveFeeling.Text;
+
             if (!DateTime.TryParse((PersonAddFormGrid.FindName("selectedDateInSubjectiveFeeling") as DatePicker).Text, out DateTime obj1) ||
                 string.IsNullOrEmpty((PersonAddFormGrid.FindName("selectedUIDInSubjectiveFeeling") as ComboBox).Text))
             {
@@ -57,7 +58,7 @@ namespace StateEvaluation
             _preferenceDb.InsertEntityInSubjectiveFeeling(sf);
             RefreshSubjectiveFeelDataGrid();
             ClearSelected();
-            RefreshUIDInTabs();
+            RefreshUIDInTabs();*/
         }
         private void RefreshSubjectiveFeelDataGrid()
         {
@@ -102,13 +103,7 @@ namespace StateEvaluation
             SetValueInTabsCommand(sender, e);
             SaveChangesTestCommand(sender, e);
         }
-        private void EditPersonBtn_Click(object sender, RoutedEventArgs e)
-        {
-            string tag = ((Button)sender).Tag.ToString();
-            var items = _preferenceDb.People.Select(item => item).Where(item => item.Id.ToString() == tag);
-            People people = items.Single();
-            SetValueInTabs(people);
-        }
+       
         private void EditFeelingsBtn_Click(object sender, RoutedEventArgs e)
         {
             string tag = ((Button)sender).Tag.ToString();
@@ -123,25 +118,7 @@ namespace StateEvaluation
             Preference preference = items.Single();
             SetValueInTabs(preference);
         }
-        private void SavePersonBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (TestID.Text.Trim().Length == 0) return;
-            People people = new People()
-            {
-                Id = new Guid(TestID.Text),
-                Firstname = FirstnameTextbox.Text,
-                Lastname = LastnameTextbox.Text,
-                Birthday = BirthdayDatePicker.Text,
-                Workposition = ProfessionTextbox.Text,
-                Expedition = int.Parse(ExpeditionTextbox.Text),
-                Number = int.Parse(NumberTextbox.Text),
-
-
-            };
-            _preferenceDb.UpdateTestInPreference(people);
-            PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
-            ClearInputs();
-        }
+       
         private void SaveFeelingPeople(object sender, RoutedEventArgs e)
         {
             if (TestID.Text.Trim().Length == 0) return;
@@ -264,17 +241,7 @@ namespace StateEvaluation
             selectedDateInSubjectiveFeeling.Text = feeling.Date.ToString();
             ApplyFeelingChangesBTN.Visibility = Visibility.Visible;
         }
-        private void SetValueInTabs(People people)
-        {
-            FirstnameTextbox.Text = people.Firstname.Trim();
-            LastnameTextbox.Text = people.Lastname.Trim();
-            BirthdayDatePicker.Text = people.Birthday.Trim();
-            ProfessionTextbox.Text = people.Workposition.Trim();
-            ExpeditionTextbox.Text = people.Expedition.ToString().Trim();
-            NumberTextbox.Text = people.Number.ToString().Trim();
-            TestID.Text = people.Id.ToString().Trim();
-            ApplyPeopleChangesBTN.Visibility = Visibility.Visible;
-        }
+       
         private void SetValueInTabs(Preference preference)
         {
             ApplyChangesBTN.Visibility = Visibility.Visible;
@@ -403,55 +370,54 @@ namespace StateEvaluation
                 ApplyChangesBTN.Visibility = Visibility.Hidden;
             }
         }
+
+        #region adding person
         private void AddPersonBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (
-                string.IsNullOrEmpty((PersonAddFormGrid.FindName("FirstnameTextbox") as TextBox).Text) ||
-                string.IsNullOrEmpty((PersonAddFormGrid.FindName("LastnameTextbox") as TextBox).Text) ||
-                !DateTime.TryParse((PersonAddFormGrid.FindName("BirthdayDatePicker") as DatePicker).Text, out DateTime obj1) ||
-                string.IsNullOrEmpty((PersonAddFormGrid.FindName("ProfessionTextbox") as TextBox).Text) ||
-                !int.TryParse((PersonAddFormGrid.FindName("ExpeditionTextbox") as TextBox).Text, out int obj2) ||
-                !int.TryParse((PersonAddFormGrid.FindName("NumberTextbox") as TextBox).Text, out int obj3)
-                )
+            var newPerson = (PeopleDto)Resources["peopleDto"];
+            if (!string.IsNullOrEmpty(PeopleProvider.CreatePerson(newPerson)))
             {
-                MessageBox.Show("Error! Try edit fields in form!");
-                return;
-            }
-            People person = GetNewPeople();
-            if (CheckFildAddedPersonOnLenght(person))
-            {
-                _preferenceDb.InsertEntityInPeople(person);
-                RefreshPersonDataGrid();
-                ClearSelectedInPeople();
                 RefreshUIDInTabs();
                 RefreshExpeditionInTabs();
                 RefreshUsersNumberInTabs();
+                RefreshPersonDataGrid();
             }
         }
-        private bool CheckFildAddedPersonOnLenght(People person)
-        {
-            if (person.UserId.Length > 11)
-            {
-                MessageBox.Show("Error! The Number and Expedition in the amount must be no more then 7");
-                return false;
-            }
-            else if (person.Lastname.Length > 21)
-            {
-                MessageBox.Show("Error! The Lastname must be no more then 20 symbols");
-                return false;
-            }
-            else if (person.Firstname.Length > 21)
-            {
-                MessageBox.Show("Error! The Firstname must be no more then 20 symbols");
-                return false;
-            }
-            else if (person.Workposition.Length > 21)
-            {
-                MessageBox.Show("Error! The Workposition must be no more then 20 symbols");
-                return false;
-            }
+        #endregion
 
-            return true;
+        #region saving person
+        private void SavePersonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (TestID.Text.Trim().Length == 0) return;
+            var editedPerson = (PeopleDto)this.Resources["peopleDto"];
+ 
+            Guid id = new Guid();
+            if(Guid.TryParse(TestID.Text.Trim(), out id))
+            {
+                PeopleProvider.UpdatePerson(editedPerson, id);
+            }
+            RefreshPersonDataGrid();
+        }
+        #endregion
+
+        #region edit person
+        private void EditPersonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string id = ((Button)sender).Tag.ToString();
+            var personDto = (PeopleDto)this.Resources["peopleDto"];
+            PeopleProvider.PrepareUpdate(personDto, id);
+            
+            //bad things
+            ApplyPeopleChangesBTN.Visibility = Visibility.Visible;
+        }
+        #endregion
+
+        #region refreshing
+        private void RefreshUIDInTabs()
+        {
+            UID.ItemsSource = _preferenceDb.CodesForFilter();
+            selectedUIDInSubjectiveFeeling.ItemsSource = _preferenceDb.CodesForInsert();
+            selectedUIDInTests.ItemsSource = _preferenceDb.CodesForInsert();
         }
 
         private void RefreshUsersNumberInTabs()
@@ -466,40 +432,13 @@ namespace StateEvaluation
             ExTo.ItemsSource = _preferenceDb.ExpeditionCodes();
         }
 
-        private void RefreshUIDInTabs()
-        {
-            UID.ItemsSource = _preferenceDb.CodesForFilter();
-            selectedUIDInSubjectiveFeeling.ItemsSource = _preferenceDb.CodesForInsert();
-            selectedUIDInTests.ItemsSource = _preferenceDb.CodesForInsert();
-        }
-        private void ClearSelectedInPeople()
-        {
-            (PersonAddFormGrid.FindName("FirstnameTextbox") as TextBox).Text = string.Empty;
-            (PersonAddFormGrid.FindName("LastnameTextbox") as TextBox).Text = string.Empty;
-            (PersonAddFormGrid.FindName("BirthdayDatePicker") as DatePicker).Text = string.Empty;
-            (PersonAddFormGrid.FindName("ProfessionTextbox") as TextBox).Text = string.Empty;
-            (PersonAddFormGrid.FindName("ExpeditionTextbox") as TextBox).Text = string.Empty;
-            (PersonAddFormGrid.FindName("NumberTextbox") as TextBox).Text = string.Empty;
-        }
         private void RefreshPersonDataGrid()
         {
             PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
         }
-        private People GetNewPeople()
-        {
-            People person = new People()
-            {
-                Firstname = (PersonAddFormGrid.FindName("FirstnameTextbox") as TextBox).Text,
-                Lastname = (PersonAddFormGrid.FindName("LastnameTextbox") as TextBox).Text,
-                Expedition = int.Parse((PersonAddFormGrid.FindName("ExpeditionTextbox") as TextBox).Text),
-                Number = int.Parse((PersonAddFormGrid.FindName("NumberTextbox") as TextBox).Text),
-                Id = Guid.NewGuid(),
-                Workposition = (PersonAddFormGrid.FindName("ProfessionTextbox") as TextBox).Text,
-                Birthday = (PersonAddFormGrid.FindName("BirthdayDatePicker") as DatePicker).Text
-            };
-            person.UserId = $"Ex{person.Expedition}#{person.Number}";
-            return person;
-        }
+        #endregion
+
+
         private void RemovePersonBtn_Click(object sender, RoutedEventArgs e)
         {
             var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
@@ -855,12 +794,12 @@ namespace StateEvaluation
             Yellow2Stat.IsChecked = false;
             Blue2Stat.IsChecked = false;
             Gray2Stat.IsChecked = false;
-            FirstnameTextbox.Text = "";
-            LastnameTextbox.Text = "";
-            BirthdayDatePicker.Text = "";
-            ProfessionTextbox.Text = "";
-            ExpeditionTextbox.Text = "";
-            NumberTextbox.Text = "";
+            //FirstnameTextbox.Text = "";
+            //LastnameTextbox.Text = "";
+            //BirthdayDatePicker.Text = "";
+            //ProfessionTextbox.Text = "";
+            //ExpeditionTextbox.Text = "";
+            //NumberTextbox.Text = "";
             markGeneralWeakness.IsChecked = false;
             markBadAppetite.IsChecked = false;
             markBadDream.IsChecked = false;
