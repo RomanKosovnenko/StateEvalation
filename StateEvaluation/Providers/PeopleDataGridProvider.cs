@@ -1,4 +1,5 @@
-﻿using StateEvaluation.Extensions;
+﻿using StateEvaluation.Enums;
+using StateEvaluation.Extensions;
 using StateEvaluation.Helpers;
 using StateEvaluation.Model;
 using StateEvaluation.ViewModel.PeopleDataGrid;
@@ -79,25 +80,25 @@ namespace StateEvaluation.Providers
             if (person.UserId.Length > 11)
             {
                 MessageBox.Show("Error! The Number and Expedition in the amount must be no more then 7");
-                return false;
+                return BooleanValues.False;
             }
             else if (person.Lastname.Length > 21)
             {
                 MessageBox.Show("Error! The Lastname must be no more then 20 symbols");
-                return false;
+                return BooleanValues.False;
             }
             else if (person.Firstname.Length > 21)
             {
                 MessageBox.Show("Error! The Firstname must be no more then 20 symbols");
-                return false;
+                return BooleanValues.False;
             }
             else if (person.Workposition.Length > 21)
             {
                 MessageBox.Show("Error! The Workposition must be no more then 20 symbols");
-                return false;
+                return BooleanValues.False;
             }
 
-            return true;
+            return BooleanValues.True;
         }
 
         public string UpdatePerson(PeopleDto editedPerson)

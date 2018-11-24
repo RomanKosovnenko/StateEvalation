@@ -10,6 +10,7 @@
         xmlns:model="clr-namespace:StateEvaluation.Model"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:peopleInsert="clr-namespace:StateEvaluation.ViewModel.PeopleDataGrid"
+        xmlns:preferenceInsert="clr-namespace:StateEvaluation.ViewModel.PreferenceDataGrid"
         mc:Ignorable="d"
         ContentRendered="WindowRendered"
         Title="MainWindow" Height="768" Width="1366" WindowState="Maximized">
@@ -26,7 +27,9 @@
         <!--here defined resourses' name for exect model-->
         <local:MainWindowVM x:Key="subjectiveFeelingInsertModel" />
         <peopleInsert:PeopleDto x:Key="peopleDto" />
-        
+        <preferenceInsert:PreferenceDto x:Key="preserenceDto" />
+
+
         <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="PeopleCodes"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="ExpeditionCodes"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetShortColorsNumbersList" ObjectType="{x:Type model:PreferenceDB}" MethodName="ShortColorsNumbersList"></ObjectDataProvider>
@@ -92,7 +95,7 @@
                     <Button x:Name="ApplyPeopleChangesBTN" Content="Save" Grid.Row="2" Grid.Column="6" HorizontalContentAlignment="Center" Margin="3" Click="SavePersonBtn_Click" Visibility="Hidden"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItem1" Header="{x:Static p:Resources.TestsTabHeader}">
+            <TabItem x:Name="tabItem1" DataContext="{StaticResource preserenceDto}" Header="{x:Static p:Resources.TestsTabHeader}">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="auto" />
@@ -247,7 +250,7 @@
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
                               ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
-                              SelectedItem="{Binding SelectedCode}" Height="22" />
+                              SelectedItem="{Binding UserId}" Height="22" />
                     <DatePicker x:Name="dateTimeForTest"
                                 Grid.Row="2"
                                 Grid.Column="2"
@@ -264,19 +267,19 @@
                     <ComboBox x:Name="selectorC1in3" 
                               Grid.Row="2"
                               Grid.Column="4"
-                              SelectedValue="{Binding C1in3}"
+                              SelectedValue="{Binding Color1in3}"
                               ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,0,0,4"
                               />
                     <ComboBox x:Name="selectorC2in3" 
                               Grid.Row="2"
                               Grid.Column="6"
-                              SelectedValue="{Binding C2in3}"
+                              SelectedValue="{Binding Color2in3}"
                               ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,0,0,4"
                               />
                     <ComboBox x:Name="selectorC3in3" 
                               Grid.Row="2"
                               Grid.Column="8"
-                              SelectedValue="{Binding C3in3}"
+                              SelectedValue="{Binding Color3in3}"
                               ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,0,0,4"
                             />
 
@@ -285,103 +288,107 @@
                               Grid.Row="2"
                               Grid.Column="12"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C1in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding Color1in12}" Margin="0,0,0,4" />
                     <ComboBox x:Name="selectorC2in12" 
                               Grid.Row="2"
                               Grid.Column="14"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C2in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding Color2in12}" Margin="0,0,0,4" />
                     <ComboBox x:Name="selectorC3in12" 
                               Grid.Row="2"
                               Grid.Column="16"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C3in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding Color3in12}" Margin="0,0,0,4" />
                     <ComboBox x:Name="selectorC4in12" 
                               Grid.Row="2"
                               Grid.Column="18"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C4in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding Color4in12}" Margin="0,0,0,4" />
                     <ComboBox x:Name="selectorC5in12" 
                               Grid.Row="2"
                               Grid.Column="20"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C5in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding Color5in12}" Margin="0,0,0,4" />
                     <ComboBox x:Name="selectorC6in12" 
                               Grid.Row="2"
                               Grid.Column="22"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C6in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding Color6in12}" Margin="0,0,0,4" />
                     <ComboBox x:Name="selectorC7in12" 
                               Grid.Row="2"
                               Grid.Column="24"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C7in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding Color7in12}" Margin="0,0,0,4" />
                     <ComboBox x:Name="selectorC8in12" 
                               Grid.Row="2"
                               Grid.Column="26"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C8in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding Color8in12}" Margin="0,0,0,4" />
                     <ComboBox x:Name="selectorC9in12" 
                               Grid.Row="2"
                               Grid.Column="28"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C9in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding Color9in12}" Margin="0,0,0,4" />
                     <ComboBox x:Name="selectorC10in12" 
                               Grid.Row="2"
                               Grid.Column="30"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C10in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding Color10in12}" Margin="0,0,0,4" />
                     <ComboBox x:Name="selectorC11in12" 
                               Grid.Row="2"
                               Grid.Column="32"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C11in12}" Margin="0,0,0,4" />
+                              SelectedValue="{Binding Color11in12}" Margin="0,0,0,4" />
                     <ComboBox x:Name="selectorC12in12" 
                               Grid.Row="2"
                               Grid.Column="34"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C12in12}" Margin="0,0,0,4"/>
+                              SelectedValue="{Binding Color12in12}" Margin="0,0,0,4"/>
                     <!-- Bio1 - Pref -->
                     <RadioButton x:Name="RedStat"
                              Grid.Row="2"
                              Grid.Column="38"
-                             GroupName="Pref1" Margin="8,4,7,19" Grid.RowSpan="2"/>
+                             GroupName="Pref1" Margin="8,4,7,19" Grid.RowSpan="2"
+                             IsChecked="{Binding Preference1Red}"/>
                     <RadioButton x:Name="YellowStat"
                              Grid.Row="2"
                              Grid.Column="40"
-                             GroupName="Pref1" Margin="6,4,4,19" Grid.RowSpan="2" />
+                             GroupName="Pref1" Margin="6,4,4,19" Grid.RowSpan="2" 
+                             IsChecked="{Binding Preference1Yellow}"/>
                     <RadioButton x:Name="BlueStat"
                              Grid.Row="2"
                              Grid.Column="42"
-                             GroupName="Pref1" Margin="3,4,0,19" Grid.RowSpan="2" />
+                             GroupName="Pref1" Margin="3,4,0,19" Grid.RowSpan="2" 
+                             IsChecked="{Binding Preference1Blue}"/>
                     <RadioButton x:Name="GrayStat"
                              Grid.Row="2"
                              Grid.Column="44"
-                             GroupName="Pref1" Margin="18,4,16,19" Grid.RowSpan="2"/>
+                             GroupName="Pref1" Margin="18,4,16,19" Grid.RowSpan="2"
+                             IsChecked="{Binding Preference1Grey}"/>
                     <!-- Bio1 - R -->
                     <ComboBox x:Name="selectorRelax1" 
                               Grid.Row="2"
                               Grid.Column="46"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding CRelax1}"/>
+                              SelectedValue="{Binding ColorRelax1}"/>
 
                     <!-- Bio2 - 3 -->
                     <ComboBox x:Name="selectorC21in3" 
                               Grid.Row="3"
                               Grid.Column="4"
-                              SelectedValue="{Binding C21in3}"
+                              SelectedValue="{Binding Color21in3}"
                               ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
                               />
                     <ComboBox x:Name="selectorC22in3" 
                               Grid.Row="3"
                               Grid.Column="6"
-                              SelectedValue="{Binding C22in3}"
+                              SelectedValue="{Binding Color22in3}"
                               ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
                               />
                     <ComboBox x:Name="selectorC23in3" 
                               Grid.Row="3"
                               Grid.Column="8"
-                              SelectedValue="{Binding C23in3}"
+                              SelectedValue="{Binding Color23in3}"
                               ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
                             />
 
@@ -390,85 +397,89 @@
                               Grid.Row="3"
                               Grid.Column="12"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C21in12}" />
+                              SelectedValue="{Binding Color21in12}" />
                     <ComboBox x:Name="selectorC22in12" 
                               Grid.Row="3"
                               Grid.Column="14"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C22in12}" />
+                              SelectedValue="{Binding Color22in12}" />
                     <ComboBox x:Name="selectorC23in12" 
                               Grid.Row="3"
                               Grid.Column="16"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C23in12}" />
+                              SelectedValue="{Binding Color23in12}" />
                     <ComboBox x:Name="selectorC24in12" 
                               Grid.Row="3"
                               Grid.Column="18"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C24in12}" />
+                              SelectedValue="{Binding Color24in12}" />
                     <ComboBox x:Name="selectorC25in12" 
                               Grid.Row="3"
                               Grid.Column="20"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C25in12}" />
+                              SelectedValue="{Binding Color25in12}" />
                     <ComboBox x:Name="selectorC26in12" 
                               Grid.Row="3"
                               Grid.Column="22"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C26in12}" />
+                              SelectedValue="{Binding Color26in12}" />
                     <ComboBox x:Name="selectorC27in12" 
                               Grid.Row="3"
                               Grid.Column="24"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C27in12}" />
+                              SelectedValue="{Binding Color27in12}" />
                     <ComboBox x:Name="selectorC28in12" 
                               Grid.Row="3"
                               Grid.Column="26"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C28in12}" />
+                              SelectedValue="{Binding Color28in12}" />
                     <ComboBox x:Name="selectorC29in12" 
                               Grid.Row="3"
                               Grid.Column="28"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C29in12}" />
+                              SelectedValue="{Binding Color29in12}" />
                     <ComboBox x:Name="selectorC210in12" 
                               Grid.Row="3"
                               Grid.Column="30"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C210in12}" />
+                              SelectedValue="{Binding Color210in12}" />
                     <ComboBox x:Name="selectorC211in12" 
                               Grid.Row="3"
                               Grid.Column="32"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C211in12}" />
+                              SelectedValue="{Binding Color211in12}" />
                     <ComboBox x:Name="selectorC212in12" 
                               Grid.Row="3"
                               Grid.Column="34"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding C212in12}" />
+                              SelectedValue="{Binding Color212in12}" />
                     <!-- Bio2 - Pref -->
                     <RadioButton x:Name="Red2Stat"
                              Grid.Row="3"
                              Grid.Column="38"
-                             GroupName="Pref2" Margin="8,4,7,-4"/>
+                             GroupName="Pref2" Margin="8,4,7,-4"
+                             IsChecked="{Binding Preference2Red}"/>
                     <RadioButton x:Name="Yellow2Stat"
                              Grid.Row="3"
                              Grid.Column="40"
-                             GroupName="Pref2" Margin="6,4,4,-4"/>
+                             GroupName="Pref2" Margin="6,4,4,-4"
+                             IsChecked="{Binding Preference2Yellow}"/>
                     <RadioButton x:Name="Blue2Stat"
                              Grid.Row="3"
                              Grid.Column="42"
-                             GroupName="Pref2" Margin="3,4,0,-4" />
+                             GroupName="Pref2" Margin="3,4,0,-4" 
+                             IsChecked="{Binding Preference2Blue}"/>
                     <RadioButton x:Name="Gray2Stat"
                              Grid.Row="3"
                              Grid.Column="44"
-                             GroupName="Pref2" Margin="18,4,16,-4"/>
+                             GroupName="Pref2" Margin="18,4,16,-4"
+                             IsChecked="{Binding Preference2Grey}"/>
                     <!-- Bio2 - R -->
                     <ComboBox x:Name="selectorRelax2" 
                               Grid.Row="3"
                               Grid.Column="46"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding CRelax2}"/>
+                              SelectedValue="{Binding ColorRelax2}"/>
                     <!-- End -->
                     <Button Grid.Row="1"
                             Grid.RowSpan="3"

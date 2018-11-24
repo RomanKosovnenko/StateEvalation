@@ -21,6 +21,7 @@ using TextBox = System.Windows.Controls.TextBox;
 using Window = System.Windows.Window;
 using StateEvaluation.Helpers;
 using StateEvaluation.Providers;
+using StateEvaluation.ViewModel.PreferenceDataGrid;
 
 namespace StateEvaluation
 {
@@ -34,6 +35,7 @@ namespace StateEvaluation
         private PreferenceDB _preferenceDb = new PreferenceDB();
         public List<string> PersonCodes = new List<string>();
         public PeopleDataGridProvider PeopleProvider = new PeopleDataGridProvider();
+        public PreferenceDataGridProvider PreferenceDataGridProvider = new PreferenceDataGridProvider();
 
         public MainWindow()
         {
@@ -373,60 +375,33 @@ namespace StateEvaluation
             }
         }
 
+
+
         private void SaveTestCommand(object sender, RoutedEventArgs e)
         {
-            var Cin3s = new List<string> { C1in3, C2in3, C3in3 };
-            var C2in3s = new List<string> { C21in3, C22in3, C23in3 };
-            var Cin12s = new List<string> { C1in12, C2in12, C3in12, C4in12, C5in12, C6in12, C7in12, C8in12, C9in12, C10in12, C11in12, C12in12 };
-            var C2in12s = new List<string> { C21in12, C22in12, C23in12, C24in12, C25in12, C26in12, C27in12, C28in12, C29in12, C210in12, C211in12, C212in12 };
-            var Pref1 = new List<RadioButton> { RedStat, YellowStat, BlueStat, GrayStat };
-            var Pref2 = new List<RadioButton> { Red2Stat, Yellow2Stat, Blue2Stat, Gray2Stat };
-            var Prefs = new List<string> { "Красная", "Желтая", "Синяя", "Смешанная" };
-
-            var inputs = new List<string> { SelectedCode };
-
-            if (false && (new List<List<string>> { inputs, Cin3s, C2in3s, Cin12s, C2in12s }.Any(x => x.Any(y => y == null) || x.Count != x.Distinct().Count())
-                || new List<List<RadioButton>> { Pref1, Pref2 }.Any(x => x.All(y => y.IsChecked != true))
-                || TestDate == null))
+            var preferenceDto = (PreferenceDto)this.Resources["preserenceDto"];
+            if (!PreferenceDataGridProvider.IsValidPreferenseDto(preferenceDto))
             {
                 MessageBox.Show("Not all fields is filled!");
             }
             else
             {
-                List<byte> Cin3sByte = Cin3s.Select(x => Byte.Parse(x)).ToList();
-                List<byte> Cin12sByte = Cin12s.Select(x => Byte.Parse(x)).ToList();
-                List<byte> C2in3sByte = C2in3s.Select(x => Byte.Parse(x)).ToList();
-                List<byte> C2in12sByte = C2in12s.Select(x => Byte.Parse(x)).ToList();
-
-                var Pref1Index = Pref1.Select(x => x.IsChecked).ToList().IndexOf(true);
-                var Pref2Index = Pref2.Select(x => x.IsChecked).ToList().IndexOf(true);
-                Preference preference = new Preference()
+                if (string.IsNullOrEmpty(PreferenceDataGridProvider.SavePreference(preferenceDto)))
                 {
-                    Id = Guid.NewGuid(),
-                    UserId = SelectedCode,
-                    Date = (DateTime)TestDate,
-                    FavoriteColor = 0,
-                    ShortOder1 = String.Join(",", Cin3s),
-                    Oder1 = String.Join(",", Cin12s),
-                    Preference1 = new StateEvaluationDLL.DataStructures.Preference(Cin3sByte, Cin12sByte).Type.ToString(), // Prefs[Pref1.Select(x => x.IsChecked).ToList().IndexOf(true)],
-                    ShortOder2 = String.Join(",", C2in3s),
-                    Oder2 = String.Join(",", C2in12s),
-                    Preference2 = new StateEvaluationDLL.DataStructures.Preference(C2in3sByte, C2in12sByte).Type.ToString(), // Prefs[Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)],
-                    Compare = (Pref1.Select(x => x.IsChecked).ToList().IndexOf(true) == Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)).ToString().ToLower(),
-                    RelaxTable1 = CRelax1,
-                    RelaxTable2 = CRelax2
-                };
-                PreferenceDB _preferenceDbNew = new PreferenceDB();
-                _preferenceDbNew.Preference.InsertOnSubmit(preference);
-                _preferenceDbNew.SubmitChanges();
-                TestsDataGrid.ItemsSource = _preferenceDbNew.GetAllTests();
-                ClearInputs();
+                    RefreshPreferenceDataGrid();
 
-                ApplyChangesBTN.Visibility = Visibility.Hidden;
+                    //hide save button
+                    ApplyChangesBTN.Visibility = Visibility.Hidden;
+                }
             }
         }
 
         #region refreshing
+
+        private void RefreshPreferenceDataGrid()
+        {
+            TestsDataGrid.ItemsSource = PreferenceDataGridProvider.GetAllPreferences();
+        }
         private void RefreshUIDInTabs()
         {
             UID.ItemsSource = _preferenceDb.CodesForFilter();
