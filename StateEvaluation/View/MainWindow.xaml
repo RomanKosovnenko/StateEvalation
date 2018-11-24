@@ -80,6 +80,7 @@
                     <Label Content="Proffession" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="3"/>
                     <Label Content="Expedition" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="4"/>
                     <Label Content="Number" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="5"/>
+                    <TextBox Text="{Binding Id}" Visibility="Hidden"/>
                     <TextBox Text="{Binding FirstName}" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" FontSize="20" LostFocus="Textbox_LostFocus"/>
                     <TextBox Text="{Binding LastName}" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="1" FontSize="20" LostFocus="Textbox_LostFocus"/>
                     <TextBox Text="{Binding MiddleName}" TextWrapping="Wrap" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="1" FontSize="20" LostFocus="Textbox_LostFocus"/>
@@ -676,6 +677,7 @@
 
             <DataGrid x:Name="PersonDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetPeople}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False">
                 <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.LastnameHeader}" Binding="{Binding Lastname}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.FirstnameHeader}" Binding="{Binding Firstname}" ClipboardContentBinding="{x:Null}"/>

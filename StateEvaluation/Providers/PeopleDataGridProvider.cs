@@ -3,6 +3,7 @@ using StateEvaluation.Helpers;
 using StateEvaluation.Model;
 using StateEvaluation.ViewModel.PeopleDataGrid;
 using System;
+using System.Collections.Generic;
 using System.Windows;
 
 namespace StateEvaluation.Providers
@@ -63,6 +64,7 @@ namespace StateEvaluation.Providers
 
         private void ClearSelectedInPeople(PeopleDto personDto)
         {
+            personDto.Id = string.Empty;
             personDto.FirstName = string.Empty;
             personDto.LastName = string.Empty;
             personDto.MiddleName = string.Empty;
@@ -98,25 +100,40 @@ namespace StateEvaluation.Providers
             return true;
         }
 
-        public void UpdatePerson(PeopleDto editedPerson, Guid id)
+        public string UpdatePerson(PeopleDto editedPerson)
         {
             try
             {
                 People person = GetNewPerson(editedPerson);
-                person.Id = id;
+                person.Id = new Guid(editedPerson.Id);
                 _preferenceDb.UpdateTestInPreference(person);
                 ClearSelectedInPeople(editedPerson);
+
+                return person.Id.ToString();
             }
-            catch { }
+            catch
+            {
+                MessageBox.Show("Error! Please, review filds.");
+                return string.Empty;
+            }
         }
 
-        public void PrepareUpdate(PeopleDto personDto, string id)
+        public string PrepareUpdate(PeopleDto personDto, Guid id)
         {
-            var person = _preferenceDb.GetPersonById(id);
-            SetValueInTabs(person, personDto);
+            try
+            {
+                var person = _preferenceDb.GetPersonById(id.ToString());
+                SetValueInTabs(person, personDto);
+                return id.ToString();
+            }
+            catch
+            {
+                return string.Empty;
+            }
         }
         private void SetValueInTabs(People person, PeopleDto personDto)
         {
+            personDto.Id = person.Id.ToString();
             personDto.FirstName = person.Firstname;
             personDto.LastName = person.Lastname;
             personDto.MiddleName = person.Middlename;
@@ -124,6 +141,10 @@ namespace StateEvaluation.Providers
             personDto.Workposition = person.Workposition;
             personDto.Expedition = person.Expedition.ToString().Trim();
             personDto.PersonNumber = person.Number.ToString().Trim();
+        }
+        public IEnumerable<People> GetAllPeople()
+        {
+            return _preferenceDb.GetAllPeople();
         }
     }
 }

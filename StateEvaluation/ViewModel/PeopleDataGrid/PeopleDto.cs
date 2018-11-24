@@ -11,7 +11,7 @@ namespace StateEvaluation.ViewModel.PeopleDataGrid
 {
     public class PeopleDto: INotifyPropertyChanged
     {
-
+        private string _id;
         private string _firstName;
         private string _lastName;
         private string _middleName;
@@ -25,6 +25,16 @@ namespace StateEvaluation.ViewModel.PeopleDataGrid
         public void OnPropertyChanged([CallerMemberName]string prop = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
+        }
+
+        public string Id
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+                OnPropertyChanged("Id");
+            }
         }
 
         public string FirstName

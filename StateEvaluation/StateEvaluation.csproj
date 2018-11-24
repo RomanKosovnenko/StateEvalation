@@ -133,6 +133,7 @@
     <Compile Include="Model\CycleErgometry.cs" />
     <Compile Include="Model\CycleErgometryWithLoad.cs" />
     <Compile Include="Model\JournalOfAppeal.cs" />
+    <Compile Include="Providers\PeopleDataGridProvider.cs" />
     <Compile Include="ViewModel\PeopleDataGrid\PeopleDto.cs" />
     <Compile Include="View\FeelingsChart.xaml.cs">
       <DependentUpon>FeelingsChart.xaml</DependentUpon>

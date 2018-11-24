@@ -42,6 +42,60 @@ namespace StateEvaluation
             BioColor.Main.InitBioColor(BioColorGraph, Date, DateNow);
         }
 
+        #region Button handlers for 'People' tab
+        /// <summary>
+        /// Create new person
+        /// </summary>
+        private void AddPersonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var newPerson = (PeopleDto)Resources["peopleDto"];
+            if (!string.IsNullOrEmpty(PeopleProvider.CreatePerson(newPerson)))
+            {
+                RefreshUIDInTabs();
+                RefreshExpeditionInTabs();
+                RefreshUsersNumberInTabs();
+                RefreshPersonDataGrid();
+            }
+        }
+
+        /// <summary>
+        /// Save changes about person
+        /// </summary>
+        private void SavePersonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var editedPerson = (PeopleDto)Resources["peopleDto"];
+
+            if (!string.IsNullOrEmpty(PeopleProvider.UpdatePerson(editedPerson)))
+            {
+                RefreshPersonDataGrid();
+
+                //hide save person button
+                ApplyPeopleChangesBTN.Visibility = Visibility.Hidden;
+            }
+        }
+
+        /// <summary>
+        /// Bind person data into input fields for editing
+        /// </summary>
+        private void EditPersonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var butonContext = ((Button)sender).DataContext;
+            var personId = ((People)butonContext).Id;
+
+            var personDto = (PeopleDto)Resources["peopleDto"];
+
+            if (!string.IsNullOrEmpty(PeopleProvider.PrepareUpdate(personDto, personId)))
+            {
+                //show save person button
+                ApplyPeopleChangesBTN.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MessageBox.Show("Oops, error while editing");
+            }
+        }
+        #endregion
+
         private void AddFeelingPeople(object sender, RoutedEventArgs e)
         {
             var picker = (MainWindowVM)this.Resources["subjectiveFeelingInsertModel"];
@@ -103,7 +157,7 @@ namespace StateEvaluation
             SetValueInTabsCommand(sender, e);
             SaveChangesTestCommand(sender, e);
         }
-       
+
         private void EditFeelingsBtn_Click(object sender, RoutedEventArgs e)
         {
             string tag = ((Button)sender).Tag.ToString();
@@ -118,7 +172,7 @@ namespace StateEvaluation
             Preference preference = items.Single();
             SetValueInTabs(preference);
         }
-       
+
         private void SaveFeelingPeople(object sender, RoutedEventArgs e)
         {
             if (TestID.Text.Trim().Length == 0) return;
@@ -184,7 +238,7 @@ namespace StateEvaluation
                     var Pref2Index = Pref2.Select(x => x.IsChecked).ToList().IndexOf(true);
                     if (Pref2Index != -1)
                     {
-                        Preference2= Prefs[Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)];
+                        Preference2 = Prefs[Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)];
                     }
                     else
                     {
@@ -218,7 +272,8 @@ namespace StateEvaluation
                 if (needUpdate)
                 {
                     TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
-                } else
+                }
+                else
                 {
                     MessageBox.Show("Done");
                 }
@@ -241,7 +296,7 @@ namespace StateEvaluation
             selectedDateInSubjectiveFeeling.Text = feeling.Date.ToString();
             ApplyFeelingChangesBTN.Visibility = Visibility.Visible;
         }
-       
+
         private void SetValueInTabs(Preference preference)
         {
             ApplyChangesBTN.Visibility = Visibility.Visible;
@@ -371,47 +426,6 @@ namespace StateEvaluation
             }
         }
 
-        #region adding person
-        private void AddPersonBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var newPerson = (PeopleDto)Resources["peopleDto"];
-            if (!string.IsNullOrEmpty(PeopleProvider.CreatePerson(newPerson)))
-            {
-                RefreshUIDInTabs();
-                RefreshExpeditionInTabs();
-                RefreshUsersNumberInTabs();
-                RefreshPersonDataGrid();
-            }
-        }
-        #endregion
-
-        #region saving person
-        private void SavePersonBtn_Click(object sender, RoutedEventArgs e)
-        {
-            if (TestID.Text.Trim().Length == 0) return;
-            var editedPerson = (PeopleDto)this.Resources["peopleDto"];
- 
-            Guid id = new Guid();
-            if(Guid.TryParse(TestID.Text.Trim(), out id))
-            {
-                PeopleProvider.UpdatePerson(editedPerson, id);
-            }
-            RefreshPersonDataGrid();
-        }
-        #endregion
-
-        #region edit person
-        private void EditPersonBtn_Click(object sender, RoutedEventArgs e)
-        {
-            string id = ((Button)sender).Tag.ToString();
-            var personDto = (PeopleDto)this.Resources["peopleDto"];
-            PeopleProvider.PrepareUpdate(personDto, id);
-            
-            //bad things
-            ApplyPeopleChangesBTN.Visibility = Visibility.Visible;
-        }
-        #endregion
-
         #region refreshing
         private void RefreshUIDInTabs()
         {
@@ -434,7 +448,7 @@ namespace StateEvaluation
 
         private void RefreshPersonDataGrid()
         {
-            PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
+            PersonDataGrid.ItemsSource = PeopleProvider.GetAllPeople();
         }
         #endregion
 
@@ -940,7 +954,7 @@ namespace StateEvaluation
 
             var people = _preferenceDb.GetAllPeople().Where(item => (item.Workposition == profession || profession == "All"));
             List<string> listOfPeople = new List<string>();
-            foreach(var item in people.ToList())
+            foreach (var item in people.ToList())
             {
                 listOfPeople.Add(item.UserId.ToString());
             }
@@ -950,7 +964,7 @@ namespace StateEvaluation
 /* DatePicker */   ((datefrom.Ticks == 0 || item.Date >= datefrom) && (item.Date <= dateto || dateto.Ticks == 0)) &&
 /* ShortOder  */   (CompareOrder(item.ShortOder1, PreferenceShortFilter1.Text, PreferenceShortFilter2.Text, PreferenceShortFilter3.Text)) &&
 /* Oder       */   (CompareOrder(item.Oder1, PreferenceFilter1.Text, PreferenceFilter2.Text, PreferenceFilter3.Text, PreferenceFilter4.Text, PreferenceFilter5.Text, PreferenceFilter6.Text, PreferenceFilter7.Text, PreferenceFilter8.Text, PreferenceFilter9.Text, PreferenceFilter10.Text, PreferenceFilter11.Text, PreferenceFilter12.Text)) &&
-/* Preference */   (item.Preference1 == preference || preference == "All")&&
+/* Preference */   (item.Preference1 == preference || preference == "All") &&
                    (listOfPeople.Contains(item.UserId))
                 );
         }
@@ -1144,7 +1158,7 @@ namespace StateEvaluation
                 var name = element.Name;
                 var factor = name.Substring(0, 1);
                 var id = name.Substring(name.Length - 1);
-                
+
                 int[] CMYK = ImageGenerator.RgbToCmyk(element.Text);
 
                 (FindName("c" + factor + "c" + id) as TextBox).Text = CMYK[0].ToString();

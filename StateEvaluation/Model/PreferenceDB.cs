@@ -174,7 +174,7 @@ namespace StateEvaluation.Model
             items.Workposition = people.Workposition;
             items.Expedition = people.Expedition;
             items.Number = people.Number;
-            items.UserId = $"Ex{items.Expedition}#{items.Number}";
+            items.UserId = people.UserId;
             SubmitChanges();
         }
         public void UpdateTestInPreference(SubjectiveFeeling feeling)
