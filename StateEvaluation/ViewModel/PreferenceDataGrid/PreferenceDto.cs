@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace StateEvaluation.ViewModel.PreferenceDataGrid
 {
-    public class PreferenceDto
+    public class PreferenceDto : INotifyPropertyChanged
     {
+        private string _id;
         private string _userId;
-        private string _testDate;
+        private object _testDate;
         private string _color1in3;
         private string _color2in3;
         private string _color3in3;
@@ -69,13 +70,13 @@ namespace StateEvaluation.ViewModel.PreferenceDataGrid
                 OnPropertyChanged("UserId");
             }
         }
-        public string TestDate
+        public object TestDate
         {
             get => _testDate;
             set
             {
                 _testDate = value;
-                OnPropertyChanged("TestDate1");
+                OnPropertyChanged("TestDate");
             }
         }
 
@@ -112,7 +113,7 @@ namespace StateEvaluation.ViewModel.PreferenceDataGrid
             set
             {
                 _color1in12 = value;
-                OnPropertyChanged("C1olor1in12");
+                OnPropertyChanged("Color1in12");
             }
         }
         public string Color2in12
@@ -437,6 +438,16 @@ namespace StateEvaluation.ViewModel.PreferenceDataGrid
             {
                 _preference1Grey = value;
                 OnPropertyChanged("Preference1Grey");
+            }
+        }
+
+        public string Id
+        {
+            get => _id;
+            set
+            {
+                _id = value;
+                OnPropertyChanged("Id");
             }
         }
     }

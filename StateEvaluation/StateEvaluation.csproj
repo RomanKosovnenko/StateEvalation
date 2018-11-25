@@ -114,6 +114,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Enums\BooleanValues.cs" />
+    <Compile Include="Enums\PreferenceColors.cs" />
     <Compile Include="Enums\StringBooleanValues.cs" />
     <Compile Include="Extensions\StringFormarter.cs" />
     <Compile Include="Helpers\BooleanToChecker.cs" />

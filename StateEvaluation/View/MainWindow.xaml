@@ -242,7 +242,7 @@
                                Grid.Column="46"
                                HorizontalAlignment="Center"
                                Text="Relax" Margin="6,0" Width="28" />
-
+                    
                     <ComboBox x:Name="selectedUIDInTests"
                               Grid.Row="2"
                               Grid.Column="0"
@@ -250,7 +250,7 @@
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
                               ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
-                              SelectedItem="{Binding UserId}" Height="22" />
+                              SelectedValue="{Binding UserId}" Height="22" />
                     <DatePicker x:Name="dateTimeForTest"
                                 Grid.Row="2"
                                 Grid.Column="2"
@@ -260,8 +260,8 @@
                                 Grid.Row="3"
                                 Grid.Column="2"
                                 VerticalAlignment="Top"
-                                Height="24" HorizontalAlignment="Left" Width="100" 
-                               Text=""
+                               Text="{Binding Id}"
+                                Height="24" HorizontalAlignment="Left" Width="100"
                                Visibility="Hidden"/>
                     <!-- Bio1 - 3 -->
                     <ComboBox x:Name="selectorC1in3" 
@@ -727,6 +727,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                    <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}" FontSize="14"/>
                     <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor I START -->

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using StateEvaluation.Enums;
+using StateEvaluation.Extensions;
 
 namespace StateEvaluation.Providers
 {
@@ -16,6 +17,7 @@ namespace StateEvaluation.Providers
         private List<string> _color2in12s = new List<string>();
         private List<bool> _preference1 = new List<bool>();
         private List<bool> _preference2 = new List<bool>();
+        private PreferenceDto _previousPreferenceDto = new PreferenceDto();
 
         public string SavePreference(PreferenceDto preferenceDto)
         {
@@ -81,9 +83,9 @@ namespace StateEvaluation.Providers
             var Preference2Index = _preference2.IndexOf(BooleanValues.True);
             Preference preference = new Preference()
             {
-                //Id = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 UserId = preferenceDto.UserId,
-                Date = DateTime.Parse(preferenceDto.TestDate),
+                Date = DateTime.Parse(preferenceDto.TestDate.ToString()),
                 FavoriteColor = 0,
                 ShortOder1 = String.Join(",", _color1in3s),
                 Oder1 = String.Join(",", _color1in12s),
@@ -99,7 +101,138 @@ namespace StateEvaluation.Providers
             return preference;
         }
 
-        private void ClearInputs(PreferenceDto preferenceDto)
+        internal string PrepareInputForm(PreferenceDto preferenceDto, Guid preferenceId)
+        {
+            try
+            {
+                var preference = _preferenceDb.GetPreferenceById(preferenceId);
+                SetValueInTabs(preferenceDto, preference);
+                _previousPreferenceDto = preferenceDto;
+                return preferenceId.ToString();
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        private void SetValueInTabs(PreferenceDto preferenceDto, Preference preference)
+        {
+            var shortOrder1List = preference.ShortOder1.ToString().Split(',');
+            var shortOrder2List = preference.ShortOder2.ToString().Split(',');
+            var order1List = preference.Oder1.ToString().Split(',');
+            var order2List = preference.Oder2.ToString().Split(',');
+
+            preferenceDto.Id = preference.Id.ToString();
+            preferenceDto.UserId = preference.UserId;
+            preferenceDto.TestDate = preference.Date.ToString().GetDateFromDateTimeString();
+
+            preferenceDto.Color1in3 = shortOrder1List[0];
+            preferenceDto.Color2in3 = shortOrder1List[1];
+            preferenceDto.Color3in3 = shortOrder1List[2];
+
+            preferenceDto.Color21in3 = shortOrder2List[0];
+            preferenceDto.Color22in3 = shortOrder2List[1];
+            preferenceDto.Color23in3 = shortOrder2List[2];
+
+            preferenceDto.Color1in12 = order1List[0];
+            preferenceDto.Color2in12 = order1List[1];
+            preferenceDto.Color3in12 = order1List[2];
+            preferenceDto.Color4in12 = order1List[3];
+            preferenceDto.Color5in12 = order1List[4];
+            preferenceDto.Color6in12 = order1List[5];
+            preferenceDto.Color7in12 = order1List[6];
+            preferenceDto.Color8in12 = order1List[7];
+            preferenceDto.Color9in12 = order1List[8];
+            preferenceDto.Color10in12 = order1List[9];
+            preferenceDto.Color11in12 = order1List[10];
+            preferenceDto.Color12in12 = order1List[11];
+
+            preferenceDto.Color21in12 = order2List[0];
+            preferenceDto.Color22in12 = order2List[1];
+            preferenceDto.Color23in12 = order2List[2];
+            preferenceDto.Color24in12 = order2List[3];
+            preferenceDto.Color25in12 = order2List[4];
+            preferenceDto.Color26in12 = order2List[5];
+            preferenceDto.Color27in12 = order2List[6];
+            preferenceDto.Color28in12 = order2List[7];
+            preferenceDto.Color29in12 = order2List[8];
+            preferenceDto.Color210in12 = order2List[9];
+            preferenceDto.Color211in12 = order2List[10];
+            preferenceDto.Color212in12 = order2List[11];
+
+            preferenceDto.ColorRelax1 = preference.RelaxTable1.ToString();
+            preferenceDto.ColorRelax2 = preference.RelaxTable2.ToString();
+
+            ResolvePreference(preferenceDto, preference);
+        }
+
+        internal string RemovePreference(string id)
+        {
+            try
+            {
+                _preferenceDb.DeletePreference(id);
+                return id;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        public string UpdatePreference(PreferenceDto preferenceDto)
+        {
+            try
+            {
+                var preference = GetNewPreference(preferenceDto);
+                _preferenceDb.UpdateTestInPreference(preference);
+
+                return preference.Id.ToString();
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        private void ResolvePreference(PreferenceDto preferenceDto, Preference preference)
+        {
+            int counter = 1;
+            var preferenceValues = new List<string>() { preference.Preference1, preference.Preference2 };
+            foreach(var preferenceValue in preferenceValues)
+            {
+                switch (preferenceValue.Trim())
+                {
+                    case PreferenceColors.Red:
+                        preferenceDto.GetType().GetProperty($"Preference{counter}Red").SetValue(preferenceDto, StringBooleanValues.True);
+                        break;
+                    case PreferenceColors.Yellow:
+                        preferenceDto.GetType().GetProperty($"Preference{counter}Yellow").SetValue(preferenceDto, StringBooleanValues.True);
+                        break;
+                    case PreferenceColors.Blue:
+                        preferenceDto.GetType().GetProperty($"Preference{counter}Blue").SetValue(preferenceDto, StringBooleanValues.True);
+                        break;
+                    case PreferenceColors.Grey:
+                        preferenceDto.GetType().GetProperty($"Preference{counter}Grey").SetValue(preferenceDto, StringBooleanValues.True);
+                        break;
+                }
+                ++counter;
+            }
+        }
+
+        public bool HasChanges(PreferenceDto preferenceDto)
+        {
+            foreach(var property in preferenceDto.GetType().GetProperties())
+            {
+                if(preferenceDto.GetType().GetProperty(property.Name) != _previousPreferenceDto.GetType().GetProperty(property.Name))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public void ClearInputs(PreferenceDto preferenceDto)
         {
             foreach(var i in preferenceDto.GetType().GetProperties())
             {

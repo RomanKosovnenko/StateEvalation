@@ -77,7 +77,7 @@ namespace StateEvaluation
         }
 
         /// <summary>
-        /// Bind person data into input fields for editing
+        /// Bind person data into input fields 
         /// </summary>
         private void EditPersonBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -86,15 +86,126 @@ namespace StateEvaluation
 
             var personDto = (PeopleDto)Resources["peopleDto"];
 
-            if (!string.IsNullOrEmpty(PeopleProvider.PrepareUpdate(personDto, personId)))
+            if (!string.IsNullOrEmpty(PeopleProvider.PrepareInputForm(personDto, personId)))
             {
                 //show save person button
                 ApplyPeopleChangesBTN.Visibility = Visibility.Visible;
             }
             else
             {
-                MessageBox.Show("Oops, error while editing");
+                MessageBox.Show("Oops, error while binding input filds");
             }
+        }
+
+        /// <summary>
+        /// Remove person from dashbord
+        /// </summary>
+        private void RemovePersonBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var personDto = (PeopleDto)Resources["peopleDto"];
+            var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                if (!string.IsNullOrEmpty(PeopleProvider.DeletePerson(personDto.Id)))
+                {
+                    PersonDataGrid.ItemsSource = PeopleProvider.GetAllPeople();
+                    RefreshUIDInTabs();
+                }
+                else
+                {
+                    MessageBox.Show("Error! You can not delete this record because it has associated entries in other tables.");
+                }
+            }
+        }
+        #endregion
+
+        #region Button handlers for 'Preference' tab
+        /// <summary>
+        /// Create test of preference
+        /// </summary>
+        private void SaveTestCommand(object sender, RoutedEventArgs e)
+        {
+            var preferenceDto = (PreferenceDto)this.Resources["preserenceDto"];
+            if (!PreferenceDataGridProvider.IsValidPreferenseDto(preferenceDto))
+            {
+                MessageBox.Show("Not all fields is filled!");
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(PreferenceDataGridProvider.SavePreference(preferenceDto)))
+                {
+                    RefreshPreferenceDataGrid();
+
+                    //hide save button
+                    ApplyChangesBTN.Visibility = Visibility.Hidden;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Bind test of preference into input fields
+        /// </summary>
+        private void SetValueInTabsCommand(object sender, RoutedEventArgs e)
+        {
+            var preferenceDto = (PreferenceDto)this.Resources["preserenceDto"];
+            var butonContext = ((Button)sender).DataContext;
+            var preferenceId = ((Preference)butonContext).Id;
+
+            if (!string.IsNullOrEmpty(PreferenceDataGridProvider.PrepareInputForm(preferenceDto, preferenceId)))
+            {
+                //show save button
+                ApplyChangesBTN.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                MessageBox.Show("Oops, error while binding input filds");
+            }
+        }
+
+        /// <summary>
+        /// Update test of preference
+        /// </summary>
+        private void SaveChangesTestCommand(object sender, RoutedEventArgs e)
+        {
+            var preferenceDto = (PreferenceDto)this.Resources["preserenceDto"];
+            if (PreferenceDataGridProvider.HasChanges(preferenceDto))
+            {
+                if (string.IsNullOrEmpty(PreferenceDataGridProvider.UpdatePreference(preferenceDto)))
+                {
+                    MessageBox.Show("Oops, error while updating");
+                    return;
+                }
+            }
+
+            MessageBox.Show("Done");
+        }
+
+        /// <summary>
+        /// Remove test of preference from dashboard
+        /// </summary>
+        private void RemovePreferenceBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var preferenceDto = (PreferenceDto)this.Resources["preserenceDto"];
+            var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
+
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                if (!string.IsNullOrEmpty(PreferenceDataGridProvider.RemovePreference(preferenceDto.Id)))
+                {
+                    TestsDataGrid.ItemsSource = PreferenceDataGridProvider.GetAllPreferences();
+                    RefreshUIDInTabs();
+                }
+                else
+                {
+                    MessageBox.Show("Oops, somesing was wrong, while deleting");
+                }
+            }
+        }
+        //????
+        private void ClearTestAdds(object sender, RoutedEventArgs e)
+        {
+            var preferenceDto = (PreferenceDto)this.Resources["preserenceDto"];
+            PreferenceDataGridProvider.ClearInputs(preferenceDto);
         }
         #endregion
 
@@ -167,13 +278,7 @@ namespace StateEvaluation
             SubjectiveFeeling feeling = items.Single();
             SetValueInTabs(feeling);
         }
-        private void SetValueInTabsCommand(object sender, RoutedEventArgs e)
-        {
-            string tag = ((Button)sender).Tag.ToString();
-            var items = _preferenceDb.Preference.Select(item => item).Where(item => item.Id.ToString() == tag);
-            Preference preference = items.Single();
-            SetValueInTabs(preference);
-        }
+
 
         private void SaveFeelingPeople(object sender, RoutedEventArgs e)
         {
@@ -194,96 +299,7 @@ namespace StateEvaluation
             SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
             ClearInputs();
         }
-        private void SaveChangesTestCommand(object sender, RoutedEventArgs e)
-        {
-            var Cin3s = new List<string> { C1in3, C2in3, C3in3 };
-            var C2in3s = new List<string> { C21in3, C22in3, C23in3 };
-            var Cin12s = new List<string> { C1in12, C2in12, C3in12, C4in12, C5in12, C6in12, C7in12, C8in12, C9in12, C10in12, C11in12, C12in12 };
-            var C2in12s = new List<string> { C21in12, C22in12, C23in12, C24in12, C25in12, C26in12, C27in12, C28in12, C29in12, C210in12, C211in12, C212in12 };
-            var Pref1 = new List<RadioButton> { RedStat, YellowStat, BlueStat, GrayStat };
-            var Pref2 = new List<RadioButton> { Red2Stat, Yellow2Stat, Blue2Stat, Gray2Stat };
-            var Prefs = new List<string> { "Красная", "Желтая", "Синяя", "Смешанная" };
 
-            var inputs = new List<string> { SelectedCode };
-
-            if (false && (new List<List<string>> { inputs, Cin3s, C2in3s, Cin12s, C2in12s }.Any(x => x.Any(y => y == null) || x.Count != x.Distinct().Count())
-                || new List<List<RadioButton>> { Pref1, Pref2 }.Any(x => x.All(y => y.IsChecked != true))
-                || TestDate == null))
-            {
-                MessageBox.Show("Not all fields is filled!");
-            }
-            else
-            {
-                string Preference1, Preference2;
-                // try to get selected Preference2 or calculate by values
-                try
-                {
-                    var Pref1Index = Pref1.Select(x => x.IsChecked).ToList().IndexOf(true);
-                    if (Pref1Index != -1)
-                    {
-                        Preference1 = Prefs[Pref1.Select(x => x.IsChecked).ToList().IndexOf(true)];
-                    }
-                    else
-                    {
-                        List<byte> Cin3sByte = Cin3s.Select(x => Byte.Parse(x)).ToList();
-                        List<byte> Cin12sByte = Cin12s.Select(x => Byte.Parse(x)).ToList();
-                        Preference1 = new StateEvaluationDLL.DataStructures.Preference(Cin3sByte, Cin12sByte).Type.ToString();
-                    }
-                }
-                catch
-                {
-                    Preference1 = "";
-                }
-                // try to get selected Preference2 or calculate by values
-                try
-                {
-                    var Pref2Index = Pref2.Select(x => x.IsChecked).ToList().IndexOf(true);
-                    if (Pref2Index != -1)
-                    {
-                        Preference2 = Prefs[Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)];
-                    }
-                    else
-                    {
-                        List<byte> C2in3sByte = C2in3s.Select(x => Byte.Parse(x)).ToList();
-                        List<byte> C2in12sByte = C2in12s.Select(x => Byte.Parse(x)).ToList();
-                        Preference2 = new StateEvaluationDLL.DataStructures.Preference(C2in3sByte, C2in12sByte).Type.ToString();
-                    }
-                }
-                catch
-                {
-                    Preference2 = "";
-                }
-                Preference preference = new Preference()
-                {
-                    Id = new Guid(TestID.Text),
-                    UserId = SelectedCode,
-                    Date = (DateTime)TestDate,
-                    FavoriteColor = 0,
-                    ShortOder1 = String.Join(",", Cin3s),
-                    Oder1 = String.Join(",", Cin12s),
-                    Preference1 = Preference1,
-                    ShortOder2 = String.Join(",", C2in3s),
-                    Oder2 = String.Join(",", C2in12s),
-                    Preference2 = Preference2,
-                    Compare = (Pref1.Select(x => x.IsChecked).ToList().IndexOf(true) == Pref2.Select(x => x.IsChecked).ToList().IndexOf(true)).ToString().ToLower(),
-                    RelaxTable1 = CRelax1,
-                    RelaxTable2 = CRelax2
-                };
-                _preferenceDb.UpdateTestInPreference(preference);
-                var needUpdate = true;
-                if (needUpdate)
-                {
-                    TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
-                }
-                else
-                {
-                    MessageBox.Show("Done");
-                }
-                ClearInputs();
-                ApplyChangesBTN.Visibility = Visibility.Hidden;
-                TestID.Text = "";
-            }
-        }
 
         private void SetValueInTabs(SubjectiveFeeling feeling)
         {
@@ -297,103 +313,6 @@ namespace StateEvaluation
             selectedUIDInSubjectiveFeeling.SelectedValue = feeling.UserId;
             selectedDateInSubjectiveFeeling.Text = feeling.Date.ToString();
             ApplyFeelingChangesBTN.Visibility = Visibility.Visible;
-        }
-
-        private void SetValueInTabs(Preference preference)
-        {
-            ApplyChangesBTN.Visibility = Visibility.Visible;
-
-            var shortOrder1List = preference.ShortOder1.ToString().Split(',');
-            var shortOrder2List = preference.ShortOder2.ToString().Split(',');
-            var order1List = preference.Oder1.ToString().Split(',');
-            var order2List = preference.Oder2.ToString().Split(',');
-
-            TestID.Text = preference.Id.ToString();
-            selectedUIDInTests.SelectedValue = preference.UserId;
-            dateTimeForTest.SelectedDate = preference.Date;
-            selectorC1in3.SelectedValue = shortOrder1List[0];
-            selectorC2in3.SelectedValue = shortOrder1List[1];
-            selectorC3in3.SelectedValue = shortOrder1List[2];
-            selectorC21in3.SelectedValue = shortOrder2List[0];
-            selectorC22in3.SelectedValue = shortOrder2List[1];
-            selectorC23in3.SelectedValue = shortOrder2List[2];
-            selectorC1in12.SelectedValue = order1List[0];
-            selectorC2in12.SelectedValue = order1List[1];
-            selectorC3in12.SelectedValue = order1List[2];
-            selectorC4in12.SelectedValue = order1List[3];
-            selectorC5in12.SelectedValue = order1List[4];
-            selectorC6in12.SelectedValue = order1List[5];
-            selectorC7in12.SelectedValue = order1List[6];
-            selectorC8in12.SelectedValue = order1List[7];
-            selectorC9in12.SelectedValue = order1List[8];
-            selectorC10in12.SelectedValue = order1List[9];
-            selectorC11in12.SelectedValue = order1List[10];
-            selectorC12in12.SelectedValue = order1List[11];
-            selectorC21in12.SelectedValue = order2List[0];
-            selectorC22in12.SelectedValue = order2List[1];
-            selectorC23in12.SelectedValue = order2List[2];
-            selectorC24in12.SelectedValue = order2List[3];
-            selectorC25in12.SelectedValue = order2List[4];
-            selectorC26in12.SelectedValue = order2List[5];
-            selectorC27in12.SelectedValue = order2List[6];
-            selectorC28in12.SelectedValue = order2List[7];
-            selectorC29in12.SelectedValue = order2List[8];
-            selectorC210in12.SelectedValue = order2List[9];
-            selectorC211in12.SelectedValue = order2List[10];
-            selectorC212in12.SelectedValue = order2List[11];
-            selectorRelax1.SelectedIndex = Convert.ToInt32(preference.RelaxTable1) - 1;
-            selectorRelax2.SelectedIndex = Convert.ToInt32(preference.RelaxTable2) - 1;
-            switch (preference.Preference1.Trim())
-            {
-                case "Красная":
-                    RedStat.IsChecked = true;
-                    break;
-                case "Желтая":
-                    YellowStat.IsChecked = true;
-                    break;
-                case "Синяя":
-                    BlueStat.IsChecked = true;
-                    break;
-                case "Смешанная":
-                    GrayStat.IsChecked = true;
-                    break;
-            }
-            switch (preference.Preference2.Trim())
-            {
-                case "Красная":
-                    Red2Stat.IsChecked = true;
-                    break;
-                case "Желтая":
-                    Yellow2Stat.IsChecked = true;
-                    break;
-                case "Синяя":
-                    Blue2Stat.IsChecked = true;
-                    break;
-                case "Смешанная":
-                    Gray2Stat.IsChecked = true;
-                    break;
-            }
-        }
-
-
-
-        private void SaveTestCommand(object sender, RoutedEventArgs e)
-        {
-            var preferenceDto = (PreferenceDto)this.Resources["preserenceDto"];
-            if (!PreferenceDataGridProvider.IsValidPreferenseDto(preferenceDto))
-            {
-                MessageBox.Show("Not all fields is filled!");
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(PreferenceDataGridProvider.SavePreference(preferenceDto)))
-                {
-                    RefreshPreferenceDataGrid();
-
-                    //hide save button
-                    ApplyChangesBTN.Visibility = Visibility.Hidden;
-                }
-            }
         }
 
         #region refreshing
@@ -426,42 +345,6 @@ namespace StateEvaluation
             PersonDataGrid.ItemsSource = PeopleProvider.GetAllPeople();
         }
         #endregion
-
-
-        private void RemovePersonBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
-            if (dialogResult == MessageBoxResult.Yes)
-            {
-                PreferenceDB _preferenceDb = new PreferenceDB();
-                People person = _preferenceDb.People.Single(c => c == ((Button)(e.Source)).BindingGroup.Items[0]);
-                try
-                {
-                    _preferenceDb.People.DeleteOnSubmit(person);
-                    _preferenceDb.SubmitChanges();
-                }
-                catch (SqlException)
-                {
-                    MessageBox.Show("Error! You can not delete this record because it has associated entries in other tables.");
-                }
-                PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
-                RefreshUIDInTabs();
-            }
-        }
-
-        private void RemovePreferenceBtn_Click(object sender, RoutedEventArgs e)
-        {
-            var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
-            if (dialogResult == MessageBoxResult.Yes)
-            {
-                PreferenceDB _preferenceDb = new PreferenceDB();
-                Preference pref = _preferenceDb.Preference.Single(c => c == ((Button)(e.Source)).BindingGroup.Items[0]);
-                _preferenceDb.Preference.DeleteOnSubmit(pref);
-                _preferenceDb.SubmitChanges();
-                TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
-                RefreshUIDInTabs();
-            }
-        }
 
         private void RemoveFeelingsBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -835,10 +718,6 @@ namespace StateEvaluation
             slowThink.IsChecked = false;
         }
 
-        private void ClearTestAdds(object sender, RoutedEventArgs e)
-        {
-            ClearInputs();
-        }
         private void ClearUIDs(object sender, RoutedEventArgs e)
         {
             switch (tabControl.SelectedIndex)

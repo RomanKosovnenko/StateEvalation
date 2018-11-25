@@ -119,7 +119,20 @@ namespace StateEvaluation.Providers
             }
         }
 
-        public string PrepareUpdate(PeopleDto personDto, Guid id)
+        internal string DeletePerson(string id)
+        {
+            try
+            {
+                _preferenceDb.DeletePerson(id);
+                return id;
+            }
+            catch
+            {
+                return string.Empty;
+            }
+        }
+
+        public string PrepareInputForm(PeopleDto personDto, Guid id)
         {
             try
             {

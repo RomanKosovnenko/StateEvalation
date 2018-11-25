@@ -43,6 +43,12 @@ namespace StateEvaluation.Model
                 MessageBox.Show("Error, when inserting in data base! May be such an UserID already exists");
             }
         }
+
+        public Preference GetPreferenceById(Guid id)
+        {
+            var preference = Preference.Single(item => item.Id == id);
+            return preference;
+        }
         public People GetPersonById(string id)
         {
             var person = People.Single(item => item.Id.ToString() == id);
@@ -114,6 +120,14 @@ namespace StateEvaluation.Model
             var items = Anthropometry.Select(item => item).OrderByDescending(item => item.Date);
             return items;
         }
+
+        internal void DeletePerson(string id)
+        {
+            var person = People.Single(item => item.Id.ToString() == id);
+            People.DeleteOnSubmit(person);
+            SubmitChanges();
+        }
+
         public IEnumerable<SubjectiveFeeling> GetAllSubjecriveFeelings()
         {
             var items = this.SubjectiveFeeling.Select(item => item).OrderBy(item => item.Date);
@@ -212,6 +226,14 @@ namespace StateEvaluation.Model
             string[] list = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
             return list;
         }
+
+        internal void DeletePreference(string id)
+        {
+            var preference = Preference.Single(item => item.Id.ToString() == id);
+            Preference.DeleteOnSubmit(preference);
+            SubmitChanges();
+        }
+
         public IEnumerable<string> ShortColorsNumbersList(string x1, string x2)
         {
             string[] list = { x1, x2 };
