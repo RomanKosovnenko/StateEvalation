@@ -24,13 +24,31 @@ namespace StateEvaluation.Model
         public Table<ArterialPressuresInNight> ArterialPressuresInNight;
         public Table<JournalOfAppeal> JournalOfAppeal;
         public Table<Anthropometry> Anthropometry;
-        
+
         public Table<ArterialPressuresInDay> ArterialPressuresInDay;
         public Table<ArterialPressuresGeneral> ArterialPressuresGeneral;
         public Table<CycleErgometry> CycleErgometry;
         public Table<CycleErgometryWithLoad> CycleErgometryWithLoad;
         public Table<BloodTest> BloodTest;
 
+        public void InsertPreference(Preference preference)
+        {
+            try
+            {
+                Preference.InsertOnSubmit(preference);
+                SubmitChanges();
+            }
+            catch (SqlException)
+            {
+                MessageBox.Show("Error, when inserting in data base! May be such an UserID already exists");
+            }
+        }
+
+        public Preference GetPreferenceById(Guid id)
+        {
+            var preference = Preference.Single(item => item.Id == id);
+            return preference;
+        }
         public People GetPersonById(string id)
         {
             var person = People.Single(item => item.Id.ToString() == id);
@@ -46,7 +64,7 @@ namespace StateEvaluation.Model
             var items = Anthropometry.Select(item => item.UserId);
             return items;
         }
-        public void InsertInAnthropometry( Anthropometry anthropometry)
+        public void InsertInAnthropometry(Anthropometry anthropometry)
         {
             Anthropometry.InsertOnSubmit(anthropometry);
             SubmitChanges();
@@ -87,7 +105,7 @@ namespace StateEvaluation.Model
                 People.InsertOnSubmit(person);
                 SubmitChanges();
             }
-            catch(SqlException)
+            catch (SqlException)
             {
                 MessageBox.Show("Error, when inserting in data base! May be such an UserID already exists");
             }
@@ -102,7 +120,15 @@ namespace StateEvaluation.Model
             var items = Anthropometry.Select(item => item).OrderByDescending(item => item.Date);
             return items;
         }
-            public IEnumerable<SubjectiveFeeling> GetAllSubjecriveFeelings()
+
+        internal void DeletePerson(string id)
+        {
+            var person = People.Single(item => item.Id.ToString() == id);
+            People.DeleteOnSubmit(person);
+            SubmitChanges();
+        }
+
+        public IEnumerable<SubjectiveFeeling> GetAllSubjecriveFeelings()
         {
             var items = this.SubjectiveFeeling.Select(item => item).OrderBy(item => item.Date);
             return items;
@@ -141,7 +167,7 @@ namespace StateEvaluation.Model
             list.Insert(0, "All");
             return list;
         }
-        
+
         public IEnumerable<string> PeopleCodes()
         {
             IEnumerable<string> items = this.People.Select(item => item.Number.ToString()).Distinct().OrderBy(item => Convert.ToInt32(item));
@@ -174,7 +200,7 @@ namespace StateEvaluation.Model
             items.Workposition = people.Workposition;
             items.Expedition = people.Expedition;
             items.Number = people.Number;
-            items.UserId = $"Ex{items.Expedition}#{items.Number}";
+            items.UserId = people.UserId;
             SubmitChanges();
         }
         public void UpdateTestInPreference(SubjectiveFeeling feeling)
@@ -200,9 +226,17 @@ namespace StateEvaluation.Model
             string[] list = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
             return list;
         }
+
+        internal void DeletePreference(string id)
+        {
+            var preference = Preference.Single(item => item.Id.ToString() == id);
+            Preference.DeleteOnSubmit(preference);
+            SubmitChanges();
+        }
+
         public IEnumerable<string> ShortColorsNumbersList(string x1, string x2)
         {
-            string[] list = {x1, x2};
+            string[] list = { x1, x2 };
             return list;
         }
         public IEnumerable<string> ShortColorsNumbersList(string x1)
