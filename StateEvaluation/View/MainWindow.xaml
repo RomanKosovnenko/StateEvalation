@@ -3,35 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:StateEvaluation.ViewModel"
         xmlns:view="clr-namespace:StateEvaluation.View"
         xmlns:helpers="clr-namespace:StateEvaluation.Helpers"
         xmlns:p="clr-namespace:StateEvaluation.Properties"
         xmlns:model="clr-namespace:StateEvaluation.Model"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:peopleInsert="clr-namespace:StateEvaluation.ViewModel.PeopleDataGrid"
-        xmlns:preferenceInsert="clr-namespace:StateEvaluation.ViewModel.PreferenceDataGrid"
+        xmlns:subjectiveFeelings="clr-namespace:StateEvaluation.ViewModel"
+        xmlns:peopleInsert="clr-namespace:StateEvaluation.ViewModel"
+        xmlns:preferenceInsert="clr-namespace:StateEvaluation.ViewModel"
         mc:Ignorable="d"
         ContentRendered="WindowRendered"
-        Title="MainWindow" Height="768" Width="1366" WindowState="Maximized">
+        Title="Оценка состояния" Height="768" Width="1366" WindowState="Maximized">
     <Window.Resources>
-        <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllPeople"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllTests"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllSubjecriveFeelings"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetAnthropometry" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllAnthropometry"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetPeople"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetPreferences"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetSubjecriveFeelings"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetCodesForInsert" ObjectType="{x:Type model:PreferenceDB}" MethodName="CodesForInsert"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type model:PreferenceDB}" MethodName="CodesForFilter"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetUserIds"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Preferences"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetProfessionsList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Professions"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetCycleErgometry" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllCycleErgometry"></ObjectDataProvider>
-        <!--here defined resourses' name for exect model-->
-        <local:MainWindowVM x:Key="subjectiveFeelingInsertModel" />
-        <peopleInsert:PeopleDto x:Key="peopleDto" />
-        <preferenceInsert:PreferenceDto x:Key="preserenceDto" />
+        <!--here defined resourses' name for exact model-->
+        <subjectiveFeelings:SubjectiveFeelingVM x:Key="subjectiveFeelingVM" />
+        <peopleInsert:PeopleVM x:Key="peopleVM" />
+        <preferenceInsert:PreferenceVM x:Key="preferenceVM" />
 
 
-        <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="PeopleCodes"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="ExpeditionCodes"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetPeopleNumbers"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetExpeditionCodes"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetShortColorsNumbersList" ObjectType="{x:Type model:PreferenceDB}" MethodName="ShortColorsNumbersList"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetColorsNumbersList" ObjectType="{x:Type model:PreferenceDB}" MethodName="ColorsNumbersList"></ObjectDataProvider>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -59,48 +57,39 @@
             <!--<TabItem Header="{x:Static p:Resources.AddDataHeader}">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>-->
-            <TabItem x:Name="tabItem" IsSelected="True" DataContext="{StaticResource peopleDto}" Header="{x:Static p:Resources.PersonsTabHeader}">
-                <Grid x:Name="PersonAddFormGrid" Background="#FFE5E5E5">
+            <TabItem x:Name="tabItem" IsSelected="True" DataContext="{StaticResource peopleVM}" Header="Люди">
+                <Grid x:Name="PersonAddFormGrid" Background="#FFE5E5E5" Margin="0,0,0,33">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition/>
+                        <RowDefinition Height="119"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label Content="Firstname" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <Label Content="Lastname" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="1"/>
-                    <Label Content="Middlename" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Row="2"/>
-                    <Label Content="Birthday date" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="2"/>
-                    <Label Content="Proffession" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="3"/>
-                    <Label Content="Expedition" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="4"/>
-                    <Label Content="Number" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0" Grid.Column="5"/>
-                    <TextBox Text="{Binding Id}" Visibility="Hidden"/>
-                    <TextBox Text="{Binding FirstName}" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" FontSize="20" LostFocus="Textbox_LostFocus"/>
-                    <TextBox Text="{Binding LastName}" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="1" FontSize="20" LostFocus="Textbox_LostFocus"/>
-                    <TextBox Text="{Binding MiddleName}" TextWrapping="Wrap" Grid.Row="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="1" FontSize="20" LostFocus="Textbox_LostFocus"/>
-                    <DatePicker SelectedDate="{Binding Birthday}" Grid.Row="1" Grid.Column="2" Margin="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="20" LostFocus="DatePicker_LostFocus"/>
-                    <TextBox Text="{Binding Workposition}" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="3" FontSize="20" LostFocus="Textbox_LostFocus"/>
-                    <TextBox Text="{Binding Expedition}" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="4" FontSize="20" LostFocus="NumberTextbox_LostFocus"/>
-                    <TextBox Text="{Binding PersonNumber}" TextWrapping="Wrap" Grid.Row="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="5" Grid.Column="5" FontSize="20" LostFocus="NumberTextbox_LostFocus"/>
-                    <Button x:Name="AddPersonBtn" Content="Add" Grid.Row="1" Grid.Column="6" HorizontalContentAlignment="Center" Margin="3" Click="AddPersonBtn_Click"/>
-                    <Button x:Name="ApplyPeopleChangesBTN" Content="Save" Grid.Row="2" Grid.Column="6" HorizontalContentAlignment="Center" Margin="3" Click="SavePersonBtn_Click" Visibility="Hidden"/>
+                    <Label Content="Имя" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,11,0,82" HorizontalAlignment="Left" Width="193"/>
+                    <Label Content="Фамилия" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="186,11,0,82" HorizontalAlignment="Left" Width="193"/>
+                    <Label Content="Отчество" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="367,4,0,82" HorizontalAlignment="Left" Width="193"/>
+                    <Label Content="День рождения" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="537,11,0,82" HorizontalAlignment="Left" Width="193"/>
+                    <Label Content="Профессия" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="719,11,0,82" HorizontalAlignment="Left" Width="193"/>
+                    <Label Content="Експедиция" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="916,11,0,0" HorizontalAlignment="Left" Width="75" Height="26" VerticalAlignment="Top"/>
+                    <Label Content="Номер" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="996,11,0,0" HorizontalAlignment="Left" Width="77" Height="26" VerticalAlignment="Top"/>
+                    <TextBox Text="{Binding Id}" Visibility="Hidden" Margin="0,0,0,0"/>
+                    <TextBox Text="{Binding FirstName}" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="33,42,0,52" HorizontalAlignment="Left" Width="150"/>
+                    <TextBox Text="{Binding LastName}" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="197,42,0,52" HorizontalAlignment="Left" Width="170"/>
+                    <TextBox Text="{Binding MiddleName}" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="381,42,0,52" HorizontalAlignment="Left" Width="167"/>
+                    <DatePicker SelectedDate="{Binding Birthday}" Margin="563,42,0,52" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalAlignment="Left" Width="149"/>
+                    <TextBox Text="{Binding Workposition}" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="730,42,0,52" HorizontalAlignment="Left" Width="165"/>
+                    <TextBox Text="{Binding Expedition}" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="921,42,0,52" HorizontalAlignment="Left" Width="60"/>
+                    <TextBox Text="{Binding PersonNumber}" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="1008,42,0,52" HorizontalAlignment="Left" Width="59"/>
+                    <Button x:Name="AddPersonBtn" Content="Добавить" Margin="1086,22,0,76" Click="CreatePerson" HorizontalAlignment="Left" Width="105"/>
+                    <Button x:Name="UpdatePersonBtn" Content="Сохранить" Margin="1209,33,0,65" Click="UpdatePerson" Visibility="Hidden" HorizontalAlignment="Left" Width="105" />
+                    <Button Content="Сброс" Margin="1086,48,0,50" Visibility="Visible" HorizontalAlignment="Left" Width="105" Height="21" />
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItem1" DataContext="{StaticResource preserenceDto}" Header="{x:Static p:Resources.TestsTabHeader}">
-                <Grid Background="#FFE5E5E5">
+            <TabItem x:Name="tabItem1" DataContext="{StaticResource preferenceVM}" Header="Преференции">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,32">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="5" />
-                        <ColumnDefinition Width="auto" MinWidth="171" />
+                        <ColumnDefinition Width="62" />
+                        <ColumnDefinition Width="205"/>
                         <ColumnDefinition Width="0" />
                         <ColumnDefinition Width="auto" MinWidth="45" />
                         <ColumnDefinition Width="5" />
@@ -134,589 +123,484 @@
                         <ColumnDefinition Width="5" />
                         <ColumnDefinition Width="auto" />
                         <ColumnDefinition Width="5" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="5" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="5" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="5" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="5" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="5" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition />
+                        <ColumnDefinition Width="400" />
                     </Grid.ColumnDefinitions>
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="73" />
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="1"
+                    <TextBlock
                                Grid.Column="0"
                                HorizontalAlignment="Center"
-                               Text="UID" Margin="30,0" Width="20" />
-                    <TextBlock Grid.Row="1"
+                               Text="Код" Margin="31,7,11,48" Width="25" RenderTransformOrigin="-1.5,0.474" />
+                    <TextBlock
+                               HorizontalAlignment="Center"
+                               Text="Дата" Margin="59,7,118,48" Width="28" RenderTransformOrigin="0.571,1.947" Grid.Column="1" />
+                    <TextBlock
                                Grid.Column="2"
                                HorizontalAlignment="Center"
-                               Text="Дата" Margin="30,0,124,0" Width="28" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="4"
+                               Text="1" Margin="20,1,19,54" Width="6" Grid.ColumnSpan="2" />
+                    <TextBlock
+                               Grid.Column="5"
                                HorizontalAlignment="Center"
-                               Text="1" Margin="20,0,19,0" Width="6" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="6"
+                               Text="2" Margin="17,1,17,54" Width="6" />
+                    <TextBlock
+                               Grid.Column="7"
                                HorizontalAlignment="Center"
-                               Text="2" Margin="17,0" Width="6" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="8"
+                               Text="3" Margin="17,1,17,54" Width="6" />
+                    <TextBlock
+                               Grid.Column="11"
                                HorizontalAlignment="Center"
-                               Text="3" Margin="17,0" Width="6" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="12"
+                               Text="1" Margin="17,1,17,54" Width="6" />
+                    <TextBlock
+                               Grid.Column="13"
                                HorizontalAlignment="Center"
-                               Text="1" Margin="17,0" Width="6" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="14"
+                               Text="2" Margin="17,1,17,54" Width="6" />
+                    <TextBlock
+                               Grid.Column="15"
                                HorizontalAlignment="Center"
-                               Text="2" Margin="17,0" Width="6" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="16"
+                               Text="3" Margin="17,1,17,54" Width="6" />
+                    <TextBlock
+                               Grid.Column="17"
                                HorizontalAlignment="Center"
-                               Text="3" Margin="17,0" Width="6" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="18"
+                               Text="4" Margin="17,1,17,54" Width="6" />
+                    <TextBlock
+                               Grid.Column="19"
                                HorizontalAlignment="Center"
-                               Text="4" Margin="17,0" Width="6" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="20"
+                               Text="5" Margin="17,1,17,54" Width="6" />
+                    <TextBlock
+                               Grid.Column="21"
                                HorizontalAlignment="Center"
-                               Text="5" Margin="17,0" Width="6" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="22"
+                               Text="6" Margin="17,1,17,54" Width="6" />
+                    <TextBlock
+                               Grid.Column="23"
                                HorizontalAlignment="Center"
-                               Text="6" Margin="17,0" Width="6" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="24"
+                               Text="7" Margin="17,1,17,54" Width="6" />
+                    <TextBlock
+                               Grid.Column="25"
                                HorizontalAlignment="Center"
-                               Text="7" Margin="17,0" Width="6" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="26"
+                               Text="8" Margin="17,1,17,54" Width="6" />
+                    <TextBlock
+                               Grid.Column="27"
                                HorizontalAlignment="Center"
-                               Text="8" Margin="17,0" Width="6" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="28"
+                               Text="9" Margin="17,1,17,54" Width="6" />
+                    <TextBlock
+                               Grid.Column="29"
                                HorizontalAlignment="Center"
-                               Text="9" Margin="17,0" Width="6" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="30"
+                               Text="10" Margin="14,1,14,54" Width="12" />
+                    <TextBlock
+                               Grid.Column="31"
                                HorizontalAlignment="Center"
-                               Text="10" Margin="14,0" Width="12" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="32"
+                               Text="11" Margin="13,1,13,54" Width="14" />
+                    <TextBlock
+                               Grid.Column="33"
                                HorizontalAlignment="Center"
-                               Text="11" Margin="13,0" Width="14" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="34"
+                               Text="12" Margin="14,1,14,54" Width="12" />
+                    <TextBlock
+                               Grid.Column="35"
                                HorizontalAlignment="Center"
-                               Text="12" Margin="14,0" Width="12" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="38"
+                               Text="Красная" Width="45" Margin="13,1,342,54" />
+                    <TextBlock
+                               Grid.Column="35"
                                HorizontalAlignment="Center"
-                               Text="Красная" Width="45" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="40"
+                               Text="Желтая" Width="40" Margin="63,1,297,54" />
+                    <TextBlock
+                               Grid.Column="35"
                                HorizontalAlignment="Center"
-                               Text="Желтая" Width="40" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="42"
+                               Text="Синяя" Width="33" Margin="108,1,259,54" />
+                    <TextBlock
+                               Grid.Column="35"
                                HorizontalAlignment="Center"
-                               Text="Синяя" Width="33" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="44"
+                               Text="Смешанная" Width="64" Margin="146,1,190,54" />
+                    <TextBlock
+                               Grid.Column="35"
                                HorizontalAlignment="Center"
-                               Text="Смешанная" Width="64" />
-                    <TextBlock Grid.Row="1"
-                               Grid.Column="46"
-                               HorizontalAlignment="Center"
-                               Text="Relax" Margin="6,0" Width="28" />
-                    
-                    <ComboBox x:Name="selectedUIDInTests"
-                              Grid.Row="2"
+                               Text="Релакс" Margin="221,1,151,54" Width="28" />
+
+                    <ComboBox x:Name="UserIdsSubFelingInsert"
                               Grid.Column="0"
-                              Width="80"
+                              Width="75"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
                               ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
-                              SelectedValue="{Binding UserId}" Height="22" />
+                              SelectedValue="{Binding UserId}" Height="22" Margin="5,29,0,0" Grid.ColumnSpan="2" />
                     <DatePicker x:Name="dateTimeForTest"
-                                Grid.Row="2"
-                                Grid.Column="2"
                                 VerticalAlignment="Top"
-                                SelectedDate="{Binding TestDate}" Height="24" HorizontalAlignment="Left" Width="100" />
+                                SelectedDate="{Binding TestDate}" Height="24" HorizontalAlignment="Left" Width="100" Margin="28,29,0,0" Grid.Column="1" />
                     <TextBlock x:Name="TestID"
-                                Grid.Row="3"
-                                Grid.Column="2"
                                 VerticalAlignment="Top"
                                Text="{Binding Id}"
                                 Height="24" HorizontalAlignment="Left" Width="100"
-                               Visibility="Hidden"/>
+                               Visibility="Hidden" Margin="23,46,0,0" Grid.Column="1"/>
                     <!-- Bio1 - 3 -->
-                    <ComboBox x:Name="selectorC1in3" 
-                              Grid.Row="2"
-                              Grid.Column="4"
+                    <ComboBox x:Name="selectorC1in3"
+                              Grid.Column="2"
                               SelectedValue="{Binding Color1in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,0,0,4"
+                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,18,0,29" Grid.ColumnSpan="2"
                               />
-                    <ComboBox x:Name="selectorC2in3" 
-                              Grid.Row="2"
-                              Grid.Column="6"
+                    <ComboBox x:Name="selectorC2in3"
+                              Grid.Column="5"
                               SelectedValue="{Binding Color2in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,0,0,4"
+                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,18,0,29"
                               />
-                    <ComboBox x:Name="selectorC3in3" 
-                              Grid.Row="2"
-                              Grid.Column="8"
+                    <ComboBox x:Name="selectorC3in3"
+                              Grid.Column="7"
                               SelectedValue="{Binding Color3in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,0,0,4"
+                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,18,0,29"
                             />
 
                     <!-- Bio1 - 12 -->
-                    <ComboBox x:Name="selectorC1in12" 
-                              Grid.Row="2"
-                              Grid.Column="12"
+                    <ComboBox x:Name="selectorC1in12"
+                              Grid.Column="11"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color1in12}" Margin="0,0,0,4" />
-                    <ComboBox x:Name="selectorC2in12" 
-                              Grid.Row="2"
-                              Grid.Column="14"
+                              SelectedValue="{Binding Color1in12}" Margin="0,18,0,29" />
+                    <ComboBox x:Name="selectorC2in12"
+                              Grid.Column="13"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color2in12}" Margin="0,0,0,4" />
-                    <ComboBox x:Name="selectorC3in12" 
-                              Grid.Row="2"
-                              Grid.Column="16"
+                              SelectedValue="{Binding Color2in12}" Margin="0,18,0,29" />
+                    <ComboBox x:Name="selectorC3in12"
+                              Grid.Column="15"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color3in12}" Margin="0,0,0,4" />
-                    <ComboBox x:Name="selectorC4in12" 
-                              Grid.Row="2"
-                              Grid.Column="18"
+                              SelectedValue="{Binding Color3in12}" Margin="0,18,0,29" />
+                    <ComboBox x:Name="selectorC4in12"
+                              Grid.Column="17"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color4in12}" Margin="0,0,0,4" />
-                    <ComboBox x:Name="selectorC5in12" 
-                              Grid.Row="2"
-                              Grid.Column="20"
+                              SelectedValue="{Binding Color4in12}" Margin="0,18,0,29" />
+                    <ComboBox x:Name="selectorC5in12"
+                              Grid.Column="19"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color5in12}" Margin="0,0,0,4" />
-                    <ComboBox x:Name="selectorC6in12" 
-                              Grid.Row="2"
-                              Grid.Column="22"
+                              SelectedValue="{Binding Color5in12}" Margin="0,18,0,29" />
+                    <ComboBox x:Name="selectorC6in12"
+                              Grid.Column="21"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color6in12}" Margin="0,0,0,4" />
-                    <ComboBox x:Name="selectorC7in12" 
-                              Grid.Row="2"
-                              Grid.Column="24"
+                              SelectedValue="{Binding Color6in12}" Margin="0,18,0,29" />
+                    <ComboBox x:Name="selectorC7in12"
+                              Grid.Column="23"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color7in12}" Margin="0,0,0,4" />
-                    <ComboBox x:Name="selectorC8in12" 
-                              Grid.Row="2"
-                              Grid.Column="26"
+                              SelectedValue="{Binding Color7in12}" Margin="0,18,0,29" />
+                    <ComboBox x:Name="selectorC8in12"
+                              Grid.Column="25"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color8in12}" Margin="0,0,0,4" />
-                    <ComboBox x:Name="selectorC9in12" 
-                              Grid.Row="2"
-                              Grid.Column="28"
+                              SelectedValue="{Binding Color8in12}" Margin="0,18,0,29" />
+                    <ComboBox x:Name="selectorC9in12"
+                              Grid.Column="27"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color9in12}" Margin="0,0,0,4" />
-                    <ComboBox x:Name="selectorC10in12" 
-                              Grid.Row="2"
-                              Grid.Column="30"
+                              SelectedValue="{Binding Color9in12}" Margin="0,18,0,29" />
+                    <ComboBox x:Name="selectorC10in12"
+                              Grid.Column="29"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color10in12}" Margin="0,0,0,4" />
-                    <ComboBox x:Name="selectorC11in12" 
-                              Grid.Row="2"
-                              Grid.Column="32"
+                              SelectedValue="{Binding Color10in12}" Margin="0,18,0,29" />
+                    <ComboBox x:Name="selectorC11in12"
+                              Grid.Column="31"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color11in12}" Margin="0,0,0,4" />
-                    <ComboBox x:Name="selectorC12in12" 
-                              Grid.Row="2"
-                              Grid.Column="34"
+                              SelectedValue="{Binding Color11in12}" Margin="0,18,0,29" />
+                    <ComboBox x:Name="selectorC12in12"
+                              Grid.Column="33"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color12in12}" Margin="0,0,0,4"/>
+                              SelectedValue="{Binding Color12in12}" Margin="0,18,0,29"/>
                     <!-- Bio1 - Pref -->
                     <RadioButton x:Name="RedStat"
-                             Grid.Row="2"
-                             Grid.Column="38"
-                             GroupName="Pref1" Margin="8,4,7,19" Grid.RowSpan="2"
+                             Grid.Column="35"
+                             GroupName="Pref1" Margin="21,22,349,19"
                              IsChecked="{Binding Preference1Red}"/>
                     <RadioButton x:Name="YellowStat"
-                             Grid.Row="2"
-                             Grid.Column="40"
-                             GroupName="Pref1" Margin="6,4,4,19" Grid.RowSpan="2" 
+                             Grid.Column="35"
+                             GroupName="Pref1" Margin="69,22,301,19" 
                              IsChecked="{Binding Preference1Yellow}"/>
                     <RadioButton x:Name="BlueStat"
-                             Grid.Row="2"
-                             Grid.Column="42"
-                             GroupName="Pref1" Margin="3,4,0,19" Grid.RowSpan="2" 
+                             Grid.Column="35"
+                             GroupName="Pref1" Margin="111,22,259,19" 
                              IsChecked="{Binding Preference1Blue}"/>
                     <RadioButton x:Name="GrayStat"
-                             Grid.Row="2"
-                             Grid.Column="44"
-                             GroupName="Pref1" Margin="18,4,16,19" Grid.RowSpan="2"
+                             Grid.Column="35"
+                             GroupName="Pref1" Margin="164,22,206,19"
                              IsChecked="{Binding Preference1Grey}"/>
                     <!-- Bio1 - R -->
-                    <ComboBox x:Name="selectorRelax1" 
-                              Grid.Row="2"
-                              Grid.Column="46"
+                    <ComboBox x:Name="selectorRelax1"
+                              Grid.Column="35"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding ColorRelax1}"/>
+                              SelectedValue="{Binding ColorRelax1}" Margin="215,18,145,29"/>
 
                     <!-- Bio2 - 3 -->
-                    <ComboBox x:Name="selectorC21in3" 
-                              Grid.Row="3"
-                              Grid.Column="4"
+                    <ComboBox x:Name="selectorC21in3"
+                              Grid.Column="2"
                               SelectedValue="{Binding Color21in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
+                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,46,0,0" Grid.ColumnSpan="2"
                               />
-                    <ComboBox x:Name="selectorC22in3" 
-                              Grid.Row="3"
-                              Grid.Column="6"
+                    <ComboBox x:Name="selectorC22in3"
+                              Grid.Column="5"
                               SelectedValue="{Binding Color22in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
+                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,46,0,0"
                               />
-                    <ComboBox x:Name="selectorC23in3" 
-                              Grid.Row="3"
-                              Grid.Column="8"
+                    <ComboBox x:Name="selectorC23in3"
+                              Grid.Column="7"
                               SelectedValue="{Binding Color23in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}"
+                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,46,0,0"
                             />
 
                     <!-- Bio2 - 12 -->
-                    <ComboBox x:Name="selectorC21in12" 
-                              Grid.Row="3"
-                              Grid.Column="12"
+                    <ComboBox x:Name="selectorC21in12"
+                              Grid.Column="11"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color21in12}" />
-                    <ComboBox x:Name="selectorC22in12" 
-                              Grid.Row="3"
-                              Grid.Column="14"
+                              SelectedValue="{Binding Color21in12}" Margin="0,46,0,0" />
+                    <ComboBox x:Name="selectorC22in12"
+                              Grid.Column="13"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color22in12}" />
-                    <ComboBox x:Name="selectorC23in12" 
-                              Grid.Row="3"
-                              Grid.Column="16"
+                              SelectedValue="{Binding Color22in12}" Margin="0,46,0,0" />
+                    <ComboBox x:Name="selectorC23in12"
+                              Grid.Column="15"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color23in12}" />
-                    <ComboBox x:Name="selectorC24in12" 
-                              Grid.Row="3"
-                              Grid.Column="18"
+                              SelectedValue="{Binding Color23in12}" Margin="0,46,0,0" />
+                    <ComboBox x:Name="selectorC24in12"
+                              Grid.Column="17"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color24in12}" />
-                    <ComboBox x:Name="selectorC25in12" 
-                              Grid.Row="3"
-                              Grid.Column="20"
+                              SelectedValue="{Binding Color24in12}" Margin="0,46,0,0" />
+                    <ComboBox x:Name="selectorC25in12"
+                              Grid.Column="19"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color25in12}" />
-                    <ComboBox x:Name="selectorC26in12" 
-                              Grid.Row="3"
-                              Grid.Column="22"
+                              SelectedValue="{Binding Color25in12}" Margin="0,46,0,0" />
+                    <ComboBox x:Name="selectorC26in12"
+                              Grid.Column="21"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color26in12}" />
-                    <ComboBox x:Name="selectorC27in12" 
-                              Grid.Row="3"
-                              Grid.Column="24"
+                              SelectedValue="{Binding Color26in12}" Margin="0,46,0,0" />
+                    <ComboBox x:Name="selectorC27in12"
+                              Grid.Column="23"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color27in12}" />
-                    <ComboBox x:Name="selectorC28in12" 
-                              Grid.Row="3"
-                              Grid.Column="26"
+                              SelectedValue="{Binding Color27in12}" Margin="0,46,0,0" />
+                    <ComboBox x:Name="selectorC28in12"
+                              Grid.Column="25"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color28in12}" />
-                    <ComboBox x:Name="selectorC29in12" 
-                              Grid.Row="3"
-                              Grid.Column="28"
+                              SelectedValue="{Binding Color28in12}" Margin="0,46,0,0" />
+                    <ComboBox x:Name="selectorC29in12"
+                              Grid.Column="27"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color29in12}" />
-                    <ComboBox x:Name="selectorC210in12" 
-                              Grid.Row="3"
-                              Grid.Column="30"
+                              SelectedValue="{Binding Color29in12}" Margin="0,46,0,0" />
+                    <ComboBox x:Name="selectorC210in12"
+                              Grid.Column="29"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color210in12}" />
-                    <ComboBox x:Name="selectorC211in12" 
-                              Grid.Row="3"
-                              Grid.Column="32"
+                              SelectedValue="{Binding Color210in12}" Margin="0,46,0,0" />
+                    <ComboBox x:Name="selectorC211in12"
+                              Grid.Column="31"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color211in12}" />
-                    <ComboBox x:Name="selectorC212in12" 
-                              Grid.Row="3"
-                              Grid.Column="34"
+                              SelectedValue="{Binding Color211in12}" Margin="0,46,0,0" />
+                    <ComboBox x:Name="selectorC212in12"
+                              Grid.Column="33"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color212in12}" />
+                              SelectedValue="{Binding Color212in12}" Margin="0,46,0,0" />
                     <!-- Bio2 - Pref -->
                     <RadioButton x:Name="Red2Stat"
-                             Grid.Row="3"
-                             Grid.Column="38"
-                             GroupName="Pref2" Margin="8,4,7,-4"
+                             Grid.Column="35"
+                             GroupName="Pref2" Margin="21,50,349,-4"
                              IsChecked="{Binding Preference2Red}"/>
                     <RadioButton x:Name="Yellow2Stat"
-                             Grid.Row="3"
-                             Grid.Column="40"
-                             GroupName="Pref2" Margin="6,4,4,-4"
+                             Grid.Column="35"
+                             GroupName="Pref2" Margin="69,50,301,-4"
                              IsChecked="{Binding Preference2Yellow}"/>
                     <RadioButton x:Name="Blue2Stat"
-                             Grid.Row="3"
-                             Grid.Column="42"
-                             GroupName="Pref2" Margin="3,4,0,-4" 
+                             Grid.Column="35"
+                             GroupName="Pref2" Margin="111,50,259,-4" 
                              IsChecked="{Binding Preference2Blue}"/>
                     <RadioButton x:Name="Gray2Stat"
-                             Grid.Row="3"
-                             Grid.Column="44"
-                             GroupName="Pref2" Margin="18,4,16,-4"
+                             Grid.Column="35"
+                             GroupName="Pref2" Margin="164,50,206,-4"
                              IsChecked="{Binding Preference2Grey}"/>
                     <!-- Bio2 - R -->
-                    <ComboBox x:Name="selectorRelax2" 
-                              Grid.Row="3"
-                              Grid.Column="46"
+                    <ComboBox x:Name="selectorRelax2"
+                              Grid.Column="35"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding ColorRelax2}"/>
+                              SelectedValue="{Binding ColorRelax2}" Margin="215,46,145,0"/>
                     <!-- End -->
-                    <Button Grid.Row="1"
-                            Grid.RowSpan="3"
-                            Grid.Column="36"
-                            Margin="0,0,0,22"
+                    <Button
+                            Grid.Column="35"
+                            Margin="0,1,291,22"
                             Visibility="Hidden"
                             Command="{Binding ChangeColors}"
                             Content="Сменить раскраску" />
 
-                    <Button Grid.Row="2"
-                            Grid.Column="36"
-                            Margin="0,0,0,22"
-                            Click="SaveTestCommand"
-                            Content="Добавить запись" Grid.RowSpan="2" />
+                    <Button
+                            Grid.Column="35"
+                            Margin="281,9,10,42"
+                            Click="CreatePreferense"
+                            Content="Добавить запись" />
 
-                    <Button Grid.Row="3"
-                            Grid.Column="36"
-                            Margin="0,0,0,-1"
-                            Click="ClearTestAdds"
+                    <Button
+                            Grid.Column="35"
+                            Margin="281,34,10,16"
+                            Click="ResetPreferenceInputs"
                             Content="Сброс выбора"  />
                     <TextBlock
-                        Grid.Column="2"
                         HorizontalAlignment="Center"
-                        Text="Biocolor1" Margin="123,6,5,5" Width="54" Grid.Row="2" />
+                        Text="Биоколор 1" Margin="137,24,42,30" Width="71" Grid.Column="1" Grid.ColumnSpan="3" />
                     <TextBlock
-                        Grid.Column="2"
                         HorizontalAlignment="Center"
-                        Margin="123,4,10,-7" Width="49" Grid.Row="3" Text="Biocolor2" />
-                    <Button x:Name="ApplyChangesBTN"
-                        Grid.Row="3"
-                        Grid.Column="36"
-                        Margin="0,25,0,-25"
-                        Click="SaveChangesTestCommand"
+                        Margin="137,50,2,-7" Width="66" Text="Биоколор 2" Grid.Column="1" />
+                    <Button x:Name="UpdatePrefernceBtn"
+                        Grid.Column="35"
+                        Margin="281,60,10,-8"
+                        Click="UpdatePreference"
                         Content="Применить"
                         Visibility="Hidden"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tabItem2" DataContext="{StaticResource subjectiveFeelingInsertModel}" Header="{x:Static p:Resources.SubjectiveFeelingsTabHeader}">
-                <Grid x:Name="DataFridSubjectiveFeelings" Background="#FFE5E5E5">
+            <TabItem x:Name="tabItem2" DataContext="{StaticResource subjectiveFeelingVM}" Header="Субъективные ощущения">
+                <Grid x:Name="DataFridSubjectiveFeelings" Background="#FFE5E5E5" Margin="0,0,0,31">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="50*" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="10" />
-                        <ColumnDefinition Width="auto" />
-                        <ColumnDefinition Width="207*" />
+                        <ColumnDefinition Width="1352" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="122" />
                     </Grid.RowDefinitions>
-                    <Button Grid.RowSpan="2"
-                            Grid.Column="16"
-                            Margin="0,0,0,-11"
+                    <Button
+                            Margin="932,37,311,61"
                             Click="AddFeelingPeople"
                             Content="Добавить запись" />
                     <Button
-                        x:Name="ApplyFeelingChangesBTN"
-                            Grid.Column="16"
-                            Margin="0,40,0,-40"
-                            Click="SaveFeelingPeople"
-                            Content="Применить" Grid.Row="1" 
+                        x:Name="UpdateSubjectiveFeelingBtn"
+                            Margin="1161,37,81,61"
+                            Click="UpdateSubjectiveFeeling"
+                            Content="Применить" 
                         Visibility="Hidden"/>
 
                     <TextBlock Grid.Row="0"
                                Grid.Column="0"
                                HorizontalAlignment="Center"
-                               Text="UID" />
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="2"
+                               Text="Код" Margin="66,17,1266,88" />
+                    <TextBlock
                                HorizontalAlignment="Center"
-                               Text="Дата" />
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="4"
+                               Text="Дата" Margin="177,14,1149,83" />
+                    <TextBlock
                                HorizontalAlignment="Center"
-                               Text="Общая слабость" />
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="6"
+                               Text="Общая слабость" Margin="279,14,983,83" />
+                    <TextBlock
                                HorizontalAlignment="Center"
-                               Text="Плохой аппетит" />
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="8"
+                               Text="Плохой аппетит" Margin="379,14,885,83" />
+                    <TextBlock
                                HorizontalAlignment="Center"
-                               Text="Плохой сон" />
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="10"
+                               Text="Плохой сон" Margin="477,14,810,83" />
+                    <TextBlock
                                HorizontalAlignment="Center"
-                               Text="Плохое настроение" />
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="12"
+                               Text="Плохое настроение" Margin="551,14,692,83" />
+                    <TextBlock
                                HorizontalAlignment="Center"
-                               Text="Тяжесть в голове" />
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="14"
+                               Text="Тяжесть в голове" Margin="669,14,588,83" />
+                    <TextBlock
                                HorizontalAlignment="Center"
-                               Text="Замедленное мышление" />
+                               Text="Замедленное мышление" Margin="774,14,441,83" />
 
-                    <ComboBox x:Name="selectedUIDInSubjectiveFeeling"
-                              Grid.Row="1"
+                    <ComboBox x:Name="UserIdsPreferenceInsert"
                               Grid.Column="0"
                               Width="80"
                               HorizontalAlignment="Left"
                               VerticalAlignment="Top"
                               ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
-                              SelectedValue="{Binding SelectedUser}"/>
-                    <DatePicker Grid.Row="1"
-                                Grid.Column="2"
+                              SelectedValue="{Binding UserId}" Margin="36,39,0,0"/>
+
+
+                    <DatePicker
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 x:Name="selectedDateInSubjectiveFeeling"
-                                SelectedDate="{Binding FealingsDate}" />
-                    <CheckBox Grid.Row="1"
-                              Grid.Column="4"
+                                SelectedDate="{Binding Date}" Margin="145,37,0,0" />
+                    <CheckBox
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
                               x:Name="markGeneralWeakness"
-                              IsChecked="{Binding GeneralWeaknes}" />
-                    <CheckBox Grid.Row="1"
-                              Grid.Column="6"
+                              IsChecked="{Binding GeneralWeaknes}" Margin="316,44,1020,63" />
+                    <CheckBox
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
                               x:Name="markBadAppetite"
-                              IsChecked="{Binding PoorAppetite}" />
-                    <CheckBox Grid.Row="1"
-                              Grid.Column="8"
+                              IsChecked="{Binding PoorAppetite}" Margin="415,44,921,63" />
+                    <CheckBox
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
                               x:Name="markBadDream"
-                              IsChecked="{Binding PoorSleep}" />
-                    <CheckBox Grid.Row="1"
-                              Grid.Column="10"
+                              IsChecked="{Binding PoorSleep}" Margin="501,44,835,63" />
+                    <CheckBox
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
                               x:Name="markBadMood"
-                              IsChecked="{Binding BadMood}" />
-                    <CheckBox Grid.Row="1"
-                              Grid.Column="12"
+                              IsChecked="{Binding BadMood}" Margin="597,44,739,63" />
+                    <CheckBox
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
                               x:Name="markHeavyHead"
-                              IsChecked="{Binding HeavyHead}" />
-                    <CheckBox Grid.Row="1"
-                              Grid.Column="14"
+                              IsChecked="{Binding HeavyHead}" Margin="709,44,627,63" />
+                    <CheckBox
                               HorizontalAlignment="Center"
                               VerticalAlignment="Center"
                               x:Name="markSlowThink"
-                              IsChecked="{Binding SlowThink}" />
+                              IsChecked="{Binding SlowThink}" Margin="834,44,502,63" />
 
+                    <TextBox Text="{Binding Id}"
+                             HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Visibility="Hidden" Margin="837,57,505,47"/>
+                    <Button
+                        Margin="1046,37,196,61"
+                        Content="Сброс" 
+                        Visibility="Visible"/>
                 </Grid>
             </TabItem>
-            
-            <TabItem x:Name="Anthropometry" Header="Anthropometry">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <TabItem x:Name="Comparison" Header="Comparison">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <TabItem x:Name="tabItem3" Header="BioColor">
+
+            <TabItem x:Name="tabItem3" Header="Биоколор">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Label  Height="25" VerticalAlignment="Top" Width="150" HorizontalAlignment="Left" Margin="26,26,0,0" Grid.ColumnSpan="2">Введите дату рождения:</Label>
-                    <DatePicker Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="176,26,0,0" Name="Date"     VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.ColumnSpan="2"/>
-                    <Label   Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="326,26,0,0" Grid.ColumnSpan="2">Введите дату рассчета:</Label>
+                    <Label  Height="25" VerticalAlignment="Top" Width="150" HorizontalAlignment="Left" Margin="26,10,0,0" Grid.ColumnSpan="2" Content="Дата рождения"/>
+                    <DatePicker Height="25" Width="111" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,34,0,0" Name="Date"     VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.ColumnSpan="2"/>
+                    <Label   Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="161,10,0,0" Grid.ColumnSpan="2" Content="Дата расчета"/>
 
-                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Prew" Margin="776,26,0,0" Grid.ColumnSpan="2" >Prew</Button>
-                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Next" Margin="851,26,0,0" Grid.ColumnSpan="2" >Next</Button>
+                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Prew" Margin="569,34,0,0" Grid.ColumnSpan="2" Content="Назад" />
+                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Next" Margin="658,34,0,0" Grid.ColumnSpan="2" Content="Вперед" />
                     <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Menu" Margin="926,26,0,0" Grid.ColumnSpan="2" Visibility="Hidden">Menu</Button>
 
-                    <DatePicker Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="476,26,0,0" Name="DateNow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}" Grid.ColumnSpan="2"/>
-                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="626,26,0,0" Click="DrawGraphs" Grid.ColumnSpan="2">Построить графики</Button>
+                    <DatePicker Height="25" Width="102" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="161,34,0,0" Name="DateNow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}" Grid.ColumnSpan="2"/>
+                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="379,34,0,0" Click="DrawGraphs" Grid.ColumnSpan="2">Построить графики</Button>
                     <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1026,26,0,0" Click="Generate" Grid.ColumnSpan="2" Visibility="Hidden">Создать изображение</Button>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="ColorSettingsTab" Header="Colors">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <!--
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <TabItem Header="TabItem">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            -->
+            <TabItem x:Name="ColorSettingsTab" Header="Цвета"/>
         </TabControl>
         <Grid Margin="0" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
-                <ColumnDefinition MaxWidth="250" MinWidth="30" Width="Auto"/>
+                <ColumnDefinition MaxWidth="250" Width="250"/>
             </Grid.ColumnDefinitions>
 
-            <DataGrid x:Name="PersonDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetPeople}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False">
+            <DataGrid x:Name="PersonDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetPeople}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0,-35,0,-31">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.LastnameHeader}" Binding="{Binding Lastname}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.FirstnameHeader}" Binding="{Binding Firstname}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.MiddlenameHeader}" Binding="{Binding Middlename}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.BirthdayHeader}" Binding="{Binding Birthday, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.ProfessionHeader}" Binding="{Binding Workposition, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.ExpeditionHeader}" Binding="{Binding Expedition}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.NumberHeader}" Binding="{Binding Number}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Width="auto" Header="Код" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Width="auto" Header="Имя" Binding="{Binding Lastname}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Width="auto" Header="Фамилия" Binding="{Binding Firstname}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Width="auto" Header="Отчество" Binding="{Binding Middlename}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Width="auto" Header="День рождения" Binding="{Binding Birthday, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Width="auto" Header="Профессия" Binding="{Binding Workposition, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Width="auto" Header="Експедиция" Binding="{Binding Expedition}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Width="auto" Header="Номер" Binding="{Binding Number}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="EditPersonBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="EditPersonBtn_Click" Tag="{Binding Id}"/>
+                                <Button x:Name="EditPersonBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="BindPersonInForm" Tag="{Binding Id}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="RemovePersonBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemovePersonBtn_Click"/>
+                                <Button x:Name="RemovePersonBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemovePerson"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid x:Name="TestsDataGrid" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
+            <DataGrid x:Name="PreferencesDataGrid" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0,-35,0,-31" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="{x:Static p:Resources.ChartColumnHeader}" ClipboardContentBinding="{x:Null}">
+                    <DataGridTemplateColumn Header="График" Width="auto" ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button
@@ -728,18 +612,18 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}" FontSize="14"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="Код" Width="auto" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}" FontSize="14"/>
+                    <DataGridTextColumn Header="Дата" Width="auto" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor I START -->
                     <!-- BioColor I (Three) -->
-                    <DataGridTemplateColumn Header="Short 1" ClipboardContentBinding="{x:Null}"
+                    <DataGridTemplateColumn Header="Короткий 1" Width="auto" ClipboardContentBinding="{x:Null}"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding ShortOder1, Converter={StaticResource StringToListConverter}}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="25" MinWidth="25"></Label>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.ItemsPanel>
@@ -754,14 +638,14 @@
 
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor I (ThreeColor) -->
-                    <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
+                    <DataGridTemplateColumn Header="Биоколор 1" Width="auto" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIThree}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding Oder1, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="25"></Label>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.ItemsPanel>
@@ -775,7 +659,7 @@
                     </DataGridTemplateColumn>
 
                     <!-- BioColor I (TwelveColor) -->
-                    <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
+                    <DataGridTemplateColumn Header="Биоколор 2" Width="auto" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                              Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -783,7 +667,7 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" 
-											Background="{Binding Content,Converter={StaticResource NameToMultiBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+											Background="{Binding Content,Converter={StaticResource NameToMultiBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="25"></Label>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.ItemsPanel>
@@ -797,11 +681,12 @@
                     </DataGridTemplateColumn>
 
                     <!-- Preference1 -->
-                    <DataGridTextColumn x:Name="Pre1" Header="Preference1" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
+                    <DataGridTextColumn x:Name="Pre1" Header="Преференция 1" Width="auto" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
                                         Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Background" Value="{Binding Preference1, Converter={StaticResource PreferenceToBrushConverter}}" />
+                                <Setter Property="TextAlignment" Value="Center"></Setter>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
@@ -810,14 +695,14 @@
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor II START -->
                     <!-- BioColor II (Three) -->
-                    <DataGridTemplateColumn Header="Short 2" ClipboardContentBinding="{x:Null}"
+                    <DataGridTemplateColumn Header="Короткий 2" Width="auto" ClipboardContentBinding="{x:Null}"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding ShortOder2, Converter={StaticResource StringToListConverter}}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="25" ></Label>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.ItemsPanel>
@@ -838,7 +723,7 @@
                                 <ListView ItemsSource="{Binding ShortOder2, Converter={StaticResource StringToListConverter}}">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="25"></Label>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.ItemsPanel>
@@ -853,14 +738,14 @@
 
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor II (TwelveColor) -->
-                    <DataGridTemplateColumn Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280"
+                    <DataGridTemplateColumn Header="Биоколор 2" Width="auto" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+                                            <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="25"></Label>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.ItemsPanel>
@@ -873,7 +758,7 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <!-- BioColor II (TwelvePictures) -->
-                    <DataGridTemplateColumn Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280"
+                    <DataGridTemplateColumn Header="Биоколор 2" Width="auto" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                              Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIPictures}, Converter={StaticResource BooleanToVisibilityConverter}}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -881,7 +766,7 @@
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" 
-											Background="{Binding Content,Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
+											Background="{Binding Content,Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="25"></Label>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                     <ListView.ItemsPanel>
@@ -895,11 +780,12 @@
                     </DataGridTemplateColumn>
 
                     <!-- Preference2 -->
-                    <DataGridTextColumn Header="Preference2" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
+                    <DataGridTextColumn Header="Преференция 2" Width="auto" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Background" Value="{Binding Preference2, Converter={StaticResource PreferenceToBrushConverter}}" />
+                                <Setter Property="TextAlignment" Value="Center"></Setter>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
@@ -908,7 +794,7 @@
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn 
                         ClipboardContentBinding="{x:Null}"
-                        Header="Physical"
+                        Header="Физическое"
                         Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=23}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
@@ -920,7 +806,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn 
                         ClipboardContentBinding="{x:Null}"
-                        Header="Emotions"
+                        Header="Эмоциональное"
                         Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=28}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
@@ -932,7 +818,7 @@
                     </DataGridTextColumn>
                     <DataGridTextColumn 
                         ClipboardContentBinding="{x:Null}"
-                        Header="Intelect"
+                        Header="Интелектуальное"
                         Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=33}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
@@ -943,7 +829,7 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="Compare P1 P2" Binding="{Binding Compare, Converter={StaticResource BooleanToChecker}}" ClipboardContentBinding="{x:Null}">
+                    <DataGridTextColumn Header="Преф 1 и Преф 2" Width="auto" Binding="{Binding Compare, Converter={StaticResource BooleanToChecker}}" ClipboardContentBinding="{x:Null}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
@@ -954,14 +840,14 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50" Header="Relax1">
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Релакс 1" Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding RelaxTable1, Converter={StaticResource NumberToRelax1Converter}}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50" Header="Relax2">
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Релакс 2" Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Image Source="{Binding RelaxTable2, Converter={StaticResource NumberToRelax2Converter}}"/>
@@ -971,28 +857,30 @@
 
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <!-- Preference1 -->
-                    <DataGridTextColumn Header="Preference1" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
+                    <DataGridTextColumn Header="Преференция 1" Width="auto" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
                                         Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Background" Value="{Binding Preference1, Converter={StaticResource PreferenceToBrushConverter}}" />
+                                <Setter Property="TextAlignment" Value="Center"></Setter>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
 
                     <!-- Preference2 -->
-                    <DataGridTextColumn Header="Preference2" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
+                    <DataGridTextColumn Header="Преференция 2" Width="auto" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
                                         Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Background" Value="{Binding Preference2, Converter={StaticResource PreferenceToBrushConverter}}" />
+                                <Setter Property="TextAlignment" Value="Center"></Setter>
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
 
                     <!-- Compare Pref1 + Relax1-->
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="Compare P1 R1" ClipboardContentBinding="{x:Null}">
+                    <DataGridTextColumn Header="Преф 1 Релакс2" Width="auto" ClipboardContentBinding="{x:Null}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
@@ -1010,7 +898,7 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
                     <!-- Compare Pref2 + Relax2-->
-                    <DataGridTextColumn Header="Compare P2 R2" ClipboardContentBinding="{x:Null}">
+                    <DataGridTextColumn Header="Преф 2 Релакс 2" Width="auto" ClipboardContentBinding="{x:Null}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
                                 <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
@@ -1027,65 +915,36 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    <!-- 
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border>
-                                    <Border.Background>
-                                        <ImageBrush ImageSource="/StateEvaluation;component/RelaxTables/Relax2/1.jpg" Stretch="UniformToFill">
-                                            <ImageBrush.RelativeTransform>
-                                                <TransformGroup>
-                                                    <ScaleTransform/>
-                                                    <SkewTransform/>
-                                                    <RotateTransform/>
-                                                    <TranslateTransform/>
-                                                </TransformGroup>
-                                            </ImageBrush.RelativeTransform>
-                                        </ImageBrush>
-                                    </Border.Background>
-                                </Border>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    -->
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button x:Name="EditPreferenceBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="SetValueInTabsCommand" Tag="{Binding Id}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button x:Name="RemovePreferenceBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemovePreferenceBtn_Click"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"  Visibility="Hidden">
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="RefreshPreferenceBtn" Content="&#xE8B5;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="RefreshPreferenceBtn_Click" Tag="{Binding Id}"/>
+                                <Button x:Name="EditPreferenceBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="BindPreferenceInForm" Tag="{Binding Id}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button x:Name="RemovePreferenceBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemovePreference"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
 
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid x:Name="SubjectiveFeelDataGrid" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetFeelings}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
+            <DataGrid x:Name="SubjectiveFeelingDataGrid" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetFeelings}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0,-35,0,-31" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridCheckBoxColumn Header="{x:Static p:Resources.GeneralWeaknesColumnHeader}" Binding="{Binding GeneralWeaknes}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridCheckBoxColumn Header="{x:Static p:Resources.PoorAppetiteColumnHeader}" Binding="{Binding PoorAppetite}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridCheckBoxColumn Header="{x:Static p:Resources.PoorSleepColumnHeader}" Binding="{Binding PoorSleep}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridCheckBoxColumn Header="{x:Static p:Resources.BadMoodColumnHeader}" Binding="{Binding BadMood}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridCheckBoxColumn Header="{x:Static p:Resources.HeavyHeadColumnHeader}" Binding="{Binding HeavyHead}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridCheckBoxColumn Header="{x:Static p:Resources.SlowThinkColumnHeader}" Binding="{Binding SlowThink}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden" />
+                    <DataGridTextColumn Header="Код" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridCheckBoxColumn Width="auto" Header="Общая слабость" Binding="{Binding GeneralWeaknes}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridCheckBoxColumn Width="auto" Header="Плохой апетит" Binding="{Binding PoorAppetite}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridCheckBoxColumn Width="auto" Header="Плохой сон" Binding="{Binding PoorSleep}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridCheckBoxColumn Width="auto" Header="Плохое настроение" Binding="{Binding BadMood}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridCheckBoxColumn Width="auto" Header="Тяжесть в голове" Binding="{Binding HeavyHead}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridCheckBoxColumn Width="auto" Header="Замедленное мышление" Binding="{Binding SlowThink}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -1103,10 +962,13 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Grid x:Name="BioColorGraph" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem3}">
+            <Grid x:Name="BioColorGraph" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem3}" Margin="0,-35,0,-31" Grid.ColumnSpan="2" Panel.ZIndex="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
             </Grid>
 
-            <Grid x:Name="ColorSettings" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=ColorSettingsTab}">
+            <Grid x:Name="ColorSettings" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=ColorSettingsTab}" Margin="2,-51,-2,-31" Grid.ColumnSpan="2" Panel.ZIndex="2">
 
                 <Image Width="200" Height="200" Margin="25,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <Image.Source>
@@ -1324,515 +1186,106 @@
                 </Image>
 
 
-                <TextBlock Width="100" Height="25" Name="pt1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,  0,0,0"  Text="Physical: [1]"/>
-                <TextBlock Width="100" Height="25" Name="pt2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250, 25,0,0"  Text="Physical: [2]"/>
-                <TextBlock Width="100" Height="25" Name="pt3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250, 50,0,0"  Text="Physical: [3]"/>
-                <TextBlock Width="100" Height="25" Name="pt4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250, 75,0,0"  Text="Physical: [4]"/>
+                <TextBlock Width="100" Height="25" Name="pt1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,  0,0,0"  Text="Физическое: [1]"/>
+                <TextBlock Width="100" Height="25" Name="pt2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250, 25,0,0"  Text="Физическое: [2]"/>
+                <TextBlock Width="100" Height="25" Name="pt3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250, 50,0,0"  Text="Физическое: [3]"/>
+                <TextBlock Width="100" Height="25" Name="pt4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250, 75,0,0"  Text="Физическое: [4]"/>
 
-                <TextBlock Width="100" Height="25" Name="et1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,100,0,0"  Text="Emotions: [1]"/>
-                <TextBlock Width="100" Height="25" Name="et2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,125,0,0"  Text="Emotions: [2]"/>
-                <TextBlock Width="100" Height="25" Name="et3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,150,0,0"  Text="Emotions: [3]"/>
-                <TextBlock Width="100" Height="25" Name="et4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,175,0,0"  Text="Emotions: [4]"/>
+                <TextBlock Width="118" Height="25" Name="et1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,100,0,0"  Text="Эмоциональное: [1]"/>
+                <TextBlock Width="118" Height="25" Name="et2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,125,0,0"  Text="Эмоциональное: [2]"/>
+                <TextBlock Width="118" Height="25" Name="et3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,150,0,0"  Text="Эмоциональное: [3]"/>
+                <TextBlock Width="118" Height="25" Name="et4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,175,0,0"  Text="Эмоциональное: [4]"/>
 
-                <TextBlock Width="100" Height="25" Name="it1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,200,0,0"  Text="Intelect: [1]"/>
-                <TextBlock Width="100" Height="25" Name="it2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,225,0,0"  Text="Intelect: [2]"/>
-                <TextBlock Width="100" Height="25" Name="it3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,250,0,0"  Text="Intelect: [3]"/>
-                <TextBlock Width="100" Height="25" Name="it4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,275,0,0"  Text="Intelect: [4]"/>
-
-
-
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,  0,0,0" />
-                <TextBox Width="50" Height="25" Name="cpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,  0,0,0" />
-                <TextBox Width="50" Height="25" Name="mpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,  0,0,0" />
-                <TextBox Width="50" Height="25" Name="ypc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,  0,0,0" />
-                <TextBox Width="50" Height="25" Name="kpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,  0,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350, 25,0,0" />
-                <TextBox Width="50" Height="25" Name="cpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575, 25,0,0" />
-                <TextBox Width="50" Height="25" Name="mpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625, 25,0,0" />
-                <TextBox Width="50" Height="25" Name="ypc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675, 25,0,0" />
-                <TextBox Width="50" Height="25" Name="kpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725, 25,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350, 50,0,0" />
-                <TextBox Width="50" Height="25" Name="cpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575, 50,0,0" />
-                <TextBox Width="50" Height="25" Name="mpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625, 50,0,0" />
-                <TextBox Width="50" Height="25" Name="ypc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675, 50,0,0" />
-                <TextBox Width="50" Height="25" Name="kpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725, 50,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350, 75,0,0" />
-                <TextBox Width="50" Height="25" Name="cpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575, 75,0,0" />
-                <TextBox Width="50" Height="25" Name="mpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625, 75,0,0" />
-                <TextBox Width="50" Height="25" Name="ypc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675, 75,0,0" />
-                <TextBox Width="50" Height="25" Name="kpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725, 75,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,100,0,0" />
-                <TextBox Width="50" Height="25" Name="cec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,100,0,0" />
-                <TextBox Width="50" Height="25" Name="mec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,100,0,0" />
-                <TextBox Width="50" Height="25" Name="yec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,100,0,0" />
-                <TextBox Width="50" Height="25" Name="kec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,100,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,125,0,0" />
-                <TextBox Width="50" Height="25" Name="cec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,125,0,0" />
-                <TextBox Width="50" Height="25" Name="mec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,125,0,0" />
-                <TextBox Width="50" Height="25" Name="yec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,125,0,0" />
-                <TextBox Width="50" Height="25" Name="kec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,125,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,150,0,0" />
-                <TextBox Width="50" Height="25" Name="cec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,150,0,0" />
-                <TextBox Width="50" Height="25" Name="mec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,150,0,0" />
-                <TextBox Width="50" Height="25" Name="yec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,150,0,0" />
-                <TextBox Width="50" Height="25" Name="kec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,150,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,175,0,0" />
-                <TextBox Width="50" Height="25" Name="cec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,175,0,0" />
-                <TextBox Width="50" Height="25" Name="mec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,175,0,0" />
-                <TextBox Width="50" Height="25" Name="yec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,175,0,0" />
-                <TextBox Width="50" Height="25" Name="kec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,175,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,200,0,0" />
-                <TextBox Width="50" Height="25" Name="cic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,200,0,0" />
-                <TextBox Width="50" Height="25" Name="mic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,200,0,0" />
-                <TextBox Width="50" Height="25" Name="yic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,200,0,0" />
-                <TextBox Width="50" Height="25" Name="kic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,200,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,225,0,0" />
-                <TextBox Width="50" Height="25" Name="cic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,225,0,0" />
-                <TextBox Width="50" Height="25" Name="mic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,225,0,0" />
-                <TextBox Width="50" Height="25" Name="yic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,225,0,0" />
-                <TextBox Width="50" Height="25" Name="kic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,225,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,250,0,0" />
-                <TextBox Width="50" Height="25" Name="cic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,250,0,0" />
-                <TextBox Width="50" Height="25" Name="mic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,250,0,0" />
-                <TextBox Width="50" Height="25" Name="yic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,250,0,0" />
-                <TextBox Width="50" Height="25" Name="kic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,250,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="350,275,0,0" />
-                <TextBox Width="50" Height="25" Name="cic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="575,275,0,0" />
-                <TextBox Width="50" Height="25" Name="mic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="625,275,0,0" />
-                <TextBox Width="50" Height="25" Name="yic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="675,275,0,0" />
-                <TextBox Width="50" Height="25" Name="kic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="725,275,0,0" />
-
-                <Button Width="65"  Height="25" Name="pb1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,  0,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button Width="65"  Height="25" Name="pb2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510, 25,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button Width="65"  Height="25" Name="pb3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510, 50,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button Width="65"  Height="25" Name="pb4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510, 75,0,0" Click="CMYK2RGB">&lt;--</Button>
-
-                <Button    Width="65"  Height="25" Name="eb1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,100,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="eb2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,125,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="eb3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,150,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="eb4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,175,0,0" Click="CMYK2RGB">&lt;--</Button>
-
-                <Button    Width="65"  Height="25" Name="ib1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,200,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="ib2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,225,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="ib3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,250,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="ib4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="510,275,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <TextBlock Width="118" Height="25" Name="it1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,200,0,0"  Text="Интелекнуальное: [1]"/>
+                <TextBlock Width="118" Height="25" Name="it2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,225,0,0"  Text="Интелекнуальное: [2]"/>
+                <TextBlock Width="118" Height="25" Name="it3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,250,0,0"  Text="Интелекнуальное: [3]"/>
+                <TextBlock Width="118" Height="25" Name="it4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,275,0,0"  Text="Интелекнуальное: [4]"/>
 
 
-                <Button Width="65"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="800,200,0,0" Click="ResetColors">Reset</Button>
-                <Button Width="65"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="800,250,0,0" Click="RestoreColors">Restore</Button>
-                <Button Width="65"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="800,275,0,0" Click="SaveColors">Save</Button>
 
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,0,0,0" />
+                <TextBox Width="50" Height="25" Name="cpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,0,0,0" />
+                <TextBox Width="50" Height="25" Name="mpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,0,0,0" />
+                <TextBox Width="50" Height="25" Name="ypc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,0,0,0" />
+                <TextBox Width="50" Height="25" Name="kpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,0,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,25,0,0" />
+                <TextBox Width="50" Height="25" Name="cpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,25,0,0" />
+                <TextBox Width="50" Height="25" Name="mpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,25,0,0" />
+                <TextBox Width="50" Height="25" Name="ypc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,25,0,0" />
+                <TextBox Width="50" Height="25" Name="kpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,25,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,50,0,0" />
+                <TextBox Width="50" Height="25" Name="cpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,50,0,0" />
+                <TextBox Width="50" Height="25" Name="mpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,50,0,0" />
+                <TextBox Width="50" Height="25" Name="ypc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,50,0,0" />
+                <TextBox Width="50" Height="25" Name="kpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,50,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,75,0,0" />
+                <TextBox Width="50" Height="25" Name="cpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,75,0,0" />
+                <TextBox Width="50" Height="25" Name="mpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,75,0,0" />
+                <TextBox Width="50" Height="25" Name="ypc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,75,0,0" />
+                <TextBox Width="50" Height="25" Name="kpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,75,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,100,0,0" />
+                <TextBox Width="50" Height="25" Name="cec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,100,0,0" />
+                <TextBox Width="50" Height="25" Name="mec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,100,0,0" />
+                <TextBox Width="50" Height="25" Name="yec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,100,0,0" />
+                <TextBox Width="50" Height="25" Name="kec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,100,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,125,0,0" />
+                <TextBox Width="50" Height="25" Name="cec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,125,0,0" />
+                <TextBox Width="50" Height="25" Name="mec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,125,0,0" />
+                <TextBox Width="50" Height="25" Name="yec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,125,0,0" />
+                <TextBox Width="50" Height="25" Name="kec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,125,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,150,0,0" />
+                <TextBox Width="50" Height="25" Name="cec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,150,0,0" />
+                <TextBox Width="50" Height="25" Name="mec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,150,0,0" />
+                <TextBox Width="50" Height="25" Name="yec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,150,0,0" />
+                <TextBox Width="50" Height="25" Name="kec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,150,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,175,0,0" />
+                <TextBox Width="50" Height="25" Name="cec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,175,0,0" />
+                <TextBox Width="50" Height="25" Name="mec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,175,0,0" />
+                <TextBox Width="50" Height="25" Name="yec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,175,0,0" RenderTransformOrigin="0.98,0.48" />
+                <TextBox Width="50" Height="25" Name="kec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,175,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,200,0,0" />
+                <TextBox Width="50" Height="25" Name="cic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,200,0,0" />
+                <TextBox Width="50" Height="25" Name="mic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,200,0,0" />
+                <TextBox Width="50" Height="25" Name="yic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,200,0,0" />
+                <TextBox Width="50" Height="25" Name="kic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,200,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,225,0,0" />
+                <TextBox Width="50" Height="25" Name="cic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,225,0,0" />
+                <TextBox Width="50" Height="25" Name="mic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,225,0,0" />
+                <TextBox Width="50" Height="25" Name="yic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,225,0,0" />
+                <TextBox Width="50" Height="25" Name="kic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,225,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,250,0,0" />
+                <TextBox Width="50" Height="25" Name="cic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,250,0,0" />
+                <TextBox Width="50" Height="25" Name="mic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,250,0,0" />
+                <TextBox Width="50" Height="25" Name="yic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,250,0,0" />
+                <TextBox Width="50" Height="25" Name="kic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,250,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,275,0,0" />
+                <TextBox Width="50" Height="25" Name="cic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,275,0,0" />
+                <TextBox Width="50" Height="25" Name="mic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,275,0,0" />
+                <TextBox Width="50" Height="25" Name="yic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,275,0,0" />
+                <TextBox Width="50" Height="25" Name="kic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,275,0,0" />
+
+                <Button Width="65"  Height="25" Name="pb1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,0,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="pb2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,25,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="pb3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,50,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="pb4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,75,0,0" Click="CMYK2RGB">&lt;--</Button>
+
+                <Button    Width="65"  Height="25" Name="eb1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,100,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="eb2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,125,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="eb3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,150,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="eb4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,175,0,0" Click="CMYK2RGB">&lt;--</Button>
+
+                <Button    Width="65"  Height="25" Name="ib1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,200,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="ib2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,225,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="ib3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,250,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="ib4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,275,0,0" Click="CMYK2RGB">&lt;--</Button>
+
+
+                <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="496,326,0,0" Click="ResetColors" Content="Сброс"/>
+                <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="606,326,0,0" Click="RestoreColors" Content="Восстановить" RenderTransformOrigin="0.494,0.64"/>
+                <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="717,326,0,0" Click="SaveColors" Content="Сохранить"/>
 
             </Grid>
-
-
-            <DataGrid x:Name="AnthropometryDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetAnthropometry}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False"  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=Anthropometry}" >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}"  ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="Growth" Binding="{Binding Growth}"  ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="Weight" Binding="{Binding Weight}"  ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="Fat (kg)" Binding="{Binding FatContentIn_kg}"  ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="Fat (%)" Binding="{Binding FatContentIn_per}"  ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="Lungs (L)" Binding="{Binding VitalCapacityOfTheLungsIn_liters}"  ClipboardContentBinding="{x:Null}"/>
-                </DataGrid.Columns>
-            </DataGrid>
-            <DataGrid x:Name="ComparisonDataGridEmpty" Background="#FFE5E5E5"  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=Comparison}"></DataGrid>
-            <Expander Header="Subjective Feeling" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=Comparison}" HorizontalAlignment="Left"  VerticalAlignment="Top" Width="300">
-                <DataGrid x:Name="SubjectiveFeelDataGridInComparsion" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetFeelings}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
-                        <DataGridCheckBoxColumn Header="{x:Static p:Resources.GeneralWeaknesColumnHeader}" Binding="{Binding GeneralWeaknes}" ClipboardContentBinding="{x:Null}"/>
-                        <DataGridCheckBoxColumn Header="{x:Static p:Resources.PoorAppetiteColumnHeader}" Binding="{Binding PoorAppetite}" ClipboardContentBinding="{x:Null}"/>
-                        <DataGridCheckBoxColumn Header="{x:Static p:Resources.PoorSleepColumnHeader}" Binding="{Binding PoorSleep}" ClipboardContentBinding="{x:Null}"/>
-                        <DataGridCheckBoxColumn Header="{x:Static p:Resources.BadMoodColumnHeader}" Binding="{Binding BadMood}" ClipboardContentBinding="{x:Null}"/>
-                        <DataGridCheckBoxColumn Header="{x:Static p:Resources.HeavyHeadColumnHeader}" Binding="{Binding HeavyHead}" ClipboardContentBinding="{x:Null}"/>
-                        <DataGridCheckBoxColumn Header="{x:Static p:Resources.SlowThinkColumnHeader}" Binding="{Binding SlowThink}" ClipboardContentBinding="{x:Null}"/>
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="EditFeelingsBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="EditFeelingsBtn_Click" Tag="{Binding Id}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="RemoveFeelingsBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemoveFeelingsBtn_Click"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Expander>
-            <Expander Header="Tests" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=Comparison}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" Margin="300,0,0,0">
-                <DataGrid x:Name="TestsDataGridInComparsion" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="{x:Static p:Resources.ChartColumnHeader}" ClipboardContentBinding="{x:Null}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button
-                                Command="{Binding MakeIndividualChartCommand}"
-                                Content="&#xE929;"
-                                FontFamily="Segoe MDL2 Assets"
-                                ToolTip="{x:Static p:Resources.MakeChartToolTip}" Click="Button_Click" />
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}" FontSize="14"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
-                        <!-- BioColor I START -->
-                        <!-- BioColor I (Three) -->
-                        <DataGridTemplateColumn Header="Short 1" ClipboardContentBinding="{x:Null}"
-                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ListView ItemsSource="{Binding ShortOder1, Converter={StaticResource StringToListConverter}}">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                        <ListView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal"></StackPanel>
-                                            </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
-                                    </ListView>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                        <!-- BioColor I (ThreeColor) -->
-                        <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
-                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIThree}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ListView ItemsSource="{Binding Oder1, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                        <ListView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal"></StackPanel>
-                                            </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
-                                    </ListView>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                        <!-- BioColor I (TwelveColor) -->
-                        <DataGridTemplateColumn Header="BioColor I" ClipboardContentBinding="{x:Null}" MinWidth="280"
-                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ListView ItemsSource="{Binding Oder1, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" 
-											Background="{Binding Content,Converter={StaticResource NameToMultiBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                        <ListView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal"></StackPanel>
-                                            </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
-                                    </ListView>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                        <!-- Preference1 -->
-                        <DataGridTextColumn x:Name="Pre1Incomparsion" Header="Preference1" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
-                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding Preference1, Converter={StaticResource PreferenceToBrushConverter}}" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <!-- BioColor I END -->
-
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                        <!-- BioColor II START -->
-                        <!-- BioColor II (Three) -->
-                        <DataGridTemplateColumn Header="Short 2" ClipboardContentBinding="{x:Null}"
-                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ListView ItemsSource="{Binding ShortOder2, Converter={StaticResource StringToListConverter}}">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                        <ListView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal"></StackPanel>
-                                            </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
-                                    </ListView>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                        <!-- BioColor II (ThreePictures) -->
-                        <DataGridTemplateColumn  ClipboardContentBinding="{x:Null}"
-                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIPictures}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ListView ItemsSource="{Binding ShortOder2, Converter={StaticResource StringToListConverter}}">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}"  Background="{Binding Content,Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" Width="20" MinWidth="20"></Label>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                        <ListView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal"></StackPanel>
-                                            </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
-                                    </ListView>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                        <!-- BioColor II (TwelveColor) -->
-                        <DataGridTemplateColumn Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280"
-                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" Background="{Binding Content,Converter={StaticResource NameToBrushConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                        <ListView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal"></StackPanel>
-                                            </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
-                                    </ListView>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <!-- BioColor II (TwelvePictures) -->
-                        <DataGridTemplateColumn Header="BioColor II" ClipboardContentBinding="{x:Null}" MinWidth="280"
-                                             Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIPictures}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <ListView ItemsSource="{Binding Oder2, Converter={StaticResource StringToListConverter}}" Padding="-4,0,0,0" Margin="0" Width="Auto" HorizontalAlignment="Left" MinWidth="270">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding}" Foreground="{Binding Content, Converter={StaticResource TextColorNumberToBrushConverter}, RelativeSource={RelativeSource Self}}" 
-											Background="{Binding Content,Converter={StaticResource NameToImageConverter}, IsAsync=True, NotifyOnTargetUpdated=True, NotifyOnSourceUpdated=True, NotifyOnValidationError=True, RelativeSource={RelativeSource Self}, ValidatesOnNotifyDataErrors=False}" BorderBrush="Black" BorderThickness="1" MinWidth="20"></Label>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                        <ListView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal"></StackPanel>
-                                            </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
-                                    </ListView>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                        <!-- Preference2 -->
-                        <DataGridTextColumn Header="Preference2" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
-                                                 Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding Preference2, Converter={StaticResource PreferenceToBrushConverter}}" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <!-- BioColor II END -->
-
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                        <DataGridTextColumn 
-                        ClipboardContentBinding="{x:Null}"
-                        Header="Physical"
-                        Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=23}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style>
-                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-                                    <Setter Property="TextBlock.FontSize" Value="20" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn 
-                        ClipboardContentBinding="{x:Null}"
-                        Header="Emotions"
-                        Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=28}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style>
-                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-                                    <Setter Property="TextBlock.FontSize" Value="20" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTextColumn 
-                        ClipboardContentBinding="{x:Null}"
-                        Header="Intelect"
-                        Binding="{Binding UserId, Converter={StaticResource DateToSin}, ConverterParameter=33}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style>
-                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-                                    <Setter Property="TextBlock.FontSize" Value="20" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                        <DataGridTextColumn Header="Compare P1 P2" Binding="{Binding Compare, Converter={StaticResource BooleanToChecker}}" ClipboardContentBinding="{x:Null}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style>
-                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-                                    <Setter Property="TextBlock.FontSize" Value="20" />
-
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50" Header="Relax1">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Image Source="{Binding RelaxTable1, Converter={StaticResource NumberToRelax1Converter}}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50" Header="Relax2">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Image Source="{Binding RelaxTable2, Converter={StaticResource NumberToRelax2Converter}}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                        <!-- Preference1 -->
-                        <DataGridTextColumn Header="Preference1" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
-                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding Preference1, Converter={StaticResource PreferenceToBrushConverter}}" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-
-                        <!-- Preference2 -->
-                        <DataGridTextColumn Header="Preference2" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
-                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Background" Value="{Binding Preference2, Converter={StaticResource PreferenceToBrushConverter}}" />
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-
-                        <!-- Compare Pref1 + Relax1-->
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                        <DataGridTextColumn Header="Compare P1 R1" ClipboardContentBinding="{x:Null}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style>
-                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-                                    <Setter Property="TextBlock.FontSize" Value="20"/>
-                                    <Setter Property="TextBlock.Text">
-                                        <Setter.Value>
-                                            <MultiBinding Converter="{StaticResource PreferenceSameAsRelax}">
-                                                <Binding Path="Preference1"/>
-                                                <Binding Path="RelaxTable1"/>
-                                            </MultiBinding>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <!-- Compare Pref2 + Relax2-->
-                        <DataGridTextColumn Header="Compare P2 R2" ClipboardContentBinding="{x:Null}">
-                            <DataGridTextColumn.ElementStyle>
-                                <Style>
-                                    <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
-                                    <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-                                    <Setter Property="TextBlock.FontSize" Value="20"/>
-                                    <Setter Property="TextBlock.Text">
-                                        <Setter.Value>
-                                            <MultiBinding Converter="{StaticResource PreferenceSameAsRelax}">
-                                                <Binding Path="Preference2"/>
-                                                <Binding Path="RelaxTable2"/>
-                                            </MultiBinding>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style>
-                            </DataGridTextColumn.ElementStyle>
-                        </DataGridTextColumn>
-                        <!-- 
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Width="50">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Border>
-                                    <Border.Background>
-                                        <ImageBrush ImageSource="/StateEvaluation;component/RelaxTables/Relax2/1.jpg" Stretch="UniformToFill">
-                                            <ImageBrush.RelativeTransform>
-                                                <TransformGroup>
-                                                    <ScaleTransform/>
-                                                    <SkewTransform/>
-                                                    <RotateTransform/>
-                                                    <TranslateTransform/>
-                                                </TransformGroup>
-                                            </ImageBrush.RelativeTransform>
-                                        </ImageBrush>
-                                    </Border.Background>
-                                </Border>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    -->
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="EditPreferenceBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="SetValueInTabsCommand" Tag="{Binding Id}"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="RemovePreferenceBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemovePreferenceBtn_Click"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-
-                        <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Expander>
-            <Expander Header="Cycle Ergometry" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=Comparison}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="300" Margin="800,0,0,0">
-                <DataGrid x:Name="CycleErgonometryDataGridInComparsion" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetCycleErgometry}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="{x:Static p:Resources.CodeHeader}" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
-                        <DataGridTextColumn Header="{x:Static p:Resources.DateColumnHeader}" Binding="{Binding Date, StringFormat=\{0:d\}}"  ClipboardContentBinding="{x:Null}"/>
-                        <DataGridTextColumn Header="АТ сист" Binding="{Binding ArterialPressuresUpper}"  ClipboardContentBinding="{x:Null}"/>
-                        <DataGridTextColumn Header="АТ діаст" Binding="{Binding ArterialPressuresBottom}"  ClipboardContentBinding="{x:Null}"/>
-                        <DataGridTextColumn Header="ЧСС" Binding="{Binding HeartRate}"  ClipboardContentBinding="{x:Null}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </Expander>
-            <Grid Grid.Column="1" Width="250" ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="Filter">
+            <Grid Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="Filter">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -1845,17 +1298,17 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Filters" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFE5E5E5"/>
+                <Label Content="Фильтры" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightGray" Margin="0,-35,0,12"/>
 
                 <Grid Grid.Row="1" Margin="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-                    <Label Content="UID" 
+                    <Label Content="Код" 
                         FontWeight="Bold" Margin="0,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <ComboBox
-                        x:Name="UID"
+                        x:Name="UserIdsFilter"
                         Grid.Column="1"
                         ItemsSource="{Binding Source={StaticResource GetCodesForFilter}}"
                         SelectedValue="{Binding FilterCodeSelected}" Margin="5"/>
@@ -1873,11 +1326,11 @@
                     </Grid.RowDefinitions>
 
                     <Label Content="Дата" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0,-6,0,6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,0"/>
-                    <Label Content="From" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
-                    <Label Content="To" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Padding="0" Grid.RowSpan="2"/>
+                    <Label Content="Начало" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
+                    <Label Content="Конец" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Padding="0" Grid.RowSpan="2"/>
                     <DatePicker Grid.Row="1"
                                 x:Name="DateFrom"
-                                    SelectedDate="{Binding FilterSelectedDateFrom}" Margin="0,5,5,7" Padding="5,2,2,2" Grid.RowSpan="2" />
+                                    SelectedDate="{Binding FilterSelectedDateFrom}"  Margin="0,5,5,7" Padding="5,2,2,2" Grid.RowSpan="2" />
                     <DatePicker Grid.Row="1"
                                 x:Name="DateTo"
                                     Grid.Column="1"
@@ -1904,15 +1357,15 @@
                                    Text="Экспедиция" Grid.ColumnSpan="2"
                                    FontWeight="Bold" Margin="84,-10,84,10"
                         />
-                    <Label Content="From" Margin="0,0,0,16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
-                    <Label Content="To" Margin="0,0,0,16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Column="1" Grid.RowSpan="2"/>
+                    <Label Content="Начало" Margin="0,0,0,16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
+                    <Label Content="Конец" Margin="0,0,0,16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Column="1" Grid.RowSpan="2"/>
                     <ComboBox Grid.Row="1"
-                              x:Name="ExFrom"
+                              x:Name="ExpeditionFromFilter"
                                   ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
                                   SelectedValue="{Binding FilterSelectedExpeditionFrom}" 
                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,6,2,0" />
                     <ComboBox Grid.Row="1"
-                              x:Name="ExTo"
+                              x:Name="ExpeditionToFilter"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
                                   SelectedValue="{Binding FilterSelectedNumberFrom}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,6,0,0" />
@@ -1922,15 +1375,15 @@
                                    Padding="0"
                                    Text="Номер" Grid.ColumnSpan="2" 
                                     FontWeight="Bold" Margin="100,5,100,14"/>
-                    <Label Content="From" Margin="0,19,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="2"/>
-                    <Label Content="To" Margin="0,18,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="1"/>
+                    <Label Content="Начало" Margin="0,19,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="2"/>
+                    <Label Content="Конец" Margin="0,18,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="1"/>
                     <ComboBox Grid.Row="2"
-                              x:Name="PeopleFrom"
+                              x:Name="PeopleFromFilter"
                               SelectedValue="{Binding FilterSelectedExpeditionTo}"
                               ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,35,2,23" />
                     <ComboBox Grid.Row="2"
-                              x:Name="PeopleTo"
+                              x:Name="PeopleToFilter"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}"
                                   SelectedValue="{Binding FilterSelectedNumberTo}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,35,0,23" />
@@ -2068,62 +1521,62 @@
                     <TextBox Grid.Row="1"
                                     x:Name="PreferenceFilter1"
                                      Grid.Column="0"
-                                     Width="20"
+                                     Width="25"
                                      Text="{Binding C1in12Filter}" />
                     <TextBox Grid.Row="1"
                                     x:Name="PreferenceFilter2"
                                      Grid.Column="1"
-                                     Width="20"
+                                     Width="25"
                                      Text="{Binding C2in12Filter}" />
                     <TextBox Grid.Row="1"
                                     x:Name="PreferenceFilter3"
                                      Grid.Column="2"
-                                     Width="20"
+                                     Width="25"
                                      Text="{Binding C3in12Filter}" />
                     <TextBox Grid.Row="1"
                                     x:Name="PreferenceFilter4"
                                      Grid.Column="3"
-                                     Width="20"
+                                     Width="25"
                                      Text="{Binding C4in12Filter}" />
                     <TextBox Grid.Row="1"
                                     x:Name="PreferenceFilter5"
                                      Grid.Column="4"
-                                     Width="20"
+                                     Width="25"
                                      Text="{Binding C5in12Filter}" />
                     <TextBox Grid.Row="1"
                                     x:Name="PreferenceFilter6"
                                      Grid.Column="5"
-                                     Width="20"
+                                     Width="25"
                                      Text="{Binding C6in12Filter}" />
                     <TextBox Grid.Row="1"
                                     x:Name="PreferenceFilter7"
                                      Grid.Column="6"
-                                     Width="20"
+                                     Width="25"
                                      Text="{Binding C7in12Filter}" />
                     <TextBox Grid.Row="1"
                                     x:Name="PreferenceFilter8"
                                      Grid.Column="7"
-                                     Width="20"
+                                     Width="25"
                                      Text="{Binding C8in12Filter}" />
                     <TextBox Grid.Row="1"
                                     x:Name="PreferenceFilter9"
                                      Grid.Column="8"
-                                     Width="20"
+                                     Width="25"
                                      Text="{Binding C9in12Filter}" />
                     <TextBox Grid.Row="1"
                                     x:Name="PreferenceFilter10"
                                      Grid.Column="9"
-                                     Width="20"
+                                     Width="25"
                                      Text="{Binding C10in12Filter}" />
                     <TextBox Grid.Row="1"
                                     x:Name="PreferenceFilter11"
                                      Grid.Column="10"
-                                     Width="20"
+                                     Width="25"
                                      Text="{Binding C11in12Filter}" />
                     <TextBox Grid.Row="1"
                                     x:Name="PreferenceFilter12"
                                      Grid.Column="11"
-                                     Width="20"
+                                     Width="25"
                                      Text="{Binding C12in12Filter}" />
                 </Grid>
 
@@ -2213,7 +1666,7 @@
                     <Label Content="Преференция" FontWeight="bold" Margin="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,0"/>
 
                     <ComboBox Grid.Row="0"
-                                  x:Name="Pref"
+                                  x:Name="PreferenceFilter"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Source={StaticResource GetPreferencesList}}" 
                                   SelectedValue="{Binding FilterPreferenceSelected}" HorizontalContentAlignment="Center" Margin="2" />
@@ -2227,48 +1680,48 @@
                     </Grid.ColumnDefinitions>
 
                     <ListBox Padding="5,0,0,0" Grid.Column="0">
-                        <TextBlock TextAlignment="Center" HorizontalAlignment="Center">BioColor I</TextBlock>
+                        <TextBlock TextAlignment="Center" HorizontalAlignment="Center">Биоколор I</TextBlock>
                         <RadioButton
                             Name="BioColorIHide"
                             Grid.Column="0"
                             HorizontalAlignment="Center">
-                            Hide
+                            Скрыть
                         </RadioButton>
                         <RadioButton
                             Name="BioColorIThree"
                             Grid.Column="0"
                             HorizontalAlignment="Center"
                             IsChecked="True">
-                            Three colors
+                            3 цвета
                         </RadioButton>
                         <RadioButton
                             Name="BioColorITwelve"
                             Grid.Column="0"
                             HorizontalAlignment="Center">
-                            Twelve colors
+                            12 цветов
                         </RadioButton>
                     </ListBox>
 
-                    <ListBox Padding="5,0,0,0" Grid.Column="1">
-                        <TextBlock TextAlignment="Center" HorizontalAlignment="Center">BioColor II</TextBlock>
+                    <ListBox Padding="5,0,0,0" Grid.Column="1" Margin="0,0,10,0">
+                        <TextBlock TextAlignment="Center" HorizontalAlignment="Center">Биоколор II</TextBlock>
                         <RadioButton
                             Name="BioColorIIHide"
                             Grid.Column="0"
                             HorizontalAlignment="Center">
-                            Hide
+                            Скрыть
                         </RadioButton>
                         <RadioButton
                             Name="BioColorIITwelve"
                             Grid.Column="0"
                             HorizontalAlignment="Center"
                             IsChecked="True">
-                            Three colors
+                            3 цвета
                         </RadioButton>
                         <RadioButton
                             Name="BioColorIIPictures"
                             Grid.Column="0"
                             HorizontalAlignment="Center">
-                            Pictures
+                            Картинки
                         </RadioButton>
                     </ListBox>
                 </Grid>
@@ -2312,7 +1765,6 @@
                 </Grid>
             </Grid>
         </Grid>
-        <StatusBar Height="30" VerticalAlignment="Bottom" Grid.Row="2"/>
 
     </Grid>
 </Window>
