@@ -7,9 +7,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace StateEvaluation.ViewModel.PeopleDataGrid
+namespace StateEvaluation.ViewModel
 {
-    public class PeopleDto: INotifyPropertyChanged
+    public class PeopleVM: INotifyPropertyChanged
     {
         private string _id;
         private string _firstName;
@@ -106,7 +106,7 @@ namespace StateEvaluation.ViewModel.PeopleDataGrid
             }
         }
 
-        public PeopleDto()
+        public PeopleVM()
         {
             _birthday = new DatePicker();
         }

@@ -6,9 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StateEvaluation.ViewModel.PreferenceDataGrid
+namespace StateEvaluation.ViewModel
 {
-    public class PreferenceDto : INotifyPropertyChanged
+    public class PreferenceVM : INotifyPropertyChanged
     {
         private string _id;
         private string _userId;
