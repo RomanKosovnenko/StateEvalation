@@ -1,5 +1,6 @@
 ﻿using StateEvaluation.Enums;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
@@ -60,6 +61,12 @@ namespace StateEvaluation.Model
             items.ShortOder2 = person.ShortOder2;
             items.Compare = person.Preference1 == person.Preference2 ? StringBooleanValues.True : StringBooleanValues.False;
             SubmitChanges();
+        }
+
+        public IEnumerable<Preference> GetPreferences(Func<Preference, bool> query)
+        {
+            var preferences = this.Preference.Where(query);
+            return preferences;
         }
 
         //--------------------------------
@@ -130,6 +137,12 @@ namespace StateEvaluation.Model
             return list;
         }
 
+        public IEnumerable<People> GetPeople(Func<People, bool> query)
+        {
+            var person = this.People.Where(query);
+            return person;
+        }
+
         //refactor!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         public IEnumerable<string> GetUserIds()
         {
@@ -145,6 +158,7 @@ namespace StateEvaluation.Model
             list.Insert(0, "All");
             return list;
         }
+
         public IEnumerable<string> GetExpeditionCodes()
         {
             IEnumerable<string> items = this.People.Select(item => item.Expedition.ToString()).Distinct().OrderByDescending(item => Convert.ToInt32(item));
@@ -164,8 +178,8 @@ namespace StateEvaluation.Model
         }
         #endregion
 
-        #region Subkective feeling
-        internal void RemoveSubjectiveFeeling(Guid subjectiveFeelingId)
+        #region Subjective feeling
+        public void RemoveSubjectiveFeeling(Guid subjectiveFeelingId)
         {
             var subjectiveFeeling = SubjectiveFeeling.Single(item => item.Id == subjectiveFeelingId);
             SubjectiveFeeling.DeleteOnSubmit(subjectiveFeeling);
@@ -199,6 +213,24 @@ namespace StateEvaluation.Model
             var items = this.SubjectiveFeeling.Select(item => item).OrderBy(item => item.Date);
             return items;
         }
+
+        public IEnumerable<SubjectiveFeeling> GetSubjecriveFeelings(Func<SubjectiveFeeling, bool> query)
+        {
+            var items = SubjectiveFeeling.Where(query);
+            return items;
+        }
         #endregion
+
+        public IEnumerable<string> GetShortColorsNumbersList()
+        {
+            string[] list = { "3", "7", "11" };
+            return list;
+        }
+        public IEnumerable<string> GetColorsNumbersList()
+        {
+            string[] list = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
+            return list;
+        }   
+
     }
 }

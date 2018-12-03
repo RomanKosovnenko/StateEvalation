@@ -18,7 +18,7 @@
         <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetPeople"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetPreferences"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetSubjecriveFeelings"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetCodesForInsert" ObjectType="{x:Type model:PreferenceDB}" MethodName="CodesForInsert"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetCodesForInsert" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetUserIds"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetUserIds"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Preferences"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetProfessionsList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Professions"></ObjectDataProvider>
@@ -30,8 +30,8 @@
 
         <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetPeopleNumbers"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetExpeditionCodes"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetShortColorsNumbersList" ObjectType="{x:Type model:PreferenceDB}" MethodName="ShortColorsNumbersList"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetColorsNumbersList" ObjectType="{x:Type model:PreferenceDB}" MethodName="ColorsNumbersList"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetShortColorsNumbersList" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetShortColorsNumbersList"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetColorsNumbersList" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetColorsNumbersList"></ObjectDataProvider>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <helpers:StringToListConverter x:Key="StringToListConverter" />
         <helpers:NameToBrushConverter x:Key="NameToBrushConverter" />
@@ -132,7 +132,7 @@
                     <TextBlock
                                Grid.Column="0"
                                HorizontalAlignment="Center"
-                               Text="Код" Margin="31,7,11,48" Width="25" RenderTransformOrigin="-1.5,0.474" />
+                               Text="Код" Margin="28,7,0,48" Width="34" RenderTransformOrigin="-1.5,0.474" />
                     <TextBlock
                                HorizontalAlignment="Center"
                                Text="Дата" Margin="59,7,118,48" Width="28" RenderTransformOrigin="0.571,1.947" Grid.Column="1" />
@@ -215,7 +215,7 @@
                     <TextBlock
                                Grid.Column="35"
                                HorizontalAlignment="Center"
-                               Text="Релакс" Margin="221,1,151,54" Width="28" />
+                               Text="Релакс" Margin="221,1,135,54" Width="44" />
 
                     <ComboBox x:Name="UserIdsSubFelingInsert"
                               Grid.Column="0"
@@ -319,7 +319,7 @@
                     <ComboBox x:Name="selectorRelax1"
                               Grid.Column="35"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding ColorRelax1}" Margin="215,18,145,29"/>
+                              SelectedValue="{Binding ColorRelax1}" Margin="220,18,140,29"/>
 
                     <!-- Bio2 - 3 -->
                     <ComboBox x:Name="selectorC21in3"
@@ -408,7 +408,7 @@
                     <ComboBox x:Name="selectorRelax2"
                               Grid.Column="35"
                               ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding ColorRelax2}" Margin="215,46,145,0"/>
+                              SelectedValue="{Binding ColorRelax2}" Margin="220,46,140,0"/>
                     <!-- End -->
                     <Button
                             Grid.Column="35"
@@ -570,7 +570,7 @@
                 <ColumnDefinition MaxWidth="250" Width="250"/>
             </Grid.ColumnDefinitions>
 
-            <DataGrid x:Name="PersonDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetPeople}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0,-35,0,-31">
+            <DataGrid x:Name="PeopleDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetPeople}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0,-35,0,-31">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
                     <DataGridTextColumn Width="auto" Header="Код" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
@@ -1308,10 +1308,25 @@
                     <Label Content="Код" 
                         FontWeight="Bold" Margin="0,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                     <ComboBox
-                        x:Name="UserIdsFilter"
+                        x:Name="UserIdsFilterPeopleTab"
                         Grid.Column="1"
                         ItemsSource="{Binding Source={StaticResource GetCodesForFilter}}"
-                        SelectedValue="{Binding FilterCodeSelected}" Margin="5"/>
+                        SelectedIndex="0" Margin="5"
+                        Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}"
+                        />
+                    <ComboBox
+                        x:Name="UserIdsFilterPreferenceTab"
+                        Grid.Column="1"
+                        ItemsSource="{Binding Source={StaticResource GetCodesForFilter}}"
+                        SelectedIndex="0" Margin="5"
+                        Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"
+                        />
+                    <ComboBox
+                        x:Name="UserIdsFilterSubjFeelTab"
+                        Grid.Column="1"
+                        ItemsSource="{Binding Source={StaticResource GetCodesForFilter}}"
+                        SelectedIndex="0" Margin="5"
+                        Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}"/>
                 </Grid>
                 <Grid Grid.Row="2" Margin="5">
                     <Grid.ColumnDefinitions>
@@ -1328,13 +1343,34 @@
                     <Label Content="Дата" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0,-6,0,6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,0"/>
                     <Label Content="Начало" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
                     <Label Content="Конец" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Padding="0" Grid.RowSpan="2"/>
+
                     <DatePicker Grid.Row="1"
-                                x:Name="DateFrom"
-                                    SelectedDate="{Binding FilterSelectedDateFrom}"  Margin="0,5,5,7" Padding="5,2,2,2" Grid.RowSpan="2" />
+                                x:Name="DateFromPeopleTab"
+                                SelectedDate="{Binding FilterSelectedDateFrom}"  Margin="0,5,5,7" Padding="5,2,2,2" Grid.RowSpan="2" 
+                                Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}"/>
                     <DatePicker Grid.Row="1"
-                                x:Name="DateTo"
-                                    Grid.Column="1"
-                                    SelectedDate="{Binding FilterSelectedDateTo}" Margin="5,0,0,7" VerticalAlignment="Bottom" Padding="2" Grid.RowSpan="2" />
+                                x:Name="DateToPeopleTab"
+                                Grid.Column="1"
+                                SelectedDate="{Binding FilterSelectedDateTo}" Margin="5,0,0,7" VerticalAlignment="Bottom" Padding="2" Grid.RowSpan="2"
+                                Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}"/>
+                    <DatePicker Grid.Row="1"
+                                x:Name="DateFromPreferenceTab"
+                                SelectedDate="{Binding FilterSelectedDateFrom}"  Margin="0,5,5,7" Padding="5,2,2,2" Grid.RowSpan="2" 
+                                Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"/>
+                    <DatePicker Grid.Row="1"
+                                x:Name="DateToPreferenceTab"
+                                Grid.Column="1"
+                                SelectedDate="{Binding FilterSelectedDateTo}" Margin="5,0,0,7" VerticalAlignment="Bottom" Padding="2" Grid.RowSpan="2" 
+                                Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"/>
+                    <DatePicker Grid.Row="1"
+                                x:Name="DateFromSubjFeelTab"
+                                SelectedDate="{Binding FilterSelectedDateFrom}"  Margin="0,5,5,7" Padding="5,2,2,2" Grid.RowSpan="2" 
+                                Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}"/>
+                    <DatePicker Grid.Row="1"
+                                x:Name="DateToSubjFeelTab"
+                                Grid.Column="1"
+                                SelectedDate="{Binding FilterSelectedDateTo}" Margin="5,0,0,7" VerticalAlignment="Bottom" Padding="2" Grid.RowSpan="2" 
+                                Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}"/>
                     <Grid Grid.ColumnSpan="2" Margin="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
                     </Grid>
                 </Grid>
@@ -1360,15 +1396,41 @@
                     <Label Content="Начало" Margin="0,0,0,16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
                     <Label Content="Конец" Margin="0,0,0,16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Column="1" Grid.RowSpan="2"/>
                     <ComboBox Grid.Row="1"
-                              x:Name="ExpeditionFromFilter"
+                              x:Name="ExpeditionFromPeopleTab"
                                   ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
-                                  SelectedValue="{Binding FilterSelectedExpeditionFrom}" 
-                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,6,2,0" />
+                                  SelectedIndex="0"
+                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,6,2,0" 
+                              Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}"/>
                     <ComboBox Grid.Row="1"
-                              x:Name="ExpeditionToFilter"
+                              x:Name="ExpeditionToPeopleTab"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
-                                  SelectedValue="{Binding FilterSelectedNumberFrom}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,6,0,0" />
+                                  SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,6,0,0" 
+                              Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}"/>
+                    <ComboBox Grid.Row="1"
+                              x:Name="ExpeditionFromPreferenceTab"
+                                  ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
+                                  SelectedIndex="0"
+                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,6,2,0"
+                              Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"/>
+                    <ComboBox Grid.Row="1"
+                              x:Name="ExpeditionToPreferenceTab"
+                                  Grid.Column="1"
+                                  ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
+                                  SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,6,0,0"
+                                  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"/>
+                    <ComboBox Grid.Row="1"
+                              x:Name="ExpeditionFromSubjFeelTab"
+                                  ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
+                                 SelectedIndex="0"
+                                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,6,2,0" 
+                                  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}"/>
+                    <ComboBox Grid.Row="1"
+                              x:Name="ExpeditionToSubjFeelTab"
+                                  Grid.Column="1"
+                                  ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
+                                 SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,6,0,0" 
+                              Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}"/>
 
                     <TextBlock Grid.Row="2"
                                    HorizontalAlignment="Center"
@@ -1378,20 +1440,58 @@
                     <Label Content="Начало" Margin="0,19,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="2"/>
                     <Label Content="Конец" Margin="0,18,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="1"/>
                     <ComboBox Grid.Row="2"
-                              x:Name="PeopleFromFilter"
-                              SelectedValue="{Binding FilterSelectedExpeditionTo}"
+                              x:Name="PeopleFromPeopleTab"
+                             SelectedIndex="0"
                               ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
-                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,35,2,23" />
+                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,35,2,23" 
+                              Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}"/>
                     <ComboBox Grid.Row="2"
-                              x:Name="PeopleToFilter"
+                              x:Name="PeopleToPeopleTab"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}"
-                                  SelectedValue="{Binding FilterSelectedNumberTo}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,35,0,23" />
-                    <Label Content="Профессия" FontWeight="Bold" Margin="18,68,15,-11" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,0" Grid.Row="2" Grid.RowSpan="4"/>
+                                  SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,35,0,23" 
+                              Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}"/>
                     <ComboBox Grid.Row="2"
-                        x:Name="ComdoBoxProfession"
+                              x:Name="PeopleFromPreferenceTab"
+                             SelectedIndex="0"
+                              ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
+                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,35,2,23" 
+                              Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"/>
+                    <ComboBox Grid.Row="2"
+                              x:Name="PeopleToPreferenceTab"
+                                  Grid.Column="1"
+                                  ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}"
+                                  SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,35,0,23" 
+                              Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"/>
+                    <ComboBox Grid.Row="2"
+                              x:Name="PeopleFromSubjFeelTab"
+                              SelectedIndex="0"
+                              ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
+                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,35,2,23" 
+                              Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}"/>
+                    <ComboBox Grid.Row="2"
+                              x:Name="PeopleToSubjFeelTab"
+                                  Grid.Column="1"
+                                  ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}"
+                                 SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,35,0,23" 
+                              Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}"/>
+                    <Label Content="Профессия" FontWeight="Bold" Margin="18,68,15,-11" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,0" Grid.Row="2" Grid.RowSpan="4"
+                           />
+                    <ComboBox Grid.Row="2"
+                        x:Name="ProfessionFilterPeopleTab"
                         ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" 
-                        SelectedValue="{Binding FilterPreferenceSelected}" HorizontalContentAlignment="Center" Margin="2,70,2,-11" Grid.RowSpan="4" Grid.Column="1" />
+                        SelectedIndex="0" HorizontalContentAlignment="Center" Margin="2,70,2,-11" Grid.RowSpan="4" Grid.Column="1" 
+                              Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}"/>
+                    <ComboBox Grid.Row="2"
+                        x:Name="ProfessionFilterPreferenceTab"
+                        ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" 
+                        SelectedIndex="0" HorizontalContentAlignment="Center" Margin="2,70,2,-11" Grid.RowSpan="4" Grid.Column="1"
+                              Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"/>
+                    <ComboBox Grid.Row="2"
+                        x:Name="ProfessionFilterSubjFeelTab"
+                        ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" 
+                        SelectedIndex="0" HorizontalContentAlignment="Center" Margin="2,70,2,-11" Grid.RowSpan="4" Grid.Column="1"
+                              Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}"/>
                 </Grid>
 
                 <Grid Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}" Grid.Row="4" Margin="5" UseLayoutRounding="False">
@@ -1626,13 +1726,13 @@
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding FilterGeneralWeakness}" />
                     <CheckBox Grid.Row="1"
-                                  x:Name="badAppetite"
+                                  x:Name="poorAppetite"
                                   Grid.Column="1"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding FilterPoorAppetite}" />
                     <CheckBox Grid.Row="3"
-                              x:Name="badDream"
+                              x:Name="poorSleep"
                                   Grid.Column="0"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
@@ -1669,7 +1769,7 @@
                                   x:Name="PreferenceFilter"
                                   Grid.Column="1"
                                   ItemsSource="{Binding Source={StaticResource GetPreferencesList}}" 
-                                  SelectedValue="{Binding FilterPreferenceSelected}" HorizontalContentAlignment="Center" Margin="2" />
+                                  SelectedIndex="0" HorizontalContentAlignment="Center" Margin="2" />
                 </Grid>
 
                 <Grid Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}" 
@@ -1740,15 +1840,40 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Row="0"
-                            x:Name="ClearBTN"
                                 Grid.Column="0"
                                 Margin="2"
-                                Click="ClearUIDs"
-                                Content="Сбосить фильтр" Padding="0" />
+                                Click="ClearFilterPeopleTab"
+                                Content="Сбосить фильтр" Padding="0" 
+                                Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}"/>
+                    <Button Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="2"
+                                Click="ClearFilterPreferenceTab"
+                                Content="Сбосить фильтр" Padding="0" 
+                                Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"/>
+                    <Button Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="2"
+                                Click="ClearFilterSubjFeelTab"
+                                Content="Сбосить фильтр" Padding="0" 
+                                Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}"/>
                     <Button Grid.Row="0"
                         Grid.Column="1"
                         Margin="2"
-                        Click="FilterUIDs"
+                        Click="FilterPeople"
+                        Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}"
+                        Content="Применить фильтр" Padding="0" />
+                    <Button Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="2"
+                        Click="FilterPreference"
+                        Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"
+                        Content="Применить фильтр" Padding="0" />
+                    <Button Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="2"
+                        Click="FilterSubjectiveFeeling"
+                        Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}"
                         Content="Применить фильтр" Padding="0" />
                     <Button Grid.Row="1"
                             Click="BildChartOnPreference1"

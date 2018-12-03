@@ -5,6 +5,8 @@ using StateEvaluation.Model;
 using StateEvaluation.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 

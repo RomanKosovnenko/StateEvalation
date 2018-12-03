@@ -6,6 +6,8 @@ using System.Linq;
 using StateEvaluation.Enums;
 using System.Windows.Controls;
 using System.Windows;
+using StateEvaluation.Helpers;
+using System.Text.RegularExpressions;
 
 namespace StateEvaluation.Providers
 {

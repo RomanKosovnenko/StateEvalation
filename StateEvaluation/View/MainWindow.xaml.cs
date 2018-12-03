@@ -15,6 +15,7 @@ using Button = System.Windows.Controls.Button;
 using TextBox = System.Windows.Controls.TextBox;
 using Window = System.Windows.Window;
 using StateEvaluation.Providers;
+using StateEvaluation.BuissnesManagers;
 
 namespace StateEvaluation
 {
@@ -30,6 +31,10 @@ namespace StateEvaluation
         public PeopleBuissnesManager peopleBuissnesManager;
         public PreferenceBuissnesManager preferenceBuissnesManager;
         public SubjectiveFeelingBuissnesManager subjectiveFeelingBuissnesManager;
+        private PreferenceFilter preferenceFilter;
+        private Filter peopleFilter;
+        private SubjectiveFeelingFilter subjectiveFeelingFilter;
+        private FilterBussinesManager filterBussinesManager = new FilterBussinesManager();
 
         #region ctor
         public MainWindow()
@@ -40,10 +45,10 @@ namespace StateEvaluation
 
             peopleBuissnesManager = new PeopleBuissnesManager
                 (
-                    new List<ComboBox>() { UserIdsFilter, UserIdsPreferenceInsert, UserIdsSubFelingInsert },
-                    new List<ComboBox>() { ExpeditionFromFilter, ExpeditionToFilter },
-                    new List<ComboBox>() { PeopleFromFilter, PeopleToFilter },
-                    PersonDataGrid, UpdatePersonBtn
+                    new List<ComboBox>() { UserIdsFilterPeopleTab, UserIdsFilterSubjFeelTab, UserIdsFilterPreferenceTab, UserIdsPreferenceInsert, UserIdsSubFelingInsert },
+                    new List<ComboBox>() { ExpeditionFromPeopleTab, ExpeditionToPeopleTab, ExpeditionFromSubjFeelTab, ExpeditionToSubjFeelTab, ExpeditionFromPreferenceTab, ExpeditionToPreferenceTab },
+                    new List<ComboBox>() { PeopleFromPeopleTab, PeopleToPeopleTab, PeopleFromSubjFeelTab, PeopleToSubjFeelTab, PeopleFromPreferenceTab, PeopleToPreferenceTab },
+                    PeopleDataGrid, UpdatePersonBtn
                 );
 
             preferenceBuissnesManager = new PreferenceBuissnesManager(PreferencesDataGrid, UpdatePrefernceBtn);
@@ -276,13 +281,15 @@ namespace StateEvaluation
         #region charts
         private void BildChartOnPreference1(object sender, RoutedEventArgs e)
         {
-            PreferenceDB _preferenceDb = new PreferenceDB();
-            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(), true, DateFrom.SelectedDate != null && DateFrom.Text == DateTo.Text);
+            var preferences = ((List<Preference>)filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter, Enums.TabControl.Preferences))
+                .OrderBy(x => x.Date).ToList();
+            var subWindow = new TestsChart(preferences, true, preferenceFilter?.DateFrom != null && preferenceFilter?.DateFrom == preferenceFilter?.DateTo);
         }
         private void BildChartOnPreference2(object sender, RoutedEventArgs e)
         {
-            PreferenceDB _preferenceDb = new PreferenceDB();
-            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(), false, DateFrom.SelectedDate != null && DateFrom.Text == DateTo.Text);
+            var preferences = ((List<Preference>)filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter, Enums.TabControl.Preferences))
+                .OrderBy(x => x.Date).ToList();
+            var subWindow = new TestsChart(preferences, false, preferenceFilter?.DateFrom != null && preferenceFilter?.DateFrom == preferenceFilter?.DateTo);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -470,212 +477,100 @@ namespace StateEvaluation
                 .GetPeople()
                 .Select(item => new { UserId = item.UserId.ToString().Trim(), item.Birthday })
                 .ToDictionary(i => i.UserId, i => i.Birthday);
-            ClearFilters();
             RestoreColors();
         }
 
-        private string GenerateRange(string f, string t)
+        private void ClearFilterPeopleTab(object sender, RoutedEventArgs e)
         {
-            int from = 0;
-            int to = 0;
-            if (!int.TryParse(f, out from) || !int.TryParse(t, out to))
-            {
-                return "([0-9]+)";
-            }
-            else
-            {
-                string re = "(";
-                if (from > to)
-                {
-                    int temp = from;
-                    from = to;
-                    to = temp;
-                };
-                for (int i = from; i <= to; ++i)
-                {
-                    re += i;
-                    if (i != to) re += "|";
-                }
-                re += ")";
-                return re;
-            }
+            filterBussinesManager.Clear(peopleFilter);
         }
 
-        private void ClearFilters()
+        private void ClearFilterPreferenceTab(object sender, RoutedEventArgs e)
         {
-            ComdoBoxProfession.SelectedIndex = 0;
-            PreferenceFilter.SelectedIndex = 0;
-            ExpeditionFromFilter.SelectedIndex = 0;
-            ExpeditionToFilter.SelectedIndex = 0;
-            PeopleFromFilter.SelectedIndex = 0;
-            PeopleToFilter.SelectedIndex = 0;
-            UserIdsFilter.SelectedIndex = 0;
-            DateFrom.Text = "";
-            DateTo.Text = "";
-            PreferenceFilter1.Text = "";
-            PreferenceFilter2.Text = "";
-            PreferenceFilter3.Text = "";
-            PreferenceFilter4.Text = "";
-            PreferenceFilter5.Text = "";
-            PreferenceFilter6.Text = "";
-            PreferenceFilter7.Text = "";
-            PreferenceFilter8.Text = "";
-            PreferenceFilter9.Text = "";
-            PreferenceFilter10.Text = "";
-            PreferenceFilter11.Text = "";
-            PreferenceFilter12.Text = "";
-
-            generalWeakness.IsChecked = false;
-            badAppetite.IsChecked = false;
-            badDream.IsChecked = false;
-            badMood.IsChecked = false;
-            heavyHead.IsChecked = false;
-            slowThink.IsChecked = false;
+            filterBussinesManager.Clear(preferenceFilter);
         }
 
-        private void ClearUIDs(object sender, RoutedEventArgs e)
+        private void ClearFilterSubjFeelTab(object sender, RoutedEventArgs e)
         {
-            switch (tabControl.SelectedIndex)
+            filterBussinesManager.Clear(subjectiveFeelingFilter);
+        }
+
+        private void FilterPeople(object sender, RoutedEventArgs e)
+        {
+            peopleFilter = new Filter()
             {
-                case 0:
-                    PersonDataGrid.ItemsSource = _preferenceDb.GetPeople();
-                    break;
-                case 1:
-                    PreferencesDataGrid.ItemsSource = _preferenceDb.GetPreferences();
-                    break;
-                case 2:
-                    SubjectiveFeelingDataGrid.ItemsSource = _preferenceDb.GetSubjecriveFeelings();
-                    break;
-            }
-            ClearFilters();
+                #region set properties
+                UserId = UserIdsFilterPeopleTab.SelectedItem?.ToString(),
+                ExpeditionFrom = ExpeditionFromPeopleTab.SelectedItem?.ToString()?.Trim(),
+                ExpeditionTo = ExpeditionToPeopleTab.SelectedItem?.ToString()?.Trim(),
+                PeopleFrom = PeopleFromPeopleTab.SelectedItem?.ToString()?.Trim(),
+                PeopleTo = PeopleToPeopleTab.SelectedItem?.ToString()?.Trim(),
+                Preference = PreferenceFilter.SelectedItem?.ToString(),
+                DateFrom = DateFromPeopleTab.SelectedDate.GetValueOrDefault(),
+                DateTo = DateToPeopleTab.SelectedDate.GetValueOrDefault(),
+                Profession = ProfessionFilterPeopleTab.SelectedItem?.ToString()
+                #endregion
+            };
+            filterBussinesManager.Filter(PeopleDataGrid, peopleFilter, Enums.TabControl.People);
         }
-
-        private bool CompareOrder(string order, params string[] prefs)
+        private void FilterPreference(object sender, RoutedEventArgs e)
         {
-            var orders = order.Split(',');
-            if (orders.Length != prefs.Length)
+            preferenceFilter = new PreferenceFilter()
             {
-                throw new IndexOutOfRangeException("Order lenght is not the same as prefs lengts");
-            }
-
-            var comparer = new bool[orders.Length];
-            for (int i = 0; i < comparer.Length; ++i)
-            {
-                comparer[i] = prefs[i] == "" || prefs[i] == orders[i];
-            }
-            return comparer.All(x => x);
+                #region set properties
+                UserId = UserIdsFilterPreferenceTab.SelectedItem?.ToString(),
+                ExpeditionFrom = ExpeditionFromPreferenceTab.SelectedItem?.ToString()?.Trim(),
+                ExpeditionTo = ExpeditionToPreferenceTab.SelectedItem?.ToString()?.Trim(),
+                PeopleFrom = PeopleFromPreferenceTab.SelectedItem?.ToString()?.Trim(),
+                PeopleTo = PeopleToPreferenceTab.SelectedItem?.ToString()?.Trim(),
+                Preference = PreferenceFilter.SelectedItem?.ToString(),
+                DateFrom = DateFromPreferenceTab.SelectedDate.GetValueOrDefault(),
+                DateTo = DateToPreferenceTab.SelectedDate.GetValueOrDefault(),
+                Profession = ProfessionFilterPreferenceTab.SelectedItem?.ToString(),
+                PreferenceShort1 = PreferenceShortFilter1.Text,
+                PreferenceShort2 = PreferenceShortFilter2.Text, 
+                PreferenceShort3 = PreferenceShortFilter3.Text,
+                Preference1 = PreferenceFilter1.Text,
+                Preference2 = PreferenceFilter2.Text,
+                Preference3 = PreferenceFilter3.Text,
+                Preference4 = PreferenceFilter4.Text,
+                Preference5 = PreferenceFilter5.Text,
+                Preference6 = PreferenceFilter6.Text,
+                Preference7 = PreferenceFilter7.Text,
+                Preference8 = PreferenceFilter8.Text,
+                Preference9 = PreferenceFilter9.Text,
+                Preference10 = PreferenceFilter10.Text,
+                Preference11 = PreferenceFilter11.Text,
+                Preference12 = PreferenceFilter12.Text
+                #endregion
+            };
+            filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter, Enums.TabControl.Preferences);
         }
-
-        private void FilterUIDs(object sender, RoutedEventArgs e)
+        private void FilterSubjectiveFeeling(object sender, RoutedEventArgs e)
         {
-            switch (tabControl.SelectedIndex)
+            subjectiveFeelingFilter = new SubjectiveFeelingFilter()
             {
-                case 0:
-                    PersonDataGrid.ItemsSource = GetPeople();
-                    break;
-                case 1:
-                    PreferencesDataGrid.ItemsSource = GetUIDs();
-                    break;
-                case 2:
-                    SubjectiveFeelingDataGrid.ItemsSource = GetSubjectiveFeel();
-                    break;
-            }
+                #region set properties
+                UserId = UserIdsFilterSubjFeelTab.SelectedItem?.ToString(),
+                ExpeditionFrom = ExpeditionFromSubjFeelTab.SelectedItem?.ToString()?.Trim(),
+                ExpeditionTo = ExpeditionToSubjFeelTab.SelectedItem?.ToString()?.Trim(),
+                PeopleFrom = PeopleFromSubjFeelTab.SelectedItem?.ToString()?.Trim(),
+                PeopleTo = PeopleToSubjFeelTab.SelectedItem?.ToString()?.Trim(),
+                Preference = PreferenceFilter.SelectedItem?.ToString(),
+                DateFrom = DateFromSubjFeelTab.SelectedDate.GetValueOrDefault(),
+                DateTo = DateToSubjFeelTab.SelectedDate.GetValueOrDefault(),
+                Profession = ProfessionFilterSubjFeelTab.SelectedItem?.ToString(),
+                GeneralWeakness = (bool)generalWeakness.IsChecked,
+                PoorAppetite = (bool)poorAppetite.IsChecked,
+                PoorSleep = (bool)poorSleep.IsChecked,
+                BadMood  = (bool)badMood.IsChecked,
+                HeavyHead = (bool)heavyHead.IsChecked,
+                SlowThink = (bool)slowThink.IsChecked
+                #endregion
+            };
+            filterBussinesManager.Filter(SubjectiveFeelingDataGrid, subjectiveFeelingFilter, Enums.TabControl.SubjectiveFeeling);
         }
 
-        private IEnumerable<Preference> GetUIDs()
-        {
-
-            string id = UserIdsFilter.SelectedItem?.ToString();
-            string exfrom = ExpeditionFromFilter.SelectedItem?.ToString()?.Trim();
-            string exto = ExpeditionToFilter.SelectedItem?.ToString()?.Trim();
-            string peoplefrom = PeopleFromFilter.SelectedItem?.ToString()?.Trim();
-            string peopleto = PeopleToFilter.SelectedItem?.ToString()?.Trim();
-            string preference = PreferenceFilter.SelectedItem?.ToString();
-            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
-            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
-            string profession = ComdoBoxProfession.SelectedItem?.ToString();
-
-            Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
-
-            var people = _preferenceDb.GetPeople().Where(item => (item.Workposition == profession || profession == "All"));
-            List<string> listOfPeople = new List<string>();
-            foreach (var item in people.ToList())
-            {
-                listOfPeople.Add(item.UserId.ToString());
-            }
-            return _preferenceDb.GetPreferences()
-                .Where(item =>
-/* UserID     */   (re.IsMatch(item.UserId)) &&
-/* DatePicker */   ((datefrom.Ticks == 0 || item.Date >= datefrom) && (item.Date <= dateto || dateto.Ticks == 0)) &&
-/* ShortOder  */   (CompareOrder(item.ShortOder1, PreferenceShortFilter1.Text, PreferenceShortFilter2.Text, PreferenceShortFilter3.Text)) &&
-/* Oder       */   (CompareOrder(item.Oder1, PreferenceFilter1.Text, PreferenceFilter2.Text, PreferenceFilter3.Text, PreferenceFilter4.Text, PreferenceFilter5.Text, PreferenceFilter6.Text, PreferenceFilter7.Text, PreferenceFilter8.Text, PreferenceFilter9.Text, PreferenceFilter10.Text, PreferenceFilter11.Text, PreferenceFilter12.Text)) &&
-/* Preference */   (item.Preference1 == preference || preference == "All") &&
-                   (listOfPeople.Contains(item.UserId))
-                );
-        }
-        private IEnumerable<People> GetPeople()
-        {
-            string id = UserIdsFilter.SelectedItem?.ToString();
-            string exfrom = ExpeditionFromFilter.SelectedItem?.ToString()?.Trim();
-            string exto = ExpeditionToFilter.SelectedItem?.ToString()?.Trim();
-            string peoplefrom = PeopleFromFilter.SelectedItem?.ToString()?.Trim();
-            string peopleto = PeopleToFilter.SelectedItem?.ToString()?.Trim();
-            string preference = PreferenceFilter.SelectedItem?.ToString();
-            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
-            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
-            string profession = ComdoBoxProfession.SelectedItem?.ToString();
-
-            Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
-
-            return _preferenceDb.GetPeople()
-                .Where(item =>
-    /* UserID     */   (re.IsMatch(item.UserId)) &&
-                       (item.Workposition == profession || profession == "All")
-                );
-        }
-       
-        private IEnumerable<SubjectiveFeeling> GetSubjectiveFeel()
-        {
-            string id = UserIdsFilter.SelectedItem?.ToString();
-            string exfrom = ExpeditionFromFilter.SelectedItem?.ToString()?.Trim();
-            string exto = ExpeditionToFilter.SelectedItem?.ToString()?.Trim();
-            string peoplefrom = PeopleFromFilter.SelectedItem?.ToString()?.Trim();
-            string peopleto = PeopleToFilter.SelectedItem?.ToString()?.Trim();
-            string preference = PreferenceFilter.SelectedItem?.ToString();
-            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
-            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
-            string profession = ComdoBoxProfession.SelectedItem?.ToString();
-
-            bool gWeakness = generalWeakness.IsChecked.Value;
-            bool bAppetite = badAppetite.IsChecked.Value;
-            bool bDream = badDream.IsChecked.Value;
-            bool bMood = badMood.IsChecked.Value;
-            bool hHead = heavyHead.IsChecked.Value;
-            bool sThink = slowThink.IsChecked.Value;
-
-            var people = _preferenceDb.GetPeople().Where(item => (item.Workposition == profession || profession == "All"));
-            List<string> listOfPeople = new List<string>();
-            foreach (var item in people.ToList())
-            {
-                listOfPeople.Add(item.UserId.ToString());
-            }
-            Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
-
-            return _preferenceDb.GetSubjecriveFeelings()
-                .Where(item =>
-    /* UserID     */   (re.IsMatch(item.UserId)) &&
-                       (datefrom.Ticks == 0 || item.Date >= datefrom) &&
-                       (item.Date <= dateto || dateto.Ticks == 0) &&
-                       (item.GeneralWeaknes == gWeakness) &&
-                       (item.PoorAppetite == bAppetite) &&
-                       (item.PoorSleep == bDream) &&
-                       (item.BadMood == bMood) &&
-                       (item.HeavyHead == hHead) &&
-                       (item.SlowThink == sThink) &&
-                       (listOfPeople.Contains(item.UserId))
-                );
-        }
-        
         private void SetFilterVisibility(object sender, SelectionChangedEventArgs e)
         {
             if (Filter != null)
