@@ -43,15 +43,16 @@ namespace StateEvaluation.Providers
                )
             {
                 MessageBox.Show("Error! Try edit fields in form!");
+                return;
             }
-            People person = GetNewPerson(newPerson);
+            People person = GeneratePerson(newPerson);
 
             if (CheckFildAddedPersonOnLenght(person))
             {
                 try
                 {
                     _preferenceDb.CreatePerson(person);
-                    ClearSelectedInPeople(newPerson);
+                    ClearInputsInternal(newPerson);
                     Refresh();
 
                     MessageBox.Show("Peson was created");
@@ -71,13 +72,12 @@ namespace StateEvaluation.Providers
         {
             try
             {
-                People person = GetNewPerson(editedPerson);
-                person.Id = new Guid(editedPerson.Id);
+                People person = GeneratePerson(editedPerson, new Guid(editedPerson.Id));
                 _preferenceDb.UpdatePerson(person);
-                ClearSelectedInPeople(editedPerson);
+                ClearInputsInternal(editedPerson);
 
                 //hide save person button
-                UpdatePersonBtn.Visibility = Visibility.Hidden;
+                ToggleButton(UpdatePersonBtn, Visibility.Hidden);
                 Refresh();
 
                 MessageBox.Show("Person was updated");
@@ -101,15 +101,15 @@ namespace StateEvaluation.Providers
             }
         }
 
-        public void PrepareInputForm(PeopleVM personDto, Guid id)
+        public void PrepareInputForm(PeopleVM personVM, Guid id)
         {
             try
             {
                 var person = _preferenceDb.GetPerson(id.ToString());
-                SetValueInTabs(person, personDto);
+                SetValueInTabs(person, personVM);
 
                 //show save person button
-                UpdatePersonBtn.Visibility = Visibility.Visible;
+                ToggleButton(UpdatePersonBtn, Visibility.Visible);
             }
             catch
             {
@@ -117,18 +117,32 @@ namespace StateEvaluation.Providers
             }
         }
 
+        public void ClearInputs(PeopleVM personVM)
+        {
+            ClearInputsInternal(personVM);
+
+            //hide save person button
+            ToggleButton(UpdatePersonBtn, Visibility.Hidden);
+        }
+
         #region private methods
-        private People GetNewPerson(PeopleVM personDto)
+
+        private void ToggleButton(Button button, Visibility visibility)
+        {
+            button.Visibility = visibility;
+        }
+
+        private People GeneratePerson(PeopleVM personVM, Guid? id = null)
         {
             People person = new People()
             {
-                Firstname = personDto.FirstName,
-                Lastname = personDto.LastName,
-                Expedition = int.Parse(personDto.Expedition),
-                Number = int.Parse(personDto.PersonNumber),
-                Id = Guid.NewGuid(),
-                Workposition = personDto.Workposition,
-                Birthday = personDto.Birthday.ToString().GetDateFromDateTimeString()
+                Firstname = personVM.FirstName,
+                Lastname = personVM.LastName,
+                Expedition = int.Parse(personVM.Expedition),
+                Number = int.Parse(personVM.PersonNumber),
+                Id = id ?? Guid.NewGuid(),
+                Workposition = personVM.Workposition,
+                Birthday = personVM.Birthday.ToString().GetDateFromDateTimeString()
             };
             person.UserId = UserIdBuilder.Build(person.Expedition, person.Number);
             return person;
@@ -171,16 +185,16 @@ namespace StateEvaluation.Providers
             }
         }
 
-        private void ClearSelectedInPeople(PeopleVM personDto)
+        private void ClearInputsInternal(PeopleVM personVM)
         {
-            personDto.Id = string.Empty;
-            personDto.FirstName = string.Empty;
-            personDto.LastName = string.Empty;
-            personDto.MiddleName = string.Empty;
-            personDto.Birthday = string.Empty;
-            personDto.Workposition = string.Empty;
-            personDto.Expedition = string.Empty;
-            personDto.PersonNumber = string.Empty;
+            personVM.Id = string.Empty;
+            personVM.FirstName = string.Empty;
+            personVM.LastName = string.Empty;
+            personVM.MiddleName = string.Empty;
+            personVM.Birthday = string.Empty;
+            personVM.Workposition = string.Empty;
+            personVM.Expedition = string.Empty;
+            personVM.PersonNumber = string.Empty;
         }
 
         private bool CheckFildAddedPersonOnLenght(People person)
@@ -209,16 +223,16 @@ namespace StateEvaluation.Providers
             return BooleanValues.True;
         }
 
-        private void SetValueInTabs(People person, PeopleVM personDto)
+        private void SetValueInTabs(People person, PeopleVM personVM)
         {
-            personDto.Id = person.Id.ToString();
-            personDto.FirstName = person.Firstname;
-            personDto.LastName = person.Lastname;
-            personDto.MiddleName = person.Middlename;
-            personDto.Birthday = DateTime.Parse(person.Birthday);
-            personDto.Workposition = person.Workposition;
-            personDto.Expedition = person.Expedition.ToString().Trim();
-            personDto.PersonNumber = person.Number.ToString().Trim();
+            personVM.Id = person.Id.ToString();
+            personVM.FirstName = person.Firstname;
+            personVM.LastName = person.Lastname;
+            personVM.MiddleName = person.Middlename;
+            personVM.Birthday = string.IsNullOrEmpty(person.Birthday.Trim()) ? new DateTime() : DateTime.Parse(person.Birthday);
+            personVM.Workposition = person.Workposition;
+            personVM.Expedition = person.Expedition.ToString().Trim();
+            personVM.PersonNumber = person.Number.ToString().Trim();
         }
         #endregion
     }

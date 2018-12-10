@@ -40,7 +40,7 @@ namespace StateEvaluation.Providers
                     var preference = GetNewPreference(preferenceVM);
 
                     _preferenceDb.InsertPreference(preference);
-                    ClearInputs(preferenceVM);
+                    ClearInputsInternal(preferenceVM);
 
                     RefreshDataGrid();
                     MessageBox.Show("Test was created");
@@ -76,8 +76,15 @@ namespace StateEvaluation.Providers
             {
                 if (HasChanges(preferenceVM))
                 {
-                    var preference = GetNewPreference(preferenceVM);
-                    _preferenceDb.UpdatePreference(preference);
+                    if (IsValidPreferenseVM(preferenceVM))
+                    {
+                        var preference = GetNewPreference(preferenceVM, new Guid(preferenceVM.Id));
+                        _preferenceDb.UpdatePreference(preference);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Oops, input form is not valid");
+                    }
                 }
 
                 MessageBox.Show("Preference was updated");
@@ -92,12 +99,11 @@ namespace StateEvaluation.Providers
         {
             try
             {
-                var preference = _preferenceDb.GetPreference(preferenceId);
+                var preference = _preferenceDb.GeneratePreference(preferenceId);
                 SetValueInTabs(preferenceVM, preference);
                 _previouspreferenceVM = preferenceVM;
-
-                //show save button
-                UpdatePrefernceBtn.Visibility = Visibility.Visible;
+                
+                ToggleButton(UpdatePrefernceBtn, Visibility.Visible);
             }
             catch
             {
@@ -107,13 +113,24 @@ namespace StateEvaluation.Providers
 
         public void ClearInputs(PreferenceVM preferenceVM)
         {
+            ToggleButton(UpdatePrefernceBtn, Visibility.Hidden);
+            ClearInputsInternal(preferenceVM);
+        }
+
+        #region private methods
+        private void ToggleButton(Button button, Visibility visibility)
+        {
+            button.Visibility = visibility;
+        }
+
+        private void ClearInputsInternal(PreferenceVM preferenceVM)
+        {
             foreach (var i in preferenceVM.GetType().GetProperties())
             {
                 i.SetValue(preferenceVM, string.Empty);
             }
         }
 
-        #region private methods
         private void RefreshDataGrid()
         {
             PreferenceDataGrid.ItemsSource = _preferenceDb.GetPreferences();
@@ -155,7 +172,7 @@ namespace StateEvaluation.Providers
             return BooleanValues.True;
         }
 
-        private Preference GetNewPreference(PreferenceVM preferenceVM)
+        private Preference GetNewPreference(PreferenceVM preferenceVM, Guid? id = null)
         {
             List<byte> Color1in3sByte = _color1in3s.Select(x => Byte.Parse(x)).ToList();
             List<byte> Color1in12sByte = _color1in12s.Select(x => Byte.Parse(x)).ToList();
@@ -166,7 +183,7 @@ namespace StateEvaluation.Providers
             var Preference2Index = _preference2.IndexOf(BooleanValues.True);
             Preference preference = new Preference()
             {
-                Id = Guid.NewGuid(),
+                Id = id ?? Guid.NewGuid(),
                 UserId = preferenceVM.UserId,
                 Date = DateTime.Parse(preferenceVM.TestDate.ToString()),
                 FavoriteColor = 0,

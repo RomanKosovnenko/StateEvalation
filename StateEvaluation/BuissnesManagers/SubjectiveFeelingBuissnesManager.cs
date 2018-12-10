@@ -29,12 +29,11 @@ namespace StateEvaluation.Providers
             {
                 var subjectiveFeeling = GenerateSubjectiveFeeling(subjectiveFeelingMV, subjectiveFeelingId);
                 _preferenceDb.UpdateSubjectiveFeeling(subjectiveFeeling);
-                ClearInputs(subjectiveFeelingMV);
+                ClearInputsInternal(subjectiveFeelingMV);
 
                 RefreshDataGrid();
-                
-                //hide update button
-                UpdateSubjectiveFeelingBtn.Visibility = Visibility.Hidden;
+
+                ToggleButton(UpdateSubjectiveFeelingBtn, Visibility.Hidden);
 
                 MessageBox.Show("Subjective feeling was updated");
             }
@@ -67,7 +66,7 @@ namespace StateEvaluation.Providers
                 {
                     SubjectiveFeeling subjectiveFeeling = GenerateSubjectiveFeeling(subjectiveFeelingVM);
                     _preferenceDb.CreateSubjectiveFeeling(subjectiveFeeling);
-                    ClearInputs(subjectiveFeelingVM);
+                    ClearInputsInternal(subjectiveFeelingVM);
 
                     RefreshDataGrid();
                     MessageBox.Show("Subjective feeling was created");
@@ -90,8 +89,7 @@ namespace StateEvaluation.Providers
                 var subjectiveFeeling = _preferenceDb.GetSubjectiveFeeling(subjectiveFeelingId);
                 SetInputForm(subjectiveFeeling, subjectiveFeelingVM);
 
-                //show save subjective feeling button
-                UpdateSubjectiveFeelingBtn.Visibility = Visibility.Visible;
+                ToggleButton(UpdateSubjectiveFeelingBtn, Visibility.Visible);
             }
             catch
             {
@@ -99,7 +97,17 @@ namespace StateEvaluation.Providers
             }
         }
 
+        public void ClearInputs(SubjectiveFeelingVM subjectiveFeelingVM)
+        {
+            ClearInputsInternal(subjectiveFeelingVM);
+            ToggleButton(UpdateSubjectiveFeelingBtn, Visibility.Hidden);
+        }
+
         #region private methods
+        private void ToggleButton(Button button, Visibility visibility)
+        {
+            button.Visibility = visibility;
+        }
 
         private void RefreshDataGrid()
         {
@@ -116,7 +124,7 @@ namespace StateEvaluation.Providers
             return true;
         }
 
-        private void ClearInputs(SubjectiveFeelingVM subjectiveFeelingVM)
+        private void ClearInputsInternal(SubjectiveFeelingVM subjectiveFeelingVM)
         {
             subjectiveFeelingVM.Date = new object();
             subjectiveFeelingVM.BadMood = false;

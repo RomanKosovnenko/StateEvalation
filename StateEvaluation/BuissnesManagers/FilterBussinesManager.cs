@@ -13,14 +13,18 @@ namespace StateEvaluation.BuissnesManagers
     {
         private FilterProvider filterProvider = new FilterProvider();
 
-        public IEnumerable Filter(DataGrid dataGrid, object filter, int tabControl)
+        public IEnumerable Filter(DataGrid dataGrid, object filter)
         {
-            return filterProvider.Filter(dataGrid, filter, tabControl);
+            var filteredData = filterProvider.Filter(filter);
+            dataGrid.ItemsSource = filteredData;
+            return filteredData;
         }
 
-        public void Clear(object filter)
+        public void Clear(DataGrid dataGrid, object filter)
         {
             filterProvider.Clear(filter);
+            var filteredData = filterProvider.Filter(filter);
+            dataGrid.ItemsSource = filteredData;
         }
     }
 }

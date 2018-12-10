@@ -29,7 +29,7 @@ namespace StateEvaluation.Model
         }
 
         #region Preferences
-        public Preference GetPreference(Guid id)
+        public Preference GeneratePreference(Guid id)
         {
             var preference = Preference.Single(item => item.Id == id);
             return preference;
@@ -102,6 +102,7 @@ namespace StateEvaluation.Model
             items.Id = person.Id;
             items.Firstname = person.Firstname;
             items.Lastname = person.Lastname;
+            items.Middlename = person.Middlename;
             items.Birthday = person.Birthday;
             items.Workposition = person.Workposition;
             items.Expedition = person.Expedition;
@@ -201,12 +202,13 @@ namespace StateEvaluation.Model
         public void UpdateSubjectiveFeeling(SubjectiveFeeling newSubjectiveFeeling)
         {
             var subjectiveFeeling = SubjectiveFeeling.Single(item => item.Id == newSubjectiveFeeling.Id);
-
-            var typeOfNewSubjectiveFeeling = newSubjectiveFeeling.GetType();
-            foreach (var i in subjectiveFeeling.GetType().GetProperties())
-            {
-                i.SetValue(subjectiveFeeling, typeOfNewSubjectiveFeeling.GetProperty(i.Name).GetValue(newSubjectiveFeeling));
-            }
+            subjectiveFeeling.BadMood = newSubjectiveFeeling.BadMood;
+            subjectiveFeeling.Date = newSubjectiveFeeling.Date;
+            subjectiveFeeling.GeneralWeaknes = newSubjectiveFeeling.GeneralWeaknes;
+            subjectiveFeeling.HeavyHead = newSubjectiveFeeling.HeavyHead;
+            subjectiveFeeling.PoorAppetite = newSubjectiveFeeling.PoorAppetite;
+            subjectiveFeeling.SlowThink = newSubjectiveFeeling.SlowThink;
+            subjectiveFeeling.UserId = newSubjectiveFeeling.UserId;
         }
         public IEnumerable<SubjectiveFeeling> GetSubjecriveFeelings()
         {

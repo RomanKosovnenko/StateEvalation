@@ -31,9 +31,9 @@ namespace StateEvaluation
         public PeopleBuissnesManager peopleBuissnesManager;
         public PreferenceBuissnesManager preferenceBuissnesManager;
         public SubjectiveFeelingBuissnesManager subjectiveFeelingBuissnesManager;
-        private PreferenceFilter preferenceFilter;
-        private Filter peopleFilter;
-        private SubjectiveFeelingFilter subjectiveFeelingFilter;
+        private PreferenceFilterVM preferenceFilter;
+        private PeopleFilterVM peopleFilter;
+        private SubjectiveFeelingFilterVM subjectiveFeelingFilter;
         private FilterBussinesManager filterBussinesManager = new FilterBussinesManager();
 
         #region ctor
@@ -43,11 +43,16 @@ namespace StateEvaluation
             this.DataContext = this;
             BioColor.Main.InitBioColor(BioColorGraph, Date, DateNow);
 
+            peopleFilter = (PeopleFilterVM)Resources["peopleFilterVM"];
+            preferenceFilter = (PreferenceFilterVM)Resources["preferenceFilterVM"];
+            subjectiveFeelingFilter = (SubjectiveFeelingFilterVM)Resources["subjectiveFeelingFilterVM"];
+
+
             peopleBuissnesManager = new PeopleBuissnesManager
                 (
-                    new List<ComboBox>() { UserIdsFilterPeopleTab, UserIdsFilterSubjFeelTab, UserIdsFilterPreferenceTab, UserIdsPreferenceInsert, UserIdsSubFelingInsert },
-                    new List<ComboBox>() { ExpeditionFromPeopleTab, ExpeditionToPeopleTab, ExpeditionFromSubjFeelTab, ExpeditionToSubjFeelTab, ExpeditionFromPreferenceTab, ExpeditionToPreferenceTab },
-                    new List<ComboBox>() { PeopleFromPeopleTab, PeopleToPeopleTab, PeopleFromSubjFeelTab, PeopleToSubjFeelTab, PeopleFromPreferenceTab, PeopleToPreferenceTab },
+                    new List<ComboBox>() { UserIdsFilterPeopleCB, UserIdsFilterSubjFeelingCB, UserIdsFilterPreferenceCB, UserIdsInsertPreferenceCB, UserIdsInsertSubjFeelCB },
+                    new List<ComboBox>() { ExpeditionFromFilterPeopleCB, ExpeditionToFilterPeopleCB, ExpeditionFromFilterSubjFeelCB, ExpeditionToFilterSubjFeelCB, ExpeditionFilterToPreferenceCB, ExpeditionFromFilterPreferenceCB },
+                    new List<ComboBox>() { NumberFromFilterPeopleCB, NumberToFilterPeopleCB, NumberFromFilterSubjFeelCB, NumberToFilterSubjFeelCB, NumberFromFilterPreferenceCB, NumberToFilterPreferenceCB },
                     PeopleDataGrid, UpdatePersonBtn
                 );
 
@@ -81,6 +86,17 @@ namespace StateEvaluation
         }
 
         /// <summary>
+        /// Clear input fields from interface
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void ClearInputs(object sender, RoutedEventArgs e)
+        {
+            var person = (PeopleVM)Resources["peopleVM"];
+            peopleBuissnesManager.ClearInputs(person);
+        }
+
+        /// <summary>
         /// Bind person data into input fields 
         /// </summary>
         /// <param name="sender">sender</param>
@@ -90,9 +106,9 @@ namespace StateEvaluation
             var butonContext = ((Button)sender).DataContext;
             var personId = ((People)butonContext).Id;
 
-            var personDto = (PeopleVM)Resources["peopleVM"];
+            var personVM = (PeopleVM)Resources["peopleVM"];
 
-            peopleBuissnesManager.PrepareInputForm(personDto, personId);
+            peopleBuissnesManager.PrepareInputForm(personVM, personId);
         }
 
         /// <summary>
@@ -102,11 +118,13 @@ namespace StateEvaluation
         /// <param name="e">routed event arguments</param>
         private void RemovePerson(object sender, RoutedEventArgs e)
         {
-            var personDto = (PeopleVM)Resources["peopleVM"];
+            var butonContext = ((Button)sender).DataContext;
+            var personId = ((People)butonContext).Id;
+
             var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
             {
-                peopleBuissnesManager.DeletePerson(personDto.Id);
+                peopleBuissnesManager.DeletePerson(personId.ToString());
             }
         }
         #endregion
@@ -169,7 +187,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void ResetPreferenceInputs(object sender, RoutedEventArgs e)
+        private void ClearPreferenceInputs(object sender, RoutedEventArgs e)
         {
             var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
             preferenceBuissnesManager.ClearInputs(preferenceVM);
@@ -182,7 +200,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void AddFeelingPeople(object sender, RoutedEventArgs e)
+        private void CreateSubjectiveFeeling(object sender, RoutedEventArgs e)
         {
             var subjectiveFeeling = (SubjectiveFeelingVM)this.Resources["subjectiveFeelingVM"];
             subjectiveFeelingBuissnesManager.Create(subjectiveFeeling);
@@ -193,7 +211,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void EditFeelingsBtn_Click(object sender, RoutedEventArgs e)
+        private void BindSubjectiveFeelingInForm(object sender, RoutedEventArgs e)
         {
             var butonContext = ((Button)sender).DataContext;
             var subjectiveFeelingId = ((SubjectiveFeeling)butonContext).Id;
@@ -208,7 +226,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void RemoveFeelingsBtn_Click(object sender, RoutedEventArgs e)
+        private void DeleteSSubjectiveFeeling(object sender, RoutedEventArgs e)
         {
             var butonContext = ((Button)sender).DataContext;
             var subjectiveFeelingId = ((SubjectiveFeeling)butonContext).Id;
@@ -233,6 +251,17 @@ namespace StateEvaluation
             var subjectiveFeelingMV = (SubjectiveFeelingVM)Resources["subjectiveFeelingVM"];
 
             subjectiveFeelingBuissnesManager.Update(subjectiveFeelingMV, Guid.Parse(subjectiveFeelingId));
+        }
+
+        /// <summary>
+        /// Reset all inputs fields
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void ClearSubjectiveFeelingInputs(object sender, RoutedEventArgs e)
+        {
+            var subjectiveFeelingVM = (SubjectiveFeelingVM)Resources["subjectiveFeelingVM"];
+            subjectiveFeelingBuissnesManager.ClearInputs(subjectiveFeelingVM);
         }
         #endregion
 
@@ -281,15 +310,15 @@ namespace StateEvaluation
         #region charts
         private void BildChartOnPreference1(object sender, RoutedEventArgs e)
         {
-            var preferences = ((List<Preference>)filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter, Enums.TabControl.Preferences))
-                .OrderBy(x => x.Date).ToList();
-            var subWindow = new TestsChart(preferences, true, preferenceFilter?.DateFrom != null && preferenceFilter?.DateFrom == preferenceFilter?.DateTo);
+           // var preferences = ((List<Preference>)filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter))
+           //     .OrderBy(x => x.Date).ToList();
+           // var subWindow = new TestsChart(preferences, true, preferenceFilter?.DateFrom != null && preferenceFilter?.DateFrom == preferenceFilter?.DateTo);
         }
         private void BildChartOnPreference2(object sender, RoutedEventArgs e)
         {
-            var preferences = ((List<Preference>)filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter, Enums.TabControl.Preferences))
-                .OrderBy(x => x.Date).ToList();
-            var subWindow = new TestsChart(preferences, false, preferenceFilter?.DateFrom != null && preferenceFilter?.DateFrom == preferenceFilter?.DateTo);
+           // var preferences = ((List<Preference>)filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter))
+           //     .OrderBy(x => x.Date).ToList();
+           // var subWindow = new TestsChart(preferences, false, preferenceFilter?.DateFrom != null && preferenceFilter?.DateFrom == preferenceFilter?.DateTo);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -480,104 +509,36 @@ namespace StateEvaluation
             RestoreColors();
         }
 
+        #region filters
         private void ClearFilterPeopleTab(object sender, RoutedEventArgs e)
         {
-            filterBussinesManager.Clear(peopleFilter);
+            filterBussinesManager.Clear(PeopleDataGrid, peopleFilter);
         }
 
         private void ClearFilterPreferenceTab(object sender, RoutedEventArgs e)
         {
-            filterBussinesManager.Clear(preferenceFilter);
+            filterBussinesManager.Clear(PreferencesDataGrid, preferenceFilter);
         }
 
         private void ClearFilterSubjFeelTab(object sender, RoutedEventArgs e)
         {
-            filterBussinesManager.Clear(subjectiveFeelingFilter);
+           filterBussinesManager.Clear(SubjectiveFeelingDataGrid, subjectiveFeelingFilter);
         }
 
         private void FilterPeople(object sender, RoutedEventArgs e)
         {
-            peopleFilter = new Filter()
-            {
-                #region set properties
-                UserId = UserIdsFilterPeopleTab.SelectedItem?.ToString(),
-                ExpeditionFrom = ExpeditionFromPeopleTab.SelectedItem?.ToString()?.Trim(),
-                ExpeditionTo = ExpeditionToPeopleTab.SelectedItem?.ToString()?.Trim(),
-                PeopleFrom = PeopleFromPeopleTab.SelectedItem?.ToString()?.Trim(),
-                PeopleTo = PeopleToPeopleTab.SelectedItem?.ToString()?.Trim(),
-                Preference = PreferenceFilter.SelectedItem?.ToString(),
-                DateFrom = DateFromPeopleTab.SelectedDate.GetValueOrDefault(),
-                DateTo = DateToPeopleTab.SelectedDate.GetValueOrDefault(),
-                Profession = ProfessionFilterPeopleTab.SelectedItem?.ToString()
-                #endregion
-            };
-            filterBussinesManager.Filter(PeopleDataGrid, peopleFilter, Enums.TabControl.People);
+            filterBussinesManager.Filter(PeopleDataGrid, peopleFilter);
         }
         private void FilterPreference(object sender, RoutedEventArgs e)
         {
-            preferenceFilter = new PreferenceFilter()
-            {
-                #region set properties
-                UserId = UserIdsFilterPreferenceTab.SelectedItem?.ToString(),
-                ExpeditionFrom = ExpeditionFromPreferenceTab.SelectedItem?.ToString()?.Trim(),
-                ExpeditionTo = ExpeditionToPreferenceTab.SelectedItem?.ToString()?.Trim(),
-                PeopleFrom = PeopleFromPreferenceTab.SelectedItem?.ToString()?.Trim(),
-                PeopleTo = PeopleToPreferenceTab.SelectedItem?.ToString()?.Trim(),
-                Preference = PreferenceFilter.SelectedItem?.ToString(),
-                DateFrom = DateFromPreferenceTab.SelectedDate.GetValueOrDefault(),
-                DateTo = DateToPreferenceTab.SelectedDate.GetValueOrDefault(),
-                Profession = ProfessionFilterPreferenceTab.SelectedItem?.ToString(),
-                PreferenceShort1 = PreferenceShortFilter1.Text,
-                PreferenceShort2 = PreferenceShortFilter2.Text, 
-                PreferenceShort3 = PreferenceShortFilter3.Text,
-                Preference1 = PreferenceFilter1.Text,
-                Preference2 = PreferenceFilter2.Text,
-                Preference3 = PreferenceFilter3.Text,
-                Preference4 = PreferenceFilter4.Text,
-                Preference5 = PreferenceFilter5.Text,
-                Preference6 = PreferenceFilter6.Text,
-                Preference7 = PreferenceFilter7.Text,
-                Preference8 = PreferenceFilter8.Text,
-                Preference9 = PreferenceFilter9.Text,
-                Preference10 = PreferenceFilter10.Text,
-                Preference11 = PreferenceFilter11.Text,
-                Preference12 = PreferenceFilter12.Text
-                #endregion
-            };
-            filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter, Enums.TabControl.Preferences);
+            filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter);
         }
         private void FilterSubjectiveFeeling(object sender, RoutedEventArgs e)
         {
-            subjectiveFeelingFilter = new SubjectiveFeelingFilter()
-            {
-                #region set properties
-                UserId = UserIdsFilterSubjFeelTab.SelectedItem?.ToString(),
-                ExpeditionFrom = ExpeditionFromSubjFeelTab.SelectedItem?.ToString()?.Trim(),
-                ExpeditionTo = ExpeditionToSubjFeelTab.SelectedItem?.ToString()?.Trim(),
-                PeopleFrom = PeopleFromSubjFeelTab.SelectedItem?.ToString()?.Trim(),
-                PeopleTo = PeopleToSubjFeelTab.SelectedItem?.ToString()?.Trim(),
-                Preference = PreferenceFilter.SelectedItem?.ToString(),
-                DateFrom = DateFromSubjFeelTab.SelectedDate.GetValueOrDefault(),
-                DateTo = DateToSubjFeelTab.SelectedDate.GetValueOrDefault(),
-                Profession = ProfessionFilterSubjFeelTab.SelectedItem?.ToString(),
-                GeneralWeakness = (bool)generalWeakness.IsChecked,
-                PoorAppetite = (bool)poorAppetite.IsChecked,
-                PoorSleep = (bool)poorSleep.IsChecked,
-                BadMood  = (bool)badMood.IsChecked,
-                HeavyHead = (bool)heavyHead.IsChecked,
-                SlowThink = (bool)slowThink.IsChecked
-                #endregion
-            };
-            filterBussinesManager.Filter(SubjectiveFeelingDataGrid, subjectiveFeelingFilter, Enums.TabControl.SubjectiveFeeling);
+            filterBussinesManager.Filter(SubjectiveFeelingDataGrid, subjectiveFeelingFilter);
         }
+        #endregion
 
-        private void SetFilterVisibility(object sender, SelectionChangedEventArgs e)
-        {
-            if (Filter != null)
-            {
-                Filter.Visibility = tabControl.SelectedIndex > 4 ? Visibility.Hidden : Visibility.Visible;
-            }
-        }
         #region biocolor
         private void CMYK2RGB(object sender, RoutedEventArgs e)
         {

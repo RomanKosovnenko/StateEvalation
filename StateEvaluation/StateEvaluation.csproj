@@ -120,7 +120,6 @@
     <Compile Include="Enums\PreferenceColors.cs" />
     <Compile Include="Enums\StringBooleanValues.cs" />
     <Compile Include="Extensions\StringFormarter.cs" />
-    <Compile Include="Filters.cs" />
     <Compile Include="Helpers\BooleanToChecker.cs" />
     <Compile Include="Helpers\BooleanToNOTVisibilityConverter.cs" />
     <Compile Include="Helpers\ButtonToVisibilityConverter.cs" />
@@ -137,11 +136,14 @@
     <Compile Include="BuissnesManagers\PeopleBuissnesManager.cs" />
     <Compile Include="BuissnesManagers\PreferenceBuissnesManager.cs" />
     <Compile Include="BuissnesManagers\SubjectiveFeelingBuissnesManager.cs" />
-    <Compile Include="PreferenceFilter.cs" />
     <Compile Include="Providers\FilterProvider.cs" />
-    <Compile Include="SubjectiveFeelingFilter.cs" />
+    <Compile Include="ViewModel\BaseFilterVM.cs" />
+    <Compile Include="ViewModel\BaseVM.cs" />
+    <Compile Include="ViewModel\PeopleFilterVM.cs" />
     <Compile Include="ViewModel\PeopleVM.cs" />
+    <Compile Include="ViewModel\PreferenceFilterVM.cs" />
     <Compile Include="ViewModel\PreferenceVM.cs" />
+    <Compile Include="ViewModel\SubjectiveFeelingFilterVM.cs" />
     <Compile Include="View\FeelingsChart.xaml.cs">
       <DependentUpon>FeelingsChart.xaml</DependentUpon>
     </Compile>

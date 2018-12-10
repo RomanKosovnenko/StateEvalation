@@ -19,7 +19,7 @@ namespace StateEvaluation.Helpers
             var comparer = new bool[orders.Length];
             for (int i = 0; i < comparer.Length; ++i)
             {
-                comparer[i] = prefs[i] == "" || prefs[i] == orders[i];
+                comparer[i] = string.IsNullOrEmpty(prefs[i]) || prefs[i] == orders[i];
             }
             return comparer.All(x => x);
         }

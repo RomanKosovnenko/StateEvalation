@@ -1,57 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using StateEvaluation.Helpers;
-
+﻿
 namespace StateEvaluation.ViewModel
 {
-    public class SubjectiveFeelingVM : BaseVM
+    public class SubjectiveFeelingFilterVM : BaseFilterVM
     {
-        private object _date;
-        private string _userId;
         private bool _generalWeaknes;
         private bool _poorAppetite;
         private bool _poorSleep;
         private bool _badMood;
         private bool _heavyHead;
         private bool _slowThink;
-        private string _id;
+        private bool _isFeeling;
 
-        public string Id
-        {
-            get => _id;
-            set
-            {
-                _id = value;
-                OnPropertyChanged("Id");
-            }
-        }
-
-        public string UserId
-        {
-            get => _userId;
-            set
-            {
-                _userId = value;
-                OnPropertyChanged("UserId");
-            }
-        }
-
-        public bool GeneralWeaknes
+        public bool GeneralWeakness
         {
             get => _generalWeaknes;
             set
             {
                 _generalWeaknes = value;
-                OnPropertyChanged("GeneralWeaknes");
+                OnPropertyChanged("GeneralWeakness");
             }
         }
-
         public bool PoorAppetite
         {
             get => _poorAppetite;
@@ -61,7 +29,6 @@ namespace StateEvaluation.ViewModel
                 OnPropertyChanged("PoorAppetite");
             }
         }
-
         public bool PoorSleep
         {
             get => _poorSleep;
@@ -71,7 +38,6 @@ namespace StateEvaluation.ViewModel
                 OnPropertyChanged("PoorSleep");
             }
         }
-
         public bool BadMood
         {
             get => _badMood;
@@ -81,7 +47,6 @@ namespace StateEvaluation.ViewModel
                 OnPropertyChanged("BadMood");
             }
         }
-
         public bool HeavyHead
         {
             get => _heavyHead;
@@ -91,7 +56,6 @@ namespace StateEvaluation.ViewModel
                 OnPropertyChanged("HeavyHead");
             }
         }
-
         public bool SlowThink
         {
             get => _slowThink;
@@ -101,14 +65,13 @@ namespace StateEvaluation.ViewModel
                 OnPropertyChanged("SlowThink");
             }
         }
-
-        public object Date
+        public bool IsFeeling
         {
-            get => _date;
+            get => _isFeeling;
             set
             {
-                _date = value;
-                OnPropertyChanged("Date");
+                _isFeeling = value;
+                OnPropertyChanged("IsFeeling");
             }
         }
     }

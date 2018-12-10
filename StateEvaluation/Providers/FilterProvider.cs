@@ -1,12 +1,10 @@
 ﻿using StateEvaluation.Helpers;
 using StateEvaluation.Model;
+using StateEvaluation.ViewModel;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace StateEvaluation.Providers
@@ -15,40 +13,48 @@ namespace StateEvaluation.Providers
     {
         private PreferenceDB _preferenceDb = new PreferenceDB();
 
-        public IEnumerable Filter(DataGrid dataGrid, object filter, int tabControl)
+        public IEnumerable Filter(object filter)
         {
-            switch(tabControl)
+            if (filter.GetType().Name == typeof(PeopleFilterVM).Name)
             {
-                case Enums.TabControl.People:
-                    return FilterPeople(dataGrid, filter);
-                case Enums.TabControl.Preferences:
-                    return FilterPreference(dataGrid, filter);
-                case Enums.TabControl.SubjectiveFeeling:
-                    return FilterSubjectiveFeeling(dataGrid, filter);
-                default:
-                    return new List<object>();
+                return FilterPeople(filter);
             }
+            if(filter.GetType().Name == typeof(PreferenceFilterVM).Name)
+            {
+                return FilterPreference(filter);
+            }
+            if (filter.GetType().Name == typeof(SubjectiveFeelingFilterVM).Name)
+            {
+                return FilterSubjectiveFeeling(filter);
+            }
+
+            return new string[0];
         }
 
         public void Clear(object filter)
         {
-            if(filter != null)
+            if (filter != null)
             {
                 foreach (var i in filter.GetType().GetProperties())
                 {
-                    if (i.Name.Contains("UserIds") || i.Name.Contains("Expedition") || i.Name.Contains("People") || i.Name.Contains("Profession"))
+                    if (i.Name.Contains("UserId") || i.Name.Contains("Expedition") || i.Name.Contains("Preference") || i.Name.Contains("People") || i.Name.Contains("Profession"))
                     {
                         i.SetValue(filter, "All");
                         continue;
                     }
-                    if (i.GetType() == typeof(bool))
-                    {
-                        i.SetValue(filter, false);
-                        continue;
-                    }
                     if (i.Name.Contains("Date"))
                     {
-                        i.SetValue(filter, new DateTime());
+                        i.SetValue(filter, null);
+                        continue;
+                    }
+                    if (i.Name.Contains("Color"))
+                    {
+                        i.SetValue(filter, string.Empty);
+                        continue;
+                    }
+                    if (bool.TryParse(i.GetValue(filter).ToString(), out bool res))
+                    {
+                        i.SetValue(filter, false);
                         continue;
                     }
                     i.SetValue(filter, string.Empty);
@@ -56,94 +62,125 @@ namespace StateEvaluation.Providers
             }
         }
 
-        private IEnumerable<People> FilterPeople(DataGrid dataGrid, object filter)
+        private IEnumerable<People> FilterPeople(object filter)
         {
             IEnumerable<People> people;
             if (filter != null)
             {
-                Filter peopleFilter = (Filter)filter;
-                Regex re = new Regex(peopleFilter.UserId == "All"
-                    ? "Ex" + RangeGenerator.Generate(peopleFilter.ExpeditionFrom, peopleFilter.ExpeditionTo) + "#" + RangeGenerator.Generate(peopleFilter.PeopleFrom, peopleFilter.PeopleTo)
-                    : peopleFilter.UserId);
-                bool query(People _) => re.IsMatch(_.UserId) && (_.Workposition == peopleFilter.Profession || peopleFilter.Profession == "All");
-                    //&&
-                    //((peopleFilter.DateFrom.Ticks == 0 || DateTime.Parse(_.Birthday) >= peopleFilter.DateFrom) 
-                    //    && (DateTime.Parse(_.Birthday) <= peopleFilter.DateTo || peopleFilter.DateTo.Ticks == 0));
+                PeopleFilterVM peopleFilter = (PeopleFilterVM)filter;
 
-                people = _preferenceDb.GetPeople(query);
-                dataGrid.ItemsSource = people;
+                DateTime dateTo = peopleFilter.DateTo != null ? DateTime.Parse(peopleFilter.DateTo.ToString()) : new DateTime();
+                DateTime dateFrom = peopleFilter.DateFrom != null ? DateTime.Parse(peopleFilter.DateFrom.ToString()) : new DateTime();
+
+                people = _preferenceDb.GetPeople(GetPeopleQuery(peopleFilter, dateFrom, dateTo));
+
                 return people;
             }
             people = _preferenceDb.GetPeople();
             return people;
         }
 
-        private IEnumerable<Preference> FilterPreference(DataGrid dataGrid, object filter)
+        private IEnumerable<Preference> FilterPreference(object filter)
         {
             IEnumerable<Preference> preferences;
             if (filter != null)
             {
-                PreferenceFilter preferenceFilter = (PreferenceFilter)filter;
-                Regex re = new Regex(preferenceFilter.UserId == "All"
-                    ? "Ex" + RangeGenerator.Generate(preferenceFilter.ExpeditionFrom, preferenceFilter.ExpeditionTo) + "#" + RangeGenerator.Generate(preferenceFilter.PeopleFrom, preferenceFilter.PeopleTo)
-                    : preferenceFilter.UserId);
+                PreferenceFilterVM preferenceFilter = (PreferenceFilterVM)filter;
 
-                var people = _preferenceDb.GetPeople().Where(item => (item.Workposition == preferenceFilter.Profession || preferenceFilter.Profession == "All"));
-                List<string> listOfPeople = new List<string>();
-                foreach (var item in people.ToList())
+                DateTime dateTo = preferenceFilter.DateTo != null ? DateTime.Parse(preferenceFilter.DateTo.ToString()) : new DateTime();
+                DateTime dateFrom = preferenceFilter.DateFrom != null ? DateTime.Parse(preferenceFilter.DateFrom.ToString()) : new DateTime();
+
+                //get people regarding person number and expedition
+                List<string> allowedUserIds = new List<string>();
+                var people = _preferenceDb.GetPeople(GetBaseQuery(preferenceFilter, dateFrom, dateTo));
+                foreach (var person in people.ToList())
                 {
-                    listOfPeople.Add(item.UserId.ToString());
+                    allowedUserIds.Add(person.UserId.ToString().Trim());
                 }
-
-                bool query(Preference _) => (re.IsMatch(_.UserId)) &&
-                                            ((preferenceFilter.DateFrom.Ticks == 0 || _.Date >= preferenceFilter.DateFrom) && (_.Date <= preferenceFilter.DateTo || preferenceFilter.DateTo.Ticks == 0)) &&
-                                            (OrderComparer.Compare(_.ShortOder1, preferenceFilter.PreferenceShort1, preferenceFilter.PreferenceShort2, preferenceFilter.PreferenceShort3)) &&
-                                            (OrderComparer.Compare(_.Oder1, preferenceFilter.Preference1, preferenceFilter.Preference2, preferenceFilter.Preference3, preferenceFilter.Preference4, preferenceFilter.Preference5, preferenceFilter.Preference6, preferenceFilter.Preference7, preferenceFilter.Preference8, preferenceFilter.Preference9, preferenceFilter.Preference10, preferenceFilter.Preference11, preferenceFilter.Preference12)) &&
-                                            (_.Preference1 == preferenceFilter.Preference || preferenceFilter.Preference == "All") &&
-                                            (listOfPeople.Contains(_.UserId));
-
-                preferences = _preferenceDb.GetPreferences(query);
-                dataGrid.ItemsSource = preferences;
+                
+                preferences = _preferenceDb.GetPreferences(GetPreferenceQuery(preferenceFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
+                
                 return preferences;
             }
             preferences = _preferenceDb.GetPreferences();
             return preferences;
         }
 
-        private IEnumerable<SubjectiveFeeling> FilterSubjectiveFeeling(DataGrid dataGrid, object filter)
+        private IEnumerable<SubjectiveFeeling> FilterSubjectiveFeeling(object filter)
         {
             IEnumerable<SubjectiveFeeling> subjectiveFeelings;
             if (filter != null)
             {
-                SubjectiveFeelingFilter subjectiveFeelingFilter = (SubjectiveFeelingFilter)filter;
-                Regex re = new Regex(subjectiveFeelingFilter.UserId == "All"
-                    ? "Ex" + RangeGenerator.Generate(subjectiveFeelingFilter.ExpeditionFrom, subjectiveFeelingFilter.ExpeditionTo) + "#" + RangeGenerator.Generate(subjectiveFeelingFilter.PeopleFrom, subjectiveFeelingFilter.PeopleTo)
-                    : subjectiveFeelingFilter.UserId);
+                var subjectiveFeelingFilter = (SubjectiveFeelingFilterVM)filter;
 
-                var people = _preferenceDb.GetPeople().Where(item => (item.Workposition == subjectiveFeelingFilter.Profession || subjectiveFeelingFilter.Profession == "All"));
-                List<string> listOfPeople = new List<string>();
-                foreach (var item in people.ToList())
+                DateTime dateTo = subjectiveFeelingFilter.DateTo != null ? DateTime.Parse(subjectiveFeelingFilter.DateTo.ToString()) : new DateTime();
+                DateTime dateFrom = subjectiveFeelingFilter.DateFrom != null ? DateTime.Parse(subjectiveFeelingFilter.DateFrom.ToString()) : new DateTime();
+
+                //get people regarding person number and expedition
+                List<string> allowedUserIds = new List<string>();
+                var people = _preferenceDb.GetPeople(GetBaseQuery(subjectiveFeelingFilter, dateFrom, dateTo));
+                foreach (var person in people.ToList())
                 {
-                    listOfPeople.Add(item.UserId.ToString());
+                    allowedUserIds.Add(person.UserId.ToString().Trim());
                 }
-                bool query(SubjectiveFeeling _) =>
-                           (re.IsMatch(_.UserId)) &&
-                           (subjectiveFeelingFilter.DateFrom.Ticks == 0 || _.Date >= subjectiveFeelingFilter.DateFrom) &&
-                           (_.Date <= subjectiveFeelingFilter.DateTo || subjectiveFeelingFilter.DateTo.Ticks == 0) &&
-                           (_.GeneralWeaknes == subjectiveFeelingFilter.GeneralWeakness) &&
-                           (_.PoorAppetite == subjectiveFeelingFilter.PoorAppetite) &&
-                           (_.PoorSleep == subjectiveFeelingFilter.PoorSleep) &&
-                           (_.BadMood == subjectiveFeelingFilter.BadMood) &&
-                           (_.HeavyHead == subjectiveFeelingFilter.HeavyHead) &&
-                           (_.SlowThink == subjectiveFeelingFilter.SlowThink) &&
-                           (listOfPeople.Contains(_.UserId));
-
-                subjectiveFeelings = _preferenceDb.GetSubjecriveFeelings(query);
-                dataGrid.ItemsSource = subjectiveFeelings;
+            
+                subjectiveFeelings = _preferenceDb.GetSubjecriveFeelings(GetSubjectiveFeelingQuery(subjectiveFeelingFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
                 return subjectiveFeelings;
             }
             subjectiveFeelings = _preferenceDb.GetSubjecriveFeelings();
             return subjectiveFeelings;
+        }
+
+        private Func<People, bool> GetPeopleQuery(object filter, DateTime dateFrom, DateTime dateTo)
+        {
+            return GetBaseQuery(filter, dateFrom, dateTo);
+        }
+        private Func<People, bool> GetBaseQuery(object filter, DateTime dateFrom, DateTime dateTo)
+        {
+            var peopleFilter = (BaseFilterVM)filter;
+
+            return (People _) =>
+                (_.Workposition == peopleFilter.Profession || peopleFilter.Profession == "All")
+                && (peopleFilter.UserId == "All"
+                    ? (peopleFilter.PeopleFrom == "All" || _.Number >= int.Parse(peopleFilter.PeopleFrom)) && (peopleFilter.PeopleTo == "All" || _.Number <= int.Parse(peopleFilter.PeopleTo))
+                    : _.UserId == peopleFilter.UserId)
+                && (peopleFilter.UserId == "All"
+                    ? (peopleFilter.ExpeditionFrom == "All" || _.Expedition >= int.Parse(peopleFilter.ExpeditionFrom)) && (peopleFilter.ExpeditionTo == "All" || _.Expedition <= int.Parse(peopleFilter.ExpeditionTo))
+                    : _.UserId == peopleFilter.UserId)
+                && (dateFrom.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks >= dateFrom.Ticks)
+                && (dateTo.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks <= dateTo.Ticks);
+        }
+
+        private Func<Preference, bool> GetPreferenceQuery(object filter, DateTime dateTo, DateTime dateFrom, string[] allowedUserIds)
+        {
+            var preferenceFilter = (PreferenceFilterVM)filter;
+            return (Preference _) => 
+                (dateFrom.Ticks == 0 || _.Date.Ticks >= dateFrom.Ticks) && (dateTo.Ticks == 0 || _.Date.Ticks <= dateTo.Ticks) &&
+                 OrderComparer.Compare(_.ShortOder1, preferenceFilter.Color1in3Filter, preferenceFilter.Color2in3Filter, preferenceFilter.Color3in3Filter) &&
+                 OrderComparer.Compare(_.Oder1, preferenceFilter.Color1in12Filter, preferenceFilter.Color2in12Filter,
+                    preferenceFilter.Color3in12Filter, preferenceFilter.Color4in12Filter, preferenceFilter.Color5in12Filter,
+                    preferenceFilter.Color6in12Filter, preferenceFilter.Color7in12Filter, preferenceFilter.Color8in12Filter,
+                    preferenceFilter.Color9in12Filter, preferenceFilter.Color10in12Filter, preferenceFilter.Color11in12Filter,
+                    preferenceFilter.Color12in12Filter) &&
+                (preferenceFilter.PreferenceFilter == "All" || _.Preference1 == preferenceFilter.PreferenceFilter) &&
+                allowedUserIds.Contains(_.UserId.Trim());
+        }
+
+        private Func<SubjectiveFeeling, bool> GetSubjectiveFeelingQuery(object filter, DateTime dateTo, DateTime dateFrom, string[] allowedUserIds)
+        {
+            var subjectiveFeelingFilter = (SubjectiveFeelingFilterVM)filter;
+            return (SubjectiveFeeling _) =>
+                (dateFrom.Ticks == 0 || _.Date.Ticks >= dateFrom.Ticks) &&
+                (dateTo.Ticks == 0 || _.Date.Ticks <= dateTo.Ticks) && 
+                allowedUserIds.Contains(_.UserId.Trim()) &&
+                (!subjectiveFeelingFilter.IsFeeling ? true : 
+                    ((subjectiveFeelingFilter.GeneralWeakness ? _.GeneralWeaknes == subjectiveFeelingFilter.GeneralWeakness : true) &&
+                    (subjectiveFeelingFilter.PoorAppetite ? _.PoorAppetite == subjectiveFeelingFilter.PoorAppetite : true) &&
+                    (subjectiveFeelingFilter.PoorSleep ? _.PoorSleep == subjectiveFeelingFilter.PoorSleep : true) &&
+                    (subjectiveFeelingFilter.BadMood ? _.BadMood == subjectiveFeelingFilter.BadMood : true) &&
+                    (subjectiveFeelingFilter.HeavyHead ? _.HeavyHead == subjectiveFeelingFilter.HeavyHead : true) &&
+                    (subjectiveFeelingFilter.SlowThink ? _.SlowThink == subjectiveFeelingFilter.SlowThink : true))
+                );
         }
     }
 }
