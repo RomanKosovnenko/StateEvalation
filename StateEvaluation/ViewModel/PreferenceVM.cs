@@ -6,9 +6,9 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StateEvaluation.ViewModel.PreferenceDataGrid
+namespace StateEvaluation.ViewModel
 {
-    public class PreferenceDto : INotifyPropertyChanged
+    public class PreferenceVM : BaseVM
     {
         private string _id;
         private string _userId;
@@ -53,13 +53,6 @@ namespace StateEvaluation.ViewModel.PreferenceDataGrid
         private string _preference2Grey;
         private string _colorRelax1;
         private string _colorRelax2;
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public void OnPropertyChanged([CallerMemberName]string prop = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
-        }
 
         public string UserId
         {

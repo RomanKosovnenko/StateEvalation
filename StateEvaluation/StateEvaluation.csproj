@@ -113,7 +113,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="BuissnesManagers\ChartBussinesManager.cs" />
+    <Compile Include="BuissnesManagers\FilterBussinesManager.cs" />
     <Compile Include="Enums\BooleanValues.cs" />
+    <Compile Include="Enums\TabControl.cs" />
     <Compile Include="Enums\PreferenceColors.cs" />
     <Compile Include="Enums\StringBooleanValues.cs" />
     <Compile Include="Extensions\StringFormarter.cs" />
@@ -125,21 +128,22 @@
     <Compile Include="Helpers\NameToMultiBrushConverter.cs" />
     <Compile Include="Helpers\NumberToRelax1Converter.cs" />
     <Compile Include="Helpers\NumberToRelax2Converter.cs" />
+    <Compile Include="Helpers\OrderComparer.cs" />
     <Compile Include="Helpers\PreferenceSameAsRelax.cs" />
     <Compile Include="Helpers\PreferenceToBrushConverter.cs" />
+    <Compile Include="Helpers\RangeGenerator.cs" />
     <Compile Include="Helpers\UserIdBuilder.cs" />
-    <Compile Include="Model\Anthropometry.cs" />
-    <Compile Include="Model\ArterialPressuresGeneral.cs" />
-    <Compile Include="Model\ArterialPressuresInDay.cs" />
-    <Compile Include="Model\ArterialPressuresInNight.cs" />
-    <Compile Include="Model\BloodTest.cs" />
-    <Compile Include="Model\CycleErgometry.cs" />
-    <Compile Include="Model\CycleErgometryWithLoad.cs" />
-    <Compile Include="Model\JournalOfAppeal.cs" />
-    <Compile Include="Providers\PeopleDataGridProvider.cs" />
-    <Compile Include="Providers\PreferenceDataGridProvider.cs" />
-    <Compile Include="ViewModel\PeopleDataGrid\PeopleDto.cs" />
-    <Compile Include="ViewModel\PreferenceDataGrid\PreferenceDto.cs" />
+    <Compile Include="BuissnesManagers\PeopleBuissnesManager.cs" />
+    <Compile Include="BuissnesManagers\PreferenceBuissnesManager.cs" />
+    <Compile Include="BuissnesManagers\SubjectiveFeelingBuissnesManager.cs" />
+    <Compile Include="Providers\FilterProvider.cs" />
+    <Compile Include="ViewModel\BaseFilterVM.cs" />
+    <Compile Include="ViewModel\BaseVM.cs" />
+    <Compile Include="ViewModel\PeopleFilterVM.cs" />
+    <Compile Include="ViewModel\PeopleVM.cs" />
+    <Compile Include="ViewModel\PreferenceFilterVM.cs" />
+    <Compile Include="ViewModel\PreferenceVM.cs" />
+    <Compile Include="ViewModel\SubjectiveFeelingFilterVM.cs" />
     <Compile Include="View\FeelingsChart.xaml.cs">
       <DependentUpon>FeelingsChart.xaml</DependentUpon>
     </Compile>
@@ -187,8 +191,6 @@
     <Compile Include="Helpers\StringToListConverter.cs" />
     <Compile Include="Helpers\TextColorNumberToBrushConverter.cs" />
     <Compile Include="Model\Color.cs" />
-    <Compile Include="Model\DemboRubin.cs" />
-    <Compile Include="Model\Depresion.cs" />
     <Compile Include="Model\NormalPreference.cs" />
     <Compile Include="Model\People.cs" />
     <Compile Include="Model\Preference.cs" />
@@ -201,9 +203,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.ru.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\MainWindowVM.cs" />
-    <Compile Include="ViewModel\MainWindowVMPrivateVars.cs" />
-    <Compile Include="ViewModel\MainWindowVMPublicVars.cs" />
+    <Compile Include="ViewModel\SubjectiveFeelingVM.cs" />
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -339,6 +339,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

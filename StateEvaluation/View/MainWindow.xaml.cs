@@ -3,25 +3,19 @@ using StateEvaluation.BioColor;
 using StateEvaluation.Model;
 using StateEvaluation.View;
 using StateEvaluation.ViewModel;
-using StateEvaluation.ViewModel.PeopleDataGrid;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using StateEvaluation.Extensions;
 using Button = System.Windows.Controls.Button;
 using TextBox = System.Windows.Controls.TextBox;
 using Window = System.Windows.Window;
-using StateEvaluation.Helpers;
 using StateEvaluation.Providers;
-using StateEvaluation.ViewModel.PreferenceDataGrid;
+using StateEvaluation.BuissnesManagers;
 
 namespace StateEvaluation
 {
@@ -34,331 +28,244 @@ namespace StateEvaluation
         public static Dictionary<string, string> people;
         private PreferenceDB _preferenceDb = new PreferenceDB();
         public List<string> PersonCodes = new List<string>();
-        public PeopleDataGridProvider PeopleProvider = new PeopleDataGridProvider();
-        public PreferenceDataGridProvider PreferenceDataGridProvider = new PreferenceDataGridProvider();
+        public PeopleBuissnesManager peopleBuissnesManager;
+        public PreferenceBuissnesManager preferenceBuissnesManager;
+        public SubjectiveFeelingBuissnesManager subjectiveFeelingBuissnesManager;
+        private PreferenceFilterVM preferenceFilter;
+        private PeopleFilterVM peopleFilter;
+        private SubjectiveFeelingFilterVM subjectiveFeelingFilter;
+        private FilterBussinesManager filterBussinesManager = new FilterBussinesManager();
 
+        #region ctor
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = this;
             BioColor.Main.InitBioColor(BioColorGraph, Date, DateNow);
+
+            peopleFilter = (PeopleFilterVM)Resources["peopleFilterVM"];
+            preferenceFilter = (PreferenceFilterVM)Resources["preferenceFilterVM"];
+            subjectiveFeelingFilter = (SubjectiveFeelingFilterVM)Resources["subjectiveFeelingFilterVM"];
+
+
+            peopleBuissnesManager = new PeopleBuissnesManager
+                (
+                    new List<ComboBox>() { UserIdsFilterPeopleCB, UserIdsFilterSubjFeelingCB, UserIdsFilterPreferenceCB, UserIdsInsertPreferenceCB, UserIdsInsertSubjFeelCB },
+                    new List<ComboBox>() { ExpeditionFromFilterPeopleCB, ExpeditionToFilterPeopleCB, ExpeditionFromFilterSubjFeelCB, ExpeditionToFilterSubjFeelCB, ExpeditionFilterToPreferenceCB, ExpeditionFromFilterPreferenceCB },
+                    new List<ComboBox>() { NumberFromFilterPeopleCB, NumberToFilterPeopleCB, NumberFromFilterSubjFeelCB, NumberToFilterSubjFeelCB, NumberFromFilterPreferenceCB, NumberToFilterPreferenceCB },
+                    PeopleDataGrid, UpdatePersonBtn
+                );
+
+            preferenceBuissnesManager = new PreferenceBuissnesManager(PreferencesDataGrid, UpdatePrefernceBtn);
+
+            subjectiveFeelingBuissnesManager = new SubjectiveFeelingBuissnesManager(SubjectiveFeelingDataGrid, UpdateSubjectiveFeelingBtn);
+        }
+        #endregion
+
+        #region Button handlers for People
+        /// <summary>
+        /// Create new person from interface
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void CreatePerson(object sender, RoutedEventArgs e)
+        {
+            var newPerson = (PeopleVM)Resources["peopleVM"];
+            peopleBuissnesManager.CreatePerson(newPerson);
         }
 
-        #region Button handlers for 'People' tab
         /// <summary>
-        /// Create new person
+        /// Update person from interface
         /// </summary>
-        private void AddPersonBtn_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void UpdatePerson(object sender, RoutedEventArgs e)
         {
-            var newPerson = (PeopleDto)Resources["peopleDto"];
-            if (!string.IsNullOrEmpty(PeopleProvider.CreatePerson(newPerson)))
-            {
-                RefreshUIDInTabs();
-                RefreshExpeditionInTabs();
-                RefreshUsersNumberInTabs();
-                RefreshPersonDataGrid();
-            }
+            var editedPerson = (PeopleVM)Resources["peopleVM"];
+            peopleBuissnesManager.UpdatePerson(editedPerson);
         }
 
         /// <summary>
-        /// Save changes about person
+        /// Clear input fields from interface
         /// </summary>
-        private void SavePersonBtn_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void ClearInputs(object sender, RoutedEventArgs e)
         {
-            var editedPerson = (PeopleDto)Resources["peopleDto"];
-
-            if (!string.IsNullOrEmpty(PeopleProvider.UpdatePerson(editedPerson)))
-            {
-                RefreshPersonDataGrid();
-
-                //hide save person button
-                ApplyPeopleChangesBTN.Visibility = Visibility.Hidden;
-            }
+            var person = (PeopleVM)Resources["peopleVM"];
+            peopleBuissnesManager.ClearInputs(person);
         }
 
         /// <summary>
         /// Bind person data into input fields 
         /// </summary>
-        private void EditPersonBtn_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void BindPersonInForm(object sender, RoutedEventArgs e)
         {
             var butonContext = ((Button)sender).DataContext;
             var personId = ((People)butonContext).Id;
 
-            var personDto = (PeopleDto)Resources["peopleDto"];
+            var personVM = (PeopleVM)Resources["peopleVM"];
 
-            if (!string.IsNullOrEmpty(PeopleProvider.PrepareInputForm(personDto, personId)))
-            {
-                //show save person button
-                ApplyPeopleChangesBTN.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                MessageBox.Show("Oops, error while binding input filds");
-            }
+            peopleBuissnesManager.PrepareInputForm(personVM, personId);
         }
 
         /// <summary>
-        /// Remove person from dashbord
+        /// Remove person
         /// </summary>
-        private void RemovePersonBtn_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void RemovePerson(object sender, RoutedEventArgs e)
         {
-            var personDto = (PeopleDto)Resources["peopleDto"];
+            var butonContext = ((Button)sender).DataContext;
+            var personId = ((People)butonContext).Id;
+
             var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
             {
-                if (!string.IsNullOrEmpty(PeopleProvider.DeletePerson(personDto.Id)))
-                {
-                    PersonDataGrid.ItemsSource = PeopleProvider.GetAllPeople();
-                    RefreshUIDInTabs();
-                }
-                else
-                {
-                    MessageBox.Show("Error! You can not delete this record because it has associated entries in other tables.");
-                }
+                peopleBuissnesManager.DeletePerson(personId.ToString());
             }
         }
         #endregion
 
-        #region Button handlers for 'Preference' tab
+        #region Button handlers for Preference
         /// <summary>
-        /// Create test of preference
+        /// Create test of preference from interface
         /// </summary>
-        private void SaveTestCommand(object sender, RoutedEventArgs e)
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void CreatePreferense(object sender, RoutedEventArgs e)
         {
-            var preferenceDto = (PreferenceDto)this.Resources["preserenceDto"];
-            if (!PreferenceDataGridProvider.IsValidPreferenseDto(preferenceDto))
-            {
-                MessageBox.Show("Not all fields is filled!");
-            }
-            else
-            {
-                if (string.IsNullOrEmpty(PreferenceDataGridProvider.SavePreference(preferenceDto)))
-                {
-                    RefreshPreferenceDataGrid();
-
-                    //hide save button
-                    ApplyChangesBTN.Visibility = Visibility.Hidden;
-                }
-            }
+            var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
+            preferenceBuissnesManager.Create(preferenceVM);
         }
 
         /// <summary>
         /// Bind test of preference into input fields
         /// </summary>
-        private void SetValueInTabsCommand(object sender, RoutedEventArgs e)
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void BindPreferenceInForm(object sender, RoutedEventArgs e)
         {
-            var preferenceDto = (PreferenceDto)this.Resources["preserenceDto"];
+            var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
             var butonContext = ((Button)sender).DataContext;
             var preferenceId = ((Preference)butonContext).Id;
 
-            if (!string.IsNullOrEmpty(PreferenceDataGridProvider.PrepareInputForm(preferenceDto, preferenceId)))
-            {
-                //show save button
-                ApplyChangesBTN.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                MessageBox.Show("Oops, error while binding input filds");
-            }
+            preferenceBuissnesManager.PrepareInputForm(preferenceVM, preferenceId);
         }
 
         /// <summary>
-        /// Update test of preference
+        /// Update test of preference from interface
         /// </summary>
-        private void SaveChangesTestCommand(object sender, RoutedEventArgs e)
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void UpdatePreference(object sender, RoutedEventArgs e)
         {
-            var preferenceDto = (PreferenceDto)this.Resources["preserenceDto"];
-            if (PreferenceDataGridProvider.HasChanges(preferenceDto))
-            {
-                if (string.IsNullOrEmpty(PreferenceDataGridProvider.UpdatePreference(preferenceDto)))
-                {
-                    MessageBox.Show("Oops, error while updating");
-                    return;
-                }
-            }
-
-            MessageBox.Show("Done");
+            var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
+            preferenceBuissnesManager.UpdatePreference(preferenceVM);
         }
 
         /// <summary>
-        /// Remove test of preference from dashboard
+        /// Remove test of preference 
         /// </summary>
-        private void RemovePreferenceBtn_Click(object sender, RoutedEventArgs e)
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void RemovePreference(object sender, RoutedEventArgs e)
         {
-            var preferenceDto = (PreferenceDto)this.Resources["preserenceDto"];
+            var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
             var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
 
             if (dialogResult == MessageBoxResult.Yes)
             {
-                if (!string.IsNullOrEmpty(PreferenceDataGridProvider.RemovePreference(preferenceDto.Id)))
-                {
-                    TestsDataGrid.ItemsSource = PreferenceDataGridProvider.GetAllPreferences();
-                    RefreshUIDInTabs();
-                }
-                else
-                {
-                    MessageBox.Show("Oops, somesing was wrong, while deleting");
-                }
+                preferenceBuissnesManager.RemovePreference(preferenceVM.Id);
             }
         }
-        //????
-        private void ClearTestAdds(object sender, RoutedEventArgs e)
-        {
-            var preferenceDto = (PreferenceDto)this.Resources["preserenceDto"];
-            PreferenceDataGridProvider.ClearInputs(preferenceDto);
-        }
-        #endregion
 
-        private void AddFeelingPeople(object sender, RoutedEventArgs e)
-        {
-            var picker = (MainWindowVM)this.Resources["subjectiveFeelingInsertModel"];
-            picker.BadMood = true;
-            /*var a = selectedDateInSubjectiveFeeling.Text;
-
-            if (!DateTime.TryParse((PersonAddFormGrid.FindName("selectedDateInSubjectiveFeeling") as DatePicker).Text, out DateTime obj1) ||
-                string.IsNullOrEmpty((PersonAddFormGrid.FindName("selectedUIDInSubjectiveFeeling") as ComboBox).Text))
-            {
-                MessageBox.Show("Error! Try edit fields in form!");
-                return;
-            }
-            SubjectiveFeeling sf = GetNewSubjectiveFeeling();
-            _preferenceDb.InsertEntityInSubjectiveFeeling(sf);
-            RefreshSubjectiveFeelDataGrid();
-            ClearSelected();
-            RefreshUIDInTabs();*/
-        }
-        private void RefreshSubjectiveFeelDataGrid()
-        {
-            SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
-        }
         /// <summary>
-        /// Получение из интерфейса новых данных для субъективных ощущений
+        /// Reset all inputs fields
         /// </summary>
-        /// <returns> Заданные пользователем субъективные ощущения </returns>
-        private SubjectiveFeeling GetNewSubjectiveFeeling()
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void ClearPreferenceInputs(object sender, RoutedEventArgs e)
         {
-            string userId = selectedUIDInSubjectiveFeeling.SelectedItem?.ToString();
-
-            SubjectiveFeeling subjectiveFeeling = new SubjectiveFeeling()
-            {
-                Id = Guid.NewGuid(),
-                UserId = userId,
-                Date = selectedDateInSubjectiveFeeling.SelectedDate.GetValueOrDefault(),
-                GeneralWeaknes = markGeneralWeakness.IsChecked.Value,
-                PoorAppetite = markBadAppetite.IsChecked.Value,
-                PoorSleep = markBadDream.IsChecked.Value,
-                BadMood = markBadMood.IsChecked.Value,
-                HeavyHead = markHeavyHead.IsChecked.Value,
-                SlowThink = markSlowThink.IsChecked.Value
-            };
-            return subjectiveFeeling;
-        }
-        private void ClearSelected()
-        {
-            markGeneralWeakness.IsChecked = false;
-            markBadAppetite.IsChecked = false;
-            markBadDream.IsChecked = false;
-            markBadMood.IsChecked = false;
-            markHeavyHead.IsChecked = false;
-            markSlowThink.IsChecked = false;
-            selectedUIDInSubjectiveFeeling.SelectedIndex = -1;
-            selectedDateInSubjectiveFeeling.Text = "";
-        }
-
-        private void RefreshPreferenceBtn_Click(object sender, RoutedEventArgs e)
-        {
-            SetValueInTabsCommand(sender, e);
-            SaveChangesTestCommand(sender, e);
-        }
-
-        private void EditFeelingsBtn_Click(object sender, RoutedEventArgs e)
-        {
-            string tag = ((Button)sender).Tag.ToString();
-            var items = _preferenceDb.SubjectiveFeeling.Select(item => item).Where(item => item.Id.ToString() == tag);
-            SubjectiveFeeling feeling = items.Single();
-            SetValueInTabs(feeling);
-        }
-
-
-        private void SaveFeelingPeople(object sender, RoutedEventArgs e)
-        {
-            if (TestID.Text.Trim().Length == 0) return;
-            SubjectiveFeeling feeling = new SubjectiveFeeling()
-            {
-                Id = new Guid(TestID.Text),
-                GeneralWeaknes = (bool)markGeneralWeakness.IsChecked,
-                PoorAppetite = (bool)markBadAppetite.IsChecked,
-                PoorSleep = (bool)markBadDream.IsChecked,
-                BadMood = (bool)markBadMood.IsChecked,
-                HeavyHead = (bool)markHeavyHead.IsChecked,
-                SlowThink = (bool)markSlowThink.IsChecked,
-                UserId = selectedUIDInSubjectiveFeeling.SelectedValue.ToString(),
-                Date = (DateTime)selectedDateInSubjectiveFeeling.SelectedDate
-            };
-            _preferenceDb.UpdateTestInPreference(feeling);
-            SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
-            ClearInputs();
-        }
-
-
-        private void SetValueInTabs(SubjectiveFeeling feeling)
-        {
-            TestID.Text = feeling.Id.ToString();
-            markGeneralWeakness.IsChecked = feeling.GeneralWeaknes;
-            markBadAppetite.IsChecked = feeling.PoorAppetite;
-            markBadDream.IsChecked = feeling.PoorSleep;
-            markBadMood.IsChecked = feeling.BadMood;
-            markHeavyHead.IsChecked = feeling.HeavyHead;
-            markSlowThink.IsChecked = feeling.SlowThink;
-            selectedUIDInSubjectiveFeeling.SelectedValue = feeling.UserId;
-            selectedDateInSubjectiveFeeling.Text = feeling.Date.ToString();
-            ApplyFeelingChangesBTN.Visibility = Visibility.Visible;
-        }
-
-        #region refreshing
-
-        private void RefreshPreferenceDataGrid()
-        {
-            TestsDataGrid.ItemsSource = PreferenceDataGridProvider.GetAllPreferences();
-        }
-        private void RefreshUIDInTabs()
-        {
-            UID.ItemsSource = _preferenceDb.CodesForFilter();
-            selectedUIDInSubjectiveFeeling.ItemsSource = _preferenceDb.CodesForInsert();
-            selectedUIDInTests.ItemsSource = _preferenceDb.CodesForInsert();
-        }
-
-        private void RefreshUsersNumberInTabs()
-        {
-            PeopleFrom.ItemsSource = _preferenceDb.PeopleCodes();
-            PeopleTo.ItemsSource = _preferenceDb.PeopleCodes();
-        }
-
-        private void RefreshExpeditionInTabs()
-        {
-            ExFrom.ItemsSource = _preferenceDb.ExpeditionCodes();
-            ExTo.ItemsSource = _preferenceDb.ExpeditionCodes();
-        }
-
-        private void RefreshPersonDataGrid()
-        {
-            PersonDataGrid.ItemsSource = PeopleProvider.GetAllPeople();
+            var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
+            preferenceBuissnesManager.ClearInputs(preferenceVM);
         }
         #endregion
 
-        private void RemoveFeelingsBtn_Click(object sender, RoutedEventArgs e)
+        #region Button handler for SubjectiveFeelng
+        /// <summary>
+        /// Create new record of subjective feeling from interface
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void CreateSubjectiveFeeling(object sender, RoutedEventArgs e)
         {
+            var subjectiveFeeling = (SubjectiveFeelingVM)this.Resources["subjectiveFeelingVM"];
+            subjectiveFeelingBuissnesManager.Create(subjectiveFeeling);
+        }
+
+        /// <summary>
+        /// Bind record of subjective feeling into input fields
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void BindSubjectiveFeelingInForm(object sender, RoutedEventArgs e)
+        {
+            var butonContext = ((Button)sender).DataContext;
+            var subjectiveFeelingId = ((SubjectiveFeeling)butonContext).Id;
+
+            var subjectiveFeeling = (SubjectiveFeelingVM)Resources["subjectiveFeelingVM"];
+
+           subjectiveFeelingBuissnesManager.PrepareInputForm(subjectiveFeeling, subjectiveFeelingId);
+        }
+
+        /// <summary>
+        /// Remove record of subjective feeling
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void DeleteSSubjectiveFeeling(object sender, RoutedEventArgs e)
+        {
+            var butonContext = ((Button)sender).DataContext;
+            var subjectiveFeelingId = ((SubjectiveFeeling)butonContext).Id;
+
             var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
             {
-                PreferenceDB _preferenceDb = new PreferenceDB();
-                SubjectiveFeeling feelings = _preferenceDb.SubjectiveFeeling.Single(c => c == ((Button)(e.Source)).BindingGroup.Items[0]);
-                _preferenceDb.SubjectiveFeeling.DeleteOnSubmit(feelings);
-                _preferenceDb.SubmitChanges();
-                SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
-                RefreshUIDInTabs();
+                subjectiveFeelingBuissnesManager.Remove(subjectiveFeelingId);
             }
         }
+
+        /// <summary>
+        /// Update record of subjective feeling from interface
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void UpdateSubjectiveFeeling(object sender, RoutedEventArgs e)
+        {
+            var butonContext = ((Button)sender).DataContext;
+            var subjectiveFeelingId = ((SubjectiveFeelingVM)butonContext).Id;
+
+            var subjectiveFeelingMV = (SubjectiveFeelingVM)Resources["subjectiveFeelingVM"];
+
+            subjectiveFeelingBuissnesManager.Update(subjectiveFeelingMV, Guid.Parse(subjectiveFeelingId));
+        }
+
+        /// <summary>
+        /// Reset all inputs fields
+        /// </summary>
+        /// <param name="sender">sender</param>
+        /// <param name="e">routed event arguments</param>
+        private void ClearSubjectiveFeelingInputs(object sender, RoutedEventArgs e)
+        {
+            var subjectiveFeelingVM = (SubjectiveFeelingVM)Resources["subjectiveFeelingVM"];
+            subjectiveFeelingBuissnesManager.ClearInputs(subjectiveFeelingVM);
+        }
+        #endregion
+
+        #region focus
 
         private void NumberTextbox_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -398,6 +305,21 @@ namespace StateEvaluation
                 textbox.BorderBrush = (Brush)(new BrushConverter().ConvertFrom("#FFABADB3"));
             }
         }
+        #endregion
+
+        #region charts
+        private void BildChartOnPreference1(object sender, RoutedEventArgs e)
+        {
+           // var preferences = ((List<Preference>)filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter))
+           //     .OrderBy(x => x.Date).ToList();
+           // var subWindow = new TestsChart(preferences, true, preferenceFilter?.DateFrom != null && preferenceFilter?.DateFrom == preferenceFilter?.DateTo);
+        }
+        private void BildChartOnPreference2(object sender, RoutedEventArgs e)
+        {
+           // var preferences = ((List<Preference>)filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter))
+           //     .OrderBy(x => x.Date).ToList();
+           // var subWindow = new TestsChart(preferences, false, preferenceFilter?.DateFrom != null && preferenceFilter?.DateFrom == preferenceFilter?.DateTo);
+        }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -405,18 +327,9 @@ namespace StateEvaluation
             Preference pref = _preferenceDb.Preference.Single(c => c == ((Button)(e.Source)).BindingGroup.Items[0]);
             var subWindow = new IndividualChart(pref, _preferenceDb);
         }
+        #endregion
 
-        private void BildChartOnPreference1(object sender, RoutedEventArgs e)
-        {
-            PreferenceDB _preferenceDb = new PreferenceDB();
-            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(), true, DateFrom.SelectedDate != null && DateFrom.Text == DateTo.Text);
-        }
-        private void BildChartOnPreference2(object sender, RoutedEventArgs e)
-        {
-            PreferenceDB _preferenceDb = new PreferenceDB();
-            var subWindow = new TestsChart(GetUIDs().OrderBy(x => x.Date).ToList(), false, DateFrom.SelectedDate != null && DateFrom.Text == DateTo.Text);
-        }
-
+        #region import
         private void AddData_OnClick(object sender, RoutedEventArgs e)
         {
             List<string> list = new List<string>();
@@ -578,6 +491,7 @@ namespace StateEvaluation
                 string values = sh.Cells[i, 2].ToString();
             }
         }
+        #endregion
 
         private const int STEP = 7;
         private void Prew(object sender, RoutedEventArgs e) => BioColor.Main.MakeStep(-STEP);
@@ -589,369 +503,43 @@ namespace StateEvaluation
         private void WindowRendered(object sender, EventArgs e)
         {
             people = _preferenceDb
-                .GetAllPeople()
+                .GetPeople()
                 .Select(item => new { UserId = item.UserId.ToString().Trim(), item.Birthday })
                 .ToDictionary(i => i.UserId, i => i.Birthday);
-            ClearFilters();
             RestoreColors();
         }
 
-        private string GenerateRange(string f, string t)
+        #region filters
+        private void ClearFilterPeopleTab(object sender, RoutedEventArgs e)
         {
-            int from = 0;
-            int to = 0;
-            if (!int.TryParse(f, out from) || !int.TryParse(t, out to))
-            {
-                return "([0-9]+)";
-            }
-            else
-            {
-                string re = "(";
-                if (from > to)
-                {
-                    int temp = from;
-                    from = to;
-                    to = temp;
-                };
-                for (int i = from; i <= to; ++i)
-                {
-                    re += i;
-                    if (i != to) re += "|";
-                }
-                re += ")";
-                return re;
-            }
-        }
-        private void ClearInputs()
-        {
-            selectedUIDInTests.SelectedIndex = -1;
-            dateTimeForTest.Text = "";
-            selectorC1in3.SelectedIndex = -1;
-            selectorC2in3.SelectedIndex = -1;
-            selectorC3in3.SelectedIndex = -1;
-            selectorC21in3.SelectedIndex = -1;
-            selectorC22in3.SelectedIndex = -1;
-            selectorC23in3.SelectedIndex = -1;
-            selectorC1in12.SelectedIndex = -1;
-            selectorC2in12.SelectedIndex = -1;
-            selectorC3in12.SelectedIndex = -1;
-            selectorC4in12.SelectedIndex = -1;
-            selectorC5in12.SelectedIndex = -1;
-            selectorC6in12.SelectedIndex = -1;
-            selectorC7in12.SelectedIndex = -1;
-            selectorC8in12.SelectedIndex = -1;
-            selectorC9in12.SelectedIndex = -1;
-            selectorC10in12.SelectedIndex = -1;
-            selectorC11in12.SelectedIndex = -1;
-            selectorC12in12.SelectedIndex = -1;
-            selectorC21in12.SelectedIndex = -1;
-            selectorC22in12.SelectedIndex = -1;
-            selectorC23in12.SelectedIndex = -1;
-            selectorC24in12.SelectedIndex = -1;
-            selectorC25in12.SelectedIndex = -1;
-            selectorC26in12.SelectedIndex = -1;
-            selectorC27in12.SelectedIndex = -1;
-            selectorC28in12.SelectedIndex = -1;
-            selectorC29in12.SelectedIndex = -1;
-            selectorC210in12.SelectedIndex = -1;
-            selectorC211in12.SelectedIndex = -1;
-            selectorC212in12.SelectedIndex = -1;
-            selectorRelax1.SelectedIndex = -1;
-            selectorRelax2.SelectedIndex = -1;
-            RedStat.IsChecked = false;
-            YellowStat.IsChecked = false;
-            BlueStat.IsChecked = false;
-            GrayStat.IsChecked = false;
-            Red2Stat.IsChecked = false;
-            Yellow2Stat.IsChecked = false;
-            Blue2Stat.IsChecked = false;
-            Gray2Stat.IsChecked = false;
-            //FirstnameTextbox.Text = "";
-            //LastnameTextbox.Text = "";
-            //BirthdayDatePicker.Text = "";
-            //ProfessionTextbox.Text = "";
-            //ExpeditionTextbox.Text = "";
-            //NumberTextbox.Text = "";
-            markGeneralWeakness.IsChecked = false;
-            markBadAppetite.IsChecked = false;
-            markBadDream.IsChecked = false;
-            markBadMood.IsChecked = false;
-            markHeavyHead.IsChecked = false;
-            markSlowThink.IsChecked = false;
-            selectedUIDInSubjectiveFeeling.SelectedIndex = -1;
-            selectedDateInSubjectiveFeeling.Text = "";
-            TestID.Text = "";
-
-            ApplyFeelingChangesBTN.Visibility = Visibility.Hidden;
-            ApplyPeopleChangesBTN.Visibility = Visibility.Hidden;
-            ApplyChangesBTN.Visibility = Visibility.Hidden;
-        }
-        private void ClearFilters()
-        {
-            ComdoBoxProfession.SelectedIndex = 0;
-            Pref.SelectedIndex = 0;
-            ExFrom.SelectedIndex = 0;
-            ExTo.SelectedIndex = 0;
-            PeopleFrom.SelectedIndex = 0;
-            PeopleTo.SelectedIndex = 0;
-            UID.SelectedIndex = 0;
-            DateFrom.Text = "";
-            DateTo.Text = "";
-            PreferenceFilter1.Text = "";
-            PreferenceFilter2.Text = "";
-            PreferenceFilter3.Text = "";
-            PreferenceFilter4.Text = "";
-            PreferenceFilter5.Text = "";
-            PreferenceFilter6.Text = "";
-            PreferenceFilter7.Text = "";
-            PreferenceFilter8.Text = "";
-            PreferenceFilter9.Text = "";
-            PreferenceFilter10.Text = "";
-            PreferenceFilter11.Text = "";
-            PreferenceFilter12.Text = "";
-
-            generalWeakness.IsChecked = false;
-            badAppetite.IsChecked = false;
-            badDream.IsChecked = false;
-            badMood.IsChecked = false;
-            heavyHead.IsChecked = false;
-            slowThink.IsChecked = false;
+            filterBussinesManager.Clear(PeopleDataGrid, peopleFilter);
         }
 
-        private void ClearUIDs(object sender, RoutedEventArgs e)
+        private void ClearFilterPreferenceTab(object sender, RoutedEventArgs e)
         {
-            switch (tabControl.SelectedIndex)
-            {
-                case 0:
-                    PersonDataGrid.ItemsSource = _preferenceDb.GetAllPeople();
-                    break;
-                case 1:
-                    TestsDataGrid.ItemsSource = _preferenceDb.GetAllTests();
-                    break;
-                case 2:
-                    SubjectiveFeelDataGrid.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
-                    break;
-                case 3:
-                    AnthropometryDataGrid.ItemsSource = _preferenceDb.GetAllAnthropometry();
-                    break;
-                case 4:
-                    SubjectiveFeelDataGridInComparsion.ItemsSource = _preferenceDb.GetAllSubjecriveFeelings();
-                    CycleErgonometryDataGridInComparsion.ItemsSource = _preferenceDb.GetAllCycleErgometry();
-                    TestsDataGridInComparsion.ItemsSource = _preferenceDb.GetAllTests();
-                    break;
-            }
-            ClearFilters();
+            filterBussinesManager.Clear(PreferencesDataGrid, preferenceFilter);
         }
 
-        private bool CompareOrder(string order, params string[] prefs)
+        private void ClearFilterSubjFeelTab(object sender, RoutedEventArgs e)
         {
-            var orders = order.Split(',');
-            if (orders.Length != prefs.Length)
-            {
-                throw new IndexOutOfRangeException("Order lenght is not the same as prefs lengts");
-            }
-
-            var comparer = new bool[orders.Length];
-            for (int i = 0; i < comparer.Length; ++i)
-            {
-                comparer[i] = prefs[i] == "" || prefs[i] == orders[i];
-            }
-            return comparer.All(x => x);
+           filterBussinesManager.Clear(SubjectiveFeelingDataGrid, subjectiveFeelingFilter);
         }
 
-        private void FilterUIDs(object sender, RoutedEventArgs e)
+        private void FilterPeople(object sender, RoutedEventArgs e)
         {
-            switch (tabControl.SelectedIndex)
-            {
-                case 0:
-                    PersonDataGrid.ItemsSource = GetPeople();
-                    break;
-                case 1:
-                    TestsDataGrid.ItemsSource = GetUIDs();
-                    break;
-                case 2:
-                    SubjectiveFeelDataGrid.ItemsSource = GetSubjectiveFeel();
-                    break;
-                case 3:
-                    AnthropometryDataGrid.ItemsSource = GetAnthropometry();
-                    break;
-                case 4:
-                    SubjectiveFeelDataGridInComparsion.ItemsSource = GetSubjectiveFeel();
-                    TestsDataGridInComparsion.ItemsSource = GetUIDs();
-                    CycleErgonometryDataGridInComparsion.ItemsSource = GetCycleErgonometry();
-                    break;
-            }
+            filterBussinesManager.Filter(PeopleDataGrid, peopleFilter);
         }
-
-        private IEnumerable<CycleErgometry> GetCycleErgonometry()
+        private void FilterPreference(object sender, RoutedEventArgs e)
         {
-            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
-            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
-
-            return _preferenceDb.GetAllCycleErgometry().Where(item => (datefrom.Ticks == 0 || item.Date >= datefrom) && (item.Date <= dateto || dateto.Ticks == 0));
+            filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter);
         }
-
-        private IEnumerable<Preference> GetUIDs()
+        private void FilterSubjectiveFeeling(object sender, RoutedEventArgs e)
         {
-
-            string id = UID.SelectedItem?.ToString();
-            string exfrom = ExFrom.SelectedItem?.ToString()?.Trim();
-            string exto = ExTo.SelectedItem?.ToString()?.Trim();
-            string peoplefrom = PeopleFrom.SelectedItem?.ToString()?.Trim();
-            string peopleto = PeopleTo.SelectedItem?.ToString()?.Trim();
-            string preference = Pref.SelectedItem?.ToString();
-            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
-            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
-            string profession = ComdoBoxProfession.SelectedItem?.ToString();
-
-            Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
-
-            var people = _preferenceDb.GetAllPeople().Where(item => (item.Workposition == profession || profession == "All"));
-            List<string> listOfPeople = new List<string>();
-            foreach (var item in people.ToList())
-            {
-                listOfPeople.Add(item.UserId.ToString());
-            }
-            return _preferenceDb.GetAllTests()
-                .Where(item =>
-/* UserID     */   (re.IsMatch(item.UserId)) &&
-/* DatePicker */   ((datefrom.Ticks == 0 || item.Date >= datefrom) && (item.Date <= dateto || dateto.Ticks == 0)) &&
-/* ShortOder  */   (CompareOrder(item.ShortOder1, PreferenceShortFilter1.Text, PreferenceShortFilter2.Text, PreferenceShortFilter3.Text)) &&
-/* Oder       */   (CompareOrder(item.Oder1, PreferenceFilter1.Text, PreferenceFilter2.Text, PreferenceFilter3.Text, PreferenceFilter4.Text, PreferenceFilter5.Text, PreferenceFilter6.Text, PreferenceFilter7.Text, PreferenceFilter8.Text, PreferenceFilter9.Text, PreferenceFilter10.Text, PreferenceFilter11.Text, PreferenceFilter12.Text)) &&
-/* Preference */   (item.Preference1 == preference || preference == "All") &&
-                   (listOfPeople.Contains(item.UserId))
-                );
+            filterBussinesManager.Filter(SubjectiveFeelingDataGrid, subjectiveFeelingFilter);
         }
-        private IEnumerable<People> GetPeople()
-        {
-            string id = UID.SelectedItem?.ToString();
-            string exfrom = ExFrom.SelectedItem?.ToString()?.Trim();
-            string exto = ExTo.SelectedItem?.ToString()?.Trim();
-            string peoplefrom = PeopleFrom.SelectedItem?.ToString()?.Trim();
-            string peopleto = PeopleTo.SelectedItem?.ToString()?.Trim();
-            string preference = Pref.SelectedItem?.ToString();
-            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
-            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
-            string profession = ComdoBoxProfession.SelectedItem?.ToString();
+        #endregion
 
-            Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
-
-            return _preferenceDb.GetAllPeople()
-                .Where(item =>
-    /* UserID     */   (re.IsMatch(item.UserId)) &&
-                       (item.Workposition == profession || profession == "All")
-                );
-        }
-        private IEnumerable<Anthropometry> GetAnthropometry()
-        {
-            string id = UID.SelectedItem?.ToString();
-            string exfrom = ExFrom.SelectedItem?.ToString()?.Trim();
-            string exto = ExTo.SelectedItem?.ToString()?.Trim();
-            string peoplefrom = PeopleFrom.SelectedItem?.ToString()?.Trim();
-            string peopleto = PeopleTo.SelectedItem?.ToString()?.Trim();
-            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
-            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
-
-            Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
-
-            return _preferenceDb.GetAllAnthropometry()
-                .Where(item =>
-/* UserID     */   (re.IsMatch(item.UserId)) &&
-/* DatePicker */   ((datefrom.Ticks == 0 || item.Date >= datefrom) && (item.Date <= dateto || dateto.Ticks == 0))
-                );
-        }
-        private IEnumerable<SubjectiveFeeling> GetSubjectiveFeel()
-        {
-            string id = UID.SelectedItem?.ToString();
-            string exfrom = ExFrom.SelectedItem?.ToString()?.Trim();
-            string exto = ExTo.SelectedItem?.ToString()?.Trim();
-            string peoplefrom = PeopleFrom.SelectedItem?.ToString()?.Trim();
-            string peopleto = PeopleTo.SelectedItem?.ToString()?.Trim();
-            string preference = Pref.SelectedItem?.ToString();
-            DateTime datefrom = DateFrom.SelectedDate.GetValueOrDefault();
-            DateTime dateto = DateTo.SelectedDate.GetValueOrDefault();
-            string profession = ComdoBoxProfession.SelectedItem?.ToString();
-
-            bool gWeakness = generalWeakness.IsChecked.Value;
-            bool bAppetite = badAppetite.IsChecked.Value;
-            bool bDream = badDream.IsChecked.Value;
-            bool bMood = badMood.IsChecked.Value;
-            bool hHead = heavyHead.IsChecked.Value;
-            bool sThink = slowThink.IsChecked.Value;
-
-            var people = _preferenceDb.GetAllPeople().Where(item => (item.Workposition == profession || profession == "All"));
-            List<string> listOfPeople = new List<string>();
-            foreach (var item in people.ToList())
-            {
-                listOfPeople.Add(item.UserId.ToString());
-            }
-            Regex re = new Regex(id == "All" ? "Ex" + GenerateRange(exfrom, exto) + "#" + GenerateRange(peoplefrom, peopleto) : id);
-
-            return _preferenceDb.GetAllSubjecriveFeelings()
-                .Where(item =>
-    /* UserID     */   (re.IsMatch(item.UserId)) &&
-                       (datefrom.Ticks == 0 || item.Date >= datefrom) &&
-                       (item.Date <= dateto || dateto.Ticks == 0) &&
-                       (item.GeneralWeaknes == gWeakness) &&
-                       (item.PoorAppetite == bAppetite) &&
-                       (item.PoorSleep == bDream) &&
-                       (item.BadMood == bMood) &&
-                       (item.HeavyHead == hHead) &&
-                       (item.SlowThink == sThink) &&
-                       (listOfPeople.Contains(item.UserId))
-                );
-        }
-
-        public string SelectedCode { get; set; }
-        public DateTime? TestDate { get; set; }
-
-        public string C1in3 { get; set; }
-        public string C2in3 { get; set; }
-        public string C3in3 { get; set; }
-
-        public string C21in3 { get; set; }
-        public string C22in3 { get; set; }
-        public string C23in3 { get; set; }
-
-        public string C1in12 { get; set; }
-        public string C2in12 { get; set; }
-        public string C3in12 { get; set; }
-        public string C4in12 { get; set; }
-        public string C5in12 { get; set; }
-        public string C6in12 { get; set; }
-        public string C7in12 { get; set; }
-        public string C8in12 { get; set; }
-        public string C9in12 { get; set; }
-        public string C10in12 { get; set; }
-        public string C11in12 { get; set; }
-        public string C12in12 { get; set; }
-
-        public string C21in12 { get; set; }
-        public string C22in12 { get; set; }
-        public string C23in12 { get; set; }
-        public string C24in12 { get; set; }
-        public string C25in12 { get; set; }
-        public string C26in12 { get; set; }
-        public string C27in12 { get; set; }
-        public string C28in12 { get; set; }
-        public string C29in12 { get; set; }
-        public string C210in12 { get; set; }
-        public string C211in12 { get; set; }
-        public string C212in12 { get; set; }
-
-        public int? CRelax1 { get; set; }
-        public int? CRelax2 { get; set; }
-
-        public Visibility HideFilter { get; set; }
-
-        private void SetFilterVisibility(object sender, SelectionChangedEventArgs e)
-        {
-            if (Filter != null)
-            {
-                Filter.Visibility = tabControl.SelectedIndex > 4 ? Visibility.Hidden : Visibility.Visible;
-            }
-        }
-
+        #region biocolor
         private void CMYK2RGB(object sender, RoutedEventArgs e)
         {
             string name = (sender as Button).Name;
@@ -1056,17 +644,6 @@ namespace StateEvaluation
             ImageGenerator.Generate(33);
         }
 
-        private void FirstnameTextbox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
-        /* private IEnumerable<string> ExeptValue()
-{
-string ShortColorsNumbersList1_Bio1 = ShortColorsNumbersList1_Biocolor1.SelectedItem?.ToString();
-MessageBox.Show(ShortColorsNumbersList1_Bio1);
-return "";   
-}*/
     }
+    #endregion
 }
-
-

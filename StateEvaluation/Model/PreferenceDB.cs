@@ -1,4 +1,6 @@
-﻿using System;
+﻿using StateEvaluation.Enums;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
@@ -18,87 +20,98 @@ namespace StateEvaluation.Model
         public Table<RelaxTable2> RelaxTable2;
         public Table<Color> Color;
         public Table<SubjectiveFeeling> SubjectiveFeeling;
-        public Table<DemboRubin> DemboRubin;
-        public Table<Depresion> Depresion;
         public Table<NormalPreference> NormalPreference;
-        public Table<ArterialPressuresInNight> ArterialPressuresInNight;
-        public Table<JournalOfAppeal> JournalOfAppeal;
-        public Table<Anthropometry> Anthropometry;
-
-        public Table<ArterialPressuresInDay> ArterialPressuresInDay;
-        public Table<ArterialPressuresGeneral> ArterialPressuresGeneral;
-        public Table<CycleErgometry> CycleErgometry;
-        public Table<CycleErgometryWithLoad> CycleErgometryWithLoad;
-        public Table<BloodTest> BloodTest;
 
         public void InsertPreference(Preference preference)
         {
-            try
-            {
-                Preference.InsertOnSubmit(preference);
-                SubmitChanges();
-            }
-            catch (SqlException)
-            {
-                MessageBox.Show("Error, when inserting in data base! May be such an UserID already exists");
-            }
+            Preference.InsertOnSubmit(preference);
+            SubmitChanges();
         }
 
-        public Preference GetPreferenceById(Guid id)
+        #region Preferences
+        public Preference GeneratePreference(Guid id)
         {
             var preference = Preference.Single(item => item.Id == id);
             return preference;
         }
-        public People GetPersonById(string id)
+
+        public IEnumerable<Preference> GetPreferences()
+        {
+            var items = this.Preference.Select(item => item).OrderByDescending(item => item.Date);
+            return items;
+        }
+
+        public void DeletePreference(string id)
+        {
+            var preference = Preference.Single(item => item.Id.ToString() == id);
+            Preference.DeleteOnSubmit(preference);
+            SubmitChanges();
+        }
+
+        public void UpdatePreference(Preference person)
+        {
+            var items = Preference.Single(item => item.Id == person.Id);
+            items.Oder1 = person.Oder1;
+            items.Oder2 = person.Oder2;
+            items.Preference1 = person.Preference1;
+            items.Preference2 = person.Preference2;
+            items.RelaxTable1 = person.RelaxTable1;
+            items.RelaxTable2 = person.RelaxTable2;
+            items.ShortOder1 = person.ShortOder1;
+            items.ShortOder2 = person.ShortOder2;
+            items.Compare = person.Preference1 == person.Preference2 ? StringBooleanValues.True : StringBooleanValues.False;
+            SubmitChanges();
+        }
+
+        public IEnumerable<Preference> GetPreferences(Func<Preference, bool> query)
+        {
+            var preferences = this.Preference.Where(query);
+            return preferences;
+        }
+
+        //--------------------------------
+        public IEnumerable<string> Preferences()
+        {
+            var items = this.Preference.Select(item => item.Preference1).Distinct().OrderByDescending(item => item);
+            var list = items.ToList();
+            list.Insert(0, "All");
+            return list;
+        }
+        #endregion
+
+        #region People
+        public People GetPerson(string id)
         {
             var person = People.Single(item => item.Id.ToString() == id);
             return person;
         }
-        public IEnumerable<CycleErgometry> GetAllCycleErgometry()
+        public IEnumerable<People> GetPeople()
         {
-            var items = CycleErgometry.Select(item => item).OrderBy(item => item.UserId);
-            return items;
+            var people = this.People.Select(item => item).OrderBy(item => item.UserId);
+            return people;
         }
-        public IEnumerable<string> GetAnthropometry()
+        public People GetPersonByUserId(string userId)
         {
-            var items = Anthropometry.Select(item => item.UserId);
-            return items;
-        }
-        public void InsertInAnthropometry(Anthropometry anthropometry)
-        {
-            Anthropometry.InsertOnSubmit(anthropometry);
-            SubmitChanges();
-        }
-        public IEnumerable<string> GetATNght()
-        {
-            var items = BloodTest.Select(item => item.UserId);
-            return items;
-        }
-        public IEnumerable<People> GetAllPeople()
-        {
-            var items = this.People.Select(item => item).OrderBy(item => item.UserId);
-            return items;
-        }
-        public People GetPerson(string tempUID)
-        {
-            var items = this.People.Select(item => item).Where(item => item.UserId == tempUID);
-            People person = new People();
-            person = items.Single();
+            var person = this.People.Select(item => item).Where(item => item.UserId == userId).Single();
             return person;
         }
-        public void InsertEntityInSubjectiveFeeling(SubjectiveFeeling sf)
+
+        public void UpdatePerson(People person)
         {
-            if (sf.Date.ToString() == "" || sf.UserId == null)
-            {
-                MessageBox.Show("Error! Some fields are empty");
-            }
-            else
-            {
-                SubjectiveFeeling.InsertOnSubmit(sf);
-                SubmitChanges();
-            }
+            var items = this.People.Where(item => item.Id == person.Id).Single<People>();
+            items.Id = person.Id;
+            items.Firstname = person.Firstname;
+            items.Lastname = person.Lastname;
+            items.Middlename = person.Middlename;
+            items.Birthday = person.Birthday;
+            items.Workposition = person.Workposition;
+            items.Expedition = person.Expedition;
+            items.Number = person.Number;
+            items.UserId = person.UserId;
+            SubmitChanges();
         }
-        public void InsertEntityInPeople(People person)
+
+        public void CreatePerson(People person)
         {
             try
             {
@@ -110,48 +123,35 @@ namespace StateEvaluation.Model
                 MessageBox.Show("Error, when inserting in data base! May be such an UserID already exists");
             }
         }
-        public IEnumerable<Preference> GetAllTests()
-        { //.Where(item => item.UserId.StartsWith("Ex20"))
-            var items = this.Preference.Select(item => item).OrderByDescending(item => item.Date);
-            return items;
-        }
-        public IEnumerable<Anthropometry> GetAllAnthropometry()
-        {
-            var items = Anthropometry.Select(item => item).OrderByDescending(item => item.Date);
-            return items;
-        }
 
-        internal void DeletePerson(string id)
+        internal void Delete(string id)
         {
             var person = People.Single(item => item.Id.ToString() == id);
             People.DeleteOnSubmit(person);
             SubmitChanges();
         }
 
-        public IEnumerable<SubjectiveFeeling> GetAllSubjecriveFeelings()
-        {
-            var items = this.SubjectiveFeeling.Select(item => item).OrderBy(item => item.Date);
-            return items;
-        }
-        public IEnumerable<string> CodesForFilter()
-        {
-            var list = CodesForInsert().ToList();
-            list.Insert(0, "All");
-            return list;
-        }
-        public IEnumerable<string> CodesForInsert()
+        public IEnumerable<string> UserIds()
         {
             var items = this.People.Select(item => item.UserId).Distinct().OrderByDescending(item => item);
             var list = items.ToList();
             return list;
         }
-        public IEnumerable<string> Preferences()
+
+        public IEnumerable<People> GetPeople(Func<People, bool> query)
         {
-            var items = this.Preference.Select(item => item.Preference1).Distinct().OrderByDescending(item => item);
-            var list = items.ToList();
+            var person = this.People.Where(query);
+            return person;
+        }
+
+        //refactor!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+        public IEnumerable<string> GetUserIds()
+        {
+            var list = UserIds().ToList();
             list.Insert(0, "All");
             return list;
         }
+
         public IEnumerable<string> Professions()
         {
             var items = this.People.Select(item => item.Workposition).Distinct().OrderByDescending(item => item);
@@ -159,7 +159,8 @@ namespace StateEvaluation.Model
             list.Insert(0, "All");
             return list;
         }
-        public IEnumerable<string> ExpeditionCodes()
+
+        public IEnumerable<string> GetExpeditionCodes()
         {
             IEnumerable<string> items = this.People.Select(item => item.Expedition.ToString()).Distinct().OrderByDescending(item => Convert.ToInt32(item));
             List<string> list = items.ToList().ToList();
@@ -168,7 +169,7 @@ namespace StateEvaluation.Model
             return list;
         }
 
-        public IEnumerable<string> PeopleCodes()
+        public IEnumerable<string> GetPeopleNumbers()
         {
             IEnumerable<string> items = this.People.Select(item => item.Number.ToString()).Distinct().OrderBy(item => Convert.ToInt32(item));
             List<string> list = items.ToList().ToList();
@@ -176,73 +177,62 @@ namespace StateEvaluation.Model
             list.Insert(0, "All");
             return list;
         }
-        public void UpdateTestInPreference(Preference person)
+        #endregion
+
+        #region Subjective feeling
+        public void RemoveSubjectiveFeeling(Guid subjectiveFeelingId)
         {
-            var items = this.Preference.Where(item => item.Id == person.Id).Single<Preference>();
-            items.Oder1 = person.Oder1;
-            items.Oder2 = person.Oder2;
-            items.Preference1 = person.Preference1;
-            items.Preference2 = person.Preference2;
-            items.RelaxTable1 = person.RelaxTable1;
-            items.RelaxTable2 = person.RelaxTable2;
-            items.ShortOder1 = person.ShortOder1;
-            items.ShortOder2 = person.ShortOder2;
-            items.Compare = person.Preference1 == person.Preference2 ? "true" : "false";
+            var subjectiveFeeling = SubjectiveFeeling.Single(item => item.Id == subjectiveFeelingId);
+            SubjectiveFeeling.DeleteOnSubmit(subjectiveFeeling);
             SubmitChanges();
         }
-        public void UpdateTestInPreference(People people)
+
+        public SubjectiveFeeling GetSubjectiveFeeling(Guid id)
         {
-            var items = this.People.Where(item => item.Id == people.Id).Single<People>();
-            items.Id = people.Id;
-            items.Firstname = people.Firstname;
-            items.Lastname = people.Lastname;
-            items.Birthday = people.Birthday;
-            items.Workposition = people.Workposition;
-            items.Expedition = people.Expedition;
-            items.Number = people.Number;
-            items.UserId = people.UserId;
+            var subjectiveFeeling = SubjectiveFeeling.Single(item => item.Id == id);
+            return subjectiveFeeling;
+        }
+
+        public void CreateSubjectiveFeeling(SubjectiveFeeling sf)
+        {
+            SubjectiveFeeling.InsertOnSubmit(sf);
             SubmitChanges();
         }
-        public void UpdateTestInPreference(SubjectiveFeeling feeling)
+
+        public void UpdateSubjectiveFeeling(SubjectiveFeeling newSubjectiveFeeling)
         {
-            var items = this.SubjectiveFeeling.Where(item => item.Id == feeling.Id).Single<SubjectiveFeeling>();
-            items.GeneralWeaknes = feeling.GeneralWeaknes;
-            items.PoorAppetite = feeling.PoorAppetite;
-            items.PoorSleep = feeling.PoorSleep;
-            items.BadMood = feeling.BadMood;
-            items.HeavyHead = feeling.HeavyHead;
-            items.SlowThink = feeling.SlowThink;
-            items.UserId = feeling.UserId;
-            items.Date = feeling.Date;
-            SubmitChanges();
+            var subjectiveFeeling = SubjectiveFeeling.Single(item => item.Id == newSubjectiveFeeling.Id);
+            subjectiveFeeling.BadMood = newSubjectiveFeeling.BadMood;
+            subjectiveFeeling.Date = newSubjectiveFeeling.Date;
+            subjectiveFeeling.GeneralWeaknes = newSubjectiveFeeling.GeneralWeaknes;
+            subjectiveFeeling.HeavyHead = newSubjectiveFeeling.HeavyHead;
+            subjectiveFeeling.PoorAppetite = newSubjectiveFeeling.PoorAppetite;
+            subjectiveFeeling.SlowThink = newSubjectiveFeeling.SlowThink;
+            subjectiveFeeling.UserId = newSubjectiveFeeling.UserId;
         }
-        public IEnumerable<string> ShortColorsNumbersList()
+        public IEnumerable<SubjectiveFeeling> GetSubjecriveFeelings()
+        {
+            var items = this.SubjectiveFeeling.Select(item => item).OrderBy(item => item.Date);
+            return items;
+        }
+
+        public IEnumerable<SubjectiveFeeling> GetSubjecriveFeelings(Func<SubjectiveFeeling, bool> query)
+        {
+            var items = SubjectiveFeeling.Where(query);
+            return items;
+        }
+        #endregion
+
+        public IEnumerable<string> GetShortColorsNumbersList()
         {
             string[] list = { "3", "7", "11" };
             return list;
         }
-        public IEnumerable<string> ColorsNumbersList()
+        public IEnumerable<string> GetColorsNumbersList()
         {
             string[] list = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
             return list;
-        }
+        }   
 
-        internal void DeletePreference(string id)
-        {
-            var preference = Preference.Single(item => item.Id.ToString() == id);
-            Preference.DeleteOnSubmit(preference);
-            SubmitChanges();
-        }
-
-        public IEnumerable<string> ShortColorsNumbersList(string x1, string x2)
-        {
-            string[] list = { x1, x2 };
-            return list;
-        }
-        public IEnumerable<string> ShortColorsNumbersList(string x1)
-        {
-            string[] list = { x1 };
-            return list;
-        }
     }
 }
