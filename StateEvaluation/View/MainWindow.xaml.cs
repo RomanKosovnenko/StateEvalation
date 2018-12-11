@@ -34,14 +34,22 @@ namespace StateEvaluation
         private PreferenceFilterVM preferenceFilter;
         private PeopleFilterVM peopleFilter;
         private SubjectiveFeelingFilterVM subjectiveFeelingFilter;
-        private FilterBussinesManager filterBussinesManager = new FilterBussinesManager();
+        private FilterBussinesManager filterBussinesManager;
+        private BiocolorProvider biocolorProvider;
+        private ImageGenerator imageGenerator;
 
         #region ctor
         public MainWindow()
         {
             InitializeComponent();
             this.DataContext = this;
-            BioColor.Main.InitBioColor(BioColorGraph, Date, DateNow);
+
+            biocolorProvider = new BiocolorProvider();
+            imageGenerator = new ImageGenerator();
+
+            biocolorProvider.InitBioColor(BioColorGraph, Date, DateNow);
+
+            filterBussinesManager = new FilterBussinesManager();
 
             peopleFilter = (PeopleFilterVM)Resources["peopleFilterVM"];
             preferenceFilter = (PreferenceFilterVM)Resources["preferenceFilterVM"];
@@ -494,11 +502,11 @@ namespace StateEvaluation
         #endregion
 
         private const int STEP = 7;
-        private void Prew(object sender, RoutedEventArgs e) => BioColor.Main.MakeStep(-STEP);
-        private void Next(object sender, RoutedEventArgs e) => BioColor.Main.MakeStep(+STEP);
-        private void Menu(object sender, RoutedEventArgs e) => BioColor.Main.Menu();
-        private void Generate(object sender, RoutedEventArgs e) => BioColor.Main.Generate();
-        private void DrawGraphs(object sender, RoutedEventArgs e) => BioColor.Main.DrawGraphs();
+        private void Prew(object sender, RoutedEventArgs e) => biocolorProvider.MakeStep(-STEP);
+        private void Next(object sender, RoutedEventArgs e) => biocolorProvider.MakeStep(+STEP);
+        private void Menu(object sender, RoutedEventArgs e) => biocolorProvider.Menu();
+        private void Generate(object sender, RoutedEventArgs e) => biocolorProvider.Generate();
+        private void DrawGraphs(object sender, RoutedEventArgs e) => biocolorProvider.DrawGraphs();
 
         private void WindowRendered(object sender, EventArgs e)
         {
@@ -551,16 +559,16 @@ namespace StateEvaluation
             int.TryParse((FindName("y" + factor + "c" + id) as TextBox).Text.ToString(), out int Y);
             int.TryParse((FindName("k" + factor + "c" + id) as TextBox).Text.ToString(), out int K);
 
-            if (new List<int> { C, M, Y, K }.Any(x => x < 0 || x > ImageGenerator.MAX))
+            if (new List<int> { C, M, Y, K }.Any(x => x < 0 || x > imageGenerator.MAX))
             {
                 MessageBox.Show("Invalid color");
                 return;
             }
 
-            int[] RGB = ImageGenerator.CmykToRgb(C, M, Y, K);
+            int[] RGB = imageGenerator.CmykToRgb(C, M, Y, K);
             string rgb = String.Format("{0:X2}{1:X2}{2:X2}", RGB[0], RGB[1], RGB[2]);
             (FindName(factor + "c" + id) as TextBox).Text = rgb;
-            if (ImageGenerator.HEX.IsMatch(rgb))
+            if (imageGenerator.HEX.IsMatch(rgb))
             {
                 (FindName(factor + "cb" + id) as GeometryDrawing).Brush = (Brush)new BrushConverter().ConvertFromString("#" + rgb);
             }
@@ -601,7 +609,7 @@ namespace StateEvaluation
                 var factor = name.Substring(0, 1);
                 var id = name.Substring(name.Length - 1);
 
-                int[] CMYK = ImageGenerator.RgbToCmyk(element.Text);
+                int[] CMYK = imageGenerator.RgbToCmyk(element.Text);
 
                 (FindName("c" + factor + "c" + id) as TextBox).Text = CMYK[0].ToString();
                 (FindName("m" + factor + "c" + id) as TextBox).Text = CMYK[1].ToString();
@@ -619,7 +627,7 @@ namespace StateEvaluation
         }
         internal void SaveColors()
         {
-            if (new List<TextBox> { ic1, ic2, ic3, ic4, ec1, ec2, ec3, ec4, pc1, pc2, pc3, pc4 }.Any(x => !ImageGenerator.HEX.IsMatch(x.Text.ToUpper())))
+            if (new List<TextBox> { ic1, ic2, ic3, ic4, ec1, ec2, ec3, ec4, pc1, pc2, pc3, pc4 }.Any(x => !imageGenerator.HEX.IsMatch(x.Text.ToUpper())))
             {
                 MessageBox.Show("Invalid color!");
                 return;
@@ -639,9 +647,9 @@ namespace StateEvaluation
             Settings.Default.Save();
 
             RestoreColors();
-            ImageGenerator.Generate(23);
-            ImageGenerator.Generate(28);
-            ImageGenerator.Generate(33);
+            imageGenerator.Generate(23);
+            imageGenerator.Generate(28);
+            imageGenerator.Generate(33);
         }
 
     }

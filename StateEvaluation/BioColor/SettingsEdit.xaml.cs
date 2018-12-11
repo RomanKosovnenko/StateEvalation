@@ -8,9 +8,12 @@ namespace StateEvaluation.BioColor
     /// </summary>
     public partial class SettingsEdit : Window
     {
+        private ImageGenerator imageGenerator;
+
         public SettingsEdit()
         {
             InitializeComponent();
+            imageGenerator = new ImageGenerator();
         }
         private string FilePicker()
         {
@@ -68,9 +71,9 @@ namespace StateEvaluation.BioColor
             c.ShowDialog();
             c.Save();
 
-            ImageGenerator.Generate(23);
-            ImageGenerator.Generate(28);
-            ImageGenerator.Generate(33);
+            imageGenerator.Generate(23);
+            imageGenerator.Generate(28);
+            imageGenerator.Generate(33);
         }
     }
 }

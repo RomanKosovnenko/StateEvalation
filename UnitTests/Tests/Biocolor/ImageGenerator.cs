@@ -11,10 +11,12 @@ namespace UnitTests
         {
             //set var
             string RGB = "test color";
-            int[] expectResult = new int[1] ;
+            int[] expectResult = new int[1];
+
+            var imageGenerator = new ImageGenerator();
 
             //action
-            var result = ImageGenerator.RgbToCmyk(RGB);
+            var result = imageGenerator.RgbToCmyk(RGB);
 
             //checked result
             Assert.Equal(expectResult, result);

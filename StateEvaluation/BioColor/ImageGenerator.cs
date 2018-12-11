@@ -4,15 +4,24 @@ using System.Text.RegularExpressions;
 
 namespace StateEvaluation.BioColor
 {
-    public static class ImageGenerator
+    public class ImageGenerator
     {
-        public static Regex HEX = new Regex(@"^([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$");
-        private static readonly int SquareSize = Settings.Default.square;
-        private static Graphics _graphics;
-        private static string[] _colors;
-        public const float MAX = 0xFF;
-        public const int MAX_HEX = 0xFF;
-        public static int[] RgbToCmyk(string RGB)
+        public Regex HEX;
+        private readonly int SquareSize;
+        private Graphics _graphics;
+        private string[] _colors;
+        public float MAX;
+        public int MAX_HEX;
+
+        public ImageGenerator()
+        {
+            HEX = new Regex(@"^([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$");
+           // SquareSize = Settings.Default.square;
+            MAX = 0xFF;
+            MAX_HEX = 0xFF;
+        }
+
+        public int[] RgbToCmyk(string RGB)
         {
             var match = HEX.Match(RGB.ToUpper());
             try
@@ -22,15 +31,16 @@ namespace StateEvaluation.BioColor
                 int B = int.Parse(match.Groups[3].Value, NumberStyles.HexNumber);
                 return RgbToCmyk(R, G, B);
             }
-            catch (System.FormatException) {
-                return new int[] { 0, 0, 0, 0};
+            catch (System.FormatException)
+            {
+                return new int[] { 0, 0, 0, 0 };
             }
         }
-        public static int[] RgbToCmyk(Color color)
+        public int[] RgbToCmyk(Color color)
         {
             return RgbToCmyk(color.R, color.G, color.B);
         }
-        public static int[] RgbToCmyk(int R, int G, int B)
+        public int[] RgbToCmyk(int R, int G, int B)
         {
             if (R == 0 && G == 0 && B == 0)
             {
@@ -40,21 +50,20 @@ namespace StateEvaluation.BioColor
             {
                 int K = MAX_HEX - System.Math.Max(R, System.Math.Max(G, B));
                 int k = (int)(MAX * K / MAX_HEX);
-                // K = 0;
                 int c = (int)(MAX * (MAX_HEX - R - K) / (MAX_HEX - K));
                 int m = (int)(MAX * (MAX_HEX - G - K) / (MAX_HEX - K));
                 int y = (int)(MAX * (MAX_HEX - B - K) / (MAX_HEX - K));
                 return new int[] { c, m, y, k };
             }
         }
-        public static int[] CmykToRgb(int C, int M, int Y, int K)
+        public int[] CmykToRgb(int C, int M, int Y, int K)
         {
             int R = (int)((1 - C / MAX) * (1 - K / MAX) * MAX_HEX);
             int G = (int)((1 - M / MAX) * (1 - K / MAX) * MAX_HEX);
             int B = (int)((1 - Y / MAX) * (1 - K / MAX) * MAX_HEX);
             return new int[] { R, G, B };
         }
-        private static void DrawSquare(Point upperLeft, string color, bool reverse = false)
+        private void DrawSquare(Point upperLeft, string color, bool reverse = false)
         {
             _graphics.FillRectangle(
                 new SolidBrush(ColorTranslator.FromHtml(color)),
@@ -67,7 +76,7 @@ namespace StateEvaluation.BioColor
                 }
             );
         }
-        private static void DrawColumn(Point point, int startIndex, int count, bool reverse = false)
+        private void DrawColumn(Point point, int startIndex, int count, bool reverse = false)
         {
             for (int i = -2; i < 12 && i < count; ++i)
             {
@@ -78,7 +87,7 @@ namespace StateEvaluation.BioColor
                 }, _colors[(startIndex + i + _colors.Length) % _colors.Length], reverse);
             }
         }
-        private static void DrawTriangle(Point point, int startIndex, bool reverse = false)
+        private void DrawTriangle(Point point, int startIndex, bool reverse = false)
         {
             for (int j = 0; j < 12; ++j)
             {
@@ -95,7 +104,8 @@ namespace StateEvaluation.BioColor
                 }, startIndex, 12 - j, reverse);
             }
         }
-        private static void RestoreColors() {
+        private void RestoreColors()
+        {
             _colors = new[] {
                 "#" + Settings.Default.i1,
                 "#" + Settings.Default.i2,
@@ -111,11 +121,11 @@ namespace StateEvaluation.BioColor
                 "#" + Settings.Default.p4
             };
         }
-        public static void Generate(int width)
+        public void Generate(int width)
         {
             RestoreColors();
             Bitmap image = new Bitmap(width * SquareSize, 24 * SquareSize);
-			_graphics = Graphics.FromImage(image);
+            _graphics = Graphics.FromImage(image);
 
 
             Point topPoint = new Point((int)((width / 4.0 * 3 - 0.5) * SquareSize), 0);
@@ -124,9 +134,9 @@ namespace StateEvaluation.BioColor
 
             switch (width)
             {
-                case 23: startIndex = 8 +2 ; break;
-                case 28: startIndex = 4 +2 ; break;
-                case 33: startIndex = 0 +2 ; break;
+                case 23: startIndex = 8 + 2; break;
+                case 28: startIndex = 4 + 2; break;
+                case 33: startIndex = 0 + 2; break;
 
             }
 

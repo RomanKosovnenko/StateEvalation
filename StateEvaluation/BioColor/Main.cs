@@ -9,24 +9,47 @@ using System.Windows.Media.Imaging;
 
 namespace StateEvaluation.BioColor
 {
-    internal static class Main
+    public class BiocolorProvider
     {
-        // BioColor 
-        private static Grid _myGrid;
-        private static DatePicker _birthDate, _nowDate;
+        private Grid _myGrid;
+        private DatePicker _birthDate;
+        private DatePicker _nowDate;
 
-        private const int RangeRed = 23, RangeGreen = 28, RangeBlue = 33;
-        private const int HalfHexFf = 128, Height = 480, Zero = 0;
-        private static readonly int Mid = Settings.Default.mid,
-               Square = Settings.Default.square;
-        private static readonly double Alpha = Settings.Default.alpha;
+        private const int RangeRed = 23;
+        private const int RangeGreen = 28;
+        private const int RangeBlue = 33;
+        private const int HalfHexFf = 128;
+        private const int Height = 480;
+        private const int Zero = 0;
+        private readonly int Mid;
+        private readonly int Square;
+        private double Alpha;
 
-        private static readonly int IntRed = Settings.Default.Int_Red,
-            IntGreen = Settings.Default.Int_Green,
+        private readonly int IntRed;
+        private readonly int IntGreen;
+        private readonly int IntBlue;
+        private int[] days;
+        private readonly string[] paths;
+
+        private Function function;
+        private ImageGenerator imageGenerator;
+
+        public BiocolorProvider()
+        {
+            Mid = Settings.Default.mid;
+            Square = Settings.Default.square;
+            Alpha = Settings.Default.alpha;
+            IntRed = Settings.Default.Int_Red;
+            IntGreen = Settings.Default.Int_Green;
             IntBlue = Settings.Default.Int_Blue;
-        private static int[] days = new int[] { 23, 28, 33 };
-        private static string[] paths = new string[days.Length];
-        public static void InitBioColor(Grid myGrid, DatePicker birthDate, DatePicker nowDate)
+            days = new int[] { 23, 28, 33 };
+            paths = new string[days.Length];
+
+            function = new Function();
+            imageGenerator = new ImageGenerator();
+        }
+
+        public void InitBioColor(Grid myGrid, DatePicker birthDate, DatePicker nowDate)
         {
             _myGrid = myGrid;
             _birthDate = birthDate;
@@ -35,17 +58,17 @@ namespace StateEvaluation.BioColor
                 paths[i] = System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/Image_" + days[i] + ".png";
             }
         }
-        public static void MakeStep(int step)
+        public void MakeStep(int step)
         {
             _nowDate.Text = Convert.ToDateTime(_nowDate.Text).AddDays(step).ToString(CultureInfo.CurrentCulture);
             DrawPicture();
         }
-        public static void DrawGraphs()
+        public void DrawGraphs()
         {
             DrawPicture();
         }
 
-        private static void DrawPicture()
+        private void DrawPicture()
         {
             try
             {
@@ -64,15 +87,9 @@ namespace StateEvaluation.BioColor
                 Bitmap b;
                 Bitmap w;
                 _myGrid.Children.Clear();
-                Function.GetCanvasImage(paths[0], IntRed, delta, _myGrid);
-                Function.GetCanvasImage(paths[1], IntGreen, delta, _myGrid);
-                Function.GetCanvasImage(paths[2], IntBlue, delta, _myGrid);
-                
-                /*
-                r = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed);
-                g = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathGreen);
-                b = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathBlue);
-                */
+                function.GetCanvasImage(paths[0], IntRed, delta, _myGrid);
+                function.GetCanvasImage(paths[1], IntGreen, delta, _myGrid);
+                function.GetCanvasImage(paths[2], IntBlue, delta, _myGrid);
 
                 using (var fs = new System.IO.FileStream(paths[0], System.IO.FileMode.Open))
                 {
@@ -89,22 +106,6 @@ namespace StateEvaluation.BioColor
                     
                 w = new Bitmap(width, Height);
                 
-                /*    Bitmap r;
-                    Bitmap g;
-                    Bitmap b;
-                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed,   System.IO.FileMode.Open))
-                    {
-                        r = (Bitmap)new Bitmap(fs).Clone();
-                    }
-                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathGreen, System.IO.FileMode.Open))
-                    {
-                        g = (Bitmap)new Bitmap(fs).Clone();
-                    }
-                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathBlue,  System.IO.FileMode.Open))
-                    {
-                        b = (Bitmap)new Bitmap(fs).Clone();
-                    }
-                    */
                 for (int x = Zero; x < width; ++x)
                 {
                     for (int y = Height / 2 - 1; Zero < y; --y)
@@ -118,7 +119,7 @@ namespace StateEvaluation.BioColor
                             rColor.A < HalfHexFf && bColor.A < HalfHexFf ||
                             gColor.A < HalfHexFf && bColor.A < HalfHexFf
                             ) break;
-                        w.SetPixel(x, y, Function.ColorMix(rColor, gColor, bColor));
+                        w.SetPixel(x, y, function.ColorMix(rColor, gColor, bColor));
 
                     }
                     for (int y = Height / 2; y < Height; ++y)
@@ -132,7 +133,7 @@ namespace StateEvaluation.BioColor
                             rColor.A < HalfHexFf && bColor.A < HalfHexFf ||
                             gColor.A < HalfHexFf && bColor.A < HalfHexFf
                             ) break;
-                        w.SetPixel(x, y, Function.ColorMix(rColor, gColor, bColor));
+                        w.SetPixel(x, y, function.ColorMix(rColor, gColor, bColor));
 
                     }
                 }
@@ -157,7 +158,7 @@ namespace StateEvaluation.BioColor
                 };
 
                 _myGrid.Children.Add(myCanvas);
-                Function.DrawClear(_myGrid);
+                function.DrawClear(_myGrid);
 
             }
             catch (FormatException)
@@ -166,28 +167,21 @@ namespace StateEvaluation.BioColor
             }
 
         }
-        public static void Menu()
+        public void Menu()
         {
             Colors c = new Colors();
             c.ShowDialog();
             c.Save();
 
-            ImageGenerator.Generate(23);
-            ImageGenerator.Generate(28);
-            ImageGenerator.Generate(33);
-            /*
-            SettingsEdit s = new SettingsEdit();
-            s.ShowDialog();
-            s.Get();
-            */
+            imageGenerator.Generate(23);
+            imageGenerator.Generate(28);
+            imageGenerator.Generate(33);
         }
-        public static void Generate()
+        public void Generate()
         {
-            ImageGenerator.Generate(RangeRed);
-            ImageGenerator.Generate(RangeGreen);
-            ImageGenerator.Generate(RangeBlue);
-            // Application.Current.Shutdown(); 
-            // myGrid.Children.Add();
+            imageGenerator.Generate(RangeRed);
+            imageGenerator.Generate(RangeGreen);
+            imageGenerator.Generate(RangeBlue);
         }
     }
 }
