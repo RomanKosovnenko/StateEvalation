@@ -100,7 +100,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="BioColor\Colors.cs" />
-    <Compile Include="BioColor\Function.cs" />
     <Compile Include="BioColor\Main.cs" />
     <Compile Include="BioColor\ImageGenerator.cs" />
     <Compile Include="BioColor\Settings.Designer.cs">
