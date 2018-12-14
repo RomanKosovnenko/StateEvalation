@@ -50,7 +50,7 @@ namespace StateEvaluation.BioColor
                 }, startIndex, 12 - j, reverse);
             }
         }
-        private static void RestoreColors() {
+        private static void LoadColorsFromSettings() {
             _colors = new[] {
                 "#" + Settings.Default.i1,
                 "#" + Settings.Default.i2,
@@ -66,9 +66,9 @@ namespace StateEvaluation.BioColor
                 "#" + Settings.Default.p4
             };
         }
-        public static void GenerateColoredImages(int width)
+        public static void GenerateImages(int width)
         {
-            RestoreColors();
+            LoadColorsFromSettings();
             Bitmap image = new Bitmap(width * SquareSize, 24 * SquareSize);
 			_graphics = Graphics.FromImage(image);
 

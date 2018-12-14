@@ -496,7 +496,7 @@ namespace StateEvaluation
         private const int STEP = 7;
         private void Prew(object sender, RoutedEventArgs e) => BioColor.Main.MakeStep(-STEP);
         private void Next(object sender, RoutedEventArgs e) => BioColor.Main.MakeStep(+STEP);
-        private void Generate(object sender, RoutedEventArgs e) => BioColor.Main.Generate();
+        private void Generate(object sender, RoutedEventArgs e) => BioColor.Main.GenerateImages();
         private void DrawGraphs(object sender, RoutedEventArgs e) => BioColor.Main.DrawGraphs();
 
         private void WindowRendered(object sender, EventArgs e)
@@ -638,9 +638,9 @@ namespace StateEvaluation
             Settings.Default.Save();
 
             RestoreColors();
-            ImageGenerator.GenerateColoredImages(23);
-            ImageGenerator.GenerateColoredImages(28);
-            ImageGenerator.GenerateColoredImages(33);
+            ImageGenerator.GenerateImages(23);
+            ImageGenerator.GenerateImages(28);
+            ImageGenerator.GenerateImages(33);
         }
 
     }
