@@ -9,19 +9,32 @@ namespace StateEvaluation.BioColor
         private static readonly int SquareSize = Settings.Default.square;
         private static Graphics _graphics;
         private static string[] _colors;
-        private static void DrawSquare(Point upperLeft, string color, bool reverse = false)
+        /// <summary>
+        /// Draw square on template
+        /// </summary>
+        /// <param name="point">top left coordinate</param>
+        /// <param name="color">Color of square</param>
+        /// <param name="reverse">Top/Bottom square</param>
+        private static void DrawSquare(Point point, string color, bool reverse = false)
         {
             _graphics.FillRectangle(
                 new SolidBrush(ColorTranslator.FromHtml(color)),
                 new Rectangle
                 {
-                    Y = upperLeft.Y - (reverse ? SquareSize : 0),
-                    X = upperLeft.X,
+                    Y = point.Y - (reverse ? SquareSize : 0),
+                    X = point.X,
                     Width = SquareSize,
                     Height = SquareSize
                 }
             );
         }
+        /// <summary>
+        /// Draw column of squares on template
+        /// </summary>
+        /// <param name="point">Top left coordinate of column</param>
+        /// <param name="startIndex">Index of color of first square in column</param>
+        /// <param name="count">Count of squares in column</param>
+        /// <param name="reverse">Top/Bottom column</param>
         private static void DrawColumn(Point point, int startIndex, int count, bool reverse = false)
         {
             for (int i = -2; i < 12 && i < count; ++i)
@@ -33,6 +46,12 @@ namespace StateEvaluation.BioColor
                 }, _colors[(startIndex + i + _colors.Length) % _colors.Length], reverse);
             }
         }
+        /// <summary>
+        /// Draw triangle from columns on template
+        /// </summary>
+        /// <param name="point">Top left coordinate of top square</param>
+        /// <param name="startIndex">Index of color of top square in triangle</param>
+        /// <param name="reverse">Top/Bottom triangle</param>
         private static void DrawTriangle(Point point, int startIndex, bool reverse = false)
         {
             for (int j = 0; j < 12; ++j)
@@ -50,6 +69,9 @@ namespace StateEvaluation.BioColor
                 }, startIndex, 12 - j, reverse);
             }
         }
+        /// <summary>
+        /// Load Colors from User settings
+        /// </summary>
         private static void LoadColorsFromSettings() {
             _colors = new[] {
                 "#" + Settings.Default.i1,
@@ -66,6 +88,10 @@ namespace StateEvaluation.BioColor
                 "#" + Settings.Default.p4
             };
         }
+        /// <summary>
+        /// Generates Images for 23, 28, 33 days from templates
+        /// </summary>
+        /// <param name="width">Count of days</param>
         public static void GenerateImages(int width)
         {
             LoadColorsFromSettings();
