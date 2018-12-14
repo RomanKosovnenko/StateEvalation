@@ -558,7 +558,6 @@
 
                     <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Prew" Margin="569,34,0,0" Grid.ColumnSpan="2" Content="Назад" />
                     <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Next" Margin="658,34,0,0" Grid.ColumnSpan="2" Content="Вперед" />
-                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Menu" Margin="926,26,0,0" Grid.ColumnSpan="2" Visibility="Hidden">Menu</Button>
 
                     <DatePicker Height="25" Width="102" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="161,34,0,0" Name="DateNow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}" Grid.ColumnSpan="2"/>
                     <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="379,34,0,0" Click="DrawGraphs" Grid.ColumnSpan="2">Построить графики</Button>

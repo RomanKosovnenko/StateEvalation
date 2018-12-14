@@ -99,15 +99,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BioColor\Colors.cs" />
     <Compile Include="BioColor\Function.cs" />
     <Compile Include="BioColor\Main.cs" />
-    <Compile Include="BioColor\Colors.xaml.cs">
-      <DependentUpon>Colors.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BioColor\ImageGenerator.cs" />
-    <Compile Include="BioColor\SettingsEdit.xaml.cs">
-      <DependentUpon>SettingsEdit.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BioColor\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -162,14 +157,6 @@
     <Compile Include="View\TestsChart.xaml.cs">
       <DependentUpon>TestsChart.xaml</DependentUpon>
     </Compile>
-    <Page Include="BioColor\Colors.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="BioColor\SettingsEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\FeelingsChart.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

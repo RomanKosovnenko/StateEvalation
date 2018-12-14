@@ -68,12 +68,6 @@ namespace StateEvaluation.BioColor
                 Function.GetCanvasImage(paths[1], IntGreen, delta, _myGrid);
                 Function.GetCanvasImage(paths[2], IntBlue, delta, _myGrid);
                 
-                /*
-                r = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed);
-                g = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathGreen);
-                b = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathBlue);
-                */
-
                 using (var fs = new System.IO.FileStream(paths[0], System.IO.FileMode.Open))
                 {
                     r = (Bitmap)new Bitmap(fs).Clone();
@@ -89,22 +83,6 @@ namespace StateEvaluation.BioColor
                     
                 w = new Bitmap(width, Height);
                 
-                /*    Bitmap r;
-                    Bitmap g;
-                    Bitmap b;
-                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed,   System.IO.FileMode.Open))
-                    {
-                        r = (Bitmap)new Bitmap(fs).Clone();
-                    }
-                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathGreen, System.IO.FileMode.Open))
-                    {
-                        g = (Bitmap)new Bitmap(fs).Clone();
-                    }
-                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathBlue,  System.IO.FileMode.Open))
-                    {
-                        b = (Bitmap)new Bitmap(fs).Clone();
-                    }
-                    */
                 for (int x = Zero; x < width; ++x)
                 {
                     for (int y = Height / 2 - 1; Zero < y; --y)
@@ -118,7 +96,7 @@ namespace StateEvaluation.BioColor
                             rColor.A < HalfHexFf && bColor.A < HalfHexFf ||
                             gColor.A < HalfHexFf && bColor.A < HalfHexFf
                             ) break;
-                        w.SetPixel(x, y, Function.ColorMix(rColor, gColor, bColor));
+                        w.SetPixel(x, y, Colors.Mix(rColor, gColor, bColor));
 
                     }
                     for (int y = Height / 2; y < Height; ++y)
@@ -132,7 +110,7 @@ namespace StateEvaluation.BioColor
                             rColor.A < HalfHexFf && bColor.A < HalfHexFf ||
                             gColor.A < HalfHexFf && bColor.A < HalfHexFf
                             ) break;
-                        w.SetPixel(x, y, Function.ColorMix(rColor, gColor, bColor));
+                        w.SetPixel(x, y, Colors.Mix(rColor, gColor, bColor));
 
                     }
                 }
@@ -160,34 +138,21 @@ namespace StateEvaluation.BioColor
                 Function.DrawClear(_myGrid);
 
             }
+            catch (System.IO.FileNotFoundException)
+            {
+                Generate();
+            }
             catch (FormatException)
             {
                 MessageBox.Show("Incorrect Date!");
             }
-
         }
-        public static void Menu()
-        {
-            Colors c = new Colors();
-            c.ShowDialog();
-            c.Save();
 
-            ImageGenerator.Generate(23);
-            ImageGenerator.Generate(28);
-            ImageGenerator.Generate(33);
-            /*
-            SettingsEdit s = new SettingsEdit();
-            s.ShowDialog();
-            s.Get();
-            */
-        }
         public static void Generate()
         {
-            ImageGenerator.Generate(RangeRed);
-            ImageGenerator.Generate(RangeGreen);
-            ImageGenerator.Generate(RangeBlue);
-            // Application.Current.Shutdown(); 
-            // myGrid.Children.Add();
+            ImageGenerator.GenerateColoredImages(RangeRed);
+            ImageGenerator.GenerateColoredImages(RangeGreen);
+            ImageGenerator.GenerateColoredImages(RangeBlue);
         }
     }
 }
