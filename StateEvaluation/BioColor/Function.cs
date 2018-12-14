@@ -20,7 +20,6 @@ namespace StateEvaluation.BioColor
                screen_H = 1080;
         internal static Color ColorMix(Color c1, Color c2, Color c3)
         {
-
             const int DIVIDER_3 = 3;
             const int DIVIDER_2 = 2;
             const int SPLACER = 128;
@@ -38,12 +37,6 @@ namespace StateEvaluation.BioColor
                     (C1[3] + C2[3] + C3[3]) / DIVIDER_3
                 );
                 return Color.FromArgb(RGB[0], RGB[1], RGB[2]);
-
-                return Color.FromArgb(
-                    (byte)((c1.R + c2.R + c3.R) / DIVIDER_3),
-                    (byte)((c1.G + c2.G + c3.G) / DIVIDER_3),
-                    (byte)((c1.B + c2.B + c3.B) / DIVIDER_3)
-                );
             }
             else if (c1.A > SPLACER && c2.A > SPLACER ||
                     c2.A > SPLACER && c3.A > SPLACER ||
@@ -56,12 +49,6 @@ namespace StateEvaluation.BioColor
                     (C1[3] + C2[3] + C3[3]) / DIVIDER_2
                 );
                 return Color.FromArgb(RGB[0], RGB[1], RGB[2]);
-
-                return Color.FromArgb(
-                    (byte)((c1.R + c2.R + c3.R) / DIVIDER_2),
-                    (byte)((c1.G + c2.G + c3.G) / DIVIDER_2),
-                    (byte)((c1.B + c2.B + c3.B) / DIVIDER_2)
-                );
             }
             else
             {
@@ -71,60 +58,10 @@ namespace StateEvaluation.BioColor
                 else return Color.FromArgb(0, 0, 0, 0);
             }
         }
-        /*
-        internal static Color ColorMix(Color c1, Color c2, Color c3)
-        {
-
-            const int DIVIDER_3 = 4;
-            const int DIVIDER_2 = 4;
-            const int SPLACER = 128;
-
-            if (c1.A > SPLACER && c2.A > SPLACER && c3.A > SPLACER)
-            {
-                return Color.FromArgb(
-                    (byte)((c1.R + c2.R + c3.R) / DIVIDER_3),
-                    (byte)((c1.G + c2.G + c3.G) / DIVIDER_3),
-                    (byte)((c1.B + c2.B + c3.B) / DIVIDER_3)
-                );
-            }
-            else if (c1.A > SPLACER && c2.A > SPLACER ||
-                    c2.A > SPLACER && c3.A > SPLACER ||
-                    c3.A > SPLACER && c1.A > SPLACER)
-            {
-                return Color.FromArgb(
-                    (byte)((c1.R + c2.R + c3.R) / DIVIDER_2),
-                    (byte)((c1.G + c2.G + c3.G) / DIVIDER_2),
-                    (byte)((c1.B + c2.B + c3.B) / DIVIDER_2)
-                );
-            }
-            else
-            {
-                if (c1.A > SPLACER) return c1;
-                else if (c2.A > SPLACER) return c2;
-                else if (c3.A > SPLACER) return c3;
-                else return Color.FromArgb(0, 0, 0, 0);
-            }
-        }
-        */
 
 
         static public void DrawClear(Grid myGrid)
         {
-            // myGrid.Children.Clear();
-            /*
-            System.Windows.Shapes.Rectangle rectangle = new System.Windows.Shapes.Rectangle
-            {
-                Fill = System.Windows.Media.Brushes.White,
-                VerticalAlignment = VerticalAlignment.Top,
-                HorizontalAlignment = HorizontalAlignment.Left
-            };
-            Thickness margin = rectangle.Margin;
-            margin.Top = topline;
-            rectangle.Margin = margin;
-            rectangle.Width = screen_W;
-            rectangle.Height = screen_H;
-            myGrid.Children.Add(rectangle);
-            */
             Line myLine = new Line
             {
                 Stroke = System.Windows.Media.Brushes.Black,
@@ -169,10 +106,6 @@ namespace StateEvaluation.BioColor
             catch (System.IO.FileNotFoundException)
             {
                 Main.Generate();
-            }
-            finally
-            {
-
             }
         }
 

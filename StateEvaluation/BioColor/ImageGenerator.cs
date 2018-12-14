@@ -12,6 +12,21 @@ namespace StateEvaluation.BioColor
         private static string[] _colors;
         public const float MAX = 0xFF;
         public const int MAX_HEX = 0xFF;
+        public static int[] RgbToCmyk(string RGB, Regex HEX)
+        {
+            var match = HEX.Match(RGB.ToUpper());
+            try
+            {
+                int R = int.Parse(match.Groups[1].Value, NumberStyles.HexNumber);
+                int G = int.Parse(match.Groups[2].Value, NumberStyles.HexNumber);
+                int B = int.Parse(match.Groups[3].Value, NumberStyles.HexNumber);
+                return RgbToCmyk(R, G, B);
+            }
+            catch (System.FormatException)
+            {
+                return new int[] { 0, 0, 0, 0 };
+            }
+        }
         public static int[] RgbToCmyk(string RGB)
         {
             var match = HEX.Match(RGB.ToUpper());

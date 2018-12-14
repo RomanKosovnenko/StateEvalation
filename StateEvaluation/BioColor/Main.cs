@@ -67,12 +67,6 @@ namespace StateEvaluation.BioColor
                 Function.GetCanvasImage(paths[0], IntRed, delta, _myGrid);
                 Function.GetCanvasImage(paths[1], IntGreen, delta, _myGrid);
                 Function.GetCanvasImage(paths[2], IntBlue, delta, _myGrid);
-                
-                /*
-                r = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed);
-                g = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathGreen);
-                b = new Bitmap(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathBlue);
-                */
 
                 using (var fs = new System.IO.FileStream(paths[0], System.IO.FileMode.Open))
                 {
@@ -88,23 +82,7 @@ namespace StateEvaluation.BioColor
                 }
                     
                 w = new Bitmap(width, Height);
-                
-                /*    Bitmap r;
-                    Bitmap g;
-                    Bitmap b;
-                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathRed,   System.IO.FileMode.Open))
-                    {
-                        r = (Bitmap)new Bitmap(fs).Clone();
-                    }
-                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathGreen, System.IO.FileMode.Open))
-                    {
-                        g = (Bitmap)new Bitmap(fs).Clone();
-                    }
-                    using (var fs = new System.IO.FileStream(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/" + _pathBlue,  System.IO.FileMode.Open))
-                    {
-                        b = (Bitmap)new Bitmap(fs).Clone();
-                    }
-                    */
+
                 for (int x = Zero; x < width; ++x)
                 {
                     for (int y = Height / 2 - 1; Zero < y; --y)
@@ -175,19 +153,12 @@ namespace StateEvaluation.BioColor
             ImageGenerator.Generate(23);
             ImageGenerator.Generate(28);
             ImageGenerator.Generate(33);
-            /*
-            SettingsEdit s = new SettingsEdit();
-            s.ShowDialog();
-            s.Get();
-            */
         }
         public static void Generate()
         {
             ImageGenerator.Generate(RangeRed);
             ImageGenerator.Generate(RangeGreen);
             ImageGenerator.Generate(RangeBlue);
-            // Application.Current.Shutdown(); 
-            // myGrid.Children.Add();
         }
     }
 }
