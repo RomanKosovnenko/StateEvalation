@@ -18,11 +18,12 @@ namespace StateEvaluation.BioColor
 
         private const int RangeRed = 23, RangeGreen = 28, RangeBlue = 33;
         private const int HalfHexFf = 128, Height = 480, Zero = 0;
-        private static readonly int Mid = Settings.Default.mid,
-               Square = Settings.Default.square;
+        private static readonly int 
+            Mid = Settings.Default.mid,
+            Square = Settings.Default.square;
         private static readonly double Alpha = Settings.Default.alpha;
-
-        private static readonly int IntRed = Settings.Default.Int_Red,
+        private static readonly int 
+            IntRed = Settings.Default.Int_Red,
             IntGreen = Settings.Default.Int_Green,
             IntBlue = Settings.Default.Int_Blue;
         private static int[] days = new int[] { 23, 28, 33 };
@@ -45,7 +46,10 @@ namespace StateEvaluation.BioColor
         {
             DrawPicture();
         }
-
+        /// <summary>
+        /// Draw Pictures for selected Birthday and for selected Date
+        /// Generates three canvases and adds it together
+        /// </summary>
         private static void DrawPicture()
         {
             try
@@ -136,7 +140,7 @@ namespace StateEvaluation.BioColor
                 };
 
                 _myGrid.Children.Add(myCanvas);
-                ClearGrid(_myGrid);
+                DrawTodayLine(_myGrid);
 
             }
             catch (System.IO.FileNotFoundException)
@@ -148,7 +152,9 @@ namespace StateEvaluation.BioColor
                 MessageBox.Show("Incorrect Date!");
             }
         }
-
+        /// <summary>
+        /// Generate Emotional, Intellectual, Physical images if files not found
+        /// </summary>
         public static void GenerateImages()
         {
             ImageGenerator.GenerateImages(RangeRed);
@@ -163,8 +169,11 @@ namespace StateEvaluation.BioColor
         static double alpha = Settings.Default.alpha,
                screen_W = 1920,
                screen_H = 1080;
-
-        static public void ClearGrid(Grid myGrid)
+        /// <summary>
+        /// Draw vertical line for today
+        /// </summary>
+        /// <param name="myGrid"></param>
+        static public void DrawTodayLine(Grid myGrid)
         {
             Line myLine = new Line
             {
@@ -177,11 +186,17 @@ namespace StateEvaluation.BioColor
             };
             myGrid.Children.Add(myLine);
         }
-
-        public static void GenerateCanvasImage(string a, int x, int Delta, Grid myGrid)
+        /// <summary>
+        /// Generates canvas image from given file for some range
+        /// </summary>
+        /// <param name="path">Path to image file</param>
+        /// <param name="daysCount">Count of days of given image</param>
+        /// <param name="Delta">Difference between Birthdate and Given date in days</param>
+        /// <param name="myGrid"></param>
+        public static void GenerateCanvasImage(string path, int daysCount, int Delta, Grid myGrid)
         {
             BitmapImage theImage = new BitmapImage();
-            var stream = File.OpenRead(a);
+            var stream = File.OpenRead(path);
             theImage.BeginInit();
             theImage.CacheOption = BitmapCacheOption.OnLoad;
             theImage.StreamSource = stream;
@@ -189,7 +204,7 @@ namespace StateEvaluation.BioColor
             stream.Close();
             stream.Dispose();
 
-            System.Windows.Media.ImageBrush myImageBrush = new System.Windows.Media.ImageBrush(theImage);
+            ImageBrush myImageBrush = new ImageBrush(theImage);
 
             for (int i = -range; i <= range * 3; ++i)
             {
@@ -200,7 +215,7 @@ namespace StateEvaluation.BioColor
                     Background = myImageBrush,
                     Opacity = alpha,
                     HorizontalAlignment = HorizontalAlignment.Left,
-                    Margin = new Thickness(i * square * x - Delta % x * square + mid, 0, 0, 0)
+                    Margin = new Thickness(i * square * daysCount - Delta % daysCount * square + mid, 0, 0, 0)
                 });
             }
         }
