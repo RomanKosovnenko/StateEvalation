@@ -616,7 +616,7 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
                     <DataGridTextColumn Header="Код" Width="auto" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}" FontSize="14"/>
-                    <DataGridTextColumn Header="Дата" Width="auto" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="Дата" Width="auto" Binding="{Binding Date, StringFormat=\{0:d\}, ConverterCulture=uk-UA}" ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor I START -->
                     <!-- BioColor I (Three) -->
                     <DataGridTemplateColumn Header="Короткий 1" Width="auto" ClipboardContentBinding="{x:Null}"
