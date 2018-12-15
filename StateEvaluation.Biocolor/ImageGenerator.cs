@@ -127,14 +127,14 @@ namespace StateEvaluation.BioColor
 
             Color alpha = Color.FromArgb(0, 255, 255, 255);
 
-            string s = System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/base_" + width + ".png";
+            string s = System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/Assets/Template/base_" + width + ".png";
             Bitmap baseImage = new Bitmap(s);
             for (int i = 0; i < image.Width; ++i)
                 for (int j = 0; j < image.Height; ++j)
                 {
                     if (baseImage.GetPixel(i, j).A == 0) image.SetPixel(i, j, alpha);
                 }
-            image.Save(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/Image_" + width + ".png");
+            image.Save(System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/Assets/Template/Image_" + width + ".png");
 
         }
     }

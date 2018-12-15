@@ -54,7 +54,7 @@ namespace StateEvaluation.BioColor
             _birthDate = birthDate;
             _nowDate = nowDate;
             for (int i = 0; i < days.Length; ++i) {
-                paths[i] = System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/Image_" + days[i] + ".png";
+                paths[i] = "../../../StateEvaluation.Biocolor/Assets/Template/Image_" + days[i] + ".png";
             }
         }
         public void MakeStep(int step)
