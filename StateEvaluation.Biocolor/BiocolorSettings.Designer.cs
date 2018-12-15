@@ -8,16 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StateEvaluation.BioColor {
+namespace StateEvaluation.Biocolor {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.9.0.0")]
-    public sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class BiocolorSettings : global::System.Configuration.ApplicationSettingsBase {
         
-        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        private static BiocolorSettings defaultInstance = ((BiocolorSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new BiocolorSettings())));
         
-        public static Settings Default {
+        public static BiocolorSettings Default {
             get {
                 return defaultInstance;
             }

@@ -12,7 +12,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 {
     public class PreferenceBuissnesManager
     {
-        private PreferenceDB _preferenceDb = new PreferenceDB();
+        private DataRepository _dataRepository = new DataRepository();
         private List<string> _color1in3s = new List<string>();
         private List<string> _color2in3s = new List<string>();
         private List<string> _color1in12s = new List<string>();
@@ -38,7 +38,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 {
                     var preference = GetNewPreference(preferenceVM);
 
-                    _preferenceDb.InsertPreference(preference);
+                    _dataRepository.InsertPreference(preference);
                     ClearInputsInternal(preferenceVM);
 
                     RefreshDataGrid();
@@ -59,7 +59,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             try
             {
-                _preferenceDb.DeletePreference(id);
+                _dataRepository.DeletePreference(id);
                 RefreshDataGrid();
                 MessageBox.Show("Preference was removed");
             }
@@ -78,7 +78,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                     if (IsValidPreferenseVM(preferenceVM))
                     {
                         var preference = GetNewPreference(preferenceVM, new Guid(preferenceVM.Id));
-                        _preferenceDb.UpdatePreference(preference);
+                        _dataRepository.UpdatePreference(preference);
                     }
                     else
                     {
@@ -98,7 +98,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             try
             {
-                var preference = _preferenceDb.GeneratePreference(preferenceId);
+                var preference = _dataRepository.GeneratePreference(preferenceId);
                 SetValueInTabs(preferenceVM, preference);
                 _previouspreferenceVM = preferenceVM;
                 
@@ -116,6 +116,10 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             ClearInputsInternal(preferenceVM);
         }
 
+        public Preference GetPreference(Preference preference)
+        {
+            return _dataRepository.GetPreference(preference);
+        }
         #region private methods
         private void ToggleButton(Button button, Visibility visibility)
         {
@@ -132,7 +136,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         private void RefreshDataGrid()
         {
-            PreferenceDataGrid.ItemsSource = _preferenceDb.GetPreferences();
+            PreferenceDataGrid.ItemsSource = _dataRepository.GetPreferences();
         }
 
         private bool IsValidPreferenseVM(PreferenceVM preferenceVM)

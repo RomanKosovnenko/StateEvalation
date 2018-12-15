@@ -11,7 +11,7 @@ namespace StateEvaluation.BussinesLayer.Providers
 {
     public class FilterProvider
     {
-        private PreferenceDB _preferenceDb = new PreferenceDB();
+        private DataRepository _dataRepository = new DataRepository();
 
         public IEnumerable Filter(object filter)
         {
@@ -72,11 +72,11 @@ namespace StateEvaluation.BussinesLayer.Providers
                 DateTime dateTo = peopleFilter.DateTo != null ? DateTime.Parse(peopleFilter.DateTo.ToString()) : new DateTime();
                 DateTime dateFrom = peopleFilter.DateFrom != null ? DateTime.Parse(peopleFilter.DateFrom.ToString()) : new DateTime();
 
-                people = _preferenceDb.GetPeople(GetPeopleQuery(peopleFilter, dateFrom, dateTo));
+                people = _dataRepository.GetPeople(GetPeopleQuery(peopleFilter, dateFrom, dateTo));
 
                 return people;
             }
-            people = _preferenceDb.GetPeople();
+            people = _dataRepository.GetPeople();
             return people;
         }
 
@@ -92,17 +92,17 @@ namespace StateEvaluation.BussinesLayer.Providers
 
                 //get people regarding person number and expedition
                 List<string> allowedUserIds = new List<string>();
-                var people = _preferenceDb.GetPeople(GetBaseQuery(preferenceFilter, dateFrom, dateTo));
+                var people = _dataRepository.GetPeople(GetBaseQuery(preferenceFilter, dateFrom, dateTo));
                 foreach (var person in people.ToList())
                 {
                     allowedUserIds.Add(person.UserId.ToString().Trim());
                 }
                 
-                preferences = _preferenceDb.GetPreferences(GetPreferenceQuery(preferenceFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
+                preferences = _dataRepository.GetPreferences(GetPreferenceQuery(preferenceFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
                 
                 return preferences;
             }
-            preferences = _preferenceDb.GetPreferences();
+            preferences = _dataRepository.GetPreferences();
             return preferences;
         }
 
@@ -118,16 +118,16 @@ namespace StateEvaluation.BussinesLayer.Providers
 
                 //get people regarding person number and expedition
                 List<string> allowedUserIds = new List<string>();
-                var people = _preferenceDb.GetPeople(GetBaseQuery(subjectiveFeelingFilter, dateFrom, dateTo));
+                var people = _dataRepository.GetPeople(GetBaseQuery(subjectiveFeelingFilter, dateFrom, dateTo));
                 foreach (var person in people.ToList())
                 {
                     allowedUserIds.Add(person.UserId.ToString().Trim());
                 }
             
-                subjectiveFeelings = _preferenceDb.GetSubjecriveFeelings(GetSubjectiveFeelingQuery(subjectiveFeelingFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
+                subjectiveFeelings = _dataRepository.GetSubjecriveFeelings(GetSubjectiveFeelingQuery(subjectiveFeelingFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
                 return subjectiveFeelings;
             }
-            subjectiveFeelings = _preferenceDb.GetSubjecriveFeelings();
+            subjectiveFeelings = _dataRepository.GetSubjecriveFeelings();
             return subjectiveFeelings;
         }
 

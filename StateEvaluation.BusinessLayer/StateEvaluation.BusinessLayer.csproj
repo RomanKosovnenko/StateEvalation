@@ -41,6 +41,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BuissnesManagers\BiocolorBusinessManager.cs" />
     <Compile Include="BuissnesManagers\ChartBussinesManager.cs" />
     <Compile Include="BuissnesManagers\FilterBussinesManager.cs" />
     <Compile Include="BuissnesManagers\PeopleBuissnesManager.cs" />
@@ -64,6 +66,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StateEvaluation.Biocolor\StateEvaluation.Biocolor.csproj">
+      <Project>{A79CC582-E5A0-4386-9382-0F32981361E7}</Project>
+      <Name>StateEvaluation.Biocolor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StateEvaluation.Common\StateEvaluation.Common.csproj">
       <Project>{e071fc3a-d3ef-46ac-b4b0-478b92509cf5}</Project>
       <Name>StateEvaluation.Common</Name>

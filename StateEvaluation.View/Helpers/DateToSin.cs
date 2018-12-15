@@ -21,7 +21,7 @@ namespace StateEvaluation.View.Helpers
             string userid = value.ToString().Trim();
 
 
-            MainWindow.people.TryGetValue(userid, out string birthday);
+            MainWindow.userIdBirthPairs.TryGetValue(userid, out string birthday);
 
             if (birthday == null || birthday.Trim().Length == 0)
             {

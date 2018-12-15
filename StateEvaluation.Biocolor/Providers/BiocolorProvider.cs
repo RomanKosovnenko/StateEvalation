@@ -8,7 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace StateEvaluation.BioColor
+namespace StateEvaluation.BioColor.Providers
 {
     public class BiocolorProvider
     {
@@ -16,12 +16,18 @@ namespace StateEvaluation.BioColor
         private DatePicker _birthDate;
         private DatePicker _nowDate;
 
-        private const int RangeRed = 23;
-        private const int RangeGreen = 28;
-        private const int RangeBlue = 33;
+
+
         private const int HalfHexFf = 128;
         private const int Height = 480;
+
+        private const int Screen_W = 1920;
+        private const int Screen_H = 1080;
+
         private const int Zero = 0;
+
+        private const int Range = 2;
+
         private readonly int Mid;
         private readonly int Square;
         private double Alpha;
@@ -29,32 +35,36 @@ namespace StateEvaluation.BioColor
         private readonly int IntRed;
         private readonly int IntGreen;
         private readonly int IntBlue;
+        private readonly int Topline;
         private int[] days;
         private readonly string[] paths;
+        
+        private Helpers.BiocolorSettings biocolorSettings;
 
-        private ImageGenerator imageGenerator;
-
-        public BiocolorProvider()
+        public BiocolorProvider(Helpers.BiocolorSettings biocolorSettings)
         {
-            Mid = Settings.Default.mid;
-            Square = Settings.Default.square;
-            Alpha = Settings.Default.alpha;
-            IntRed = Settings.Default.Int_Red;
-            IntGreen = Settings.Default.Int_Green;
-            IntBlue = Settings.Default.Int_Blue;
+            this.biocolorSettings = biocolorSettings;
+
+            Mid = biocolorSettings.Mid;
+            Square = biocolorSettings.Square;
+            Alpha = biocolorSettings.Alpha;
+            IntRed = biocolorSettings.Int_Red;
+            IntGreen = biocolorSettings.Int_Green;
+            IntBlue = biocolorSettings.Int_Blue;
+            Topline = biocolorSettings.Topline;
             days = new int[] { 23, 28, 33 };
             paths = new string[days.Length];
-
-            imageGenerator = new ImageGenerator();
+            
+            biocolorSettings = new Helpers.BiocolorSettings();
         }
 
-        public void InitBioColor(Grid myGrid, DatePicker birthDate, DatePicker nowDate)
+        public void InitBiocolor(Grid myGrid, DatePicker birthDate, DatePicker nowDate)
         {
             _myGrid = myGrid;
             _birthDate = birthDate;
             _nowDate = nowDate;
             for (int i = 0; i < days.Length; ++i) {
-                paths[i] = "../../../StateEvaluation.Biocolor/Assets/Template/Image_" + days[i] + ".png";
+                paths[i] = Directory.GetCurrentDirectory() + "../../../Assets/Templates/Image_" + days[i] + ".png";
             }
         }
         public void MakeStep(int step)
@@ -66,6 +76,7 @@ namespace StateEvaluation.BioColor
         {
             DrawPicture();
         }
+
         /// <summary>
         /// Draw Pictures for selected Birthday and for selected Date
         /// Generates three canvases and adds it together
@@ -121,7 +132,7 @@ namespace StateEvaluation.BioColor
                             rColor.A < HalfHexFf && bColor.A < HalfHexFf ||
                             gColor.A < HalfHexFf && bColor.A < HalfHexFf
                             ) break;
-                        w.SetPixel(x, y, Colors.Mix(rColor, gColor, bColor));
+                        w.SetPixel(x, y, Helpers.ColorConverter.Mix(rColor, gColor, bColor));
 
                     }
                     for (int y = Height / 2; y < Height; ++y)
@@ -135,7 +146,7 @@ namespace StateEvaluation.BioColor
                             rColor.A < HalfHexFf && bColor.A < HalfHexFf ||
                             gColor.A < HalfHexFf && bColor.A < HalfHexFf
                             ) break;
-                        w.SetPixel(x, y, Colors.Mix(rColor, gColor, bColor));
+                        w.SetPixel(x, y, Helpers.ColorConverter.Mix(rColor, gColor, bColor));
 
                     }
                 }
@@ -163,49 +174,30 @@ namespace StateEvaluation.BioColor
                 DrawTodayLine(_myGrid);
 
             }
-            catch (System.IO.FileNotFoundException)
-            {
-                GenerateImages();
-            }
             catch (FormatException)
             {
                 MessageBox.Show("Incorrect Date!");
             }
         }
-        /// <summary>
-        /// Generate Emotional, Intellectual, Physical images if files not found
-        /// </summary>
-        public void GenerateImages()
-        {
-            imageGenerator.GenerateImages(RangeRed);
-            imageGenerator.GenerateImages(RangeGreen);
-            imageGenerator.GenerateImages(RangeBlue);
-        }
-        static int mid = Settings.Default.mid,
-               square = Settings.Default.square,
-               topline = Settings.Default.topline,
-               step = Settings.Default.step,
-               range = 2;
-        static double alpha = Settings.Default.alpha,
-               screen_W = 1920,
-               screen_H = 1080;
+
         /// <summary>
         /// Draw vertical line for today
         /// </summary>
         /// <param name="myGrid"></param>
-        static public void DrawTodayLine(Grid myGrid)
+        public void DrawTodayLine(Grid myGrid)
         {
             Line myLine = new Line
             {
                 Stroke = System.Windows.Media.Brushes.Black,
-                X1 = mid,
-                X2 = mid,
-                Y1 = topline,
-                Y2 = screen_H,
+                X1 = Mid,
+                X2 = Mid,
+                Y1 = Topline,
+                Y2 = Screen_H,
                 StrokeThickness = 1
             };
             myGrid.Children.Add(myLine);
         }
+
         /// <summary>
         /// Generates canvas image from given file for some range
         /// </summary>
@@ -226,16 +218,16 @@ namespace StateEvaluation.BioColor
 
             ImageBrush myImageBrush = new ImageBrush(theImage);
 
-            for (int i = -range; i <= range * 3; ++i)
+            for (int i = -Range; i <= Range * 3; ++i)
             {
                 myGrid.Children.Add(new Canvas
                 {
                     Width = theImage.Width,
                     Height = theImage.Height,
                     Background = myImageBrush,
-                    Opacity = alpha,
+                    Opacity = Alpha,
                     HorizontalAlignment = HorizontalAlignment.Left,
-                    Margin = new Thickness(i * square * daysCount - Delta % daysCount * square + mid, 0, 0, 0)
+                    Margin = new Thickness(i * Square * daysCount - Delta % daysCount * Square + Mid, 0, 0, 0)
                 });
             }
         }

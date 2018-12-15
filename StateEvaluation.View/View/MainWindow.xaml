@@ -13,13 +13,13 @@
         ContentRendered="WindowRendered"
         Title="Оценка состояния" Height="768" Width="1366" WindowState="Maximized">
     <Window.Resources>
-        <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetPeople"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetPreferences"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetSubjecriveFeelings"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetCodesForInsert" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetUserIds"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetUserIds"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type repository:PreferenceDB}" MethodName="Preferences"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetProfessionsList" ObjectType="{x:Type repository:PreferenceDB}" MethodName="Professions"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type repository:DataRepository}" MethodName="GetPeople"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type repository:DataRepository}" MethodName="GetPreferences"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type repository:DataRepository}" MethodName="GetSubjecriveFeelings"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetCodesForInsert" ObjectType="{x:Type repository:DataRepository}" MethodName="GetUserIds"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type repository:DataRepository}" MethodName="GetUserIds"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type repository:DataRepository}" MethodName="Preferences"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetProfessionsList" ObjectType="{x:Type repository:DataRepository}" MethodName="Professions"></ObjectDataProvider>
         <!--here defined resourses' name for exact model-->
 
         <viewModel:PeopleFilterVM x:Key="peopleFilterVM" />
@@ -30,10 +30,10 @@
         <viewModel:SubjectiveFeelingFilterVM x:Key="subjectiveFeelingFilterVM"/>
 
 
-        <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetPeopleNumbers"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetExpeditionCodes"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetShortColorsNumbersList" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetShortColorsNumbersList"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetColorsNumbersList" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetColorsNumbersList"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type repository:DataRepository}" MethodName="GetPeopleNumbers"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type repository:DataRepository}" MethodName="GetExpeditionCodes"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetShortColorsNumbersList" ObjectType="{x:Type repository:DataRepository}" MethodName="GetShortColorsNumbersList"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetColorsNumbersList" ObjectType="{x:Type repository:DataRepository}" MethodName="GetColorsNumbersList"></ObjectDataProvider>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <helpers:StringToListConverter x:Key="StringToListConverter" />
         <biocolorhelpers:NameToBrushConverter x:Key="NameToBrushConverter" />
@@ -1295,7 +1295,8 @@
                     <RowDefinition Height="599"/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Фильтры" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightGray" Margin="0,-35,0,12"/>
+                <Label Content="Фильтры" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightGray" Margin="0,-35,0,12"/>
+
                 <Grid Grid.Row="1" Margin="5,5,5,562"   Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
@@ -1418,10 +1419,10 @@
                         Margin="2"
                         Click="FilterPeople"
                         Content="Применить фильтр" Padding="0" />
-                    <!--<Button Grid.Row="2"
+                    <Button Grid.Row="3"
                         Click="AddData_OnClick"
-                        Margin="2"
-                        Content="Add" Padding="0" Grid.ColumnSpan="2" /> -->
+                        Margin="2,0,2,-18"
+                        Content="Add" Padding="0" Grid.ColumnSpan="2" />
                 </Grid>
             </Grid>
             <Grid Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto"
