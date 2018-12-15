@@ -68,6 +68,18 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         public void UpdatePerson(PeopleVM editedPerson)
         {
+            if (
+               string.IsNullOrEmpty(editedPerson.FirstName) ||
+               string.IsNullOrEmpty(editedPerson.LastName) ||
+               !DateTime.TryParse(editedPerson.Birthday.ToString(), out DateTime birthday) ||
+               string.IsNullOrEmpty(editedPerson.Workposition) ||
+               !int.TryParse(editedPerson.Expedition, out int expedition) ||
+               !int.TryParse(editedPerson.PersonNumber, out int personNumber)
+               )
+            {
+                MessageBox.Show("Error! Try edit fields in form!");
+                return;
+            }
             try
             {
                 People person = GeneratePerson(editedPerson, new Guid(editedPerson.Id));
@@ -224,11 +236,11 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         private void SetValueInTabs(People person, PeopleVM personVM)
         {
             personVM.Id = person.Id.ToString();
-            personVM.FirstName = person.Firstname;
-            personVM.LastName = person.Lastname;
-            personVM.MiddleName = person.Middlename;
+            personVM.FirstName = person.Firstname?.Trim();
+            personVM.LastName = person.Lastname?.Trim();
+            personVM.MiddleName = person.Middlename?.Trim();
             personVM.Birthday = string.IsNullOrEmpty(person.Birthday.Trim()) ? new DateTime() : DateTime.Parse(person.Birthday);
-            personVM.Workposition = person.Workposition;
+            personVM.Workposition = person.Workposition?.Trim();
             personVM.Expedition = person.Expedition.ToString().Trim();
             personVM.PersonNumber = person.Number.ToString().Trim();
         }

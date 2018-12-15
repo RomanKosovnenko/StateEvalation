@@ -558,7 +558,6 @@
 
                     <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Prew" Margin="569,34,0,0" Grid.ColumnSpan="2" Content="Назад" />
                     <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Next" Margin="658,34,0,0" Grid.ColumnSpan="2" Content="Вперед" />
-                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Menu" Margin="926,26,0,0" Grid.ColumnSpan="2" Visibility="Hidden">Menu</Button>
 
                     <DatePicker Height="25" Width="102" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="161,34,0,0" Name="DateNow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}" Grid.ColumnSpan="2"/>
                     <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="379,34,0,0" Click="DrawGraphs" Grid.ColumnSpan="2">Построить графики</Button>
@@ -616,7 +615,7 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
                     <DataGridTextColumn Header="Код" Width="auto" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}" FontSize="14"/>
-                    <DataGridTextColumn Header="Дата" Width="auto" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="Дата" Width="auto" Binding="{Binding Date, StringFormat=\{0:d\}, ConverterCulture=uk-UA}" ClipboardContentBinding="{x:Null}"/>
                     <!-- BioColor I START -->
                     <!-- BioColor I (Three) -->
                     <DataGridTemplateColumn Header="Короткий 1" Width="auto" ClipboardContentBinding="{x:Null}"

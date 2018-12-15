@@ -4,79 +4,38 @@ using System.Text.RegularExpressions;
 
 namespace StateEvaluation.BioColor
 {
-    public class ImageGenerator
+    public static class ImageGenerator
     {
-        public Regex HEX;
-        private readonly int SquareSize;
-        private Graphics _graphics;
-        private string[] _colors;
-        public float MAX;
-        public int MAX_HEX;
-
-        public ImageGenerator()
-        {
-            HEX = new Regex(@"^([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$");
-           // SquareSize = Settings.Default.square;
-            MAX = 0xFF;
-            MAX_HEX = 0xFF;
-        }
-
-        public int[] RgbToCmyk(string RGB)
-        {
-            var match = HEX.Match(RGB.ToUpper());
-            try
-            {
-                int R = int.Parse(match.Groups[1].Value, NumberStyles.HexNumber);
-                int G = int.Parse(match.Groups[2].Value, NumberStyles.HexNumber);
-                int B = int.Parse(match.Groups[3].Value, NumberStyles.HexNumber);
-                return RgbToCmyk(R, G, B);
-            }
-            catch (System.FormatException)
-            {
-                return new int[] { 0, 0, 0, 0 };
-            }
-        }
-        public int[] RgbToCmyk(Color color)
-        {
-            return RgbToCmyk(color.R, color.G, color.B);
-        }
-        public int[] RgbToCmyk(int R, int G, int B)
-        {
-            if (R == 0 && G == 0 && B == 0)
-            {
-                return new int[] { 0, 0, 0, (int)MAX };
-            }
-            else
-            {
-                int K = MAX_HEX - System.Math.Max(R, System.Math.Max(G, B));
-                int k = (int)(MAX * K / MAX_HEX);
-                int c = (int)(MAX * (MAX_HEX - R - K) / (MAX_HEX - K));
-                int m = (int)(MAX * (MAX_HEX - G - K) / (MAX_HEX - K));
-                int y = (int)(MAX * (MAX_HEX - B - K) / (MAX_HEX - K));
-                return new int[] { c, m, y, k };
-            }
-        }
-        public int[] CmykToRgb(int C, int M, int Y, int K)
-        {
-            int R = (int)((1 - C / MAX) * (1 - K / MAX) * MAX_HEX);
-            int G = (int)((1 - M / MAX) * (1 - K / MAX) * MAX_HEX);
-            int B = (int)((1 - Y / MAX) * (1 - K / MAX) * MAX_HEX);
-            return new int[] { R, G, B };
-        }
-        private void DrawSquare(Point upperLeft, string color, bool reverse = false)
+        private static readonly int SquareSize = Settings.Default.square;
+        private static Graphics _graphics;
+        private static string[] _colors;
+        /// <summary>
+        /// Draw square on template
+        /// </summary>
+        /// <param name="point">top left coordinate</param>
+        /// <param name="color">Color of square</param>
+        /// <param name="reverse">Top/Bottom square</param>
+        private static void DrawSquare(Point point, string color, bool reverse = false)
         {
             _graphics.FillRectangle(
                 new SolidBrush(ColorTranslator.FromHtml(color)),
                 new Rectangle
                 {
-                    Y = upperLeft.Y - (reverse ? SquareSize : 0),
-                    X = upperLeft.X,
+                    Y = point.Y - (reverse ? SquareSize : 0),
+                    X = point.X,
                     Width = SquareSize,
                     Height = SquareSize
                 }
             );
         }
-        private void DrawColumn(Point point, int startIndex, int count, bool reverse = false)
+        /// <summary>
+        /// Draw column of squares on template
+        /// </summary>
+        /// <param name="point">Top left coordinate of column</param>
+        /// <param name="startIndex">Index of color of first square in column</param>
+        /// <param name="count">Count of squares in column</param>
+        /// <param name="reverse">Top/Bottom column</param>
+        private static void DrawColumn(Point point, int startIndex, int count, bool reverse = false)
         {
             for (int i = -2; i < 12 && i < count; ++i)
             {
@@ -87,7 +46,13 @@ namespace StateEvaluation.BioColor
                 }, _colors[(startIndex + i + _colors.Length) % _colors.Length], reverse);
             }
         }
-        private void DrawTriangle(Point point, int startIndex, bool reverse = false)
+        /// <summary>
+        /// Draw triangle from columns on template
+        /// </summary>
+        /// <param name="point">Top left coordinate of top square</param>
+        /// <param name="startIndex">Index of color of top square in triangle</param>
+        /// <param name="reverse">Top/Bottom triangle</param>
+        private static void DrawTriangle(Point point, int startIndex, bool reverse = false)
         {
             for (int j = 0; j < 12; ++j)
             {
@@ -104,8 +69,10 @@ namespace StateEvaluation.BioColor
                 }, startIndex, 12 - j, reverse);
             }
         }
-        private void RestoreColors()
-        {
+        /// <summary>
+        /// Load Colors from User settings
+        /// </summary>
+        private static void LoadColorsFromSettings() {
             _colors = new[] {
                 "#" + Settings.Default.i1,
                 "#" + Settings.Default.i2,
@@ -121,11 +88,15 @@ namespace StateEvaluation.BioColor
                 "#" + Settings.Default.p4
             };
         }
-        public void Generate(int width)
+        /// <summary>
+        /// Generates Images for 23, 28, 33 days from templates
+        /// </summary>
+        /// <param name="width">Count of days</param>
+        public static void GenerateImages(int width)
         {
-            RestoreColors();
+            LoadColorsFromSettings();
             Bitmap image = new Bitmap(width * SquareSize, 24 * SquareSize);
-            _graphics = Graphics.FromImage(image);
+			_graphics = Graphics.FromImage(image);
 
 
             Point topPoint = new Point((int)((width / 4.0 * 3 - 0.5) * SquareSize), 0);
@@ -134,9 +105,9 @@ namespace StateEvaluation.BioColor
 
             switch (width)
             {
-                case 23: startIndex = 8 + 2; break;
-                case 28: startIndex = 4 + 2; break;
-                case 33: startIndex = 0 + 2; break;
+                case 23: startIndex = 8 +2 ; break;
+                case 28: startIndex = 4 +2 ; break;
+                case 33: startIndex = 0 +2 ; break;
 
             }
 
