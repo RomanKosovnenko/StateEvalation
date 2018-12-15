@@ -7,7 +7,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 {
     public class ChartBussinesManager
     {
-        public PreferenceDB _preferenceDB = new PreferenceDB();
+        public DataRepository _dataRepository = new DataRepository();
 
         public void BuildChart(IEnumerable<Preference> preferences, DateTime? dateFrom, DateTime? dateTo)
         {

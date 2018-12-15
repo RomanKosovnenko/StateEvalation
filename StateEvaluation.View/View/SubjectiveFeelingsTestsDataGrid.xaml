@@ -10,9 +10,9 @@
              xmlns:biocolorhelpers="clr-namespace:StateEvaluation.BioColor.Helpers;assembly=StateEvaluation.Biocolor"
              mc:Ignorable="d">
     <UserControl.Resources>
-        <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllPeople"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllTests"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllSubjecriveFeelings"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:DataRepository}" MethodName="GetAllPeople"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:DataRepository}" MethodName="GetAllTests"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type model:DataRepository}" MethodName="GetAllSubjecriveFeelings"></ObjectDataProvider>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <helpers:StringToListConverter x:Key="StringToListConverter" />
         <biocolorhelpers:NameToBrushConverter x:Key="NameToBrushConverter" />

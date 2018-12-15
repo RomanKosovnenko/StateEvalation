@@ -1,6 +1,7 @@
 using System;
 using Xunit;
 using StateEvaluation;
+using StateEvaluation.BioColor.Helpers;
 
 namespace UnitTests
 {
@@ -10,16 +11,16 @@ namespace UnitTests
         public void RgbToCmyk()
         {
             //set var
-            //string RGB = "test color";
-            //int[] expectResult = new int[1];
-            //
-            //var imageGenerator = new ImageGenerator();
-            //
-            ////action
-            //var result = imageGenerator.RgbToCmyk(RGB);
-            //
-            ////checked result
-            //Assert.Equal(expectResult, result);
+            string RGB = "test color";
+            int[] expectResult = new int[1];
+            
+            //var colorConvertor = new ColorConverter();
+            
+            //action
+            var result = ColorConverter.RgbToCmyk(RGB);
+            
+            //checked result
+            Assert.Equal(expectResult, result);
 
         }
     }

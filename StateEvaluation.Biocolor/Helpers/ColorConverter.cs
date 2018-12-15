@@ -2,13 +2,14 @@
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace StateEvaluation.BioColor
+namespace StateEvaluation.BioColor.Helpers
 {
-    public class Colors
+    public class ColorConverter
     {
         public static Regex HEX = new Regex(@"^([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$");
         public const float MAX = 0xFF;
         public const int MAX_HEX = 0xFF;
+
         /// <summary>
         /// Convert RGB string to CMYK array
         /// </summary>
@@ -29,6 +30,7 @@ namespace StateEvaluation.BioColor
                 return new int[] { 0, 0, 0, 0 };
             }
         }
+
         /// <summary>
         /// Convert RGB Color to CMYK array
         /// </summary>
@@ -38,6 +40,7 @@ namespace StateEvaluation.BioColor
         {
             return RgbToCmyk(color.R, color.G, color.B);
         }
+
         /// <summary>
         /// Convert (R, G, B) to CMYK array
         /// </summary>
@@ -61,6 +64,7 @@ namespace StateEvaluation.BioColor
                 return new int[] { c, m, y, k };
             }
         }
+
         /// <summary>
         /// Convert (C, M, Y, K) to RGB array
         /// </summary>
@@ -76,6 +80,7 @@ namespace StateEvaluation.BioColor
             int B = (int)((1 - Y / MAX) * (1 - K / MAX) * MAX_HEX);
             return new int[] { R, G, B };
         }
+
         /// <summary>
         /// Natural Color mixing. Mix 3 colors into 1
         /// </summary>
@@ -83,7 +88,7 @@ namespace StateEvaluation.BioColor
         /// <param name="c2">Color</param>
         /// <param name="c3">Color</param>
         /// <returns>Color</returns>
-        internal static Color Mix(Color c1, Color c2, Color c3)
+        public static Color Mix(Color c1, Color c2, Color c3)
         {
 
             const int DIVIDER_3 = 3;
@@ -96,7 +101,7 @@ namespace StateEvaluation.BioColor
 
             if (c1.A > SPLACER && c2.A > SPLACER && c3.A > SPLACER)
             {
-                int[] RGB = Colors.CmykToRgb(
+                int[] RGB = ColorConverter.CmykToRgb(
                     (C1[0] + C2[0] + C3[0]) / DIVIDER_3,
                     (C1[1] + C2[1] + C3[1]) / DIVIDER_3,
                     (C1[2] + C2[2] + C3[2]) / DIVIDER_3,
@@ -108,7 +113,7 @@ namespace StateEvaluation.BioColor
                     c2.A > SPLACER && c3.A > SPLACER ||
                     c3.A > SPLACER && c1.A > SPLACER)
             {
-                int[] RGB = Colors.CmykToRgb(
+                int[] RGB = ColorConverter.CmykToRgb(
                     (C1[0] + C2[0] + C3[0]) / DIVIDER_2,
                     (C1[1] + C2[1] + C3[1]) / DIVIDER_2,
                     (C1[2] + C2[2] + C3[2]) / DIVIDER_2,

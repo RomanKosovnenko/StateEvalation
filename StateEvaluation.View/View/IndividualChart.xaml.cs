@@ -15,11 +15,11 @@ namespace StateEvaluation.View
     {
         int ChartType = 1;
         Preference test = new Preference();
-        PreferenceDB _preferenceDb = new PreferenceDB();
+        DataRepository _dataRepository = new DataRepository();
         ChartValues<ViewModel> values1 = new ChartValues<ViewModel>();
         ChartValues<ViewModel> values2 = new ChartValues<ViewModel>();
         //public IndividualChart(List<byte> LongSTR, string title )
-        public IndividualChart(Preference Item, PreferenceDB _preferenceDb)
+        public IndividualChart(Preference Item)
         {
             test = Item;
             InitializeComponent();
@@ -51,7 +51,7 @@ namespace StateEvaluation.View
 
         private double GetIntensiveByNumber(byte v)
         {
-            return _preferenceDb.Color.Single(item => item.ColorNumber == Convert.ToInt32(v)).Intensity;
+            return _dataRepository.Color.Single(item => item.ColorNumber == Convert.ToInt32(v)).Intensity;
         }
 
         public SeriesCollection Series { get; set; }
@@ -64,7 +64,7 @@ namespace StateEvaluation.View
         }
         private int GetWaveByNumber(byte number)
         {
-            return _preferenceDb.Color.Single(item => item.ColorNumber == Convert.ToInt32(number)).WaveLengthMax;
+            return _dataRepository.Color.Single(item => item.ColorNumber == Convert.ToInt32(number)).WaveLengthMax;
         }
 
         private void ChartChanger_Click(object sender, RoutedEventArgs e)

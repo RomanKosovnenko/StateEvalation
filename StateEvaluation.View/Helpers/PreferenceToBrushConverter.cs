@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Windows.Data;
 using System.Windows.Media;
-using StateEvaluation.BioColor;
+using StateEvaluation.BioColor.Helpers;
 
 namespace StateEvaluation.View.Helpers
 {
     public class PreferenceToBrushConverter : IValueConverter
     {
+        BiocolorSettings biocolorSettings;
+
+        public PreferenceToBrushConverter()
+        {
+            biocolorSettings = new BiocolorSettings();
+        }
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             string input = value?.ToString()?.Trim();
@@ -14,13 +20,13 @@ namespace StateEvaluation.View.Helpers
             switch (input)
             {
                 case "Красная":
-                    color = Settings.Default.p3; // Brushes.Red;
+                    color = biocolorSettings.P3; // Brushes.Red;
                     break;
                 case "Синяя":
-                    color = Settings.Default.i3; // Brushes.Blue;
+                    color = biocolorSettings.I3; // Brushes.Blue;
                     break;
                 case "Желтая":
-                    color = Settings.Default.e3; // Brushes.Yellow;
+                    color = biocolorSettings.E3; // Brushes.Yellow;
                     break;
                 case "Смешанная":
                     return Brushes.Gray;

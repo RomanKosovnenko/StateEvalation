@@ -9,7 +9,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 {
     public class SubjectiveFeelingBuissnesManager
     {
-        private PreferenceDB _preferenceDb = new PreferenceDB();
+        private DataRepository _dataRepository = new DataRepository();
 
         public DataGrid SubjectiveFeelingDataGrid { get; }
         public Button UpdateSubjectiveFeelingBtn { get; }
@@ -25,7 +25,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             try
             {
                 var subjectiveFeeling = GenerateSubjectiveFeeling(subjectiveFeelingMV, subjectiveFeelingId);
-                _preferenceDb.UpdateSubjectiveFeeling(subjectiveFeeling);
+                _dataRepository.UpdateSubjectiveFeeling(subjectiveFeeling);
                 ClearInputsInternal(subjectiveFeelingMV);
 
                 RefreshDataGrid();
@@ -44,7 +44,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             try
             {
-                _preferenceDb.RemoveSubjectiveFeeling(subjectiveFeelingId);
+                _dataRepository.RemoveSubjectiveFeeling(subjectiveFeelingId);
                 RefreshDataGrid();
 
                 MessageBox.Show("Subjective feeling was removed");
@@ -62,7 +62,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 if (IsValidSubjectiveFeelingVM(subjectiveFeelingVM))
                 {
                     SubjectiveFeeling subjectiveFeeling = GenerateSubjectiveFeeling(subjectiveFeelingVM);
-                    _preferenceDb.CreateSubjectiveFeeling(subjectiveFeeling);
+                    _dataRepository.CreateSubjectiveFeeling(subjectiveFeeling);
                     ClearInputsInternal(subjectiveFeelingVM);
 
                     RefreshDataGrid();
@@ -83,7 +83,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             try
             {
-                var subjectiveFeeling = _preferenceDb.GetSubjectiveFeeling(subjectiveFeelingId);
+                var subjectiveFeeling = _dataRepository.GetSubjectiveFeeling(subjectiveFeelingId);
                 SetInputForm(subjectiveFeeling, subjectiveFeelingVM);
 
                 ToggleButton(UpdateSubjectiveFeelingBtn, Visibility.Visible);
@@ -108,7 +108,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         private void RefreshDataGrid()
         {
-            SubjectiveFeelingDataGrid.ItemsSource = _preferenceDb.GetSubjecriveFeelings();
+            SubjectiveFeelingDataGrid.ItemsSource = _dataRepository.GetSubjecriveFeelings();
         }
 
         private bool IsValidSubjectiveFeelingVM(SubjectiveFeelingVM subjectiveFeeling)

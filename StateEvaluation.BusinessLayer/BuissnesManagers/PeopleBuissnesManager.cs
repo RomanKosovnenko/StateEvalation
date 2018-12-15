@@ -5,6 +5,7 @@ using StateEvaluation.Repository.Models;
 using StateEvaluation.Repository.Providers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,7 +13,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 {
     public class PeopleBuissnesManager
     {
-        private PreferenceDB _preferenceDb = new PreferenceDB();
+        private DataRepository _dataRepository = new DataRepository();
 
         public List<ComboBox> UserIdComboBoxes { get; }
         public List<ComboBox> ExpeditionComboBoxes { get; }
@@ -27,6 +28,13 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             UserNumberComboBoxes = userNumberComboBoxes;
             PeopleDataGrid = peopleDataGrid;
             UpdatePersonBtn = updatePersonBtn;
+        }
+
+        public Dictionary<string, string> GetUserIdBirthPairs()
+        {
+           return _dataRepository.GetPeople()
+               .Select(item => new { UserId = item.UserId.ToString().Trim(), item.Birthday })
+               .ToDictionary(i => i.UserId, i => i.Birthday);
         }
 
         public void CreatePerson(PeopleVM newPerson)
@@ -49,7 +57,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             {
                 try
                 {
-                    _preferenceDb.CreatePerson(person);
+                    _dataRepository.CreatePerson(person);
                     ClearInputsInternal(newPerson);
                     Refresh();
 
@@ -83,7 +91,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             try
             {
                 People person = GeneratePerson(editedPerson, new Guid(editedPerson.Id));
-                _preferenceDb.UpdatePerson(person);
+                _dataRepository.UpdatePerson(person);
                 ClearInputsInternal(editedPerson);
 
                 //hide save person button
@@ -102,7 +110,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             try
             {
-                _preferenceDb.Delete(id);
+                _dataRepository.Delete(id);
                 Refresh();
             }
             catch
@@ -115,7 +123,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             try
             {
-                var person = _preferenceDb.GetPerson(id.ToString());
+                var person = _dataRepository.GetPerson(id.ToString());
                 SetValueInTabs(person, personVM);
 
                 //show save person button
@@ -168,14 +176,14 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         private void RefreshPeople()
         {
-            PeopleDataGrid.ItemsSource = _preferenceDb.GetPeople();
+            PeopleDataGrid.ItemsSource = _dataRepository.GetPeople();
         }
 
         private void RefreshUsersNumber()
         {
             foreach (var comboBox in UserNumberComboBoxes)
             {
-                comboBox.ItemsSource = _preferenceDb.GetPeopleNumbers();
+                comboBox.ItemsSource = _dataRepository.GetPeopleNumbers();
             }
         }
 
@@ -183,7 +191,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             foreach (var comboBox in ExpeditionComboBoxes)
             {
-                comboBox.ItemsSource = _preferenceDb.GetExpeditionCodes();
+                comboBox.ItemsSource = _dataRepository.GetExpeditionCodes();
             }
         }
 
@@ -191,7 +199,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             foreach(var comboBox in UserIdComboBoxes)
             {
-                comboBox.ItemsSource = _preferenceDb.GetUserIds();
+                comboBox.ItemsSource = _dataRepository.GetUserIds();
             }
         }
 

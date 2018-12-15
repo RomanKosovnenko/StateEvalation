@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StateEvaluation.Biocolor;
+using System;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -6,6 +7,12 @@ namespace StateEvaluation.BioColor.Helpers
 {
     public class NameToMultiBrushConverter : IValueConverter
     {
+        BiocolorSettings biocolorSettings;
+
+        public NameToMultiBrushConverter()
+        {
+            biocolorSettings = new BiocolorSettings();
+        }
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             string input = value?.ToString();
@@ -13,40 +20,40 @@ namespace StateEvaluation.BioColor.Helpers
             switch (input)
             {
                 case "1":
-                    color = Settings.Default.i1; // Brushes.Violet;
+                    color = biocolorSettings.I1; // Brushes.Violet;
                     break;
                 case "2":
-                    color = Settings.Default.i2; // Brushes.DarkBlue;
+                    color = biocolorSettings.I2; // Brushes.DarkBlue;
                     break;
                 case "3":
-                    color = Settings.Default.i3; // Brushes.Blue;
+                    color = biocolorSettings.I3; // Brushes.Blue;
                     break;
                 case "4":
-                    color = Settings.Default.i4; // Brushes.Cyan;
+                    color = biocolorSettings.I4; // Brushes.Cyan;
                     break;
                 case "5":
-                    color = Settings.Default.e1; // Brushes.Green;
+                    color = biocolorSettings.E1; // Brushes.Green;
                     break;
                 case "6":
-                    color = Settings.Default.e2; // Brushes.LightGreen;
+                    color = biocolorSettings.E2; // Brushes.LightGreen;
                     break;
                 case "7":
-                    color = Settings.Default.e3; // Brushes.Yellow;
+                    color = biocolorSettings.E3; // Brushes.Yellow;
                     break;
                 case "8":
-                    color = Settings.Default.e4; // Brushes.Orange;
+                    color = biocolorSettings.E4; // Brushes.Orange;
                     break;
                 case "9":
-                    color = Settings.Default.p1; // Brushes.DarkOrange;
+                    color = biocolorSettings.P1; // Brushes.DarkOrange;
                     break;
                 case "10":
-                    color = Settings.Default.p2; // Brushes.OrangeRed;
+                    color = biocolorSettings.P2; // Brushes.OrangeRed;
                     break;
                 case "11":
-                    color = Settings.Default.p3; // Brushes.Red;
+                    color = biocolorSettings.P3; // Brushes.Red;
                     break;
                 case "12":
-                    color = Settings.Default.p4; // Brushes.Magenta;
+                    color = biocolorSettings.P4; // Brushes.Magenta;
                     break;
 
                 default:

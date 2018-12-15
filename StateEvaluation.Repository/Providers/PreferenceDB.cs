@@ -11,9 +11,9 @@ using StateEvaluation.Common.Enums;
 namespace StateEvaluation.Repository.Providers
 {
     [Database]
-    public class PreferenceDB : DataContext
+    public class DataRepository : DataContext
     {
-        public PreferenceDB() : base("Data Source=mssql1.gear.host;Initial Catalog=PreferenceDB;User ID=preferencedb;Password=Qwe!23;Encrypt=True;TrustServerCertificate=True") { }
+        public DataRepository() : base("Data Source=mssql1.gear.host;Initial Catalog=PreferenceDB;User ID=preferencedb;Password=Qwe!23;Encrypt=True;TrustServerCertificate=True") { }
         public Table<People> People;
         public Table<Preference> Preference;
         public Table<RelaxTable1> RelaxTable1;
@@ -63,19 +63,15 @@ namespace StateEvaluation.Repository.Providers
             SubmitChanges();
         }
 
+        public Preference GetPreference(Preference preference)
+        {
+            return Preference.Single(item => item == preference);
+        }
+
         public IEnumerable<Preference> GetPreferences(Func<Preference, bool> query)
         {
             var preferences = this.Preference.Where(query);
             return preferences;
-        }
-
-        //--------------------------------
-        public IEnumerable<string> Preferences()
-        {
-            var items = this.Preference.Select(item => item.Preference1).Distinct().OrderByDescending(item => item);
-            var list = items.ToList();
-            list.Insert(0, "All");
-            return list;
         }
         #endregion
 

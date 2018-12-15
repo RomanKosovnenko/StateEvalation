@@ -99,6 +99,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Handlers\MainWindow.Biocolor.cs" />
+    <Compile Include="Handlers\MainWindow.People.cs" />
+    <Compile Include="Handlers\MainWindow.Preference.cs" />
+    <Compile Include="Handlers\MainWindow.SubjectiveFeeling.cs" />
     <Compile Include="Helpers\BooleanToChecker.cs" />
     <Compile Include="Helpers\BooleanToNOTVisibilityConverter.cs" />
     <Compile Include="Helpers\ButtonToVisibilityConverter.cs" />
@@ -209,6 +213,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Templates\base_23.png" />
+    <Resource Include="Assets\Templates\base_28.png" />
+    <Resource Include="Assets\Templates\base_33.png" />
     <Content Include="RelaxTables\Relax3\1.png" />
     <Content Include="RelaxTables\Relax3\10.png" />
     <Content Include="RelaxTables\Relax3\11.png" />
@@ -267,9 +274,6 @@
     <Resource Include="RelaxTables\Relax2\7.jpg" />
     <Resource Include="RelaxTables\Relax2\8.jpg" />
     <Resource Include="RelaxTables\Relax2\9.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LiveChartsCore\LiveChartsCore.csproj">
