@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="StateEvaluation.View.SubjectiveFeelingsTestsDataGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:StateEvaluation.View"
+             xmlns:p="clr-namespace:StateEvaluation.Properties"
+             xmlns:model="clr-namespace:StateEvaluation.Repository.Providers;assembly=StateEvaluation.Repository"
+             xmlns:helpers="clr-namespace:StateEvaluation.View.Helpers"
+             xmlns:biocolorhelpers="clr-namespace:StateEvaluation.BioColor.Helpers;assembly=StateEvaluation.Biocolor"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllPeople"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllTests"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllSubjecriveFeelings"></ObjectDataProvider>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <helpers:StringToListConverter x:Key="StringToListConverter" />
+        <biocolorhelpers:NameToBrushConverter x:Key="NameToBrushConverter" />
+        <helpers:TextColorNumberToBrushConverter x:Key="TextColorNumberToBrushConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        
+    </Grid>
+</UserControl>
