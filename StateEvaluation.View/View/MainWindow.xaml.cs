@@ -504,8 +504,7 @@ namespace StateEvaluation
         private const int STEP = 7;
         private void Prew(object sender, RoutedEventArgs e) => biocolorProvider.MakeStep(-STEP);
         private void Next(object sender, RoutedEventArgs e) => biocolorProvider.MakeStep(+STEP);
-        private void Menu(object sender, RoutedEventArgs e) => biocolorProvider.Menu();
-        private void Generate(object sender, RoutedEventArgs e) => biocolorProvider.Generate();
+        private void Generate(object sender, RoutedEventArgs e) => biocolorProvider.GenerateImages();
         private void DrawGraphs(object sender, RoutedEventArgs e) => biocolorProvider.DrawGraphs();
 
         private void WindowRendered(object sender, EventArgs e)
@@ -559,13 +558,13 @@ namespace StateEvaluation
             int.TryParse((FindName("y" + factor + "c" + id) as TextBox).Text.ToString(), out int Y);
             int.TryParse((FindName("k" + factor + "c" + id) as TextBox).Text.ToString(), out int K);
 
-            if (new List<int> { C, M, Y, K }.Any(x => x < 0 || x > imageGenerator.MAX))
+            if (new List<int> { C, M, Y, K }.Any(x => x < 0 || x > BioColor.Colors.MAX))
             {
                 MessageBox.Show("Invalid color");
                 return;
             }
 
-            int[] RGB = imageGenerator.CmykToRgb(C, M, Y, K);
+            int[] RGB = BioColor.Colors.CmykToRgb(C, M, Y, K);
             string rgb = String.Format("{0:X2}{1:X2}{2:X2}", RGB[0], RGB[1], RGB[2]);
             (FindName(factor + "c" + id) as TextBox).Text = rgb;
             if (imageGenerator.HEX.IsMatch(rgb))
@@ -609,7 +608,7 @@ namespace StateEvaluation
                 var factor = name.Substring(0, 1);
                 var id = name.Substring(name.Length - 1);
 
-                int[] CMYK = imageGenerator.RgbToCmyk(element.Text);
+                int[] CMYK = BioColor.Colors.RgbToCmyk(element.Text);
 
                 (FindName("c" + factor + "c" + id) as TextBox).Text = CMYK[0].ToString();
                 (FindName("m" + factor + "c" + id) as TextBox).Text = CMYK[1].ToString();
@@ -647,9 +646,9 @@ namespace StateEvaluation
             Settings.Default.Save();
 
             RestoreColors();
-            imageGenerator.Generate(23);
-            imageGenerator.Generate(28);
-            imageGenerator.Generate(33);
+            imageGenerator.GenerateImages(23);
+            imageGenerator.GenerateImages(28);
+            imageGenerator.GenerateImages(33);
         }
 
     }

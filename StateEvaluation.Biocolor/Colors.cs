@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace StateEvaluation.BioColor
 {
-    class Colors
+    public class Colors
     {
         public static Regex HEX = new Regex(@"^([0-9A-F]{2})([0-9A-F]{2})([0-9A-F]{2})$");
         public const float MAX = 0xFF;

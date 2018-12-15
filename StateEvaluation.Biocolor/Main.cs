@@ -10,25 +10,45 @@ using System.Windows.Shapes;
 
 namespace StateEvaluation.BioColor
 {
-    internal static class Main
+    public class BiocolorProvider
     {
-        // BioColor 
-        private static Grid _myGrid;
-        private static DatePicker _birthDate, _nowDate;
+        private Grid _myGrid;
+        private DatePicker _birthDate;
+        private DatePicker _nowDate;
 
-        private const int RangeRed = 23, RangeGreen = 28, RangeBlue = 33;
-        private const int HalfHexFf = 128, Height = 480, Zero = 0;
-        private static readonly int 
-            Mid = Settings.Default.mid,
+        private const int RangeRed = 23;
+        private const int RangeGreen = 28;
+        private const int RangeBlue = 33;
+        private const int HalfHexFf = 128;
+        private const int Height = 480;
+        private const int Zero = 0;
+        private readonly int Mid;
+        private readonly int Square;
+        private double Alpha;
+
+        private readonly int IntRed;
+        private readonly int IntGreen;
+        private readonly int IntBlue;
+        private int[] days;
+        private readonly string[] paths;
+
+        private ImageGenerator imageGenerator;
+
+        public BiocolorProvider()
+        {
+            Mid = Settings.Default.mid;
             Square = Settings.Default.square;
-        private static readonly double Alpha = Settings.Default.alpha;
-        private static readonly int 
-            IntRed = Settings.Default.Int_Red,
-            IntGreen = Settings.Default.Int_Green,
+            Alpha = Settings.Default.alpha;
+            IntRed = Settings.Default.Int_Red;
+            IntGreen = Settings.Default.Int_Green;
             IntBlue = Settings.Default.Int_Blue;
-        private static int[] days = new int[] { 23, 28, 33 };
-        private static string[] paths = new string[days.Length];
-        public static void InitBioColor(Grid myGrid, DatePicker birthDate, DatePicker nowDate)
+            days = new int[] { 23, 28, 33 };
+            paths = new string[days.Length];
+
+            imageGenerator = new ImageGenerator();
+        }
+
+        public void InitBioColor(Grid myGrid, DatePicker birthDate, DatePicker nowDate)
         {
             _myGrid = myGrid;
             _birthDate = birthDate;
@@ -37,12 +57,12 @@ namespace StateEvaluation.BioColor
                 paths[i] = System.IO.Directory.GetCurrentDirectory() + "/../../BioColor/template/Image_" + days[i] + ".png";
             }
         }
-        public static void MakeStep(int step)
+        public void MakeStep(int step)
         {
             _nowDate.Text = Convert.ToDateTime(_nowDate.Text).AddDays(step).ToString(CultureInfo.CurrentCulture);
             DrawPicture();
         }
-        public static void DrawGraphs()
+        public void DrawGraphs()
         {
             DrawPicture();
         }
@@ -50,7 +70,7 @@ namespace StateEvaluation.BioColor
         /// Draw Pictures for selected Birthday and for selected Date
         /// Generates three canvases and adds it together
         /// </summary>
-        private static void DrawPicture()
+        private void DrawPicture()
         {
             try
             {
@@ -155,11 +175,11 @@ namespace StateEvaluation.BioColor
         /// <summary>
         /// Generate Emotional, Intellectual, Physical images if files not found
         /// </summary>
-        public static void GenerateImages()
+        public void GenerateImages()
         {
-            ImageGenerator.GenerateImages(RangeRed);
-            ImageGenerator.GenerateImages(RangeGreen);
-            ImageGenerator.GenerateImages(RangeBlue);
+            imageGenerator.GenerateImages(RangeRed);
+            imageGenerator.GenerateImages(RangeGreen);
+            imageGenerator.GenerateImages(RangeBlue);
         }
         static int mid = Settings.Default.mid,
                square = Settings.Default.square,
@@ -193,7 +213,7 @@ namespace StateEvaluation.BioColor
         /// <param name="daysCount">Count of days of given image</param>
         /// <param name="Delta">Difference between Birthdate and Given date in days</param>
         /// <param name="myGrid"></param>
-        public static void GenerateCanvasImage(string path, int daysCount, int Delta, Grid myGrid)
+        public void GenerateCanvasImage(string path, int daysCount, int Delta, Grid myGrid)
         {
             BitmapImage theImage = new BitmapImage();
             var stream = File.OpenRead(path);
