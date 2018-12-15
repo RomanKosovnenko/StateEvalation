@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using StateEvaluation.Common;
 
 namespace StateEvaluation.BioColor
 {
@@ -25,7 +24,6 @@ namespace StateEvaluation.BioColor
 
         public Function()
         {
-            biocolorManager = new BiocolorProvider();
             imageGenerator = new ImageGenerator();
         }
 
@@ -89,35 +87,28 @@ namespace StateEvaluation.BioColor
 
         public void GetCanvasImage(String a, int x, int Delta, Grid myGrid)
         {
-            try
+            BitmapImage theImage = new BitmapImage();
+            var stream = File.OpenRead(a);
+            theImage.BeginInit();
+            theImage.CacheOption = BitmapCacheOption.OnLoad;
+            theImage.StreamSource = stream;
+            theImage.EndInit();
+            stream.Close();
+            stream.Dispose();
+
+            System.Windows.Media.ImageBrush myImageBrush = new System.Windows.Media.ImageBrush(theImage);
+
+            for (int i = -range; i <= range * 3; ++i)
             {
-                BitmapImage theImage = new BitmapImage();
-                var stream = File.OpenRead(a);
-                theImage.BeginInit();
-                theImage.CacheOption = BitmapCacheOption.OnLoad;
-                theImage.StreamSource = stream;
-                theImage.EndInit();
-                stream.Close();
-                stream.Dispose();
-
-                System.Windows.Media.ImageBrush myImageBrush = new System.Windows.Media.ImageBrush(theImage);
-
-                for (int i = -range; i <= range * 3; ++i)
+                myGrid.Children.Add(new Canvas
                 {
-                    myGrid.Children.Add(new Canvas
-                    {
-                        Width = theImage.Width,
-                        Height = theImage.Height,
-                        Background = myImageBrush,
-                        Opacity = alpha,
-                        HorizontalAlignment = HorizontalAlignment.Left,
-                        Margin = new Thickness(i * square * x - Delta % x * square + mid, 0, 0, 0)
-                    });
-                }
-            }
-            catch (FileNotFoundException)
-            {
-                biocolorManager.Generate();
+                    Width = theImage.Width,
+                    Height = theImage.Height,
+                    Background = myImageBrush,
+                    Opacity = alpha,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    Margin = new Thickness(i * square * x - Delta % x * square + mid, 0, 0, 0)
+                });
             }
         }
 

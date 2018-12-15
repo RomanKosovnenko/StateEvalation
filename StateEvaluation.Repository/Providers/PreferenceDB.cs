@@ -113,15 +113,8 @@ namespace StateEvaluation.Repository.Providers
 
         public void CreatePerson(People person)
         {
-            try
-            {
-                People.InsertOnSubmit(person);
-                SubmitChanges();
-            }
-            catch (SqlException)
-            {
-                MessageBox.Show("Error, when inserting in data base! May be such an UserID already exists");
-            }
+            People.InsertOnSubmit(person);
+            SubmitChanges();
         }
 
         public void Delete(string id)

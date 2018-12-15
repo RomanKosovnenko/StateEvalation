@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using StateEvaluation.ViewModel;
+using StateEvaluation.Common.ViewModel;
 using System.Windows.Controls;
 
 namespace StateEvaluation.View.Helpers

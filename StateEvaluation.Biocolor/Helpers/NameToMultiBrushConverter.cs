@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using StateEvaluation.BioColor;
-using StateEvaluation.Common;
 
-namespace StateEvaluation.Biocolor.Helpers
+namespace StateEvaluation.BioColor.Helpers
 {
     public class NameToMultiBrushConverter : IValueConverter
     {

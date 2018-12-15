@@ -1,5 +1,4 @@
-﻿using StateEvaluation.Common;
-using System.Windows;
+﻿using System.Windows;
 
 namespace StateEvaluation.BioColor
 {

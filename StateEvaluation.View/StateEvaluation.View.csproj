@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{5CDB604A-E966-415E-B536-E7A0C1D64D3E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>StateEvaluation.View</RootNamespace>
-    <AssemblyName>StateEvaluation.View</AssemblyName>
+    <RootNamespace>StateEvaluation</RootNamespace>
+    <AssemblyName>StateEvaluation</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -277,11 +277,11 @@
       <Name>LiveChartsCore</Name>
     </ProjectReference>
     <ProjectReference Include="..\StateEvaluation.Biocolor\StateEvaluation.Biocolor.csproj">
-      <Project>{c09e8d07-bc01-4fb3-892d-f208deca6157}</Project>
+      <Project>{a79cc582-e5a0-4386-9382-0f32981361e7}</Project>
       <Name>StateEvaluation.Biocolor</Name>
     </ProjectReference>
     <ProjectReference Include="..\StateEvaluation.BusinessLayer\StateEvaluation.BusinessLayer.csproj">
-      <Project>{93bd8fe2-9f52-4ec4-95d7-08b010dc526b}</Project>
+      <Project>{8029ebd6-63d8-4de9-823d-61c7f890b5e3}</Project>
       <Name>StateEvaluation.BusinessLayer</Name>
     </ProjectReference>
     <ProjectReference Include="..\StateEvaluation.Common\StateEvaluation.Common.csproj">
@@ -293,7 +293,7 @@
       <Name>StateEvaluation.Preference.DLL</Name>
     </ProjectReference>
     <ProjectReference Include="..\StateEvaluation.Repository\StateEvaluation.Repository.csproj">
-      <Project>{92c7d210-c2d0-4415-aa93-83224cac6961}</Project>
+      <Project>{cc1e06aa-db3f-4753-bb97-71fea7835333}</Project>
       <Name>StateEvaluation.Repository</Name>
     </ProjectReference>
   </ItemGroup>

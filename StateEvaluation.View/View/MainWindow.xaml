@@ -3,23 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:view="clr-namespace:StateEvaluation.View"
-        xmlns:helpers="clr-namespace:StateEvaluation.Helpers"
+        xmlns:helpers="clr-namespace:StateEvaluation.View.Helpers"
+        xmlns:biocolorhelpers="clr-namespace:StateEvaluation.BioColor.Helpers;assembly=StateEvaluation.Biocolor"
         xmlns:p="clr-namespace:StateEvaluation.Properties"
-        xmlns:model="clr-namespace:StateEvaluation.Model"
+        xmlns:repository="clr-namespace:StateEvaluation.Repository.Providers;assembly=StateEvaluation.Repository"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
-        xmlns:viewModel="clr-namespace:StateEvaluation.ViewModel"
+        xmlns:viewModel="clr-namespace:StateEvaluation.Common.ViewModel;assembly=StateEvaluation.Common"
         mc:Ignorable="d"
         ContentRendered="WindowRendered"
         Title="Оценка состояния" Height="768" Width="1366" WindowState="Maximized">
     <Window.Resources>
-        <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetPeople"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetPreferences"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetSubjecriveFeelings"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetCodesForInsert" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetUserIds"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetUserIds"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Preferences"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetProfessionsList" ObjectType="{x:Type model:PreferenceDB}" MethodName="Professions"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetPeople"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetPreferences"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetSubjecriveFeelings"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetCodesForInsert" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetUserIds"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetUserIds"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type repository:PreferenceDB}" MethodName="Preferences"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetProfessionsList" ObjectType="{x:Type repository:PreferenceDB}" MethodName="Professions"></ObjectDataProvider>
         <!--here defined resourses' name for exact model-->
 
         <viewModel:PeopleFilterVM x:Key="peopleFilterVM" />
@@ -30,19 +30,19 @@
         <viewModel:SubjectiveFeelingFilterVM x:Key="subjectiveFeelingFilterVM"/>
 
 
-        <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetPeopleNumbers"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetExpeditionCodes"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetShortColorsNumbersList" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetShortColorsNumbersList"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetColorsNumbersList" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetColorsNumbersList"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetPeopleNumbers"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetExpeditionCodes"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetShortColorsNumbersList" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetShortColorsNumbersList"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetColorsNumbersList" ObjectType="{x:Type repository:PreferenceDB}" MethodName="GetColorsNumbersList"></ObjectDataProvider>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <helpers:StringToListConverter x:Key="StringToListConverter" />
-        <helpers:NameToBrushConverter x:Key="NameToBrushConverter" />
+        <biocolorhelpers:NameToBrushConverter x:Key="NameToBrushConverter" />
         <helpers:NameToImageConverter x:Key="NameToImageConverter" />
         <helpers:DateToSin x:Key="DateToSin" />
         <helpers:BooleanToChecker x:Key="BooleanToChecker" />
         <helpers:NumberToRelax1Converter x:Key="NumberToRelax1Converter" />
         <helpers:NumberToRelax2Converter x:Key="NumberToRelax2Converter" />
-        <helpers:NameToMultiBrushConverter x:Key="NameToMultiBrushConverter" />
+        <biocolorhelpers:NameToMultiBrushConverter x:Key="NameToMultiBrushConverter" />
         <helpers:PreferenceSameAsRelax x:Key="PreferenceSameAsRelax" />
         <helpers:PreferenceToBrushConverter x:Key="PreferenceToBrushConverter" />
         <helpers:ButtonToVisibilityConverter x:Key="ButtonToVisibilityConverter" />

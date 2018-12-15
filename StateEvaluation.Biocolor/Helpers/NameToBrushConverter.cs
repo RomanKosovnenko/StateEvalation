@@ -7,9 +7,8 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 using StateEvaluation.BioColor;
-using StateEvaluation.Common;
 
-namespace StateEvaluation.Biocolor.Helpers
+namespace StateEvaluation.BioColor.Helpers
 {
     public class NameToBrushConverter : IValueConverter
     {

@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:view="clr-namespace:StateEvaluation.View"
              xmlns:p="clr-namespace:StateEvaluation.Properties"
-             xmlns:model="clr-namespace:StateEvaluation.Model"
-             xmlns:helpers="clr-namespace:StateEvaluation.Helpers"
+             xmlns:model="clr-namespace:StateEvaluation.Repository.Providers;assembly=StateEvaluation.Repository"
+             xmlns:helpers="clr-namespace:StateEvaluation.View.Helpers"
              mc:Ignorable="d">
     <UserControl.Resources>
         <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type model:PreferenceDB}" MethodName="GetAllPeople"></ObjectDataProvider>

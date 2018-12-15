@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace StateEvaluation.Common {
+namespace StateEvaluation.BioColor {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
