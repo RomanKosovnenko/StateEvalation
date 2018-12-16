@@ -8,12 +8,13 @@ namespace UnitTests
 {
     public class ColorConverterTests
     {
+        #region RgbToCmyk
         [Fact(DisplayName = "SE: Biocolor ColorConverter RgbToCmyk")]
         public void RgbToCmyk()
         {
             //set vars
             string RGB = "FF0000";
-            int[] expectedResult = new int[4] { 0, 255, 255, 0 };
+            byte[] expectedResult = new byte[4] { 0, 255, 255, 0 };
 
             //action
             var result = ColorConverter.RgbToCmyk(RGB);
@@ -26,12 +27,50 @@ namespace UnitTests
             Assert.Equal(expectedResult[3], result[3]);
         }
 
+        [Fact(DisplayName = "SE: Biocolor ColorConverter RgbToCmyk (black)")]
+        public void RgbToCmykBlack()
+        {
+            //set vars
+            byte R = 0, G = 0, B = 0;
+            byte[] expectedResult = new byte[4] { 0, 0, 0, 255 };
+
+            //action
+            var result = ColorConverter.RgbToCmyk(R, G, B);
+
+            //check result
+            Assert.Equal(4, result.Length);
+            Assert.Equal(expectedResult[0], result[0]);
+            Assert.Equal(expectedResult[1], result[1]);
+            Assert.Equal(expectedResult[2], result[2]);
+            Assert.Equal(expectedResult[3], result[3]);
+        }
+
+        [Fact(DisplayName = "SE: Biocolor ColorConverter RgbToCmyk (error)")]
+        public void RgbToCmykError()
+        {
+            //set vars
+            string RGB = "RandomString";
+            byte[] expectedResult = new byte[4] { 0, 0, 0, 0 };
+
+            //action
+            var result = ColorConverter.RgbToCmyk(RGB);
+
+            //check result
+            Assert.Equal(4, result.Length);
+            Assert.Equal(expectedResult[0], result[0]);
+            Assert.Equal(expectedResult[1], result[1]);
+            Assert.Equal(expectedResult[2], result[2]);
+            Assert.Equal(expectedResult[3], result[3]);
+        }
+        #endregion
+
+        #region CmykToRgb
         [Fact(DisplayName = "SE: Biocolor ColorConverter CmykToRgb")]
         public void CmykToRgb()
         {
             //set vars
-            int C = 75, M = 0, Y = 168, K = 58;
-            int[] expectedResult = new int[3] { 139, 197, 67 };
+            byte C = 75, M = 0, Y = 168, K = 58;
+            byte[] expectedResult = new byte[3] { 139, 197, 67 };
 
             //action
             var result = ColorConverter.CmykToRgb(C, M, Y, K);
@@ -42,7 +81,9 @@ namespace UnitTests
             Assert.Equal(expectedResult[1], result[1]);
             Assert.Equal(expectedResult[2], result[2]);
         }
+        #endregion
 
+        #region Mix
         [Fact(DisplayName = "SE: Biocolor ColorConverter Mix")]
         public void Mix()
         {
@@ -58,5 +99,6 @@ namespace UnitTests
             //check result
             Assert.Equal(result, expectedResult);
         }
+        #endregion
     }
 }
