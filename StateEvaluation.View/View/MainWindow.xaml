@@ -1419,10 +1419,6 @@
                         Margin="2"
                         Click="FilterPeople_Click"
                         Content="Применить фильтр" Padding="0" />
-                    <Button Grid.Row="3"
-                        Click="AddData_OnClick"
-                        Margin="2,0,2,-18"
-                        Content="Add" Padding="0" Grid.ColumnSpan="2" />
                 </Grid>
             </Grid>
             <Grid Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto"
@@ -1782,6 +1778,10 @@
                             Click="BildChartOnPreference2_Click"
                             Margin="2"
                             Content="Диаграма преф.2" Padding="0" Grid.Column="1" />
+                    <!--<Button Grid.Row="3"
+                        Click="AddData_OnClick"
+                        Margin="2,30,2,-49"
+                        Content="Импорт" Padding="0" Grid.ColumnSpan="2" />-->
                 </Grid>
             </Grid>
             <Grid Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto" 
