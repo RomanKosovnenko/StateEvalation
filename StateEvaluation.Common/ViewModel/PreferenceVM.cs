@@ -188,8 +188,8 @@ namespace StateEvaluation.Common.ViewModel
             get => _color11in12;
             set
             {
-                OnPropertyChanged("Color11in12");
                 _color11in12 = value;
+                OnPropertyChanged("Color11in12");
             }
         }
         public string Color12in12
