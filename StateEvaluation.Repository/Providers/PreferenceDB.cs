@@ -75,6 +75,17 @@ namespace StateEvaluation.Repository.Providers
             var preferences = this.Preference.Where(query);
             return preferences;
         }
+
+        public IEnumerable<string> GetShortColorsNumbersList()
+        {
+            return PreferenceValues.ShortColorsNumbersList;
+        }
+
+        public IEnumerable<string> GetColorsNumbersList()
+        {
+            return PreferenceValues.ColorsNumbersList;
+        }
+
         #endregion
 
         #region People
@@ -213,17 +224,5 @@ namespace StateEvaluation.Repository.Providers
             return items;
         }
         #endregion
-
-        public IEnumerable<string> GetShortColorsNumbersList()
-        {
-            string[] list = { "3", "7", "11" };
-            return list;
-        }
-        public IEnumerable<string> GetColorsNumbersList()
-        {
-            string[] list = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
-            return list;
-        }   
-
     }
 }
