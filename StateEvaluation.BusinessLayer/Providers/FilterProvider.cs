@@ -12,7 +12,12 @@ namespace StateEvaluation.BussinesLayer.Providers
 {
     public class FilterProvider
     {
-        private DataRepository _dataRepository = new DataRepository();
+        private DataRepository _dataRepository;
+
+        public FilterProvider(DataRepository dataRepository)
+        {
+            _dataRepository = dataRepository;
+        }
 
         public IEnumerable Filter(object filter)
         {
@@ -99,11 +104,11 @@ namespace StateEvaluation.BussinesLayer.Providers
                     allowedUserIds.Add(person.UserId.ToString().Trim());
                 }
                 
-                preferences = _dataRepository.GetPreferences(GetPreferenceQuery(preferenceFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
+                preferences = _dataRepository.GetPreferenceTests(GetPreferenceQuery(preferenceFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
                 
                 return preferences;
             }
-            preferences = _dataRepository.GetPreferences();
+            preferences = _dataRepository.GetPreferenceTests();
             return preferences;
         }
 

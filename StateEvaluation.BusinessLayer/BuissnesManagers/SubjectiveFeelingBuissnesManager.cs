@@ -9,15 +9,16 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 {
     public class SubjectiveFeelingBuissnesManager
     {
-        private DataRepository _dataRepository = new DataRepository();
+        private DataRepository _dataRepository;
 
-        public DataGrid SubjectiveFeelingDataGrid { get; }
-        public Button UpdateSubjectiveFeelingBtn { get; }
+        private DataGrid _subjectiveFeelingDataGrid { get; }
+        private Button _updateSubjectiveFeelingBtn { get; }
 
-        public SubjectiveFeelingBuissnesManager(DataGrid subjectiveFeelingDataGrid, Button updateSubjectiveFeelingBtn)
+        public SubjectiveFeelingBuissnesManager(DataRepository dataRepository, DataGrid subjectiveFeelingDataGrid, Button updateSubjectiveFeelingBtn)
         {
-            SubjectiveFeelingDataGrid = subjectiveFeelingDataGrid;
-            UpdateSubjectiveFeelingBtn = updateSubjectiveFeelingBtn;
+            _dataRepository = dataRepository;
+            _subjectiveFeelingDataGrid = subjectiveFeelingDataGrid;
+            _updateSubjectiveFeelingBtn = updateSubjectiveFeelingBtn;
         }
 
         public void Update(SubjectiveFeelingVM subjectiveFeelingMV, Guid subjectiveFeelingId)
@@ -30,7 +31,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
                 RefreshDataGrid();
 
-                ToggleButton(UpdateSubjectiveFeelingBtn, Visibility.Hidden);
+                ToggleButton(_updateSubjectiveFeelingBtn, Visibility.Hidden);
 
                 MessageBox.Show("Subjective feeling was updated");
             }
@@ -86,7 +87,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 var subjectiveFeeling = _dataRepository.GetSubjectiveFeeling(subjectiveFeelingId);
                 SetInputForm(subjectiveFeeling, subjectiveFeelingVM);
 
-                ToggleButton(UpdateSubjectiveFeelingBtn, Visibility.Visible);
+                ToggleButton(_updateSubjectiveFeelingBtn, Visibility.Visible);
             }
             catch
             {
@@ -97,7 +98,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         public void ClearInputs(SubjectiveFeelingVM subjectiveFeelingVM)
         {
             ClearInputsInternal(subjectiveFeelingVM);
-            ToggleButton(UpdateSubjectiveFeelingBtn, Visibility.Hidden);
+            ToggleButton(_updateSubjectiveFeelingBtn, Visibility.Hidden);
         }
 
         #region private methods
@@ -108,7 +109,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         private void RefreshDataGrid()
         {
-            SubjectiveFeelingDataGrid.ItemsSource = _dataRepository.GetSubjecriveFeelings();
+            _subjectiveFeelingDataGrid.ItemsSource = _dataRepository.GetSubjecriveFeelings();
         }
 
         private bool IsValidSubjectiveFeelingVM(SubjectiveFeelingVM subjectiveFeeling)

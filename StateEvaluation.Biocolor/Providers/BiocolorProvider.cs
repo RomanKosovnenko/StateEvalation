@@ -16,8 +16,6 @@ namespace StateEvaluation.BioColor.Providers
         private DatePicker _birthDate;
         private DatePicker _nowDate;
 
-
-
         private const int HalfHexFf = 128;
         private const int Height = 480;
 
