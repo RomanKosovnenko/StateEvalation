@@ -25,5 +25,22 @@ namespace UnitTests
             Assert.Equal(expectedResult[2], result[2]);
             Assert.Equal(expectedResult[3], result[3]);
         }
+
+        [Fact(DisplayName = "SE: Biocolor ColorConverter CmykToRgb")]
+        public void CmykToRgb()
+        {
+            //set vars
+            int C = 75, M = 0, Y = 168, K = 58;
+            int[] expectedResult = new int[3] { 139, 197, 67 };
+
+            //action
+            var result = ColorConverter.CmykToRgb(C, M, Y, K);
+
+            //check result
+            Assert.Equal(3, result.Length);
+            Assert.Equal(expectedResult[0], result[0]);
+            Assert.Equal(expectedResult[1], result[1]);
+            Assert.Equal(expectedResult[2], result[2]);
+        }
     }
 }
