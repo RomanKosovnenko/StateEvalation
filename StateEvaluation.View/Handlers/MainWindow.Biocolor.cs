@@ -55,18 +55,18 @@ namespace StateEvaluation
             string id = name.Substring(name.Length - 1);
             string factor = name.Substring(0, 1);
 
-            int.TryParse((FindName("c" + factor + "c" + id) as TextBox).Text.ToString(), out int C);
-            int.TryParse((FindName("m" + factor + "c" + id) as TextBox).Text.ToString(), out int M);
-            int.TryParse((FindName("y" + factor + "c" + id) as TextBox).Text.ToString(), out int Y);
-            int.TryParse((FindName("k" + factor + "c" + id) as TextBox).Text.ToString(), out int K);
+            byte.TryParse((FindName("c" + factor + "c" + id) as TextBox).Text.ToString(), out byte C);
+            byte.TryParse((FindName("m" + factor + "c" + id) as TextBox).Text.ToString(), out byte M);
+            byte.TryParse((FindName("y" + factor + "c" + id) as TextBox).Text.ToString(), out byte Y);
+            byte.TryParse((FindName("k" + factor + "c" + id) as TextBox).Text.ToString(), out byte K);
 
-            if (new List<int> { C, M, Y, K }.Any(x => x < 0 || x > BioColor.Helpers.ColorConverter.MAX))
+            if (new List<byte> { C, M, Y, K }.Any(x => x < 0 || x > BioColor.Helpers.ColorConverter.MAX))
             {
                 MessageBox.Show("Invalid color");
                 return;
             }
 
-            int[] RGB = BioColor.Helpers.ColorConverter.CmykToRgb(C, M, Y, K);
+            byte[] RGB = BioColor.Helpers.ColorConverter.CmykToRgb(C, M, Y, K);
             string rgb = String.Format("{0:X2}{1:X2}{2:X2}", RGB[0], RGB[1], RGB[2]);
             (FindName(factor + "c" + id) as TextBox).Text = rgb;
             if (imageGenerator.HEX.IsMatch(rgb))
@@ -100,7 +100,7 @@ namespace StateEvaluation
                 var factor = name.Substring(0, 1);
                 var id = name.Substring(name.Length - 1);
 
-                int[] CMYK = BioColor.Helpers.ColorConverter.RgbToCmyk(element.Text);
+                byte[] CMYK = BioColor.Helpers.ColorConverter.RgbToCmyk(element.Text);
 
                 (FindName("c" + factor + "c" + id) as TextBox).Text = CMYK[0].ToString();
                 (FindName("m" + factor + "c" + id) as TextBox).Text = CMYK[1].ToString();
