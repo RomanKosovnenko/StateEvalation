@@ -39,7 +39,7 @@ namespace StateEvaluation.BussinesLayer.Providers
                 {
                     if (i.Name.Contains("UserId") || i.Name.Contains("Expedition") || i.Name.Contains("Preference") || i.Name.Contains("People") || i.Name.Contains("Profession"))
                     {
-                        i.SetValue(filter, "All");
+                        i.SetValue(filter, Common.Constants.Filter.All);
                         continue;
                     }
                     if (i.Name.Contains("Date"))
@@ -140,12 +140,12 @@ namespace StateEvaluation.BussinesLayer.Providers
             var peopleFilter = (BaseFilterVM)filter;
 
             return (People _) =>
-                (_.Workposition == peopleFilter.Profession || peopleFilter.Profession == "All")
-                && (peopleFilter.UserId == "All"
-                    ? (peopleFilter.PeopleFrom == "All" || _.Number >= int.Parse(peopleFilter.PeopleFrom)) && (peopleFilter.PeopleTo == "All" || _.Number <= int.Parse(peopleFilter.PeopleTo))
+                (_.Workposition == peopleFilter.Profession || peopleFilter.Profession == Common.Constants.Filter.All)
+                && (peopleFilter.UserId == Common.Constants.Filter.All
+                    ? (peopleFilter.PeopleFrom == Common.Constants.Filter.All || _.Number >= int.Parse(peopleFilter.PeopleFrom)) && (peopleFilter.PeopleTo == Common.Constants.Filter.All || _.Number <= int.Parse(peopleFilter.PeopleTo))
                     : _.UserId == peopleFilter.UserId)
-                && (peopleFilter.UserId == "All"
-                    ? (peopleFilter.ExpeditionFrom == "All" || _.Expedition >= int.Parse(peopleFilter.ExpeditionFrom)) && (peopleFilter.ExpeditionTo == "All" || _.Expedition <= int.Parse(peopleFilter.ExpeditionTo))
+                && (peopleFilter.UserId == Common.Constants.Filter.All
+                    ? (peopleFilter.ExpeditionFrom == Common.Constants.Filter.All || _.Expedition >= int.Parse(peopleFilter.ExpeditionFrom)) && (peopleFilter.ExpeditionTo == Common.Constants.Filter.All || _.Expedition <= int.Parse(peopleFilter.ExpeditionTo))
                     : _.UserId == peopleFilter.UserId)
                 && (dateFrom.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks >= dateFrom.Ticks)
                 && (dateTo.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks <= dateTo.Ticks);
@@ -162,7 +162,7 @@ namespace StateEvaluation.BussinesLayer.Providers
                     preferenceFilter.Color6in12Filter, preferenceFilter.Color7in12Filter, preferenceFilter.Color8in12Filter,
                     preferenceFilter.Color9in12Filter, preferenceFilter.Color10in12Filter, preferenceFilter.Color11in12Filter,
                     preferenceFilter.Color12in12Filter) &&
-                (preferenceFilter.PreferenceFilter == "All" || _.Preference1 == preferenceFilter.PreferenceFilter) &&
+                (preferenceFilter.PreferenceFilter == Common.Constants.Filter.All || _.Preference1 == preferenceFilter.PreferenceFilter) &&
                 allowedUserIds.Contains(_.UserId.Trim());
         }
 
