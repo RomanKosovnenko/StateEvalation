@@ -1,5 +1,4 @@
-﻿using StateEvaluation.BioColor;
-using StateEvaluation.BioColor.Helpers;
+﻿using StateEvaluation.BioColor.Helpers;
 using StateEvaluation.BioColor.Providers;
 using StateEvaluation.BusinessLayer.BuissnesManagers;
 using System;
@@ -21,33 +20,33 @@ namespace StateEvaluation
         private BiocolorProvider biocolorProvider;
         private ImageGenerator imageGenerator;
 
-        private void Prew(object sender, RoutedEventArgs e)
+        private void Prew_Click(object sender, RoutedEventArgs e)
         {
             biocolorBusinessManager.MakeStep(-STEP);
         }
 
-        private void Next(object sender, RoutedEventArgs e)
+        private void Next_Click(object sender, RoutedEventArgs e)
         {
             biocolorBusinessManager.MakeStep(+STEP);
         }
 
-        private void Generate(object sender, RoutedEventArgs e)
+        private void Generate_Click(object sender, RoutedEventArgs e)
         {
             biocolorBusinessManager.GenerateImages();
         }
 
-        private void DrawGraphs(object sender, RoutedEventArgs e)
+        private void DrawGraphs_Click(object sender, RoutedEventArgs e)
         {
             biocolorBusinessManager.DrawGraphs();
         }
 
-        private void WindowRendered(object sender, EventArgs e)
+        private void WindowRendered_Click(object sender, EventArgs e)
         {
             userIdBirthPairs = peopleBuissnesManager.GetUserIdBirthPairs();
-            RestoreColors(sender, null);
+            RestoreColors_Click(sender, null);
         }
 
-        private void CMYK2RGB(object sender, RoutedEventArgs e)
+        private void CMYK2RGB_Click(object sender, RoutedEventArgs e)
         {
             string name = (sender as Button).Name;
             string id = name.Substring(name.Length - 1);
@@ -73,13 +72,13 @@ namespace StateEvaluation
             }
         }
 
-        private void RestoreColors(object sender, RoutedEventArgs e)
+        private void RestoreColors_Click(object sender, RoutedEventArgs e)
         {
             biocolorBusinessManager.RestoreColors(colors);
             SetCmykValues(colors);
         }
 
-        private void ResetColors(object sender, RoutedEventArgs e)
+        private void ResetColors_Click(object sender, RoutedEventArgs e)
         {
             var dialogResult = MessageBox.Show("Do you want to RESET colors BiocolorSettings?", "Reset BiocolorSettings", MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
@@ -109,10 +108,10 @@ namespace StateEvaluation
             }
         }
 
-        private void SaveColors(object sender, RoutedEventArgs e)
+        private void SaveColors_Click(object sender, RoutedEventArgs e)
         {
             biocolorBusinessManager.SaveColors(colors);
-            RestoreColors(sender, e);
+            RestoreColors_Click(sender, e);
         }
     }
 }

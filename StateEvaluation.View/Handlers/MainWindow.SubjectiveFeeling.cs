@@ -1,10 +1,6 @@
 ﻿using StateEvaluation.Common.ViewModel;
 using StateEvaluation.Repository.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -17,7 +13,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void CreateSubjectiveFeeling(object sender, RoutedEventArgs e)
+        private void CreateSubjectiveFeeling_Click(object sender, RoutedEventArgs e)
         {
             var subjectiveFeeling = (SubjectiveFeelingVM)this.Resources["subjectiveFeelingVM"];
             subjectiveFeelingBuissnesManager.Create(subjectiveFeeling);
@@ -28,7 +24,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void BindSubjectiveFeelingInForm(object sender, RoutedEventArgs e)
+        private void BindSubjectiveFeelingInForm_Click(object sender, RoutedEventArgs e)
         {
             var butonContext = ((Button)sender).DataContext;
             var subjectiveFeelingId = ((SubjectiveFeeling)butonContext).Id;
@@ -43,7 +39,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void DeleteSSubjectiveFeeling(object sender, RoutedEventArgs e)
+        private void DeleteSSubjectiveFeeling_Click(object sender, RoutedEventArgs e)
         {
             var butonContext = ((Button)sender).DataContext;
             var subjectiveFeelingId = ((SubjectiveFeeling)butonContext).Id;
@@ -60,7 +56,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void UpdateSubjectiveFeeling(object sender, RoutedEventArgs e)
+        private void UpdateSubjectiveFeeling_Click(object sender, RoutedEventArgs e)
         {
             var butonContext = ((Button)sender).DataContext;
             var subjectiveFeelingId = ((SubjectiveFeelingVM)butonContext).Id;
@@ -75,7 +71,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void ClearSubjectiveFeelingInputs(object sender, RoutedEventArgs e)
+        private void ClearSubjectiveFeelingInputs_Click(object sender, RoutedEventArgs e)
         {
             var subjectiveFeelingVM = (SubjectiveFeelingVM)Resources["subjectiveFeelingVM"];
             subjectiveFeelingBuissnesManager.ClearInputs(subjectiveFeelingVM);
@@ -86,7 +82,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ClearFilterSubjFeelTab(object sender, RoutedEventArgs e)
+        private void ClearFilterSubjFeelTab_Click(object sender, RoutedEventArgs e)
         {
             filterBussinesManager.Clear(SubjectiveFeelingDataGrid, subjectiveFeelingFilter);
         }
@@ -96,7 +92,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FilterSubjectiveFeeling(object sender, RoutedEventArgs e)
+        private void FilterSubjectiveFeeling_Click(object sender, RoutedEventArgs e)
         {
             filterBussinesManager.Filter(SubjectiveFeelingDataGrid, subjectiveFeelingFilter);
         }

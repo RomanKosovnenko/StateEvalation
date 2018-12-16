@@ -13,9 +13,19 @@ using StateEvaluation.BussinesLayer.BuissnesManagers;
 using StateEvaluation.BioColor.Providers;
 using StateEvaluation.BioColor.Helpers;
 using StateEvaluation.BusinessLayer.BuissnesManagers;
+using Application = System.Windows.Application;
 
 namespace StateEvaluation
 {
+    public partial class App : Application
+    {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            MainWindow = new MainWindow(new DataRepository());
+            MainWindow.ShowDialog();
+        }
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -31,21 +41,24 @@ namespace StateEvaluation
         private PeopleFilterVM peopleFilter;
         private SubjectiveFeelingFilterVM subjectiveFeelingFilter;
         private FilterBussinesManager filterBussinesManager;
+        private DataRepository dataRepository;
      
         #region ctor
-        public MainWindow()
+        public MainWindow(DataRepository dataRepository)
         {
             InitializeComponent();
             this.DataContext = this;
+
+            this.dataRepository = dataRepository;
 
             biocolorSettings = new BiocolorSettings();
 
             biocolorProvider = new BiocolorProvider(biocolorSettings);
             imageGenerator = new ImageGenerator(biocolorSettings);
 
-            biocolorProvider.InitBiocolor(BioColorGraph, Date, DateNow);
+            biocolorProvider.InitBiocolor(BioColorGrid, Date, DateNow);
 
-            filterBussinesManager = new FilterBussinesManager();
+            filterBussinesManager = new FilterBussinesManager(dataRepository);
 
             peopleFilter = (PeopleFilterVM)Resources["peopleFilterVM"];
             preferenceFilter = (PreferenceFilterVM)Resources["preferenceFilterVM"];
@@ -53,18 +66,18 @@ namespace StateEvaluation
 
 
             peopleBuissnesManager = new PeopleBuissnesManager
-                (
+                (dataRepository,
                     new List<ComboBox>() { UserIdsFilterPeopleCB, UserIdsFilterSubjFeelingCB, UserIdsFilterPreferenceCB, UserIdsInsertPreferenceCB, UserIdsInsertSubjFeelCB },
                     new List<ComboBox>() { ExpeditionFromFilterPeopleCB, ExpeditionToFilterPeopleCB, ExpeditionFromFilterSubjFeelCB, ExpeditionToFilterSubjFeelCB, ExpeditionFilterToPreferenceCB, ExpeditionFromFilterPreferenceCB },
                     new List<ComboBox>() { NumberFromFilterPeopleCB, NumberToFilterPeopleCB, NumberFromFilterSubjFeelCB, NumberToFilterSubjFeelCB, NumberFromFilterPreferenceCB, NumberToFilterPreferenceCB },
                     PeopleDataGrid, UpdatePersonBtn
                 );
 
-            biocolorBusinessManager = new BiocolorBusinessManager(BioColorGraph, Date, DateNow, biocolorSettings);
+            biocolorBusinessManager = new BiocolorBusinessManager(BioColorGrid, Date, DateNow, biocolorSettings);
 
-            preferenceBuissnesManager = new PreferenceBuissnesManager(PreferencesDataGrid, UpdatePrefernceBtn);
+            preferenceBuissnesManager = new PreferenceBuissnesManager(dataRepository, PreferencesDataGrid, UpdatePrefernceBtn);
 
-            subjectiveFeelingBuissnesManager = new SubjectiveFeelingBuissnesManager(SubjectiveFeelingDataGrid, UpdateSubjectiveFeelingBtn);
+            subjectiveFeelingBuissnesManager = new SubjectiveFeelingBuissnesManager(dataRepository, SubjectiveFeelingDataGrid, UpdateSubjectiveFeelingBtn);
             
             colors = new TextBox[] { ic1, ic2, ic3, ic4, ec1, ec2, ec3, ec4, pc1, pc2, pc3, pc4 };
         }
@@ -110,7 +123,6 @@ namespace StateEvaluation
             {
                 fornames.Add(xlRng[i, 2].Value2);
             }
-            DataRepository _dataRepository = new DataRepository();
             for (int i = i0; i < xlRng.Rows.Count; ++i)
             {
                 tabl1.Add(xlRng[i, 44].Value2.ToString());
@@ -217,8 +229,8 @@ namespace StateEvaluation
 
             foreach (var pref in prefinTable)
             {
-                _dataRepository.Preference.InsertOnSubmit(pref);
-                _dataRepository.SubmitChanges();
+                dataRepository.Preference.InsertOnSubmit(pref);
+                dataRepository.SubmitChanges();
             }
             #endregion
 

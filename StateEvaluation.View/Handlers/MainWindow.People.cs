@@ -17,7 +17,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void CreatePerson(object sender, RoutedEventArgs e)
+        private void CreatePerson_Click(object sender, RoutedEventArgs e)
         {
             var newPerson = (PeopleVM)Resources["peopleVM"];
             peopleBuissnesManager.CreatePerson(newPerson);
@@ -28,7 +28,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void UpdatePerson(object sender, RoutedEventArgs e)
+        private void UpdatePerson_Click(object sender, RoutedEventArgs e)
         {
             var editedPerson = (PeopleVM)Resources["peopleVM"];
             peopleBuissnesManager.UpdatePerson(editedPerson);
@@ -39,7 +39,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void ClearInputs(object sender, RoutedEventArgs e)
+        private void ClearInputs_Click(object sender, RoutedEventArgs e)
         {
             var person = (PeopleVM)Resources["peopleVM"];
             peopleBuissnesManager.ClearInputs(person);
@@ -50,7 +50,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void BindPersonInForm(object sender, RoutedEventArgs e)
+        private void BindPersonInForm_Click(object sender, RoutedEventArgs e)
         {
             var butonContext = ((Button)sender).DataContext;
             var personId = ((People)butonContext).Id;
@@ -65,7 +65,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void RemovePerson(object sender, RoutedEventArgs e)
+        private void RemovePerson_Click(object sender, RoutedEventArgs e)
         {
             var butonContext = ((Button)sender).DataContext;
             var personId = ((People)butonContext).Id;
@@ -82,7 +82,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ClearFilterPeopleTab(object sender, RoutedEventArgs e)
+        private void ClearFilterPeopleTab_Click(object sender, RoutedEventArgs e)
         {
             filterBussinesManager.Clear(PeopleDataGrid, peopleFilter);
         }
@@ -92,7 +92,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FilterPeople(object sender, RoutedEventArgs e)
+        private void FilterPeople_Click(object sender, RoutedEventArgs e)
         {
             filterBussinesManager.Filter(PeopleDataGrid, peopleFilter);
         }

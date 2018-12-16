@@ -13,7 +13,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 {
     public class PeopleBuissnesManager
     {
-        private DataRepository _dataRepository = new DataRepository();
+        private DataRepository _dataRepository;
 
         public List<ComboBox> UserIdComboBoxes { get; }
         public List<ComboBox> ExpeditionComboBoxes { get; }
@@ -21,8 +21,9 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         public DataGrid PeopleDataGrid { get; }
         public Button UpdatePersonBtn { get; }
 
-        public PeopleBuissnesManager(List<ComboBox> userIdComboBoxes, List<ComboBox> expeditionComboBoxes, List<ComboBox> userNumberComboBoxes, DataGrid peopleDataGrid, Button updatePersonBtn)
+        public PeopleBuissnesManager(DataRepository dataRepository, List<ComboBox> userIdComboBoxes, List<ComboBox> expeditionComboBoxes, List<ComboBox> userNumberComboBoxes, DataGrid peopleDataGrid, Button updatePersonBtn)
         {
+            _dataRepository = dataRepository;
             UserIdComboBoxes = userIdComboBoxes;
             ExpeditionComboBoxes = expeditionComboBoxes;
             UserNumberComboBoxes = userNumberComboBoxes;
@@ -156,6 +157,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             {
                 Firstname = personVM.FirstName,
                 Lastname = personVM.LastName,
+                Middlename = personVM.MiddleName,
                 Expedition = int.Parse(personVM.Expedition),
                 Number = int.Parse(personVM.PersonNumber),
                 Id = id ?? Guid.NewGuid(),
