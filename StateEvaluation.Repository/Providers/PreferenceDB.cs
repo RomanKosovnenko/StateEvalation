@@ -8,13 +8,14 @@ using System.Windows;
 using StateEvaluation.Repository.Models;
 using StateEvaluation.Common.Enums;
 using StateEvaluation.Common.Constants;
+using System.Configuration;
 
 namespace StateEvaluation.Repository.Providers
 {
     [Database]
     public class DataRepository : DataContext
     {
-        public DataRepository() : base("Data Source=mssql1.gear.host;Initial Catalog=PreferenceDB;User ID=preferencedb;Password=Qwe!23;Encrypt=True;TrustServerCertificate=True") { }
+        public DataRepository() : base(ConfigurationManager.ConnectionStrings["StateEvaluation.Properties.Settings.PreferenceDBConnectionString"].ConnectionString) { }
         public Table<People> People;
         public Table<Preference> Preference;
         public Table<RelaxTable1> RelaxTable1;
