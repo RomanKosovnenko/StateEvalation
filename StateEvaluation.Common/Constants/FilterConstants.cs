@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StateEvaluation.Common.Constants
 {
-    public static class Filter
+    public static class FilterConstants
     {
         public static string All = "All";
     }
