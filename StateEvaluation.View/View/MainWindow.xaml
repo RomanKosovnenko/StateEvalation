@@ -576,8 +576,8 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
                     <DataGridTextColumn Width="auto" Header="Код" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Width="auto" Header="Имя" Binding="{Binding Lastname}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Width="auto" Header="Фамилия" Binding="{Binding Firstname}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Width="auto" Header="Имя" Binding="{Binding Firstname}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Width="auto" Header="Фамилия" Binding="{Binding Lastname}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Width="auto" Header="Отчество" Binding="{Binding Middlename}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Width="auto" Header="День рождения" Binding="{Binding Birthday, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridTextColumn Width="auto" Header="Профессия" Binding="{Binding Workposition, UpdateSourceTrigger=PropertyChanged}" ClipboardContentBinding="{x:Null}"/>
