@@ -101,7 +101,7 @@ namespace StateEvaluation.BioColor.Helpers
 
             if (c1.A > SPLACER && c2.A > SPLACER && c3.A > SPLACER)
             {
-                int[] RGB = ColorConverter.CmykToRgb(
+                int[] RGB = CmykToRgb(
                     (C1[0] + C2[0] + C3[0]) / DIVIDER_3,
                     (C1[1] + C2[1] + C3[1]) / DIVIDER_3,
                     (C1[2] + C2[2] + C3[2]) / DIVIDER_3,
@@ -113,7 +113,7 @@ namespace StateEvaluation.BioColor.Helpers
                     c2.A > SPLACER && c3.A > SPLACER ||
                     c3.A > SPLACER && c1.A > SPLACER)
             {
-                int[] RGB = ColorConverter.CmykToRgb(
+                int[] RGB = CmykToRgb(
                     (C1[0] + C2[0] + C3[0]) / DIVIDER_2,
                     (C1[1] + C2[1] + C3[1]) / DIVIDER_2,
                     (C1[2] + C2[2] + C3[2]) / DIVIDER_2,
