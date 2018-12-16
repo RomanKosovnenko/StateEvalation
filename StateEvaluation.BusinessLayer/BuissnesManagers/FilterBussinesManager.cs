@@ -7,24 +7,24 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 {
     public class FilterBussinesManager
     {
-        private FilterProvider filterProvider;
+        private FilterProvider _filterProvider;
 
         public FilterBussinesManager(DataRepository dataRepository)
         {
-            filterProvider = new FilterProvider(dataRepository);
+            _filterProvider = new FilterProvider(dataRepository);
         }
 
         public IEnumerable Filter(DataGrid dataGrid, object filter)
         {
-            var filteredData = filterProvider.Filter(filter);
+            var filteredData = _filterProvider.Filter(filter);
             dataGrid.ItemsSource = filteredData;
             return filteredData;
         }
 
         public void Clear(DataGrid dataGrid, object filter)
         {
-            filterProvider.Clear(filter);
-            var filteredData = filterProvider.Filter(filter);
+            _filterProvider.Clear(filter);
+            var filteredData = _filterProvider.Filter(filter);
             dataGrid.ItemsSource = filteredData;
         }
     }

@@ -10,6 +10,9 @@ using System.Windows.Media;
 
 namespace StateEvaluation
 {
+    /// <summary>
+    /// Interaction logic for Biocolor tab
+    /// </summary>
     partial class MainWindow : Window
     {
         private const int STEP = 7;

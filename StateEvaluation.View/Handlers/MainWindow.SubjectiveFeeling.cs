@@ -6,6 +6,9 @@ using System.Windows.Controls;
 
 namespace StateEvaluation
 {
+    /// <summary>
+    /// Interaction logic for SubjectiveFeeling tab
+    /// </summary>
     partial class MainWindow : Window
     {
         /// <summary>

@@ -21,14 +21,14 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         private List<bool> _preference2 = new List<bool>();
         private PreferenceVM _previouspreferenceVM = new PreferenceVM();
 
-        public DataGrid PreferenceDataGrid { get; }
-        public Button UpdatePrefernceBtn { get; }
+        private DataGrid _preferenceDataGrid { get; }
+        private Button _updatePrefernceBtn { get; }
 
         public PreferenceBuissnesManager(DataRepository dataRepository, DataGrid preferenceDataGrid, Button updatePrefernceBtn)
         {
             _dataRepository = dataRepository;
-            PreferenceDataGrid = preferenceDataGrid;
-            UpdatePrefernceBtn = updatePrefernceBtn;
+            _preferenceDataGrid = preferenceDataGrid;
+            _updatePrefernceBtn = updatePrefernceBtn;
         }
 
         public void Create(PreferenceVM preferenceVM)
@@ -105,7 +105,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 SetValueInTabs(preferenceVM, preference);
                 _previouspreferenceVM = preferenceVM;
                 
-                ToggleButton(UpdatePrefernceBtn, Visibility.Visible);
+                ToggleButton(_updatePrefernceBtn, Visibility.Visible);
             }
             catch
             {
@@ -115,7 +115,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         public void ClearInputs(PreferenceVM preferenceVM)
         {
-            ToggleButton(UpdatePrefernceBtn, Visibility.Hidden);
+            ToggleButton(_updatePrefernceBtn, Visibility.Hidden);
             ClearInputsInternal(preferenceVM);
         }
 
@@ -139,7 +139,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         private void RefreshDataGrid()
         {
-            PreferenceDataGrid.ItemsSource = _dataRepository.GetPreferenceTests();
+            _preferenceDataGrid.ItemsSource = _dataRepository.GetPreferenceTests();
         }
 
         private bool IsValidPreferenseVM(PreferenceVM preferenceVM)

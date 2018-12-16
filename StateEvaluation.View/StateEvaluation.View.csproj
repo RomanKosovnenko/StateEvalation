@@ -100,6 +100,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Handlers\MainWindow.Biocolor.cs" />
+    <Compile Include="Handlers\MainWindow.Import.cs" />
     <Compile Include="Handlers\MainWindow.People.cs" />
     <Compile Include="Handlers\MainWindow.Preference.cs" />
     <Compile Include="Handlers\MainWindow.SubjectiveFeeling.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Helpers\PreferenceSameAsRelax.cs" />
     <Compile Include="Helpers\PreferenceToBrushConverter.cs" />
     <Compile Include="Helpers\RangeGenerator.cs" />
+    <Compile Include="Startup.cs" />
     <Compile Include="View\FeelingsChart.xaml.cs">
       <DependentUpon>FeelingsChart.xaml</DependentUpon>
     </Compile>

@@ -15,20 +15,20 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
     {
         private DataRepository _dataRepository;
 
-        public List<ComboBox> UserIdComboBoxes { get; }
-        public List<ComboBox> ExpeditionComboBoxes { get; }
-        public List<ComboBox> UserNumberComboBoxes { get; }
-        public DataGrid PeopleDataGrid { get; }
-        public Button UpdatePersonBtn { get; }
+        private List<ComboBox> _userIdComboBoxes { get; }
+        private List<ComboBox> _expeditionComboBoxes { get; }
+        private List<ComboBox> _userNumberComboBoxes { get; }
+        private DataGrid _peopleDataGrid { get; }
+        private Button _updatePersonBtn { get; }
 
         public PeopleBuissnesManager(DataRepository dataRepository, List<ComboBox> userIdComboBoxes, List<ComboBox> expeditionComboBoxes, List<ComboBox> userNumberComboBoxes, DataGrid peopleDataGrid, Button updatePersonBtn)
         {
             _dataRepository = dataRepository;
-            UserIdComboBoxes = userIdComboBoxes;
-            ExpeditionComboBoxes = expeditionComboBoxes;
-            UserNumberComboBoxes = userNumberComboBoxes;
-            PeopleDataGrid = peopleDataGrid;
-            UpdatePersonBtn = updatePersonBtn;
+            _userIdComboBoxes = userIdComboBoxes;
+            _expeditionComboBoxes = expeditionComboBoxes;
+            _userNumberComboBoxes = userNumberComboBoxes;
+            _peopleDataGrid = peopleDataGrid;
+            _updatePersonBtn = updatePersonBtn;
         }
 
         public Dictionary<string, string> GetUserIdBirthPairs()
@@ -96,7 +96,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 ClearInputsInternal(editedPerson);
 
                 //hide save person button
-                ToggleButton(UpdatePersonBtn, Visibility.Hidden);
+                ToggleButton(_updatePersonBtn, Visibility.Hidden);
                 Refresh();
 
                 MessageBox.Show("Person was updated");
@@ -128,7 +128,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 SetValueInTabs(person, personVM);
 
                 //show save person button
-                ToggleButton(UpdatePersonBtn, Visibility.Visible);
+                ToggleButton(_updatePersonBtn, Visibility.Visible);
             }
             catch
             {
@@ -141,7 +141,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             ClearInputsInternal(personVM);
 
             //hide save person button
-            ToggleButton(UpdatePersonBtn, Visibility.Hidden);
+            ToggleButton(_updatePersonBtn, Visibility.Hidden);
         }
 
         #region private methods
@@ -178,12 +178,12 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         private void RefreshPeople()
         {
-            PeopleDataGrid.ItemsSource = _dataRepository.GetPeople();
+            _peopleDataGrid.ItemsSource = _dataRepository.GetPeople();
         }
 
         private void RefreshUsersNumber()
         {
-            foreach (var comboBox in UserNumberComboBoxes)
+            foreach (var comboBox in _userNumberComboBoxes)
             {
                 comboBox.ItemsSource = _dataRepository.GetPeopleNumbers();
             }
@@ -191,7 +191,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         private void RefreshExpedition()
         {
-            foreach (var comboBox in ExpeditionComboBoxes)
+            foreach (var comboBox in _expeditionComboBoxes)
             {
                 comboBox.ItemsSource = _dataRepository.GetExpeditionCodes();
             }
@@ -199,7 +199,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         private void RefreshUserIds()
         {
-            foreach(var comboBox in UserIdComboBoxes)
+            foreach(var comboBox in _userIdComboBoxes)
             {
                 comboBox.ItemsSource = _dataRepository.GetUserIds();
             }

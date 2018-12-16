@@ -1,15 +1,13 @@
 ﻿using StateEvaluation.Common.ViewModel;
 using StateEvaluation.Repository.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace StateEvaluation
 {
+    /// <summary>
+    /// Interaction logic for People tab
+    /// </summary>
     partial class MainWindow : Window
     {
         /// <summary>

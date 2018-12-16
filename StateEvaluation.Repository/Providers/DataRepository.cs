@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Windows;
 using StateEvaluation.Repository.Models;
 using StateEvaluation.Common.Enums;
-using System.Threading.Tasks;
 
 namespace StateEvaluation.Repository.Providers
 {
