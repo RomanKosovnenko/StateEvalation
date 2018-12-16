@@ -11,7 +11,12 @@ namespace StateEvaluation.BussinesLayer.Providers
 {
     public class FilterProvider
     {
-        private DataRepository _dataRepository = new DataRepository();
+        private DataRepository _dataRepository;
+
+        public FilterProvider(DataRepository dataRepository)
+        {
+            _dataRepository = dataRepository;
+        }
 
         public IEnumerable Filter(object filter)
         {
@@ -98,11 +103,11 @@ namespace StateEvaluation.BussinesLayer.Providers
                     allowedUserIds.Add(person.UserId.ToString().Trim());
                 }
                 
-                preferences = _dataRepository.GetPreferences(GetPreferenceQuery(preferenceFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
+                preferences = _dataRepository.GetPreferenceTests(GetPreferenceQuery(preferenceFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
                 
                 return preferences;
             }
-            preferences = _dataRepository.GetPreferences();
+            preferences = _dataRepository.GetPreferenceTests();
             return preferences;
         }
 
@@ -162,7 +167,7 @@ namespace StateEvaluation.BussinesLayer.Providers
                     preferenceFilter.Color6in12Filter, preferenceFilter.Color7in12Filter, preferenceFilter.Color8in12Filter,
                     preferenceFilter.Color9in12Filter, preferenceFilter.Color10in12Filter, preferenceFilter.Color11in12Filter,
                     preferenceFilter.Color12in12Filter) &&
-                (preferenceFilter.PreferenceFilter == "All" || _.Preference1 == preferenceFilter.PreferenceFilter) &&
+                (preferenceFilter.PreferenceFilter == "All" || _.Preference1.Trim() == preferenceFilter.PreferenceFilter) &&
                 allowedUserIds.Contains(_.UserId.Trim());
         }
 

@@ -10,11 +10,11 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:viewModel="clr-namespace:StateEvaluation.Common.ViewModel;assembly=StateEvaluation.Common"
         mc:Ignorable="d"
-        ContentRendered="WindowRendered"
+        ContentRendered="WindowRendered_Click"
         Title="Оценка состояния" Height="768" Width="1366" WindowState="Maximized">
     <Window.Resources>
         <ObjectDataProvider x:Key="GetPeople" ObjectType="{x:Type repository:DataRepository}" MethodName="GetPeople"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type repository:DataRepository}" MethodName="GetPreferences"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type repository:DataRepository}" MethodName="GetPreferenceTests"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type repository:DataRepository}" MethodName="GetSubjecriveFeelings"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetCodesForInsert" ObjectType="{x:Type repository:DataRepository}" MethodName="GetUserIds"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type repository:DataRepository}" MethodName="GetUserIds"></ObjectDataProvider>
@@ -82,9 +82,9 @@
                     <TextBox Text="{Binding Workposition}" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="730,42,0,52" HorizontalAlignment="Left" Width="165"/>
                     <TextBox Text="{Binding Expedition}" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="921,42,0,52" HorizontalAlignment="Left" Width="60"/>
                     <TextBox Text="{Binding PersonNumber}" TextWrapping="Wrap" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="1008,42,0,52" HorizontalAlignment="Left" Width="59"/>
-                    <Button x:Name="AddPersonBtn" Content="Добавить" Margin="1086,22,0,76" Click="CreatePerson" HorizontalAlignment="Left" Width="105"/>
-                    <Button x:Name="UpdatePersonBtn" Content="Сохранить" Margin="1209,33,0,65" Click="UpdatePerson" Visibility="Hidden" HorizontalAlignment="Left" Width="105" />
-                    <Button Content="Сброс" Margin="1086,48,0,50" Visibility="Visible" HorizontalAlignment="Left" Click="ClearInputs" Width="105" Height="21" />
+                    <Button x:Name="AddPersonBtn" Content="Добавить" Margin="1086,22,0,76" Click="CreatePerson_Click" HorizontalAlignment="Left" Width="105"/>
+                    <Button x:Name="UpdatePersonBtn" Content="Сохранить" Margin="1209,33,0,65" Click="UpdatePerson_Click" Visibility="Hidden" HorizontalAlignment="Left" Width="105" />
+                    <Button Content="Сброс" Margin="1086,48,0,50" Visibility="Visible" HorizontalAlignment="Left" Click="ClearInputs_Click" Width="105" Height="21" />
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItem1" DataContext="{StaticResource preferenceVM}" Header="Преференции">
@@ -422,13 +422,13 @@
                     <Button
                             Grid.Column="35"
                             Margin="281,9,10,42"
-                            Click="CreatePreferense"
+                            Click="CreatePreferense_Click"
                             Content="Добавить запись" />
 
                     <Button
                             Grid.Column="35"
                             Margin="281,34,10,16"
-                            Click="ClearPreferenceInputs"
+                            Click="ClearPreferenceInputs_Click"
                             Content="Сброс выбора"  />
                     <TextBlock
                         HorizontalAlignment="Center"
@@ -439,7 +439,7 @@
                     <Button x:Name="UpdatePrefernceBtn"
                         Grid.Column="35"
                         Margin="281,60,10,-8"
-                        Click="UpdatePreference"
+                        Click="UpdatePreference_Click"
                         Content="Применить"
                         Visibility="Hidden"/>
                 </Grid>
@@ -454,12 +454,12 @@
                     </Grid.RowDefinitions>
                     <Button
                             Margin="932,37,311,61"
-                            Click="CreateSubjectiveFeeling"
+                            Click="CreateSubjectiveFeeling_Click"
                             Content="Добавить запись" />
                     <Button
                         x:Name="UpdateSubjectiveFeelingBtn"
                             Margin="1161,37,81,61"
-                            Click="UpdateSubjectiveFeeling"
+                            Click="UpdateSubjectiveFeeling_Click"
                             Content="Применить" 
                         Visibility="Hidden"/>
 
@@ -542,7 +542,7 @@
                         Margin="1046,37,196,61"
                         Content="Сброс" 
                         Visibility="Visible"
-                        Click="ClearSubjectiveFeelingInputs"/>
+                        Click="ClearSubjectiveFeelingInputs_Click"/>
                 </Grid>
             </TabItem>
 
@@ -556,12 +556,12 @@
                     <DatePicker Height="25" Width="111" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,34,0,0" Name="Date"     VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.ColumnSpan="2"/>
                     <Label   Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="161,10,0,0" Grid.ColumnSpan="2" Content="Дата расчета"/>
 
-                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Prew" Margin="569,34,0,0" Grid.ColumnSpan="2" Content="Назад" />
-                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Next" Margin="658,34,0,0" Grid.ColumnSpan="2" Content="Вперед" />
+                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Prew_Click" Margin="569,34,0,0" Grid.ColumnSpan="2" Content="Назад" />
+                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Next_Click" Margin="658,34,0,0" Grid.ColumnSpan="2" Content="Вперед" />
 
                     <DatePicker Height="25" Width="102" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="161,34,0,0" Name="DateNow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}" Grid.ColumnSpan="2"/>
-                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="379,34,0,0" Click="DrawGraphs" Grid.ColumnSpan="2">Построить графики</Button>
-                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1026,26,0,0" Click="Generate" Grid.ColumnSpan="2" Visibility="Hidden">Создать изображение</Button>
+                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="379,34,0,0" Click="DrawGraphs_Click" Grid.ColumnSpan="2">Построить графики</Button>
+                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1026,26,0,0" Click="Generate_Click" Grid.ColumnSpan="2" Visibility="Hidden">Создать изображение</Button>
                 </Grid>
             </TabItem>
             <TabItem x:Name="ColorSettingsTab" Header="Цвета"/>
@@ -586,14 +586,14 @@
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="EditPersonBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="BindPersonInForm" Tag="{Binding Id}"/>
+                                <Button x:Name="EditPersonBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="BindPersonInForm_Click" Tag="{Binding Id}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="RemovePersonBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemovePerson"/>
+                                <Button x:Name="RemovePersonBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemovePerson_Click"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -609,7 +609,7 @@
                                 Command="{Binding MakeIndividualChartCommand}"
                                 Content="&#xE929;"
                                 FontFamily="Segoe MDL2 Assets"
-                                ToolTip="{x:Static p:Resources.MakeChartToolTip}" Click="Button_Click" />
+                                ToolTip="{x:Static p:Resources.MakeChartToolTip}" Click="BuildInduvidualChart_Click" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -921,14 +921,14 @@
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="EditPreferenceBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="BindPreferenceInForm" Tag="{Binding Id}"/>
+                                <Button x:Name="EditPreferenceBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="BindPreferenceInForm_Click" Tag="{Binding Id}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="RemovePreferenceBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemovePreference"/>
+                                <Button x:Name="RemovePreferenceBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemovePreference_Click"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -950,21 +950,21 @@
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="EditFeelingsBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="BindSubjectiveFeelingInForm" Tag="{Binding Id}"/>
+                                <Button x:Name="EditFeelingsBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="BindSubjectiveFeelingInForm_Click" Tag="{Binding Id}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="RemoveFeelingsBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="DeleteSSubjectiveFeeling"/>
+                                <Button x:Name="RemoveFeelingsBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="DeleteSSubjectiveFeeling_Click"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Grid x:Name="BioColorGraph" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem3}" Margin="0,-35,0,-31" Grid.ColumnSpan="2" Panel.ZIndex="1">
+            <Grid x:Name="BioColorGrid" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem3}" Margin="0,-35,0,-31" Grid.ColumnSpan="2" Panel.ZIndex="1">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
@@ -1266,25 +1266,25 @@
                 <TextBox Width="50" Height="25" Name="yic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,275,0,0" />
                 <TextBox Width="50" Height="25" Name="kic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,275,0,0" />
 
-                <Button Width="65"  Height="25" Name="pb1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,0,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button Width="65"  Height="25" Name="pb2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,25,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button Width="65"  Height="25" Name="pb3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,50,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button Width="65"  Height="25" Name="pb4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,75,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="pb1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,0,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="pb2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,25,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="pb3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,50,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="pb4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,75,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
 
-                <Button    Width="65"  Height="25" Name="eb1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,100,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="eb2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,125,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="eb3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,150,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="eb4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,175,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="eb1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,100,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="eb2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,125,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="eb3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,150,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="eb4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,175,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
 
-                <Button    Width="65"  Height="25" Name="ib1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,200,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="ib2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,225,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="ib3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,250,0,0" Click="CMYK2RGB">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="ib4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,275,0,0" Click="CMYK2RGB">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="ib1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,200,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="ib2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,225,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="ib3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,250,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="ib4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,275,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
 
 
-                <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="496,326,0,0" Click="ResetColors" Content="Сброс"/>
-                <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="606,326,0,0" Click="RestoreColors" Content="Восстановить" RenderTransformOrigin="0.494,0.64"/>
-                <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="717,326,0,0" Click="SaveColors" Content="Сохранить"/>
+                <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="496,326,0,0" Click="ResetColors_Click" Content="Сброс"/>
+                <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="606,326,0,0" Click="RestoreColors_Click" Content="Восстановить" RenderTransformOrigin="0.494,0.64"/>
+                <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="717,326,0,0" Click="SaveColors_Click" Content="Сохранить"/>
 
             </Grid>
             <Grid Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto"  
@@ -1412,12 +1412,12 @@
                     <Button Grid.Row="0"
                                 Grid.Column="0"
                                 Margin="2"
-                                Click="ClearFilterPeopleTab"
+                                Click="ClearFilterPeopleTab_Click"
                                 Content="Сбосить фильтр" Padding="0" Grid.ColumnSpan="2" />
                     <Button Grid.Row="0"
                         Grid.Column="2"
                         Margin="2"
-                        Click="FilterPeople"
+                        Click="FilterPeople_Click"
                         Content="Применить фильтр" Padding="0" />
                     <Button Grid.Row="3"
                         Click="AddData_OnClick"
@@ -1765,21 +1765,21 @@
                     <Button Grid.Row="0"
                                 Grid.Column="0"
                                 Margin="2"
-                                Click="ClearFilterPreferenceTab"
+                                Click="ClearFilterPreferenceTab_Click"
                                 Content="Сбосить фильтр" Padding="0" 
                                 Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"/>
                     <Button Grid.Row="0"
                         Grid.Column="1"
                         Margin="2"
-                        Click="FilterPreference"
+                        Click="FilterPreference_Click"
                         Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"
                         Content="Применить фильтр" Padding="0" />
                     <Button Grid.Row="1"
-                            Click="BildChartOnPreference1"
+                            Click="BildChartOnPreference1_Click"
                             Margin="2"
                             Content="Диаграма преф.1" Padding="0" />
                     <Button Grid.Row="1"
-                            Click="BildChartOnPreference2"
+                            Click="BildChartOnPreference2_Click"
                             Margin="2"
                             Content="Диаграма преф.2" Padding="0" Grid.Column="1" />
                 </Grid>
@@ -2002,12 +2002,12 @@
                     <Button Grid.Row="0"
                                 Grid.Column="0"
                                 Margin="2,10,2,188"
-                                Click="ClearFilterSubjFeelTab"
+                                Click="ClearFilterSubjFeelTab_Click"
                                 Content="Сбосить фильтр" Padding="0" />
                     <Button Grid.Row="0"
                         Grid.Column="1"
                         Margin="2,10,2,188"
-                        Click="FilterSubjectiveFeeling"
+                        Click="FilterSubjectiveFeeling_Click"
                         Content="Применить фильтр" Padding="0" />
                 </Grid>
             </Grid>
