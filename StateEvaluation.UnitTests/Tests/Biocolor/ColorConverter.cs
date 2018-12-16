@@ -1,6 +1,4 @@
-using System;
 using Xunit;
-using StateEvaluation;
 using StateEvaluation.BioColor.Helpers;
 using Color = System.Drawing.Color;
 
@@ -84,20 +82,52 @@ namespace UnitTests
         #endregion
 
         #region Mix
-        [Fact(DisplayName = "SE: Biocolor ColorConverter Mix")]
-        public void Mix()
+        [Fact(DisplayName = "SE: Biocolor ColorConverter Mix 3 colors")]
+        public void Mix3()
         {
             //set vars
-            Color Color1 = Color.FromArgb(255, 0, 0);
-            Color Color2 = Color.FromArgb(0, 255, 0);
-            Color Color3 = Color.FromArgb(0, 0, 255);
-            Color expectedResult = Color.FromArgb(84, 84, 84);
+            Color Color1 = Color.FromArgb(0xFF, 0x78, 0xA4, 0xF6);
+            Color Color2 = Color.FromArgb(0xFF, 0x90, 0x4E, 0x9A);
+            Color Color3 = Color.FromArgb(0xFF, 0x1D, 0xE8, 0x3A);
+            Color eColor = Color.FromArgb(0xFF, 0x6D, 0x99, 0x9E);
 
             //action
             var result = ColorConverter.Mix(Color1, Color2, Color3);
 
             //check result
-            Assert.Equal(result, expectedResult);
+            Assert.Equal(eColor, result);
+        }
+
+        [Fact(DisplayName = "SE: Biocolor ColorConverter Mix 2 colors")]
+        public void Mix2()
+        {
+            //set vars
+            Color Color1 = Color.FromArgb(0xFF, 0x78, 0xA4, 0xF6);
+            Color Color2 = Color.FromArgb(0xFF, 0x90, 0x4E, 0x9A);
+            Color Color3 = Color.FromArgb(0x00, 0xFF, 0xFF, 0xFF);
+            Color eColor = Color.FromArgb(0xFF, 0x8E, 0x75, 0xC8);
+
+            //action
+            var result = ColorConverter.Mix(Color1, Color2, Color3);
+
+            //check result
+            Assert.Equal(eColor, result);
+        }
+
+        [Fact(DisplayName = "SE: Biocolor ColorConverter Mix 1 color")]
+        public void Mix1()
+        {
+            //set vars
+            Color Color1 = Color.FromArgb(0xFF, 0x78, 0xA4, 0xF6);
+            Color Color2 = Color.FromArgb(0x00, 0xFF, 0xFF, 0xFF);
+            Color Color3 = Color.FromArgb(0x00, 0xFF, 0xFF, 0xFF);
+            Color eColor = Color.FromArgb(0xFF, 0x78, 0xA4, 0xF6);
+
+            //action
+            var result = ColorConverter.Mix(Color1, Color2, Color3);
+
+            //check result
+            Assert.Equal(eColor, result);
         }
         #endregion
     }
