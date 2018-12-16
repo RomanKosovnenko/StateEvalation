@@ -14,6 +14,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using StateEvaluation.Repository.Models;
 using Microsoft.Win32;
+using StateEvaluation.Common.Enums;
+using StateEvaluation.BussinesLayer.Enums;
 
 namespace StateEvaluation.View
 {
@@ -161,26 +163,26 @@ namespace StateEvaluation.View
             SalesmenSeries.Add(
                 new BarSeries
                 {
-                    Title = "Синяя",
+                    Title = PreferenceValues.Blue,
                     Values = new ChartValues<SalesData>()
                 });
             SalesmenSeries.Add(
                 new BarSeries
                 {
-                    Title = "Красная",
+                    Title = PreferenceValues.Red,
                     Values = new ChartValues<SalesData>()
                 });
             SalesmenSeries.Add(
                 new BarSeries
                 {
-                    Title = "Желтая",
+                    Title = PreferenceValues.Yellow,
                     Values = new ChartValues<SalesData>()
                 });
 
             SalesmenSeries.Add(
                 new BarSeries
                 {
-                    Title = "Серая",
+                    Title = PreferenceValues.Gray,
                     Values = new ChartValues<SalesData>()
                 });
             SalesmenSeries.Setup(new SeriesConfiguration<SalesData>().Y(data => data.Count)); // Setup a default configuration for all series in this collection.
@@ -195,7 +197,7 @@ namespace StateEvaluation.View
                         string itemPreference = isPreference1 ? item.Preference1 : itemPreference = item.Preference2;
                         switch (itemPreference.TrimEnd((' ')))
                         {
-                            case "Синяя":
+                            case PreferenceColors.Blue:
                                 if (SalesmenSeries[0].Values.Count == i)
                                 {
                                     SalesmenSeries[0].Values.Add(new SalesData { Count = 1 });
@@ -214,7 +216,7 @@ namespace StateEvaluation.View
                                     (SalesmenSeries[0].Values[i] as SalesData).Count += 1;
                                 }
                                 break;
-                            case "Красная":
+                            case PreferenceColors.Red:
                                 if (SalesmenSeries[1].Values.Count == i)
                                 {
                                     SalesmenSeries[1].Values.Add(new SalesData { Count = 1 });
@@ -233,7 +235,7 @@ namespace StateEvaluation.View
                                     (SalesmenSeries[1].Values[i] as SalesData).Count += 1;
                                 }
                                 break;
-                            case "Желтая":
+                            case PreferenceColors.Yellow:
                                 if (SalesmenSeries[2].Values.Count == i)
                                 {
                                     SalesmenSeries[2].Values.Add(new SalesData { Count = 1 });
@@ -252,7 +254,7 @@ namespace StateEvaluation.View
                                     (SalesmenSeries[2].Values[i] as SalesData).Count += 1;
                                 }
                                 break;
-                            case "Смешанная":
+                            case PreferenceColors.Gray:
                                 if (SalesmenSeries[3].Values.Count == i)
                                 {
                                     SalesmenSeries[3].Values.Add(new SalesData { Count = 1 });

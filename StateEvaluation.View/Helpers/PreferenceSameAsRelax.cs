@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StateEvaluation.BussinesLayer.Enums;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -20,16 +21,16 @@ namespace StateEvaluation.View.Helpers
 
             switch (preference)
             {
-                case "Красная":
+                case PreferenceColors.Red:
                     selector = IsNumberInRange(relax, 1, 4);
                     break;
-                case "Синяя":
+                case PreferenceColors.Blue:
                     selector = IsNumberInRange(relax, 5, 8);
                     break;
-                case "Желтая":
+                case PreferenceColors.Yellow:
                     selector = IsNumberInRange(relax, 9, 12);
                     break;
-                case "Смешанная":
+                case PreferenceColors.Gray:
                     selector = false;
                     break;
 

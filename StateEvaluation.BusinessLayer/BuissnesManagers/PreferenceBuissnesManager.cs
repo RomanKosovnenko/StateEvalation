@@ -272,7 +272,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                     case PreferenceColors.Blue:
                         preferenceVM.GetType().GetProperty($"Preference{counter}Blue").SetValue(preferenceVM, StringBooleanValues.True);
                         break;
-                    case PreferenceColors.Grey:
+                    case PreferenceColors.Gray:
                         preferenceVM.GetType().GetProperty($"Preference{counter}Grey").SetValue(preferenceVM, StringBooleanValues.True);
                         break;
                 }
