@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows;
 using StateEvaluation.Repository.Models;
 using StateEvaluation.Common.Enums;
+using StateEvaluation.Common.Constants;
 
 namespace StateEvaluation.Repository.Providers
 {
@@ -137,7 +138,7 @@ namespace StateEvaluation.Repository.Providers
         public IEnumerable<string> GetUserIds()
         {
             var list = UserIds().ToList();
-            list.Insert(0, "All");
+            list.Insert(0, Filter.All);
             return list;
         }
 
@@ -145,7 +146,7 @@ namespace StateEvaluation.Repository.Providers
         {
             var items = this.People.Select(item => item.Workposition).Distinct().OrderByDescending(item => item);
             var list = items.ToList();
-            list.Insert(0, "All");
+            list.Insert(0, Filter.All);
             return list;
         }
 
@@ -154,7 +155,7 @@ namespace StateEvaluation.Repository.Providers
             IEnumerable<string> items = this.People.Select(item => item.Expedition.ToString()).Distinct().OrderByDescending(item => Convert.ToInt32(item));
             List<string> list = items.ToList().ToList();
 
-            list.Insert(0, "All");
+            list.Insert(0, Filter.All);
             return list;
         }
 
@@ -163,7 +164,7 @@ namespace StateEvaluation.Repository.Providers
             IEnumerable<string> items = this.People.Select(item => item.Number.ToString()).Distinct().OrderBy(item => Convert.ToInt32(item));
             List<string> list = items.ToList().ToList();
 
-            list.Insert(0, "All");
+            list.Insert(0, Filter.All);
             return list;
         }
         #endregion
