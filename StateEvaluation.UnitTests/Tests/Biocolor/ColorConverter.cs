@@ -42,5 +42,21 @@ namespace UnitTests
             Assert.Equal(expectedResult[1], result[1]);
             Assert.Equal(expectedResult[2], result[2]);
         }
+
+        [Fact(DisplayName = "SE: Biocolor ColorConverter Mix")]
+        public void Mix()
+        {
+            //set vars
+            Color Color1 = Color.FromArgb(255, 0, 0);
+            Color Color2 = Color.FromArgb(0, 255, 0);
+            Color Color3 = Color.FromArgb(0, 0, 255);
+            Color expectedResult = Color.FromArgb(84, 84, 84);
+
+            //action
+            var result = ColorConverter.Mix(Color1, Color2, Color3);
+
+            //check result
+            Assert.Equal(result, expectedResult);
+        }
     }
 }
