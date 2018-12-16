@@ -78,6 +78,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             if (
                string.IsNullOrEmpty(editedPerson.FirstName) ||
+               string.IsNullOrEmpty(editedPerson.MiddleName) ||
                string.IsNullOrEmpty(editedPerson.LastName) ||
                !DateTime.TryParse(editedPerson.Birthday.ToString(), out DateTime birthday) ||
                string.IsNullOrEmpty(editedPerson.Workposition) ||
@@ -156,6 +157,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             {
                 Firstname = personVM.FirstName,
                 Lastname = personVM.LastName,
+                Middlename = personVM.MiddleName,
                 Expedition = int.Parse(personVM.Expedition),
                 Number = int.Parse(personVM.PersonNumber),
                 Id = id ?? Guid.NewGuid(),
@@ -230,6 +232,11 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             else if (person.Firstname.Length > 21)
             {
                 MessageBox.Show("Error! The Firstname must be no more then 20 symbols");
+                return false;
+            }
+            else if (person.Middlename.Length > 21)
+            {
+                MessageBox.Show("Error! The Middlename must be no more then 20 symbols");
                 return false;
             }
             else if (person.Workposition.Length > 21)
