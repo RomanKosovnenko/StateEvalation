@@ -101,7 +101,6 @@ namespace StateEvaluation
             biocolorSettings = new BiocolorSettings();
             biocolorProvider = new BiocolorProvider(biocolorSettings);
             imageGenerator = new ImageGenerator(biocolorSettings);
-            colors = new TextBox[] { ic1, ic2, ic3, ic4, ec1, ec2, ec3, ec4, pc1, pc2, pc3, pc4 };
 
             biocolorProvider.InitBiocolor(BioColorGrid, Date, DateNow);
 
