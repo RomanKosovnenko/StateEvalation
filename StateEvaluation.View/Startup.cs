@@ -11,6 +11,5 @@ namespace StateEvaluation
             MainWindow = new MainWindow(new DataRepository());
             MainWindow.ShowDialog();
         }
-
     }
 }

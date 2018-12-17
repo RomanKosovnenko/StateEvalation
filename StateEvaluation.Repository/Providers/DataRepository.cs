@@ -141,7 +141,7 @@ namespace StateEvaluation.Repository.Providers
 
         public IEnumerable<string> Professions()
         {
-            var items = this.People.Select(item => item.Workposition).Distinct();
+            var items = this.People.Select(item => item.Workposition.Trim()).Distinct().OrderBy(item => item);
             var list = items.ToList();
             list.Insert(0, "All");
             return list;
