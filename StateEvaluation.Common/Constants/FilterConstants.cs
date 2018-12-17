@@ -8,6 +8,6 @@ namespace StateEvaluation.Common.Constants
 {
     public static class FilterConstants
     {
-        public static string All = "All";
+        public static string All = "Всі";
     }
 }
