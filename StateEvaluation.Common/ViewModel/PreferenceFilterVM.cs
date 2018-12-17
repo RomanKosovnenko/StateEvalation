@@ -161,7 +161,7 @@ namespace StateEvaluation.Common.ViewModel
             set
             {
                 _preferenceFilter = value;
-                OnPropertyChanged("UserId");
+                OnPropertyChanged("PreferenceFilter");
             }
         }
     }

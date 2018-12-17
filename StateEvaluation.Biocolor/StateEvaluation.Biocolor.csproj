@@ -39,6 +39,7 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xaml" />
@@ -72,6 +73,12 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>BiocolorSettings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StateEvaluation.Common\StateEvaluation.Common.csproj">
+      <Project>{E071FC3A-D3EF-46AC-B4B0-478B92509CF5}</Project>
+      <Name>StateEvaluation.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

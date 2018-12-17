@@ -12,7 +12,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 {
     public class PreferenceBuissnesManager
     {
-        private DataRepository _dataRepository = new DataRepository();
+        private DataRepository _dataRepository;
         private List<string> _color1in3s = new List<string>();
         private List<string> _color2in3s = new List<string>();
         private List<string> _color1in12s = new List<string>();
@@ -21,13 +21,14 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         private List<bool> _preference2 = new List<bool>();
         private PreferenceVM _previouspreferenceVM = new PreferenceVM();
 
-        public DataGrid PreferenceDataGrid { get; }
-        public Button UpdatePrefernceBtn { get; }
+        private DataGrid _preferenceDataGrid { get; }
+        private Button _updatePrefernceBtn { get; }
 
-        public PreferenceBuissnesManager(DataGrid preferenceDataGrid, Button updatePrefernceBtn)
+        public PreferenceBuissnesManager(DataRepository dataRepository, DataGrid preferenceDataGrid, Button updatePrefernceBtn)
         {
-            PreferenceDataGrid = preferenceDataGrid;
-            UpdatePrefernceBtn = updatePrefernceBtn;
+            _dataRepository = dataRepository;
+            _preferenceDataGrid = preferenceDataGrid;
+            _updatePrefernceBtn = updatePrefernceBtn;
         }
 
         public void Create(PreferenceVM preferenceVM)
@@ -38,7 +39,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 {
                     var preference = GetNewPreference(preferenceVM);
 
-                    _dataRepository.InsertPreference(preference);
+                    _dataRepository.InsertPreferenceTest(preference);
                     ClearInputsInternal(preferenceVM);
 
                     RefreshDataGrid();
@@ -59,7 +60,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             try
             {
-                _dataRepository.DeletePreference(id);
+                _dataRepository.DeletePreferenceTest(id);
                 RefreshDataGrid();
                 MessageBox.Show("Preference was removed");
             }
@@ -78,7 +79,9 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                     if (IsValidPreferenseVM(preferenceVM))
                     {
                         var preference = GetNewPreference(preferenceVM, new Guid(preferenceVM.Id));
-                        _dataRepository.UpdatePreference(preference);
+                        _dataRepository.UpdatePreferenceTest(preference);
+                        ClearInputsInternal(preferenceVM);
+                        RefreshDataGrid();
                     }
                     else
                     {
@@ -98,11 +101,11 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             try
             {
-                var preference = _dataRepository.GeneratePreference(preferenceId);
+                var preference = _dataRepository.GeneratePreferenceTest(preferenceId);
                 SetValueInTabs(preferenceVM, preference);
                 _previouspreferenceVM = preferenceVM;
                 
-                ToggleButton(UpdatePrefernceBtn, Visibility.Visible);
+                ToggleButton(_updatePrefernceBtn, Visibility.Visible);
             }
             catch
             {
@@ -112,13 +115,13 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         public void ClearInputs(PreferenceVM preferenceVM)
         {
-            ToggleButton(UpdatePrefernceBtn, Visibility.Hidden);
+            ToggleButton(_updatePrefernceBtn, Visibility.Hidden);
             ClearInputsInternal(preferenceVM);
         }
 
         public Preference GetPreference(Preference preference)
         {
-            return _dataRepository.GetPreference(preference);
+            return _dataRepository.GetPreferenceTest(preference);
         }
         #region private methods
         private void ToggleButton(Button button, Visibility visibility)
@@ -136,7 +139,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         private void RefreshDataGrid()
         {
-            PreferenceDataGrid.ItemsSource = _dataRepository.GetPreferences();
+            _preferenceDataGrid.ItemsSource = _dataRepository.GetPreferenceTests();
         }
 
         private bool IsValidPreferenseVM(PreferenceVM preferenceVM)
@@ -197,8 +200,8 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 Oder2 = String.Join(",", _color2in12s),
                 Preference2 = new StateEvaluationDLL.DataStructures.Preference(Color2in3sByte, Color2in12sByte).Type.ToString(),
                 Compare = (_preference1.IndexOf(true) == _preference2.IndexOf(true)).ToString().ToLower(),
-                RelaxTable1 = int.Parse(preferenceVM.ColorRelax1),
-                RelaxTable2 = int.Parse(preferenceVM.ColorRelax2)
+                RelaxTable1 = (int?)int.Parse(preferenceVM.ColorRelax1),
+                RelaxTable2 = (int?)int.Parse(preferenceVM.ColorRelax2)
             };
 
             return preference;
@@ -272,7 +275,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                     case PreferenceColors.Blue:
                         preferenceVM.GetType().GetProperty($"Preference{counter}Blue").SetValue(preferenceVM, StringBooleanValues.True);
                         break;
-                    case PreferenceColors.Grey:
+                    case PreferenceColors.Gray:
                         preferenceVM.GetType().GetProperty($"Preference{counter}Grey").SetValue(preferenceVM, StringBooleanValues.True);
                         break;
                 }

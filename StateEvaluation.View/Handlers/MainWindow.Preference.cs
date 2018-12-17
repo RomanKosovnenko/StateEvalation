@@ -1,16 +1,15 @@
 ﻿using StateEvaluation.Common.ViewModel;
 using StateEvaluation.Repository.Models;
 using StateEvaluation.View;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace StateEvaluation
 {
+    /// <summary>
+    /// Interaction logic for Preference tab
+    /// </summary>
     partial class MainWindow : Window
     {
         /// <summary>
@@ -18,7 +17,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void CreatePreferense(object sender, RoutedEventArgs e)
+        private void CreatePreferense_Click(object sender, RoutedEventArgs e)
         {
             var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
             preferenceBuissnesManager.Create(preferenceVM);
@@ -29,7 +28,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void BindPreferenceInForm(object sender, RoutedEventArgs e)
+        private void BindPreferenceInForm_Click(object sender, RoutedEventArgs e)
         {
             var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
             var butonContext = ((Button)sender).DataContext;
@@ -43,7 +42,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void UpdatePreference(object sender, RoutedEventArgs e)
+        private void UpdatePreference_Click(object sender, RoutedEventArgs e)
         {
             var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
             preferenceBuissnesManager.UpdatePreference(preferenceVM);
@@ -54,14 +53,15 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void RemovePreference(object sender, RoutedEventArgs e)
+        private void RemovePreference_Click(object sender, RoutedEventArgs e)
         {
-            var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
+            var butonContext = ((Button)sender).DataContext;
+            var preferenceId = ((Preference)butonContext).Id;
             var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
 
             if (dialogResult == MessageBoxResult.Yes)
             {
-                preferenceBuissnesManager.RemovePreference(preferenceVM.Id);
+                preferenceBuissnesManager.RemovePreference(preferenceId.ToString());
             }
         }
 
@@ -70,7 +70,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void ClearPreferenceInputs(object sender, RoutedEventArgs e)
+        private void ClearPreferenceInputs_Click(object sender, RoutedEventArgs e)
         {
             var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
             preferenceBuissnesManager.ClearInputs(preferenceVM);
@@ -81,7 +81,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void ClearFilterPreferenceTab(object sender, RoutedEventArgs e)
+        private void ClearFilterPreferenceTab_Click(object sender, RoutedEventArgs e)
         {
             filterBussinesManager.Clear(PreferencesDataGrid, preferenceFilter);
         }
@@ -91,7 +91,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void FilterPreference(object sender, RoutedEventArgs e)
+        private void FilterPreference_Click(object sender, RoutedEventArgs e)
         {
             filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter);
         }
@@ -101,10 +101,9 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BildChartOnPreference1(object sender, RoutedEventArgs e)
+        private void BildChartOnPreference1_Click(object sender, RoutedEventArgs e)
         {
-            var preferences = ((List<Preference>)filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter))
-                .OrderBy(x => x.Date).ToList();
+            var preferences = filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter).Cast<Preference>().OrderBy(x => x.Date).ToList();
             var subWindow = new TestsChart(preferences, true, preferenceFilter?.DateFrom != null && preferenceFilter?.DateFrom == preferenceFilter?.DateTo);
         }
 
@@ -113,10 +112,9 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BildChartOnPreference2(object sender, RoutedEventArgs e)
+        private void BildChartOnPreference2_Click(object sender, RoutedEventArgs e)
         {
-            var preferences = ((List<Preference>)filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter))
-                .OrderBy(x => x.Date).ToList();
+            var preferences = filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter).Cast<Preference>().OrderBy(x => x.Date).ToList();
             var subWindow = new TestsChart(preferences, false, preferenceFilter?.DateFrom != null && preferenceFilter?.DateFrom == preferenceFilter?.DateTo);
         }
 
@@ -125,7 +123,7 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BuildInduvidualChart_Click(object sender, RoutedEventArgs e)
         {
             var currentPreference = (Preference)((Button)(e.Source)).BindingGroup.Items[0];
             Preference pref = preferenceBuissnesManager.GetPreference(currentPreference);

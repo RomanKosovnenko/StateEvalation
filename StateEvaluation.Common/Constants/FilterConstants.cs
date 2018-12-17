@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repository
+namespace StateEvaluation.Common.Constants
 {
-    class Program
+    public static class FilterConstants
     {
-        static void Main(string[] args)
-        {
-        }
+        public static string All = "All";
     }
 }

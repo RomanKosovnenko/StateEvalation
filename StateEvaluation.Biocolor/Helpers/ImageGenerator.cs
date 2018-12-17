@@ -1,6 +1,9 @@
 ﻿using System.Drawing;
 using System.IO;
+using System.Configuration;
+using System.Collections.Specialized;
 using System.Text.RegularExpressions;
+using StateEvaluation.Common.Constants;
 
 namespace StateEvaluation.BioColor.Helpers
 {
@@ -132,14 +135,14 @@ namespace StateEvaluation.BioColor.Helpers
 
             Color alpha = Color.FromArgb(0, 255, 255, 255);
 
-            string s = "C:\\Users\\Vitalii.Kushch\\Documents\\projects\\StateEvalation\\StateEvaluation.View\\Assets\\Templates\\base_" + width + ".png";
+            string s = System.IO.Directory.GetCurrentDirectory() + ConfigurationManager.AppSettings["imagePath"] + ConfigurationManager.AppSettings["baseImagePath"] + width + ImageGeneratorConstants.ImageExtension;
             Bitmap baseImage = new Bitmap(s);
             for (int i = 0; i < image.Width; ++i)
                 for (int j = 0; j < image.Height; ++j)
                 {
                     if (baseImage.GetPixel(i, j).A == 0) image.SetPixel(i, j, alpha);
                 }
-            image.Save("C:\\Users\\Vitalii.Kushch\\Documents\\projects\\StateEvalation\\StateEvaluation.View\\Assets\\Templates\\Image_" + width + ".png");
+            image.Save(System.IO.Directory.GetCurrentDirectory() + ConfigurationManager.AppSettings["imagePath"] + ConfigurationManager.AppSettings["generatedImagePath"] + width + ImageGeneratorConstants.ImageExtension);
 
         }
     }

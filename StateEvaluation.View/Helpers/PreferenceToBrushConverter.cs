@@ -2,6 +2,7 @@
 using System.Windows.Data;
 using System.Windows.Media;
 using StateEvaluation.BioColor.Helpers;
+using StateEvaluation.BussinesLayer.Enums;
 
 namespace StateEvaluation.View.Helpers
 {
@@ -19,16 +20,16 @@ namespace StateEvaluation.View.Helpers
             string color;
             switch (input)
             {
-                case "Красная":
+                case PreferenceColors.Red:
                     color = biocolorSettings.P3; // Brushes.Red;
                     break;
-                case "Синяя":
+                case PreferenceColors.Blue:
                     color = biocolorSettings.I3; // Brushes.Blue;
                     break;
-                case "Желтая":
+                case PreferenceColors.Yellow:
                     color = biocolorSettings.E3; // Brushes.Yellow;
                     break;
-                case "Смешанная":
+                case PreferenceColors.Gray:
                     return Brushes.Gray;
 
                 default:

@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using System.Data.Linq;
 using System.Data.Linq.Mapping;
-using System.Data.SqlClient;
 using System.Linq;
-using System.Windows;
 using StateEvaluation.Repository.Models;
 using StateEvaluation.Common.Enums;
+using System.Configuration;
 
 namespace StateEvaluation.Repository.Providers
 {
     [Database]
     public class DataRepository : DataContext
     {
-        public DataRepository() : base("Data Source=mssql1.gear.host;Initial Catalog=PreferenceDB;User ID=preferencedb;Password=Qwe!23;Encrypt=True;TrustServerCertificate=True") { }
+        public DataRepository() : base(ConfigurationManager.ConnectionStrings["StateEvaluation.Properties.Settings.PreferenceDBConnectionString"].ConnectionString) { }
         public Table<People> People;
         public Table<Preference> Preference;
         public Table<RelaxTable1> RelaxTable1;
@@ -22,33 +21,33 @@ namespace StateEvaluation.Repository.Providers
         public Table<SubjectiveFeeling> SubjectiveFeeling;
         public Table<NormalPreference> NormalPreference;
 
-        public void InsertPreference(Preference preference)
+        #region Preferences
+        public void InsertPreferenceTest(Preference preference)
         {
             Preference.InsertOnSubmit(preference);
             SubmitChanges();
         }
 
-        #region Preferences
-        public Preference GeneratePreference(Guid id)
+        public Preference GeneratePreferenceTest(Guid id)
         {
             var preference = Preference.Single(item => item.Id == id);
             return preference;
         }
 
-        public IEnumerable<Preference> GetPreferences()
+        public IEnumerable<Preference> GetPreferenceTests()
         {
             var items = this.Preference.Select(item => item).OrderByDescending(item => item.Date);
             return items;
         }
 
-        public void DeletePreference(string id)
+        public void DeletePreferenceTest(string id)
         {
             var preference = Preference.Single(item => item.Id.ToString() == id);
             Preference.DeleteOnSubmit(preference);
             SubmitChanges();
         }
 
-        public void UpdatePreference(Preference person)
+        public void UpdatePreferenceTest(Preference person)
         {
             var items = Preference.Single(item => item.Id == person.Id);
             items.Oder1 = person.Oder1;
@@ -63,15 +62,30 @@ namespace StateEvaluation.Repository.Providers
             SubmitChanges();
         }
 
-        public Preference GetPreference(Preference preference)
+        public Preference GetPreferenceTest(Preference preference)
         {
             return Preference.Single(item => item == preference);
         }
 
-        public IEnumerable<Preference> GetPreferences(Func<Preference, bool> query)
+        public IEnumerable<Preference> GetPreferenceTests(Func<Preference, bool> query)
         {
-            var preferences = this.Preference.Where(query);
+            var preferences = this.Preference.Where(query).OrderByDescending(item => item.Date); ;
             return preferences;
+        }
+
+        public IEnumerable<string> GetShortColorsNumbersList()
+        {
+            return PreferenceValues.ShortColorsNumbersList;
+        }
+
+        public IEnumerable<string> GetColorsNumbersList()
+        {
+            return PreferenceValues.ColorsNumbersList;
+        }
+
+        public IEnumerable<string> Preferences()
+        {
+            return PreferenceValues.Preferences;
         }
         #endregion
 
@@ -83,7 +97,7 @@ namespace StateEvaluation.Repository.Providers
         }
         public IEnumerable<People> GetPeople()
         {
-            var people = this.People.Select(item => item).OrderBy(item => item.UserId);
+            var people = this.People.Select(item => item).OrderByDescending(item => item.UserId);
             return people;
         }
         public People GetPersonByUserId(string userId)
@@ -129,7 +143,7 @@ namespace StateEvaluation.Repository.Providers
 
         public IEnumerable<People> GetPeople(Func<People, bool> query)
         {
-            var person = this.People.Where(query);
+            var person = this.People.Where(query).OrderByDescending(item => item.UserId);
             return person;
         }
 
@@ -143,7 +157,7 @@ namespace StateEvaluation.Repository.Providers
 
         public IEnumerable<string> Professions()
         {
-            var items = this.People.Select(item => item.Workposition).Distinct().OrderByDescending(item => item);
+            var items = this.People.Select(item => item.Workposition).Distinct();
             var list = items.ToList();
             list.Insert(0, "All");
             return list;
@@ -207,21 +221,9 @@ namespace StateEvaluation.Repository.Providers
 
         public IEnumerable<SubjectiveFeeling> GetSubjecriveFeelings(Func<SubjectiveFeeling, bool> query)
         {
-            var items = SubjectiveFeeling.Where(query);
+            var items = SubjectiveFeeling.Where(query).OrderByDescending(item => item.Date);
             return items;
         }
         #endregion
-
-        public IEnumerable<string> GetShortColorsNumbersList()
-        {
-            string[] list = { "3", "7", "11" };
-            return list;
-        }
-        public IEnumerable<string> GetColorsNumbersList()
-        {
-            string[] list = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" };
-            return list;
-        }   
-
     }
 }
