@@ -977,7 +977,7 @@
                         <DrawingImage>
                             <DrawingImage.Drawing>
                                 <DrawingGroup>
-                                    <GeometryDrawing x:Name="pcb4" Brush="#F603EB">
+                                    <GeometryDrawing x:Name="PhysicalColorBackground4" Brush="#F603EB">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -994,7 +994,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing x:Name="pcb3" Brush="#FA0006">
+                                    <GeometryDrawing x:Name="PhysicalColorBackground3" Brush="#FA0006">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1011,7 +1011,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing x:Name="pcb2" Brush="#FE280C">
+                                    <GeometryDrawing x:Name="PhysicalColorBackground2" Brush="#FE280C">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1028,7 +1028,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing x:Name="pcb1" Brush="#F96F0A">
+                                    <GeometryDrawing x:Name="PhysicalColorBackground1" Brush="#F96F0A">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1045,7 +1045,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing x:Name="ecb4" Brush="#FBBC0C">
+                                    <GeometryDrawing x:Name="EmotionalColorBackground4" Brush="#FBBC0C">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1062,7 +1062,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing x:Name="ecb3" Brush="#F4FE09">
+                                    <GeometryDrawing x:Name="EmotionalColorBackground3" Brush="#F4FE09">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1079,7 +1079,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing x:Name="ecb2" Brush="#7EFE07">
+                                    <GeometryDrawing x:Name="EmotionalColorBackground2" Brush="#7EFE07">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1096,7 +1096,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing x:Name="ecb1" Brush="#31F715">
+                                    <GeometryDrawing x:Name="EmotionalColorBackground1" Brush="#31F715">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1113,7 +1113,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing x:Name="icb4" Brush="#3DDEFB">
+                                    <GeometryDrawing x:Name="IntellectualColorBackground4" Brush="#3DDEFB">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1130,7 +1130,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing x:Name="icb3" Brush="#1855F7">
+                                    <GeometryDrawing x:Name="IntellectualColorBackground3" Brush="#1855F7">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1147,7 +1147,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing x:Name="icb2" Brush="#0F2BEB">
+                                    <GeometryDrawing x:Name="IntellectualColorBackground2" Brush="#0F2BEB">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1164,7 +1164,7 @@
                                         </GeometryDrawing.Geometry>
                                     </GeometryDrawing>
 
-                                    <GeometryDrawing x:Name="icb1" Brush="#2317F5">
+                                    <GeometryDrawing x:Name="IntellectualColorBackground1" Brush="#2317F5">
                                         <GeometryDrawing.Pen>
                                             <Pen Brush="Black"/>
                                         </GeometryDrawing.Pen>
@@ -1205,81 +1205,81 @@
 
 
 
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,0,0,0" />
-                <TextBox Width="50" Height="25" Name="cpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,0,0,0" />
-                <TextBox Width="50" Height="25" Name="mpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,0,0,0" />
-                <TextBox Width="50" Height="25" Name="ypc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,0,0,0" />
-                <TextBox Width="50" Height="25" Name="kpc1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,0,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,25,0,0" />
-                <TextBox Width="50" Height="25" Name="cpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,25,0,0" />
-                <TextBox Width="50" Height="25" Name="mpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,25,0,0" />
-                <TextBox Width="50" Height="25" Name="ypc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,25,0,0" />
-                <TextBox Width="50" Height="25" Name="kpc2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,25,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,50,0,0" />
-                <TextBox Width="50" Height="25" Name="cpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,50,0,0" />
-                <TextBox Width="50" Height="25" Name="mpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,50,0,0" />
-                <TextBox Width="50" Height="25" Name="ypc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,50,0,0" />
-                <TextBox Width="50" Height="25" Name="kpc3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,50,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="pc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,75,0,0" />
-                <TextBox Width="50" Height="25" Name="cpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,75,0,0" />
-                <TextBox Width="50" Height="25" Name="mpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,75,0,0" />
-                <TextBox Width="50" Height="25" Name="ypc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,75,0,0" />
-                <TextBox Width="50" Height="25" Name="kpc4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,75,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,100,0,0" />
-                <TextBox Width="50" Height="25" Name="cec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,100,0,0" />
-                <TextBox Width="50" Height="25" Name="mec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,100,0,0" />
-                <TextBox Width="50" Height="25" Name="yec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,100,0,0" />
-                <TextBox Width="50" Height="25" Name="kec1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,100,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,125,0,0" />
-                <TextBox Width="50" Height="25" Name="cec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,125,0,0" />
-                <TextBox Width="50" Height="25" Name="mec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,125,0,0" />
-                <TextBox Width="50" Height="25" Name="yec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,125,0,0" />
-                <TextBox Width="50" Height="25" Name="kec2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,125,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,150,0,0" />
-                <TextBox Width="50" Height="25" Name="cec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,150,0,0" />
-                <TextBox Width="50" Height="25" Name="mec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,150,0,0" />
-                <TextBox Width="50" Height="25" Name="yec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,150,0,0" />
-                <TextBox Width="50" Height="25" Name="kec3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,150,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,175,0,0" />
-                <TextBox Width="50" Height="25" Name="cec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,175,0,0" />
-                <TextBox Width="50" Height="25" Name="mec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,175,0,0" />
-                <TextBox Width="50" Height="25" Name="yec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,175,0,0" RenderTransformOrigin="0.98,0.48" />
-                <TextBox Width="50" Height="25" Name="kec4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,175,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,200,0,0" />
-                <TextBox Width="50" Height="25" Name="cic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,200,0,0" />
-                <TextBox Width="50" Height="25" Name="mic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,200,0,0" />
-                <TextBox Width="50" Height="25" Name="yic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,200,0,0" />
-                <TextBox Width="50" Height="25" Name="kic1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,200,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,225,0,0" />
-                <TextBox Width="50" Height="25" Name="cic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,225,0,0" />
-                <TextBox Width="50" Height="25" Name="mic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,225,0,0" />
-                <TextBox Width="50" Height="25" Name="yic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,225,0,0" />
-                <TextBox Width="50" Height="25" Name="kic2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,225,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,250,0,0" />
-                <TextBox Width="50" Height="25" Name="cic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,250,0,0" />
-                <TextBox Width="50" Height="25" Name="mic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,250,0,0" />
-                <TextBox Width="50" Height="25" Name="yic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,250,0,0" />
-                <TextBox Width="50" Height="25" Name="kic3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,250,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="ic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,275,0,0" />
-                <TextBox Width="50" Height="25" Name="cic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,275,0,0" />
-                <TextBox Width="50" Height="25" Name="mic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,275,0,0" />
-                <TextBox Width="50" Height="25" Name="yic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,275,0,0" />
-                <TextBox Width="50" Height="25" Name="kic4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,275,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="PhysicalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,0,0,0" />
+                <TextBox                   Width="50" Height="25" Name="cPhysicalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,0,0,0" />
+                <TextBox                   Width="50" Height="25" Name="mPhysicalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,0,0,0" />
+                <TextBox                   Width="50" Height="25" Name="yPhysicalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,0,0,0" />
+                <TextBox                   Width="50" Height="25" Name="kPhysicalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,0,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="PhysicalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,25,0,0" />
+                <TextBox                   Width="50" Height="25" Name="cPhysicalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,25,0,0" />
+                <TextBox                   Width="50" Height="25" Name="mPhysicalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,25,0,0" />
+                <TextBox                   Width="50" Height="25" Name="yPhysicalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,25,0,0" />
+                <TextBox                   Width="50" Height="25" Name="kPhysicalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,25,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="PhysicalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,50,0,0" />
+                <TextBox                   Width="50" Height="25" Name="cPhysicalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,50,0,0" />
+                <TextBox                   Width="50" Height="25" Name="mPhysicalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,50,0,0" />
+                <TextBox                   Width="50" Height="25" Name="yPhysicalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,50,0,0" />
+                <TextBox                   Width="50" Height="25" Name="kPhysicalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,50,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="PhysicalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,75,0,0" />
+                <TextBox                   Width="50" Height="25" Name="cPhysicalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,75,0,0" />
+                <TextBox                   Width="50" Height="25" Name="mPhysicalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,75,0,0" />
+                <TextBox                   Width="50" Height="25" Name="yPhysicalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,75,0,0" />
+                <TextBox                   Width="50" Height="25" Name="kPhysicalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,75,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="EmotionalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,100,0,0" />
+                <TextBox                   Width="50" Height="25" Name="cEmotionalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,100,0,0" />
+                <TextBox                   Width="50" Height="25" Name="mEmotionalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,100,0,0" />
+                <TextBox                   Width="50" Height="25" Name="yEmotionalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,100,0,0" />
+                <TextBox                   Width="50" Height="25" Name="kEmotionalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,100,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="EmotionalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,125,0,0" />
+                <TextBox                   Width="50" Height="25" Name="cEmotionalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,125,0,0" />
+                <TextBox                   Width="50" Height="25" Name="mEmotionalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,125,0,0" />
+                <TextBox                   Width="50" Height="25" Name="yEmotionalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,125,0,0" />
+                <TextBox                   Width="50" Height="25" Name="kEmotionalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,125,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="EmotionalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,150,0,0" />
+                <TextBox                   Width="50" Height="25" Name="cEmotionalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,150,0,0" />
+                <TextBox                   Width="50" Height="25" Name="mEmotionalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,150,0,0" />
+                <TextBox                   Width="50" Height="25" Name="yEmotionalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,150,0,0" />
+                <TextBox                   Width="50" Height="25" Name="kEmotionalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,150,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="EmotionalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,175,0,0" />
+                <TextBox                   Width="50" Height="25" Name="cEmotionalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,175,0,0" />
+                <TextBox                   Width="50" Height="25" Name="mEmotionalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,175,0,0" />
+                <TextBox                   Width="50" Height="25" Name="yEmotionalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,175,0,0" RenderTransformOrigin="0.98,0.48" />
+                <TextBox                   Width="50" Height="25" Name="kEmotionalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,175,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="IntellectualColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,200,0,0" />
+                <TextBox                   Width="50" Height="25" Name="cIntellectualColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,200,0,0" />
+                <TextBox                   Width="50" Height="25" Name="mIntellectualColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,200,0,0" />
+                <TextBox                   Width="50" Height="25" Name="yIntellectualColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,200,0,0" />
+                <TextBox                   Width="50" Height="25" Name="kIntellectualColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,200,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="IntellectualColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,225,0,0" />
+                <TextBox                   Width="50" Height="25" Name="cIntellectualColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,225,0,0" />
+                <TextBox                   Width="50" Height="25" Name="mIntellectualColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,225,0,0" />
+                <TextBox                   Width="50" Height="25" Name="yIntellectualColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,225,0,0" />
+                <TextBox                   Width="50" Height="25" Name="kIntellectualColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,225,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="IntellectualColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,250,0,0" />
+                <TextBox                   Width="50" Height="25" Name="cIntellectualColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,250,0,0" />
+                <TextBox                   Width="50" Height="25" Name="mIntellectualColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,250,0,0" />
+                <TextBox                   Width="50" Height="25" Name="yIntellectualColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,250,0,0" />
+                <TextBox                   Width="50" Height="25" Name="kIntellectualColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,250,0,0" />
+                <TextBox IsReadOnly="True" Width="160" Height="25" Name="IntellectualColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,275,0,0" />
+                <TextBox                   Width="50" Height="25" Name="cIntellectualColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,275,0,0" />
+                <TextBox                   Width="50" Height="25" Name="mIntellectualColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,275,0,0" />
+                <TextBox                   Width="50" Height="25" Name="yIntellectualColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,275,0,0" />
+                <TextBox                   Width="50" Height="25" Name="kIntellectualColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,275,0,0" />
 
-                <Button Width="65"  Height="25" Name="pb1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,0,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button Width="65"  Height="25" Name="pb2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,25,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button Width="65"  Height="25" Name="pb3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,50,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button Width="65"  Height="25" Name="pb4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,75,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="PhysicalButton1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,0,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="PhysicalButton2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,25,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="PhysicalButton3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,50,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button Width="65"  Height="25" Name="PhysicalButton4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,75,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
 
-                <Button    Width="65"  Height="25" Name="eb1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,100,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="eb2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,125,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="eb3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,150,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="eb4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,175,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="EmotionalButton1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,100,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="EmotionalButton2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,125,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="EmotionalButton3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,150,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="EmotionalButton4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,175,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
 
-                <Button    Width="65"  Height="25" Name="ib1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,200,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="ib2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,225,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="ib3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,250,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="ib4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,275,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="IntellectualButton1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,200,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="IntellectualButton2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,225,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="IntellectualButton3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,250,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button    Width="65"  Height="25" Name="IntellectualButton4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,275,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
 
 
                 <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="496,326,0,0" Click="ResetColors_Click" Content="Сброс"/>

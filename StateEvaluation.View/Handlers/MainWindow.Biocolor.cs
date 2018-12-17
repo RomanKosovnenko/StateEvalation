@@ -48,30 +48,28 @@ namespace StateEvaluation
             userIdBirthPairs = peopleBuissnesManager.GetUserIdBirthPairs();
             RestoreColors_Click(sender, null);
         }
+        private TextBox GetTextBoxByName(string name)
+        {
+            return FindName(name) as TextBox;
+        }
 
         private void CMYK2RGB_Click(object sender, RoutedEventArgs e)
         {
             string name = (sender as Button).Name;
             string id = name.Substring(name.Length - 1);
-            string factor = name.Substring(0, 1);
+            string factor = name.Substring(0, name.Length - 7);
 
-            byte.TryParse((FindName("c" + factor + "c" + id) as TextBox).Text.ToString(), out byte C);
-            byte.TryParse((FindName("m" + factor + "c" + id) as TextBox).Text.ToString(), out byte M);
-            byte.TryParse((FindName("y" + factor + "c" + id) as TextBox).Text.ToString(), out byte Y);
-            byte.TryParse((FindName("k" + factor + "c" + id) as TextBox).Text.ToString(), out byte K);
-
-            if (new List<byte> { C, M, Y, K }.Any(x => x < 0 || x > BioColor.Helpers.ColorConverter.MAX))
-            {
-                MessageBox.Show("Invalid color");
-                return;
-            }
+            byte.TryParse(GetTextBoxByName("c" + factor + "Color" + id).Text.ToString(), out byte C);
+            byte.TryParse(GetTextBoxByName("m" + factor + "Color" + id).Text.ToString(), out byte M);
+            byte.TryParse(GetTextBoxByName("y" + factor + "Color" + id).Text.ToString(), out byte Y);
+            byte.TryParse(GetTextBoxByName("k" + factor + "Color" + id).Text.ToString(), out byte K);
 
             byte[] RGB = BioColor.Helpers.ColorConverter.CmykToRgb(C, M, Y, K);
             string rgb = String.Format("{0:X2}{1:X2}{2:X2}", RGB[0], RGB[1], RGB[2]);
-            (FindName(factor + "c" + id) as TextBox).Text = rgb;
+            GetTextBoxByName(factor + "Color" + id).Text = rgb;
             if (imageGenerator.HEX.IsMatch(rgb))
             {
-                (FindName(factor + "cb" + id) as GeometryDrawing).Brush = (Brush)new BrushConverter().ConvertFromString("#" + rgb);
+                (FindName(factor + "ColorBackground" + id) as GeometryDrawing).Brush = (Brush)new BrushConverter().ConvertFromString("#" + rgb);
             }
         }
 
@@ -97,17 +95,17 @@ namespace StateEvaluation
             foreach (var element in colors)
             {
                 var name = element.Name;
-                var factor = name.Substring(0, 1);
+                var factor = name.Substring(0, name.Length - 6);
                 var id = name.Substring(name.Length - 1);
 
                 byte[] CMYK = BioColor.Helpers.ColorConverter.RgbToCmyk(element.Text);
 
-                (FindName("c" + factor + "c" + id) as TextBox).Text = CMYK[0].ToString();
-                (FindName("m" + factor + "c" + id) as TextBox).Text = CMYK[1].ToString();
-                (FindName("y" + factor + "c" + id) as TextBox).Text = CMYK[2].ToString();
-                (FindName("k" + factor + "c" + id) as TextBox).Text = CMYK[3].ToString();
+                (FindName("c" + factor + "Color" + id) as TextBox).Text = CMYK[0].ToString();
+                (FindName("m" + factor + "Color" + id) as TextBox).Text = CMYK[1].ToString();
+                (FindName("y" + factor + "Color" + id) as TextBox).Text = CMYK[2].ToString();
+                (FindName("k" + factor + "Color" + id) as TextBox).Text = CMYK[3].ToString();
 
-                (FindName(factor + "cb" + id) as GeometryDrawing).Brush = (Brush)new BrushConverter().ConvertFromString("#" + element.Text);
+                (FindName(factor + "ColorBackground" + id) as GeometryDrawing).Brush = (Brush)new BrushConverter().ConvertFromString("#" + element.Text);
             }
         }
 

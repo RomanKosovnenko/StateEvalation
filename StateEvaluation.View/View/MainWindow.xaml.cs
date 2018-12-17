@@ -70,7 +70,20 @@ namespace StateEvaluation
 
             subjectiveFeelingBuissnesManager = new SubjectiveFeelingBuissnesManager(dataRepository, SubjectiveFeelingDataGrid, UpdateSubjectiveFeelingBtn);
             
-            colors = new TextBox[] { ic1, ic2, ic3, ic4, ec1, ec2, ec3, ec4, pc1, pc2, pc3, pc4 };
+            colors = new TextBox[] {
+                IntellectualColor1,
+                IntellectualColor2,
+                IntellectualColor3,
+                IntellectualColor4,
+                EmotionalColor1,
+                EmotionalColor2,
+                EmotionalColor3,
+                EmotionalColor4,
+                PhysicalColor1,
+                PhysicalColor2,
+                PhysicalColor3,
+                PhysicalColor4
+            };
         }
         #endregion
     }
