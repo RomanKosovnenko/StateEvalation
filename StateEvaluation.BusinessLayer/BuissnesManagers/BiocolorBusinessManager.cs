@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.Generic;
+using System.Windows.Media;
 
 namespace StateEvaluation.BusinessLayer.BuissnesManagers
 {
@@ -25,6 +26,34 @@ namespace StateEvaluation.BusinessLayer.BuissnesManagers
 
             _biocolorProvider.InitBiocolor(biocolorGrid, birthday, now);
         }
+
+        public void GenerateRgbFromCmyk(BiocolorProvider.ColorRow color)
+        {
+            byte.TryParse(color.C.Text, out byte C);
+            byte.TryParse(color.M.Text, out byte M);
+            byte.TryParse(color.Y.Text, out byte Y);
+            byte.TryParse(color.K.Text, out byte K);
+
+            byte[] RGB = BioColor.Helpers.ColorConverter.CmykToRgb(C, M, Y, K);
+            string rgb = string.Format("{0:X2}{1:X2}{2:X2}", RGB[0], RGB[1], RGB[2]);
+
+            color.RGB.Text = rgb;
+            color.Background.Brush = (Brush) new BrushConverter().ConvertFromString("#" + rgb);
+        }
+
+        public void SetCmykValues(List<BiocolorProvider.ColorRow> colors)
+        {
+            foreach (BiocolorProvider.ColorRow color in colors)
+            {
+                byte[] CMYK = BioColor.Helpers.ColorConverter.RgbToCmyk(color.RGB.Text);
+                color.C.Text = CMYK[0].ToString();
+                color.M.Text = CMYK[1].ToString();
+                color.Y.Text = CMYK[2].ToString();
+                color.K.Text = CMYK[3].ToString();
+                color.Background.Brush = (Brush)new BrushConverter().ConvertFromString("#" + color.RGB.Text);
+            }
+        }
+
         public void ResetColors(List<BiocolorProvider.ColorRow> colors)
         {
             _biocolorSettings.Reset();
