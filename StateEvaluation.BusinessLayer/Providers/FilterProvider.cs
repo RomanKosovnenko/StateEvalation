@@ -78,7 +78,9 @@ namespace StateEvaluation.BussinesLayer.Providers
                 DateTime dateTo = peopleFilter.DateTo != null ? DateTime.Parse(peopleFilter.DateTo.ToString()) : new DateTime();
                 DateTime dateFrom = peopleFilter.DateFrom != null ? DateTime.Parse(peopleFilter.DateFrom.ToString()) : new DateTime();
 
-                people = _dataRepository.GetPeople(GetPeopleQuery(peopleFilter, dateFrom, dateTo));
+                people = _dataRepository.GetPeople(GetBaseQuery(peopleFilter))
+                    .Where(_ => (dateFrom.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks >= dateFrom.Ticks)
+                        && (dateTo.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks <= dateTo.Ticks));
 
                 return people;
             }
@@ -98,7 +100,7 @@ namespace StateEvaluation.BussinesLayer.Providers
 
                 //get people regarding person number and expedition
                 List<string> allowedUserIds = new List<string>();
-                var people = _dataRepository.GetPeople(GetBaseQuery(preferenceFilter, dateFrom, dateTo));
+                var people = _dataRepository.GetPeople(GetBaseQuery(preferenceFilter));
                 foreach (var person in people.ToList())
                 {
                     allowedUserIds.Add(person.UserId.ToString().Trim());
@@ -124,7 +126,7 @@ namespace StateEvaluation.BussinesLayer.Providers
 
                 //get people regarding person number and expedition
                 List<string> allowedUserIds = new List<string>();
-                var people = _dataRepository.GetPeople(GetBaseQuery(subjectiveFeelingFilter, dateFrom, dateTo));
+                var people = _dataRepository.GetPeople(GetBaseQuery(subjectiveFeelingFilter));
                 foreach (var person in people.ToList())
                 {
                     allowedUserIds.Add(person.UserId.ToString().Trim());
@@ -137,24 +139,18 @@ namespace StateEvaluation.BussinesLayer.Providers
             return subjectiveFeelings;
         }
 
-        private Func<People, bool> GetPeopleQuery(object filter, DateTime dateFrom, DateTime dateTo)
-        {
-            return GetBaseQuery(filter, dateFrom, dateTo);
-        }
-        private Func<People, bool> GetBaseQuery(object filter, DateTime dateFrom, DateTime dateTo)
+        private Func<People, bool> GetBaseQuery(object filter)
         {
             var peopleFilter = (BaseFilterVM)filter;
 
             return (People _) =>
-                (_.Workposition == peopleFilter.Profession || peopleFilter.Profession == FilterConstants.All)
+                (_.Workposition.Trim() == peopleFilter.Profession || peopleFilter.Profession == FilterConstants.All)
                 && (peopleFilter.UserId == FilterConstants.All
                     ? (peopleFilter.PeopleFrom == FilterConstants.All || _.Number >= int.Parse(peopleFilter.PeopleFrom)) && (peopleFilter.PeopleTo == FilterConstants.All || _.Number <= int.Parse(peopleFilter.PeopleTo))
-                    : _.UserId == peopleFilter.UserId)
+                    : _.UserId.Trim() == peopleFilter.UserId.Trim())
                 && (peopleFilter.UserId == FilterConstants.All
                     ? (peopleFilter.ExpeditionFrom == FilterConstants.All || _.Expedition >= int.Parse(peopleFilter.ExpeditionFrom)) && (peopleFilter.ExpeditionTo == FilterConstants.All || _.Expedition <= int.Parse(peopleFilter.ExpeditionTo))
-                    : _.UserId == peopleFilter.UserId)
-                && (dateFrom.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks >= dateFrom.Ticks)
-                && (dateTo.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks <= dateTo.Ticks);
+                    : _.UserId.Trim() == peopleFilter.UserId.Trim());
         }
 
         private Func<Preference, bool> GetPreferenceQuery(object filter, DateTime dateTo, DateTime dateFrom, string[] allowedUserIds)
@@ -168,7 +164,7 @@ namespace StateEvaluation.BussinesLayer.Providers
                     preferenceFilter.Color6in12Filter, preferenceFilter.Color7in12Filter, preferenceFilter.Color8in12Filter,
                     preferenceFilter.Color9in12Filter, preferenceFilter.Color10in12Filter, preferenceFilter.Color11in12Filter,
                     preferenceFilter.Color12in12Filter) &&
-                (preferenceFilter.PreferenceFilter == FilterConstants.All || _.Preference1 == preferenceFilter.PreferenceFilter) &&
+                (preferenceFilter.PreferenceFilter == FilterConstants.All || _.Preference1.Trim() == preferenceFilter.PreferenceFilter) &&
                 allowedUserIds.Contains(_.UserId.Trim());
         }
 

@@ -15,13 +15,21 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
     {
         private DataRepository _dataRepository;
 
-        private List<ComboBox> _userIdComboBoxes { get; }
-        private List<ComboBox> _expeditionComboBoxes { get; }
-        private List<ComboBox> _userNumberComboBoxes { get; }
+        private IEnumerable<ComboBox> _userIdComboBoxes { get; }
+        private IEnumerable<ComboBox> _expeditionComboBoxes { get; }
+        private IEnumerable<ComboBox> _userNumberComboBoxes { get; }
+        private IEnumerable<ComboBox> _professionsComboBoxes { get; }
         private DataGrid _peopleDataGrid { get; }
         private Button _updatePersonBtn { get; }
 
-        public PeopleBuissnesManager(DataRepository dataRepository, List<ComboBox> userIdComboBoxes, List<ComboBox> expeditionComboBoxes, List<ComboBox> userNumberComboBoxes, DataGrid peopleDataGrid, Button updatePersonBtn)
+        public PeopleBuissnesManager(
+            DataRepository dataRepository, 
+            IEnumerable<ComboBox> userIdComboBoxes,
+            IEnumerable<ComboBox> expeditionComboBoxes,
+            IEnumerable<ComboBox> userNumberComboBoxes,
+            IEnumerable<ComboBox> professionsComboBoxes,
+            DataGrid peopleDataGrid,
+            Button updatePersonBtn)
         {
             _dataRepository = dataRepository;
             _userIdComboBoxes = userIdComboBoxes;
@@ -29,6 +37,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             _userNumberComboBoxes = userNumberComboBoxes;
             _peopleDataGrid = peopleDataGrid;
             _updatePersonBtn = updatePersonBtn;
+            _professionsComboBoxes = professionsComboBoxes;
         }
 
         public Dictionary<string, string> GetUserIdBirthPairs()
@@ -165,7 +174,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 Workposition = personVM.Workposition,
                 Birthday = personVM.Birthday.ToString().GetDateFromDateTimeString()
             };
-            person.UserId = UserIdBuilder.Build(person.Expedition, person.Number);
+            person.UserId = UserIdBuilder.Build(int.Parse(personVM.Expedition), int.Parse(personVM.PersonNumber));
             return person;
         }
 
@@ -175,6 +184,15 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             RefreshExpedition();
             RefreshUsersNumber();
             RefreshPeople();
+            RefreshProfessions();
+        }
+
+        private void RefreshProfessions()
+        {
+            foreach (var combobox in _professionsComboBoxes)
+            {
+                combobox.ItemsSource = _dataRepository.Professions();
+            }
         }
 
         private void RefreshPeople()
