@@ -78,7 +78,9 @@ namespace StateEvaluation.BussinesLayer.Providers
                 DateTime dateTo = peopleFilter.DateTo != null ? DateTime.Parse(peopleFilter.DateTo.ToString()) : new DateTime();
                 DateTime dateFrom = peopleFilter.DateFrom != null ? DateTime.Parse(peopleFilter.DateFrom.ToString()) : new DateTime();
 
-                people = _dataRepository.GetPeople(GetPeopleQuery(peopleFilter, dateFrom, dateTo));
+                people = _dataRepository.GetPeople(GetBaseQuery(peopleFilter))
+                    .Where(_ => (dateFrom.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks >= dateFrom.Ticks)
+                        && (dateTo.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks <= dateTo.Ticks));
 
                 return people;
             }
@@ -98,7 +100,7 @@ namespace StateEvaluation.BussinesLayer.Providers
 
                 //get people regarding person number and expedition
                 List<string> allowedUserIds = new List<string>();
-                var people = _dataRepository.GetPeople(GetBaseQuery(preferenceFilter, dateFrom, dateTo));
+                var people = _dataRepository.GetPeople(GetBaseQuery(preferenceFilter));
                 foreach (var person in people.ToList())
                 {
                     allowedUserIds.Add(person.UserId.ToString().Trim());
@@ -124,7 +126,7 @@ namespace StateEvaluation.BussinesLayer.Providers
 
                 //get people regarding person number and expedition
                 List<string> allowedUserIds = new List<string>();
-                var people = _dataRepository.GetPeople(GetBaseQuery(subjectiveFeelingFilter, dateFrom, dateTo));
+                var people = _dataRepository.GetPeople(GetBaseQuery(subjectiveFeelingFilter));
                 foreach (var person in people.ToList())
                 {
                     allowedUserIds.Add(person.UserId.ToString().Trim());
@@ -137,11 +139,7 @@ namespace StateEvaluation.BussinesLayer.Providers
             return subjectiveFeelings;
         }
 
-        private Func<People, bool> GetPeopleQuery(object filter, DateTime dateFrom, DateTime dateTo)
-        {
-            return GetBaseQuery(filter, dateFrom, dateTo);
-        }
-        private Func<People, bool> GetBaseQuery(object filter, DateTime dateFrom, DateTime dateTo)
+        private Func<People, bool> GetBaseQuery(object filter)
         {
             var peopleFilter = (BaseFilterVM)filter;
 
@@ -152,9 +150,7 @@ namespace StateEvaluation.BussinesLayer.Providers
                     : _.UserId == peopleFilter.UserId)
                 && (peopleFilter.UserId == FilterConstants.All
                     ? (peopleFilter.ExpeditionFrom == FilterConstants.All || _.Expedition >= int.Parse(peopleFilter.ExpeditionFrom)) && (peopleFilter.ExpeditionTo == FilterConstants.All || _.Expedition <= int.Parse(peopleFilter.ExpeditionTo))
-                    : _.UserId == peopleFilter.UserId)
-                && (dateFrom.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks >= dateFrom.Ticks)
-                && (dateTo.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks <= dateTo.Ticks);
+                    : _.UserId == peopleFilter.UserId);
         }
 
         private Func<Preference, bool> GetPreferenceQuery(object filter, DateTime dateTo, DateTime dateFrom, string[] allowedUserIds)

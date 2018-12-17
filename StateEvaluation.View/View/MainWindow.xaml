@@ -1741,6 +1741,7 @@
 
                     <ComboBox Grid.Row="0"
                                   Grid.Column="1"
+                              x:Name="ProfessionPreferenceTab"
                                   SelectedItem="{Binding PreferenceFilter}"
                                   ItemsSource="{Binding Source={StaticResource GetPreferencesList}}" 
                                   SelectedIndex="0" HorizontalContentAlignment="Center" Margin="2" />
@@ -1894,6 +1895,7 @@
                            />
                     <ComboBox Grid.Row="2"
                               SelectedItem="{Binding Profession}"
+                              x:Name="ProfessionsSubjectiveFeelingTab"
                         ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" 
                         SelectedIndex="0" HorizontalContentAlignment="Center" Margin="2,70,2,-11" Grid.RowSpan="4" Grid.Column="1" />
                 </Grid>
