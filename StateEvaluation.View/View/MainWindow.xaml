@@ -940,7 +940,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden" />
                     <DataGridTextColumn Header="Код" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=\{0:d\}}" ClipboardContentBinding="{x:Null}"/>
+                    <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=\{0:d\}, ConverterCulture=uk-UA}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridCheckBoxColumn Width="auto" Header="Общая слабость" Binding="{Binding GeneralWeaknes}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridCheckBoxColumn Width="auto" Header="Плохой апетит" Binding="{Binding PoorAppetite}" ClipboardContentBinding="{x:Null}"/>
                     <DataGridCheckBoxColumn Width="auto" Header="Плохой сон" Binding="{Binding PoorSleep}" ClipboardContentBinding="{x:Null}"/>
