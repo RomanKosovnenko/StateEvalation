@@ -69,20 +69,20 @@ namespace StateEvaluation
             preferenceBuissnesManager = new PreferenceBuissnesManager(dataRepository, PreferencesDataGrid, UpdatePrefernceBtn);
 
             subjectiveFeelingBuissnesManager = new SubjectiveFeelingBuissnesManager(dataRepository, SubjectiveFeelingDataGrid, UpdateSubjectiveFeelingBtn);
-            
-            colors = new TextBox[] {
-                IntellectualColor1,
-                IntellectualColor2,
-                IntellectualColor3,
-                IntellectualColor4,
-                EmotionalColor1,
-                EmotionalColor2,
-                EmotionalColor3,
-                EmotionalColor4,
-                PhysicalColor1,
-                PhysicalColor2,
-                PhysicalColor3,
-                PhysicalColor4
+
+            colors = new List<BiocolorProvider.ColorRow> {
+                new BiocolorProvider.ColorRow(PhysicalColor1, PhysicalButton1, cPhysicalColor1, mPhysicalColor1, yPhysicalColor1, kPhysicalColor1, PhysicalColorBackground1),
+                new BiocolorProvider.ColorRow(PhysicalColor2, PhysicalButton2, cPhysicalColor2, mPhysicalColor2, yPhysicalColor2, kPhysicalColor2, PhysicalColorBackground2),
+                new BiocolorProvider.ColorRow(PhysicalColor3, PhysicalButton3, cPhysicalColor3, mPhysicalColor3, yPhysicalColor3, kPhysicalColor3, PhysicalColorBackground3),
+                new BiocolorProvider.ColorRow(PhysicalColor4, PhysicalButton4, cPhysicalColor4, mPhysicalColor4, yPhysicalColor4, kPhysicalColor4, PhysicalColorBackground4),
+                new BiocolorProvider.ColorRow(EmotionalColor1, EmotionalButton1, cEmotionalColor1, mEmotionalColor1, yEmotionalColor1, kEmotionalColor1, EmotionalColorBackground1),
+                new BiocolorProvider.ColorRow(EmotionalColor2, EmotionalButton2, cEmotionalColor2, mEmotionalColor2, yEmotionalColor2, kEmotionalColor2, EmotionalColorBackground2),
+                new BiocolorProvider.ColorRow(EmotionalColor3, EmotionalButton3, cEmotionalColor3, mEmotionalColor3, yEmotionalColor3, kEmotionalColor3, EmotionalColorBackground3),
+                new BiocolorProvider.ColorRow(EmotionalColor4, EmotionalButton4, cEmotionalColor4, mEmotionalColor4, yEmotionalColor4, kEmotionalColor4, EmotionalColorBackground4),
+                new BiocolorProvider.ColorRow(IntellectualColor1, IntellectualButton1, cIntellectualColor1, mIntellectualColor1, yIntellectualColor1, kIntellectualColor1, IntellectualColorBackground1),
+                new BiocolorProvider.ColorRow(IntellectualColor2, IntellectualButton2, cIntellectualColor2, mIntellectualColor2, yIntellectualColor2, kIntellectualColor2, IntellectualColorBackground2),
+                new BiocolorProvider.ColorRow(IntellectualColor3, IntellectualButton3, cIntellectualColor3, mIntellectualColor3, yIntellectualColor3, kIntellectualColor3, IntellectualColorBackground3),
+                new BiocolorProvider.ColorRow(IntellectualColor4, IntellectualButton4, cIntellectualColor4, mIntellectualColor4, yIntellectualColor4, kIntellectualColor4, IntellectualColorBackground4),
             };
         }
         #endregion

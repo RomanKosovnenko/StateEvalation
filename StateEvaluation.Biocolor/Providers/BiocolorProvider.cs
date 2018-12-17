@@ -39,6 +39,20 @@ namespace StateEvaluation.BioColor.Providers
         
         private Helpers.BiocolorSettings biocolorSettings;
 
+        public struct ColorRow
+        {
+            public readonly TextBox RGB;
+            public readonly Button Converter;
+            public readonly TextBox C, M, Y, K;
+            public readonly GeometryDrawing Background;
+            public ColorRow(TextBox rgb, Button converter, TextBox c, TextBox m, TextBox y, TextBox k, GeometryDrawing background)
+            {
+                RGB = rgb;
+                Converter = converter;
+                C = c; M = m; Y = y; K = k;
+                Background = background;
+            }
+        }
         public BiocolorProvider(Helpers.BiocolorSettings biocolorSettings)
         {
             this.biocolorSettings = biocolorSettings;

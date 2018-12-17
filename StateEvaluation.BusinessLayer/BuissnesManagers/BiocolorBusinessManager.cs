@@ -3,6 +3,7 @@ using StateEvaluation.BioColor.Helpers;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.Generic;
 
 namespace StateEvaluation.BusinessLayer.BuissnesManagers
 {
@@ -24,26 +25,20 @@ namespace StateEvaluation.BusinessLayer.BuissnesManagers
 
             _biocolorProvider.InitBiocolor(biocolorGrid, birthday, now);
         }
-        public void ResetColors(TextBox[] colors)
+        public void ResetColors(List<BiocolorProvider.ColorRow> colors)
         {
             _biocolorSettings.Reset();
             SetDefaultColors(colors);
             SaveColors();
         }
 
-        public void RestoreColors(TextBox[] colors)
+        public void RestoreColors(List<BiocolorProvider.ColorRow> colors)
         {
             SetDefaultColors(colors);
         }
 
-        public void SaveColors(TextBox[] colors)
+        public void SaveColors(List<BiocolorProvider.ColorRow> colors)
         {
-            if (colors.ToList().Any(x => !_imageGenerator.HEX.IsMatch(x.Text.ToUpper())))
-            {
-                MessageBox.Show("Invalid color!");
-                return;
-            }
-
             SetNewColors(colors);
             SaveColors();
             GenerateImages();
@@ -88,36 +83,36 @@ namespace StateEvaluation.BusinessLayer.BuissnesManagers
             _biocolorSettings.Save();
         }
 
-        private void SetDefaultColors(TextBox[] colors)
+        private void SetDefaultColors(List<BiocolorProvider.ColorRow> colors)
         {
-            colors[0].Text = _biocolorSettings.I1;
-            colors[1].Text = _biocolorSettings.I2;
-            colors[2].Text = _biocolorSettings.I3;
-            colors[3].Text = _biocolorSettings.I4;
-            colors[4].Text = _biocolorSettings.E1;
-            colors[5].Text = _biocolorSettings.E2;
-            colors[6].Text = _biocolorSettings.E3;
-            colors[7].Text = _biocolorSettings.E4;
-            colors[8].Text = _biocolorSettings.P1;
-            colors[9].Text = _biocolorSettings.P2;
-            colors[10].Text = _biocolorSettings.P3;
-            colors[11].Text = _biocolorSettings.P4;
+            colors[ 0].RGB.Text = _biocolorSettings.P1;
+            colors[ 1].RGB.Text = _biocolorSettings.P2;
+            colors[ 2].RGB.Text = _biocolorSettings.P3;
+            colors[ 3].RGB.Text = _biocolorSettings.P4;
+            colors[ 4].RGB.Text = _biocolorSettings.E1;
+            colors[ 5].RGB.Text = _biocolorSettings.E2;
+            colors[ 6].RGB.Text = _biocolorSettings.E3;
+            colors[ 7].RGB.Text = _biocolorSettings.E4;
+            colors[ 8].RGB.Text = _biocolorSettings.I1;
+            colors[ 9].RGB.Text = _biocolorSettings.I2;
+            colors[10].RGB.Text = _biocolorSettings.I3;
+            colors[11].RGB.Text = _biocolorSettings.I4;
         }
 
-        private void SetNewColors(TextBox[] colors)
+        private void SetNewColors(List<BiocolorProvider.ColorRow> colors)
         {
-            _biocolorSettings.I1 = colors[0].Text;
-            _biocolorSettings.I2 = colors[1].Text;
-            _biocolorSettings.I3 = colors[2].Text;
-            _biocolorSettings.I4 = colors[3].Text;
-            _biocolorSettings.E1 = colors[4].Text;
-            _biocolorSettings.E2 = colors[5].Text;
-            _biocolorSettings.E3 = colors[6].Text;
-            _biocolorSettings.E4 = colors[7].Text;
-            _biocolorSettings.P1 = colors[8].Text;
-            _biocolorSettings.P2 = colors[9].Text;
-            _biocolorSettings.P3 = colors[10].Text;
-            _biocolorSettings.P4 = colors[11].Text;
+            _biocolorSettings.P1 = colors[ 0].RGB.Text;
+            _biocolorSettings.P2 = colors[ 1].RGB.Text;
+            _biocolorSettings.P3 = colors[ 2].RGB.Text;
+            _biocolorSettings.P4 = colors[ 3].RGB.Text;
+            _biocolorSettings.E1 = colors[ 4].RGB.Text;
+            _biocolorSettings.E2 = colors[ 5].RGB.Text;
+            _biocolorSettings.E3 = colors[ 6].RGB.Text;
+            _biocolorSettings.E4 = colors[ 7].RGB.Text;
+            _biocolorSettings.I1 = colors[ 8].RGB.Text;
+            _biocolorSettings.I2 = colors[ 9].RGB.Text;
+            _biocolorSettings.I3 = colors[10].RGB.Text;
+            _biocolorSettings.I4 = colors[11].RGB.Text;
         }
     }
 }
