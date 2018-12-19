@@ -46,7 +46,8 @@ namespace StateEvaluation
         private void WindowRendered_Click(object sender, EventArgs e)
         {
             userIdBirthPairs = peopleBuissnesManager.GetUserIdBirthPairs();
-            RestoreColors_Click(sender, null);
+            biocolorBusinessManager.RestoreColors(colors);
+            biocolorBusinessManager.SetCmykValues(colors);
         }
 
         private void CMYK2RGB_Click(object sender, RoutedEventArgs e)
@@ -54,16 +55,20 @@ namespace StateEvaluation
             var color = colors.Find(c => c.Converter == sender);
             biocolorBusinessManager.GenerateRgbFromCmyk(color);
         }
-
+        
         private void RestoreColors_Click(object sender, RoutedEventArgs e)
         {
-            biocolorBusinessManager.RestoreColors(colors);
-            biocolorBusinessManager.SetCmykValues(colors);
+            var dialogResult = MessageBox.Show("Восстановить последнее сохранение?", "Восстановление настроек", MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                biocolorBusinessManager.RestoreColors(colors);
+                biocolorBusinessManager.SetCmykValues(colors);
+            }
         }
 
         private void ResetColors_Click(object sender, RoutedEventArgs e)
         {
-            var dialogResult = MessageBox.Show("Do you want to RESET colors BiocolorSettings?", "Reset BiocolorSettings", MessageBoxButton.YesNo);
+            var dialogResult = MessageBox.Show("Восстановить настроки до заводских?", "Сброс настроек", MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
             {
                 biocolorBusinessManager.ResetColors(colors);
@@ -74,8 +79,13 @@ namespace StateEvaluation
 
         private void SaveColors_Click(object sender, RoutedEventArgs e)
         {
-            biocolorBusinessManager.SaveColors(colors);
-            RestoreColors_Click(sender, e);
+            var dialogResult = MessageBox.Show("Хотите сохранить цвета?", "Сохранение настроек", MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                biocolorBusinessManager.SaveColors(colors);
+                biocolorBusinessManager.RestoreColors(colors);
+                biocolorBusinessManager.SetCmykValues(colors);
+            }
         }
     }
 }

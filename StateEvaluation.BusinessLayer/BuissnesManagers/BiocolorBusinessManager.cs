@@ -59,6 +59,7 @@ namespace StateEvaluation.BusinessLayer.BuissnesManagers
             _biocolorSettings.Reset();
             SetDefaultColors(colors);
             SaveColors();
+            GenerateImages();
         }
 
         public void RestoreColors(List<BiocolorProvider.ColorRow> colors)
