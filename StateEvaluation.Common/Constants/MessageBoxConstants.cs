@@ -31,6 +31,13 @@ namespace StateEvaluation.Common.Constants
             ErrorPersonLastname = "Ошибка! Фамилия должна быть не больше 20 символов",
             ErrorPersonFirstname = "Ошибка! Имя должно быть не больше 20 символов",
             ErrorPersonMiddlename = "Ошибка! Отчество должно быть не больше 20 символов",
-            ErrorPersonWorkposition = "Ошибка! Длина профессии должна быть не более 20 символов";
+            ErrorPersonWorkposition = "Ошибка! Длина профессии должна быть не более 20 символов",
+
+            BiocolorSave = "Хотите сохранить цвета?",
+            BiocolorSaveTitle = "Сохранение настроек",
+            BiocolorReset = "Восстановить настроки до заводских?",
+            BiocolorResetTitle = "Сброс настроек",
+            BiocolorRestore = "Восстановить последнее сохранение?",
+            BiocolorRestoreTitle = "Восстановление настроек";
     }
 }

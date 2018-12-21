@@ -1,6 +1,7 @@
 ﻿using StateEvaluation.BioColor.Helpers;
 using StateEvaluation.BioColor.Providers;
 using StateEvaluation.BusinessLayer.BuissnesManagers;
+using StateEvaluation.Common.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,7 +59,7 @@ namespace StateEvaluation
         
         private void RestoreColors_Click(object sender, RoutedEventArgs e)
         {
-            var dialogResult = MessageBox.Show("Восстановить последнее сохранение?", "Восстановление настроек", MessageBoxButton.YesNo);
+            var dialogResult = MessageBox.Show(MessageBoxConstants.BiocolorReset, MessageBoxConstants.BiocolorResetTitle, MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
             {
                 biocolorBusinessManager.RestoreColors(colors);
@@ -68,7 +69,7 @@ namespace StateEvaluation
 
         private void ResetColors_Click(object sender, RoutedEventArgs e)
         {
-            var dialogResult = MessageBox.Show("Восстановить настроки до заводских?", "Сброс настроек", MessageBoxButton.YesNo);
+            var dialogResult = MessageBox.Show(MessageBoxConstants.BiocolorRestore, MessageBoxConstants.BiocolorRestoreTitle, MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
             {
                 biocolorBusinessManager.ResetColors(colors);
@@ -79,7 +80,7 @@ namespace StateEvaluation
 
         private void SaveColors_Click(object sender, RoutedEventArgs e)
         {
-            var dialogResult = MessageBox.Show("Хотите сохранить цвета?", "Сохранение настроек", MessageBoxButton.YesNo);
+            var dialogResult = MessageBox.Show(MessageBoxConstants.BiocolorSave, MessageBoxConstants.BiocolorSaveTitle, MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
             {
                 biocolorBusinessManager.SaveColors(colors);
