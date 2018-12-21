@@ -4,6 +4,7 @@ using StateEvaluation.Common.ViewModel;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using StateEvaluation.Common.Constants;
 
 namespace StateEvaluation.BussinesLayer.BuissnesManagers
 {
@@ -33,11 +34,11 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
                 ToggleButton(_updateSubjectiveFeelingBtn, Visibility.Hidden);
 
-                MessageBox.Show("Subjective feeling was updated");
+                MessageBox.Show(MessageBoxConstants.FeelUpdated);
             }
             catch
             {
-                MessageBox.Show("Oops, error while updating");
+                MessageBox.Show(MessageBoxConstants.ErrorUpdating);
             }
         }
 
@@ -48,11 +49,11 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 _dataRepository.RemoveSubjectiveFeeling(subjectiveFeelingId);
                 RefreshDataGrid();
 
-                MessageBox.Show("Subjective feeling was removed");
+                MessageBox.Show(MessageBoxConstants.FeelDeleted);
             }
             catch
             {
-                MessageBox.Show("Oops, error while removing");
+                MessageBox.Show(MessageBoxConstants.ErrorFeelDelete);
             }
         }
 
@@ -67,16 +68,16 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                     ClearInputsInternal(subjectiveFeelingVM);
 
                     RefreshDataGrid();
-                    MessageBox.Show("Subjective feeling was created");
+                    MessageBox.Show(MessageBoxConstants.FeelCreated);
                 }
                 else
                 {
-                    MessageBox.Show("Oops, error while creating");
+                    MessageBox.Show(MessageBoxConstants.ErrorFeelCreate);
                 }
             }
             catch
             {
-                MessageBox.Show("Oops, error while creating");
+                MessageBox.Show(MessageBoxConstants.ErrorFeelCreate);
             }
         }
 
@@ -91,7 +92,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             }
             catch
             {
-                MessageBox.Show("Oops, error while binding input filds");
+                MessageBox.Show(MessageBoxConstants.BindFailed);
             }
         }
 

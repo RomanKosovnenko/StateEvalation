@@ -7,6 +7,7 @@ using StateEvaluation.Repository.Providers;
 using StateEvaluation.Repository.Models;
 using StateEvaluation.Common.ViewModel;
 using StateEvaluation.BussinesLayer.Enums;
+using StateEvaluation.Common.Constants;
 
 namespace StateEvaluation.BussinesLayer.BuissnesManagers
 {
@@ -43,16 +44,16 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                     ClearInputsInternal(preferenceVM);
 
                     RefreshDataGrid();
-                    MessageBox.Show("Test was created");
+                    MessageBox.Show(MessageBoxConstants.TestCreated);
                 }
                 else
                 {
-                    MessageBox.Show("Oops, not all fields is filled!");
+                    MessageBox.Show(MessageBoxConstants.WrongFields);
                 }
             }
             catch
             {
-                MessageBox.Show("Oops, error while creating");
+                MessageBox.Show(MessageBoxConstants.ErrorTestCreate);
             }
         }
 
@@ -62,11 +63,11 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             {
                 _dataRepository.DeletePreferenceTest(id);
                 RefreshDataGrid();
-                MessageBox.Show("Preference was removed");
+                MessageBox.Show(MessageBoxConstants.TestDeleted);
             }
             catch
             {
-                MessageBox.Show("Oops, somesing was wrong, while deleting");
+                MessageBox.Show(MessageBoxConstants.ErrorTestDelete);
             }
         }
 
@@ -85,15 +86,15 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                     }
                     else
                     {
-                        MessageBox.Show("Oops, input form is not valid");
+                        MessageBox.Show(MessageBoxConstants.WrongFields);
                     }
                 }
 
-                MessageBox.Show("Preference was updated");
+                MessageBox.Show(MessageBoxConstants.TestUpdated);
             }
             catch
             {
-                MessageBox.Show("Oops, error while updating");
+                MessageBox.Show(MessageBoxConstants.ErrorUpdating);
             }
         }
 
@@ -109,7 +110,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             }
             catch
             {
-                MessageBox.Show("Oops, error while binding input filds");
+                MessageBox.Show(MessageBoxConstants.BindFailed);
             }
         }
 
@@ -123,6 +124,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             return _dataRepository.GetPreferenceTest(preference);
         }
+
         #region private methods
         private void ToggleButton(Button button, Visibility visibility)
         {

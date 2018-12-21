@@ -1,4 +1,5 @@
 ﻿using StateEvaluation.BussinesLayer.Extensions;
+using StateEvaluation.Common.Constants;
 using StateEvaluation.Common.Helpers;
 using StateEvaluation.Common.ViewModel;
 using StateEvaluation.Repository.Models;
@@ -58,7 +59,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                !int.TryParse(newPerson.PersonNumber, out int personNumber)
                )
             {
-                MessageBox.Show("Error! Try edit fields in form!");
+                MessageBox.Show(MessageBoxConstants.WrongFields);
                 return;
             }
             People person = GeneratePerson(newPerson);
@@ -71,16 +72,16 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                     ClearInputsInternal(newPerson);
                     Refresh();
 
-                    MessageBox.Show("Peson was created");
+                    MessageBox.Show(MessageBoxConstants.PersonCreated);
                 }
                 catch
                 {
-                    MessageBox.Show("Oops, error while creating person");
+                    MessageBox.Show(MessageBoxConstants.ErrorPersonCreate);
                 }
             }
             else
             {
-                MessageBox.Show("Oops, error while creating person");
+                MessageBox.Show(MessageBoxConstants.ErrorPersonCreate);
             }
         }
 
@@ -96,7 +97,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                !int.TryParse(editedPerson.PersonNumber, out int personNumber)
                )
             {
-                MessageBox.Show("Error! Try edit fields in form!");
+                MessageBox.Show(MessageBoxConstants.WrongFields);
                 return;
             }
             try
@@ -109,11 +110,11 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 ToggleButton(_updatePersonBtn, Visibility.Hidden);
                 Refresh();
 
-                MessageBox.Show("Person was updated");
+                MessageBox.Show(MessageBoxConstants.PersonUpdated);
             }
             catch
             {
-                MessageBox.Show("Oops, error while updating");
+                MessageBox.Show(MessageBoxConstants.ErrorUpdating);
             }
         }
 
@@ -126,7 +127,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             }
             catch
             {
-                MessageBox.Show("Oops. You can not delete this record because it has associated entries in other tables.");
+                MessageBox.Show(MessageBoxConstants.ErrorDeletingAssociated);
             }
         }
 
@@ -142,7 +143,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             }
             catch
             {
-                MessageBox.Show("Oops, error while binding input filds");
+                MessageBox.Show(MessageBoxConstants.BindFailed);
             }
         }
 
@@ -240,27 +241,27 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             if (person.UserId.Length > 11)
             {
-                MessageBox.Show("Error! The Number and Expedition in the amount must be no more then 7");
+                MessageBox.Show(MessageBoxConstants.ErrorPersonUserID);
                 return false;
             }
             else if (person.Lastname.Length > 21)
             {
-                MessageBox.Show("Error! The Lastname must be no more then 20 symbols");
+                MessageBox.Show(MessageBoxConstants.ErrorPersonLastname);
                 return false;
             }
             else if (person.Firstname.Length > 21)
             {
-                MessageBox.Show("Error! The Firstname must be no more then 20 symbols");
+                MessageBox.Show(MessageBoxConstants.ErrorPersonFirstname);
                 return false;
             }
             else if (person.Middlename.Length > 21)
             {
-                MessageBox.Show("Error! The Middlename must be no more then 20 symbols");
+                MessageBox.Show(MessageBoxConstants.ErrorPersonMiddlename);
                 return false;
             }
             else if (person.Workposition.Length > 21)
             {
-                MessageBox.Show("Error! The Workposition must be no more then 20 symbols");
+                MessageBox.Show(MessageBoxConstants.ErrorPersonWorkposition);
                 return false;
             }
 

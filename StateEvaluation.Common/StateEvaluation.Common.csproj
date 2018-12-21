@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="Constants\FilterConstants.cs" />
     <Compile Include="Constants\ImageGeneratorConstants.cs" />
+    <Compile Include="Constants\MessageBoxConstants.cs" />
     <Compile Include="Enums\PreferenceValues.cs" />
     <Compile Include="Enums\StringBooleanValues.cs" />
     <Compile Include="Helpers\OrderComparer.cs" />
