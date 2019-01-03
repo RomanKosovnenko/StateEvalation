@@ -126,8 +126,14 @@ namespace StateEvaluation
         private void BuildInduvidualChart_Click(object sender, RoutedEventArgs e)
         {
             var currentPreference = (Preference)((Button)(e.Source)).BindingGroup.Items[0];
-            Preference pref = preferenceBuissnesManager.GetPreference(currentPreference);
-            var subWindow = new IndividualChart(pref);
+            if (preferenceBuissnesManager.IsExistsPreference(currentPreference))
+            {
+                var subWindow = new IndividualChart(currentPreference, dataRepository);
+            }
+            else
+            {
+                throw new System.Exception();
+            }
         }
     }
 }

@@ -1,17 +1,9 @@
 ﻿using LiveCharts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using StateEvaluation.Repository.Models;
 using Microsoft.Win32;
 using StateEvaluation.Common.Enums;
@@ -22,7 +14,6 @@ namespace StateEvaluation.View
 
     public partial class TestsChart : Window
     {
-
         public TestsChart(List<Preference> Tests, bool isPreference1)
         {
             InitializeComponent();

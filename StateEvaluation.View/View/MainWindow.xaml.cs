@@ -39,12 +39,12 @@ namespace StateEvaluation
         private IEnumerable<ComboBox> professionsComboBoxes;
      
         #region ctor
-        public MainWindow(DataRepository dataRepository)
+        public MainWindow()
         {
             InitializeComponent();
             this.DataContext = this;
 
-            this.dataRepository = dataRepository;
+            this.dataRepository = new DataRepository();
 
             userIdComboBoxes = new List<ComboBox>()
             {

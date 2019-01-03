@@ -122,12 +122,12 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             try
             {
-                _dataRepository.Delete(id);
+                _dataRepository.DeletePerson(id);
                 Refresh();
             }
             catch
             {
-                MessageBox.Show(MessageBoxConstants.ErrorDeletingAssociated);
+                MessageBox.Show(MessageBoxConstants.ErrorPersonDelete);
             }
         }
 
@@ -192,7 +192,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             foreach (var combobox in _professionsComboBoxes)
             {
-                combobox.ItemsSource = _dataRepository.Professions();
+                combobox.ItemsSource = _dataRepository.GetProfessionsFilter();
             }
         }
 
@@ -205,7 +205,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             foreach (var comboBox in _userNumberComboBoxes)
             {
-                comboBox.ItemsSource = _dataRepository.GetPeopleNumbers();
+                comboBox.ItemsSource = _dataRepository.GetPeopleNumbersFilter();
             }
         }
 
@@ -213,7 +213,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             foreach (var comboBox in _expeditionComboBoxes)
             {
-                comboBox.ItemsSource = _dataRepository.GetExpeditionCodes();
+                comboBox.ItemsSource = _dataRepository.GetExpeditionCodesFilter();
             }
         }
 
@@ -221,7 +221,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             foreach(var comboBox in _userIdComboBoxes)
             {
-                comboBox.ItemsSource = _dataRepository.GetUserIds();
+                comboBox.ItemsSource = _dataRepository.GetUserIdsFilter();
             }
         }
 
