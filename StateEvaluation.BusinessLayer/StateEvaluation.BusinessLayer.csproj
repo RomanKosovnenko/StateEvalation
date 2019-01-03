@@ -63,9 +63,6 @@
     <Compile Include="Providers\FilterProvider.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\StateEvaluation.Biocolor\StateEvaluation.Biocolor.csproj">
       <Project>{A79CC582-E5A0-4386-9382-0F32981361E7}</Project>
       <Name>StateEvaluation.Biocolor</Name>
