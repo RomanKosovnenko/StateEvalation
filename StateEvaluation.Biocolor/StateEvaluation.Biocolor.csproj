@@ -66,9 +66,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="BiocolorSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>BiocolorSettings.Designer.cs</LastGenOutput>

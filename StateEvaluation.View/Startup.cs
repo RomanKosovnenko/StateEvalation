@@ -6,10 +6,10 @@ namespace StateEvaluation
 {
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
-        {
-            MainWindow = new MainWindow(new DataRepository());
-            MainWindow.ShowDialog();
-        }
+        //protected override void OnStartup(StartupEventArgs e)
+        //{
+        //    MainWindow = new MainWindow(new DataRepository());
+        //    MainWindow.ShowDialog();
+        //}
     }
 }

@@ -40,7 +40,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 {
                     var preference = GetNewPreference(preferenceVM);
 
-                    _dataRepository.InsertPreferenceTest(preference);
+                    _dataRepository.CreatePreferenceTest(preference);
                     ClearInputsInternal(preferenceVM);
 
                     RefreshDataGrid();
@@ -102,7 +102,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             try
             {
-                var preference = _dataRepository.GeneratePreferenceTest(preferenceId);
+                var preference = _dataRepository.GetPreferenceTest(preferenceId);
                 SetValueInTabs(preferenceVM, preference);
                 _previouspreferenceVM = preferenceVM;
                 
@@ -120,9 +120,22 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             ClearInputsInternal(preferenceVM);
         }
 
-        public Preference GetPreference(Preference preference)
+        public bool IsExistsPreference(Preference preference)
         {
-            return _dataRepository.GetPreferenceTest(preference);
+            var existPref = _dataRepository.GetPreferenceTest(preference.Id);
+            if(existPref.Oder1 == preference.Oder1 &&
+            existPref.Oder2 == preference.Oder2 &&
+            existPref.Preference1 == preference.Preference1 &&
+            existPref.Preference2 == preference.Preference2 &&
+            existPref.RelaxTable1 == preference.RelaxTable1 &&
+            existPref.RelaxTable2 == preference.RelaxTable2 &&
+            existPref.ShortOder1 == preference.ShortOder1 &&
+            existPref.ShortOder2 == preference.ShortOder2 &&
+            existPref.Compare == preference.Compare)
+            {
+                return true;
+            }
+            return false;
         }
 
         #region private methods

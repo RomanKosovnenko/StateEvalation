@@ -72,9 +72,9 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\DataRepository.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
+    <Compile Include="Providers\DataRepository.People.cs" />
+    <Compile Include="Providers\DataRepository.Preference.cs" />
+    <Compile Include="Providers\DataRepository.SubjectiveFeeling.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StateEvaluation.Common\StateEvaluation.Common.csproj">

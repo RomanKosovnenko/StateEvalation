@@ -17,23 +17,23 @@
         <ObjectDataProvider x:Key="GetPreferences" ObjectType="{x:Type repository:DataRepository}" MethodName="GetPreferenceTests"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetFeelings" ObjectType="{x:Type repository:DataRepository}" MethodName="GetSubjecriveFeelings"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetCodesForInsert" ObjectType="{x:Type repository:DataRepository}" MethodName="GetUserIds"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type repository:DataRepository}" MethodName="GetUserIds"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type repository:DataRepository}" MethodName="Preferences"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetProfessionsList" ObjectType="{x:Type repository:DataRepository}" MethodName="Professions"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type repository:DataRepository}" MethodName="GetUserIdsFilter"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type repository:DataRepository}" MethodName="PreferencesFilters"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetProfessionsList" ObjectType="{x:Type repository:DataRepository}" MethodName="GetProfessionsFilter"></ObjectDataProvider>
+        
         <!--here defined resourses' name for exact model-->
-
         <viewModel:PeopleFilterVM x:Key="peopleFilterVM" />
         <viewModel:SubjectiveFeelingVM x:Key="subjectiveFeelingVM" />
         <viewModel:PeopleVM x:Key="peopleVM" />
         <viewModel:PreferenceVM x:Key="preferenceVM" />
         <viewModel:PreferenceFilterVM x:Key="preferenceFilterVM"/>
         <viewModel:SubjectiveFeelingFilterVM x:Key="subjectiveFeelingFilterVM"/>
+        <!---->
 
-
-        <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type repository:DataRepository}" MethodName="GetPeopleNumbers"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type repository:DataRepository}" MethodName="GetExpeditionCodes"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetShortColorsNumbersList" ObjectType="{x:Type repository:DataRepository}" MethodName="GetShortColorsNumbersList"></ObjectDataProvider>
-        <ObjectDataProvider x:Key="GetColorsNumbersList" ObjectType="{x:Type repository:DataRepository}" MethodName="GetColorsNumbersList"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetPeopleCodes" ObjectType="{x:Type repository:DataRepository}" MethodName="GetPeopleNumbersFilter"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type repository:DataRepository}" MethodName="GetExpeditionCodesFilter"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetShortColorsNumbersList" ObjectType="{x:Type repository:DataRepository}" MethodName="GetShortColorsNumbersFilters"></ObjectDataProvider>
+        <ObjectDataProvider x:Key="GetColorsNumbersList" ObjectType="{x:Type repository:DataRepository}" MethodName="GetColorsNumbersFilters"></ObjectDataProvider>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <helpers:StringToListConverter x:Key="StringToListConverter" />
         <biocolorhelpers:NameToBrushConverter x:Key="NameToBrushConverter" />
