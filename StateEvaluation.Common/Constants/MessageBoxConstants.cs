@@ -5,8 +5,10 @@ namespace StateEvaluation.Common.Constants
     {
         public static string
             WrongFields = "Ошибка, проверьте введенные поля",
-            BindFailed = "Ошибка при биндинге полей",
+            ErrorBinding = "Ошибка при биндинге полей",
             ErrorUpdating = "Ой, ошибка обновления",
+            DeleteSure = "Вы уверены?",
+            DeleteSureTitle = "Удалить элемент",
 
             TestCreated = "Преференция была создана",
             TestDeleted = "Преференция была удалена",
@@ -33,6 +35,8 @@ namespace StateEvaluation.Common.Constants
             ErrorPersonMiddlename = "Ошибка! Отчество должно быть не больше 20 символов",
             ErrorPersonWorkposition = "Ошибка! Длина профессии должна быть не более 20 символов",
 
+            ErrorBiocolorDate = "Неправильная дата",
+            ErrorBiocolorBirthDate = "Дата рождения должна быть меньше рассчитываемой даты",
             BiocolorSave = "Хотите сохранить цвета?",
             BiocolorSaveTitle = "Сохранение настроек",
             BiocolorReset = "Восстановить настроки до заводских?",

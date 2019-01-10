@@ -1,4 +1,5 @@
-﻿using StateEvaluation.Common.ViewModel;
+﻿using StateEvaluation.Common.Constants;
+using StateEvaluation.Common.ViewModel;
 using StateEvaluation.Repository.Models;
 using System.Windows;
 using System.Windows.Controls;
@@ -68,7 +69,7 @@ namespace StateEvaluation
             var butonContext = ((Button)sender).DataContext;
             var personId = ((People)butonContext).Id;
 
-            var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
+            var dialogResult = MessageBox.Show(MessageBoxConstants.DeleteSure, MessageBoxConstants.DeleteSureTitle, MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
             {
                 peopleBuissnesManager.DeletePerson(personId.ToString());

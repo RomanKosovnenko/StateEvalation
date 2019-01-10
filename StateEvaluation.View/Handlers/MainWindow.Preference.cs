@@ -1,4 +1,5 @@
-﻿using StateEvaluation.Common.ViewModel;
+﻿using StateEvaluation.Common.Constants;
+using StateEvaluation.Common.ViewModel;
 using StateEvaluation.Repository.Models;
 using StateEvaluation.View;
 using System.Linq;
@@ -57,7 +58,7 @@ namespace StateEvaluation
         {
             var butonContext = ((Button)sender).DataContext;
             var preferenceId = ((Preference)butonContext).Id;
-            var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
+            var dialogResult = MessageBox.Show(MessageBoxConstants.DeleteSure, MessageBoxConstants.DeleteSureTitle, MessageBoxButton.YesNo);
 
             if (dialogResult == MessageBoxResult.Yes)
             {

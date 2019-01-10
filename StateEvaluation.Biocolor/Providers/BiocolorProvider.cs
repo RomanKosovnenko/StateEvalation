@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StateEvaluation.Common.Constants;
+using System;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
@@ -101,7 +102,7 @@ namespace StateEvaluation.BioColor.Providers
                 DateTime nw = Convert.ToDateTime(_nowDate.Text);
                 if (dt > nw)
                 {
-                    MessageBox.Show("Birthday greater than date!");
+                    MessageBox.Show(MessageBoxConstants.ErrorBiocolorBirthDate);
                     return;
                 }
                 int delta = (int)((nw.Subtract(dt)).TotalDays);
@@ -188,7 +189,7 @@ namespace StateEvaluation.BioColor.Providers
             }
             catch (FormatException)
             {
-                MessageBox.Show("Incorrect Date!");
+                MessageBox.Show(MessageBoxConstants.ErrorBiocolorDate);
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using StateEvaluation.Common.ViewModel;
+﻿using StateEvaluation.Common.Constants;
+using StateEvaluation.Common.ViewModel;
 using StateEvaluation.Repository.Models;
 using System;
 using System.Windows;
@@ -47,7 +48,7 @@ namespace StateEvaluation
             var butonContext = ((Button)sender).DataContext;
             var subjectiveFeelingId = ((SubjectiveFeeling)butonContext).Id;
 
-            var dialogResult = MessageBox.Show("Sure", "Remove item", MessageBoxButton.YesNo);
+            var dialogResult = MessageBox.Show(MessageBoxConstants.DeleteSure, MessageBoxConstants.DeleteSureTitle, MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
             {
                 subjectiveFeelingBuissnesManager.Remove(subjectiveFeelingId);

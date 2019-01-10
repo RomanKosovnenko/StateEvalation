@@ -143,7 +143,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             }
             catch
             {
-                MessageBox.Show(MessageBoxConstants.BindFailed);
+                MessageBox.Show(MessageBoxConstants.ErrorBinding);
             }
         }
 
