@@ -16,7 +16,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
     {
         private DataRepository _dataRepository;
 
-        private IEnumerable<ComboBox> _userIdComboBoxes { get; }
+        private IEnumerable<ListBox> _userIdComboBoxes { get; }
         private IEnumerable<ComboBox> _expeditionComboBoxes { get; }
         private IEnumerable<ComboBox> _userNumberComboBoxes { get; }
         private IEnumerable<ComboBox> _professionsComboBoxes { get; }
@@ -25,7 +25,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         public PeopleBuissnesManager(
             DataRepository dataRepository, 
-            IEnumerable<ComboBox> userIdComboBoxes,
+            IEnumerable<ListBox> userIdComboBoxes,
             IEnumerable<ComboBox> expeditionComboBoxes,
             IEnumerable<ComboBox> userNumberComboBoxes,
             IEnumerable<ComboBox> professionsComboBoxes,

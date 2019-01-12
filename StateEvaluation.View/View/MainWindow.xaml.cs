@@ -1,5 +1,4 @@
-﻿using Microsoft.Office.Interop.Excel;
-using StateEvaluation.Repository.Providers;
+﻿using StateEvaluation.Repository.Providers;
 using StateEvaluation.Common.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -33,6 +32,11 @@ namespace StateEvaluation
         private FilterBussinesManager filterBussinesManager;
         private DataRepository dataRepository;
 
+        private IEnumerable<ListBox> userIdListBoxes;
+        private IEnumerable<ListBox> expeditionListBoxes;
+        private IEnumerable<ListBox> numberOfPeopleListBoxes;
+        private IEnumerable<ListBox> professionsListBoxes;
+
         private IEnumerable<ComboBox> userIdComboBoxes;
         private IEnumerable<ComboBox> expeditionComboBoxes;
         private IEnumerable<ComboBox> numberOfPeopleComboBoxes;
@@ -46,39 +50,52 @@ namespace StateEvaluation
 
             this.dataRepository = new DataRepository();
 
+            userIdListBoxes = new List<ListBox>()
+            {
+                UserIdsFilterPeopleCB
+            };
+
             userIdComboBoxes = new List<ComboBox>()
             {
-                UserIdsFilterPeopleCB,
                 UserIdsFilterSubjFeelingCB,
                 UserIdsFilterPreferenceCB,
                 UserIdsInsertPreferenceCB,
                 UserIdsInsertSubjFeelCB
             };
 
+            expeditionListBoxes = new List<ListBox>()
+            {
+                ExpeditionFilterPeopleCB
+            };
+
             expeditionComboBoxes = new List<ComboBox>()
             {
-                ExpeditionFromFilterPeopleCB,
-                ExpeditionToFilterPeopleCB,
                 ExpeditionFromFilterSubjFeelCB,
                 ExpeditionToFilterSubjFeelCB,
                 ExpeditionFilterToPreferenceCB,
                 ExpeditionFromFilterPreferenceCB
             };
 
+            numberOfPeopleListBoxes = new List<ListBox>()
+            {
+                NumberFilterPeopleCB,
+            };
+
             numberOfPeopleComboBoxes = new List<ComboBox>()
             {
-                NumberFromFilterPeopleCB,
-                NumberToFilterPeopleCB,
                 NumberFromFilterSubjFeelCB,
                 NumberToFilterSubjFeelCB,
                 NumberFromFilterPreferenceCB,
                 NumberToFilterPreferenceCB
+            };
 
+            professionsListBoxes = new List<ListBox>()
+            {
+                ProfessionFilterPeopleTab,
             };
 
             professionsComboBoxes = new List<ComboBox>()
             {
-                ProfessionFilterPeopleTab,
                 ProfessionPreferenceTab,
                 ProfessionsSubjectiveFeelingTab
             };
@@ -90,7 +107,7 @@ namespace StateEvaluation
             peopleBuissnesManager = new PeopleBuissnesManager
             (
                 dataRepository,
-                userIdComboBoxes,
+                userIdListBoxes,
                 expeditionComboBoxes,
                 numberOfPeopleComboBoxes,
                 professionsComboBoxes,

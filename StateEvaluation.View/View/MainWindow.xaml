@@ -21,6 +21,7 @@
         <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type repository:DataRepository}" MethodName="PreferencesFilters"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetProfessionsList" ObjectType="{x:Type repository:DataRepository}" MethodName="GetProfessionsFilter"></ObjectDataProvider>
         
+        
         <!--here defined resourses' name for exact model-->
         <viewModel:PeopleFilterVM x:Key="peopleFilterVM" />
         <viewModel:SubjectiveFeelingVM x:Key="subjectiveFeelingVM" />
@@ -1295,24 +1296,8 @@
                     <RowDefinition Height="599"/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Фильтры" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightGray" Margin="0,-35,0,12"/>
-
-                <Grid Grid.Row="1" Margin="5,5,5,562"   Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Label Content="Код" 
-                        FontWeight="Bold" Margin="0,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <ComboBox
-                        x:Name="UserIdsFilterPeopleCB"
-                        Grid.Column="1"
-                        SelectedItem="{Binding UserId}"
-                        ItemsSource="{Binding Source={StaticResource GetCodesForFilter}}"
-                        SelectedIndex="0" Margin="5"
-                        />
-                </Grid>
-                <Grid Grid.Row="1" Margin="5,47,5,363"   Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}">
+                <Label Grid.Row="0" Content="Фильтры" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightGray" Margin="0,-35,0,12"/>
+                <Grid Grid.Row="1" Margin="5,10,5,525" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
@@ -1325,77 +1310,66 @@
                     </Grid.RowDefinitions>
 
                     <Label Content="Дата рождения" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0,-6,0,6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,0"/>
-                    <Label Content="Начало" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
-                    <Label Content="Конец" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Padding="0" Grid.RowSpan="2"/>
+                    <Label Content="Начало" Margin="0,5,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
+                    <Label Content="Конец" Margin="0,5,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Padding="0" Grid.RowSpan="2"/>
 
                     <DatePicker Grid.Row="1"
                                 x:Name="DateFromPeopleTab"
                                 SelectedDate="{Binding DateFrom}"
-                                Margin="0,5,5,7" Padding="5,2,2,2" Grid.RowSpan="2" />
+                                Margin="0,10,5,7" Padding="5,2,2,2" Grid.RowSpan="2" />
                     <DatePicker Grid.Row="1"
                                 x:Name="DateToPeopleTab"
                                 Grid.Column="1"
                                 SelectedDate="{Binding DateTo}"
                                  Margin="5,0,0,7" VerticalAlignment="Bottom" Padding="2" Grid.RowSpan="2"/>
-                    <Grid Grid.ColumnSpan="2" Margin="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    </Grid>
                 </Grid>
-                <Grid  Grid.Row="1" Margin="5,111,5,361"  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="127" />
-                    </Grid.RowDefinitions>
-                    <TextBlock
-                                   HorizontalAlignment="Center"
-                                   Padding="0"
-                                   Text="Экспедиция" Grid.ColumnSpan="2"
-                                   FontWeight="Bold" Margin="84,-10,84,121" Width="72"
-                        />
-                    <Label Content="Начало" Margin="0,0,0,99" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0"/>
-                    <Label Content="Конец" Margin="0,0,0,99" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Column="1"/>
-                    <ComboBox
-                              x:Name="ExpeditionFromFilterPeopleCB"
-                              SelectedItem="{Binding ExpeditionFrom}"
-                                  ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
-                                  SelectedIndex="0"
-                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,22,2,83" />
-                    <ComboBox
-                              x:Name="ExpeditionToFilterPeopleCB"
-                                  Grid.Column="1"
-                              SelectedItem="{Binding ExpeditionTo}"
-                                  ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
-                                  SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,22,0,83" />
-                    <TextBlock
-                                   HorizontalAlignment="Center"
-                                   Padding="0"
-                                   Text="Номер" Grid.ColumnSpan="2" 
-                                    FontWeight="Bold" Margin="100,49,100,14" Width="40"/>
-                    <Label Content="Начало" Margin="0,63,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0"/>
-                    <Label Content="Конец" Margin="0,62,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Column="1"/>
-                    <ComboBox
-                              x:Name="NumberFromFilterPeopleCB"
-                             SelectedIndex="0"
-                              SelectedItem="{Binding PeopleFrom}"
-                              ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
-                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,79,2,23" />
-                    <ComboBox
-                              x:Name="NumberToFilterPeopleCB"
-                              SelectedItem="{Binding PeopleTo}"    
-                              Grid.Column="1"
-                                  ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}"
-                                  SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,79,0,23" />
-                    <Label Content="Профессия" FontWeight="Bold" Margin="18,0,0,-11" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,0" HorizontalAlignment="Left" Width="87" Height="26" VerticalAlignment="Bottom"
-                           />
-                    <ComboBox
-                        x:Name="ProfessionFilterPeopleTab"
-                              SelectedItem="{Binding Profession}"
-                        ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" 
-                        SelectedIndex="0" HorizontalContentAlignment="Center" Margin="2,0,2,-11" Grid.Column="1" Height="24" VerticalAlignment="Bottom" />
+                <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="5,70,5,110">
+                    <ScrollViewer>
+                        <StackPanel Margin="5">
+                            <Expander Header="Код человека">
+                                <ListBox 
+                                    x:Name="UserIdsFilterPeopleCB" 
+                                    SelectedItem="{Binding UserIds}"
+                                    ItemsSource="{Binding Source={StaticResource GetCodesForFilter}}" 
+                                    SelectionMode="Multiple">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Content="{Binding}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Expander>
+                            <Expander Header="Экспедиция">
+                                <ListBox x:Name="ExpeditionFilterPeopleCB" ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}" SelectionMode="Multiple">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Content="{Binding}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Expander>
+                            <Expander Header="Номер человека">
+                                <ListBox x:Name="NumberFilterPeopleCB" ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" SelectionMode="Multiple">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Content="{Binding}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Expander>
+                            <Expander Header="Профессия">
+                                <ListBox x:Name="ProfessionFilterPeopleTab" ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" SelectionMode="Extended">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox Content="{Binding}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Expander>
+                        </StackPanel>
+                    </ScrollViewer>
                 </Grid>
-                <Grid Grid.Row="1" Margin="5,258,5,0"   Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}" Height="25" VerticalAlignment="Top">
+                <Grid Grid.Row="1" Margin="5,0,5,80"   Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}" Height="25" VerticalAlignment="Bottom">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>

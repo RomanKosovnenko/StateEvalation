@@ -144,13 +144,11 @@ namespace StateEvaluation.BussinesLayer.Providers
             var peopleFilter = (BaseFilterVM)filter;
 
             return (People _) =>
-                (_.Workposition.Trim() == peopleFilter.Profession || peopleFilter.Profession == FilterConstants.All)
-                && (peopleFilter.UserId == FilterConstants.All
-                    ? (peopleFilter.PeopleFrom == FilterConstants.All || _.Number >= int.Parse(peopleFilter.PeopleFrom)) && (peopleFilter.PeopleTo == FilterConstants.All || _.Number <= int.Parse(peopleFilter.PeopleTo))
-                    : _.UserId.Trim() == peopleFilter.UserId.Trim())
-                && (peopleFilter.UserId == FilterConstants.All
-                    ? (peopleFilter.ExpeditionFrom == FilterConstants.All || _.Expedition >= int.Parse(peopleFilter.ExpeditionFrom)) && (peopleFilter.ExpeditionTo == FilterConstants.All || _.Expedition <= int.Parse(peopleFilter.ExpeditionTo))
-                    : _.UserId.Trim() == peopleFilter.UserId.Trim());
+                peopleFilter.UserIds.Count == 0 ? (
+                    (peopleFilter.Expeditions.Count == 0 || peopleFilter.Expeditions.Contains(_.Expedition.ToString())) &&
+                    (peopleFilter.People.Count == 0 || peopleFilter.People.Contains(_.Number.ToString())) &&
+                    (peopleFilter.Professions.Count == 0 || peopleFilter.Professions.Contains(_.Workposition.ToString())) 
+                ) : peopleFilter.UserIds.Contains(_.UserId.Trim());
         }
 
         private Func<Preference, bool> GetPreferenceQuery(object filter, DateTime dateTo, DateTime dateFrom, string[] allowedUserIds)

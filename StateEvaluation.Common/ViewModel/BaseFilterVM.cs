@@ -1,24 +1,24 @@
 ﻿
+using System.Collections.Generic;
+
 namespace StateEvaluation.Common.ViewModel
 {
     public class BaseFilterVM : BaseVM
     {
-        private string _userId;
+        private List<string> _userIds;
         private object _dateFrom;
         private object _dateTo;
-        private string _expeditionFrom;
-        private string _expeditionTo;
-        private string _peopleFrom;
-        private string _peopleTo;
-        private string _profession;
+        private List<string> _expeditions;
+        private List<string> _people;
+        private List<string> _professions;
         
-        public string UserId
+        public List<string> UserIds
         {
-            get => _userId;
+            get => _userIds;
             set
             {
-                _userId = value;
-                OnPropertyChanged("UserId");
+                _userIds = value;
+                OnPropertyChanged("UserIds");
             }
         }
 
@@ -40,49 +40,31 @@ namespace StateEvaluation.Common.ViewModel
                 OnPropertyChanged("DateTo");
             }
         }
-        public string ExpeditionFrom
+        public List<string> Expeditions
         {
-            get => _expeditionFrom;
+            get => _expeditions;
             set
             {
-                _expeditionFrom = value;
-                OnPropertyChanged("ExpeditionFrom");
+                _expeditions = value;
+                OnPropertyChanged("Expeditions");
             }
         }
-        public string ExpeditionTo
+        public List<string> People
         {
-            get => _expeditionTo;
+            get => _people;
             set
             {
-                _expeditionTo = value;
-                OnPropertyChanged("ExpeditionTo");
+                _people = value;
+                OnPropertyChanged("People");
             }
         }
-        public string PeopleFrom
+        public List<string> Professions
         {
-            get => _peopleFrom;
+            get => _professions;
             set
             {
-                _peopleFrom = value;
-                OnPropertyChanged("PeopleFrom");
-            }
-        }
-        public string PeopleTo
-        {
-            get => _peopleTo;
-            set
-            {
-                _peopleTo = value;
-                OnPropertyChanged("PeopleTo");
-            }
-        }
-        public string Profession
-        {
-            get => _profession;
-            set
-            {
-                _profession = value;
-                OnPropertyChanged("Profession");
+                _professions = value;
+                OnPropertyChanged("Professions");
             }
         }
     }
