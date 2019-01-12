@@ -142,13 +142,12 @@ namespace StateEvaluation.BussinesLayer.Providers
         private Func<People, bool> GetBaseQuery(object filter)
         {
             var peopleFilter = (BaseFilterVM)filter;
-
             return (People _) =>
-                peopleFilter.UserIds.Count == 0 ? (
+                (peopleFilter.Professions.Count == 0 || peopleFilter.Professions.Contains(_.Workposition.Trim())) &&
+                (peopleFilter.UserIds.Count == 0 ? (
                     (peopleFilter.Expeditions.Count == 0 || peopleFilter.Expeditions.Contains(_.Expedition.ToString())) &&
-                    (peopleFilter.People.Count == 0 || peopleFilter.People.Contains(_.Number.ToString())) &&
-                    (peopleFilter.Professions.Count == 0 || peopleFilter.Professions.Contains(_.Workposition.ToString())) 
-                ) : peopleFilter.UserIds.Contains(_.UserId.Trim());
+                    (peopleFilter.People.Count == 0 || peopleFilter.People.Contains(_.Number.ToString()))
+                ) : peopleFilter.UserIds.Contains(_.UserId.Trim()));
         }
 
         private Func<Preference, bool> GetPreferenceQuery(object filter, DateTime dateTo, DateTime dateFrom, string[] allowedUserIds)

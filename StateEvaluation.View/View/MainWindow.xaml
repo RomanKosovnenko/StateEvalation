@@ -1329,39 +1329,63 @@
                             <Expander Header="Код человека">
                                 <ListBox 
                                     x:Name="UserIdsFilterPeopleCB" 
-                                    SelectedItem="{Binding UserIds}"
                                     ItemsSource="{Binding Source={StaticResource GetCodesForFilter}}" 
                                     SelectionMode="Multiple">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                            <CheckBox 
+                                                Checked="UserIdsFilterPeopleCB_Selected" 
+                                                Unchecked="UserIdsFilterPeopleCB_Selected" 
+                                                Content="{Binding}" 
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"/>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                             </Expander>
                             <Expander Header="Экспедиция">
-                                <ListBox x:Name="ExpeditionFilterPeopleCB" ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}" SelectionMode="Multiple">
+                                <ListBox 
+                                    x:Name="ExpeditionFilterPeopleCB" 
+                                    ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}" 
+                                    SelectionMode="Multiple">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                            <CheckBox 
+                                                Checked="ExpeditionFilterPeopleCB_Selected" 
+                                                Unchecked="ExpeditionFilterPeopleCB_Selected" 
+                                                Content="{Binding}" 
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                             </Expander>
                             <Expander Header="Номер человека">
-                                <ListBox x:Name="NumberFilterPeopleCB" ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" SelectionMode="Multiple">
+                                <ListBox 
+                                    x:Name="NumberFilterPeopleCB" 
+                                    ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
+                                    SelectionMode="Multiple">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                            <CheckBox 
+                                                Checked="NumberFilterPeopleCB_Selected" 
+                                                Unchecked="NumberFilterPeopleCB_Selected" 
+                                                Content="{Binding}" 
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
                             </Expander>
                             <Expander Header="Профессия">
-                                <ListBox x:Name="ProfessionFilterPeopleTab" ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" SelectionMode="Extended">
+                                <ListBox 
+                                    x:Name="ProfessionFilterPeopleTab" 
+                                    ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" 
+                                    SelectionMode="Multiple">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox Content="{Binding}" IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                            <CheckBox 
+                                                Checked="ProfessionFilterPeopleTab_Selected" 
+                                                Unchecked="ProfessionFilterPeopleTab_Selected" 
+                                                Content="{Binding}" 
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>

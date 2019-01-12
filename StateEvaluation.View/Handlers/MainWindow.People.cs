@@ -95,5 +95,26 @@ namespace StateEvaluation
         {
             filterBussinesManager.Filter(PeopleDataGrid, peopleFilter);
         }
+
+        private void UserIdsFilterPeopleCB_Selected(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            peopleFilter.SetUserState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
+        }
+        private void ExpeditionFilterPeopleCB_Selected(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            peopleFilter.SetExpeditionState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
+        }
+        private void NumberFilterPeopleCB_Selected(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            peopleFilter.SetPeopleState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
+        }
+        private void ProfessionFilterPeopleTab_Selected(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            peopleFilter.SetProfessionsState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
+        }
     }
 }
