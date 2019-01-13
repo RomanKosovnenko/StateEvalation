@@ -71,6 +71,13 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="CheckBox" x:Key="BigCheckBox">
+            <Setter Property="LayoutTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="2" ScaleY="2"/>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
     
     <Grid>
@@ -285,12 +292,12 @@
 
                 <ComboBox   Grid.Row="2" Grid.Column="0" Margin="2" Width="100" x:Name="UserIdsInsertSubjFeelCB" ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}" SelectedValue="{Binding UserId}"/>
                 <DatePicker Grid.Row="2" Grid.Column="1" Margin="2" Width="110" x:Name="selectedDateInSubjectiveFeeling" SelectedDate="{Binding Date}" CalendarStyle="{StaticResource styleCalendar}" />
-                <CheckBox   Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="markGeneralWeakness" IsChecked="{Binding GeneralWeaknes}" />
-                <CheckBox   Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="markBadAppetite"     IsChecked="{Binding PoorAppetite}" />
-                <CheckBox   Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="markBadDream"        IsChecked="{Binding PoorSleep}" />
-                <CheckBox   Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="markBadMood"         IsChecked="{Binding BadMood}" />
-                <CheckBox   Grid.Row="2" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="markHeavyHead"       IsChecked="{Binding HeavyHead}" />
-                <CheckBox   Grid.Row="2" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="markSlowThink"       IsChecked="{Binding SlowThink}" />
+                <CheckBox   Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BigCheckBox}" x:Name="markGeneralWeakness" IsChecked="{Binding GeneralWeaknes}" />
+                <CheckBox   Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BigCheckBox}" x:Name="markBadAppetite"     IsChecked="{Binding PoorAppetite}"   />
+                <CheckBox   Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BigCheckBox}" x:Name="markBadDream"        IsChecked="{Binding PoorSleep}"      />
+                <CheckBox   Grid.Row="2" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BigCheckBox}" x:Name="markBadMood"         IsChecked="{Binding BadMood}"        />
+                <CheckBox   Grid.Row="2" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BigCheckBox}" x:Name="markHeavyHead"       IsChecked="{Binding HeavyHead}"      />
+                <CheckBox   Grid.Row="2" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BigCheckBox}" x:Name="markSlowThink"       IsChecked="{Binding SlowThink}"      />
 
                 <Button Grid.Row="1" Grid.Column="8" Margin="2" Click="ClearSubjectiveFeelingInputs_Click" Content="Сброс" />
                 <Button Grid.Row="2" Grid.Column="8" Margin="2" Click="CreateSubjectiveFeeling_Click" Content="Добавить запись" Visibility="Visible" />
@@ -510,7 +517,7 @@
                     </DataGridTemplateColumn>
 
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                    
+
                     <!-- BioColor II (TwelveColor) -->
                     <DataGridTemplateColumn Header="Биоколор 2" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -531,7 +538,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                   
+
                     <!-- BioColor II (TwelvePictures) -->
                     <DataGridTemplateColumn Header="Биоколор 2" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                              Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIPictures}, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -564,7 +571,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-              
+
                     <!-- BioColor II END -->
 
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
@@ -642,7 +649,7 @@
                     </DataGridTextColumn>
 
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                    
+
                     <!-- Compare Preferences -->
                     <DataGridTextColumn Header="Преф 1 и Преф 2" Binding="{Binding Compare, Converter={StaticResource BooleanToChecker}}" ClipboardContentBinding="{x:Null}">
                         <DataGridTextColumn.ElementStyle>
@@ -656,7 +663,7 @@
                     </DataGridTextColumn>
 
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                    
+
                     <!-- Compare Pref1 + Relax1-->
                     <DataGridTextColumn Header="Преф 1 Релакс2" ClipboardContentBinding="{x:Null}">
                         <DataGridTextColumn.ElementStyle>
@@ -675,7 +682,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
-                    
+
                     <!-- Compare Pref2 + Relax2-->
                     <DataGridTextColumn Header="Преф 2 Релакс 2" ClipboardContentBinding="{x:Null}">
                         <DataGridTextColumn.ElementStyle>
@@ -769,7 +776,7 @@
                     <RowDefinition Height="25"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="300"/>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="150"/>
                     <ColumnDefinition Width="65"/>
@@ -994,6 +1001,34 @@
                     </Image.Source>
                 </Image>
 
+                <Grid Grid.Row="2" Grid.Column="0" Grid.RowSpan="10" Width="250" Height="250">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="25"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="25"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <TextBlock Grid.Row="0" Grid.Column="1" Margin=" 0, 0,20, 0" HorizontalAlignment="Right"  VerticalAlignment="Center" Text="Ф 1"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="20, 0, 0, 0" HorizontalAlignment="Left"   VerticalAlignment="Center" Text="Ф 2"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" Margin=" 5, 5, 5, 5" HorizontalAlignment="Right"  VerticalAlignment="Top"    Text="Ф 3"/>
+                    <TextBlock Grid.Row="1" Grid.Column="3" Margin=" 0, 0, 0,20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="Ф 4"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Margin=" 5, 5, 5, 5" HorizontalAlignment="Left"   VerticalAlignment="Bottom" Text="Э 1"/>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin=" 0,20, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Top"    Text="Э 2"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin=" 0, 0, 0,20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Text="Э 3"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Margin=" 5, 5, 5, 5" HorizontalAlignment="Left"   VerticalAlignment="Top"    Text="Э 4"/>
+                    <TextBlock Grid.Row="2" Grid.Column="3" Margin=" 0,20, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Top"    Text="И 1"/>
+                    <TextBlock Grid.Row="2" Grid.Column="2" Margin=" 5, 5, 5, 5" HorizontalAlignment="Right"  VerticalAlignment="Bottom" Text="И 2"/>
+                    <TextBlock Grid.Row="3" Grid.Column="2" Margin="20, 0, 0, 0" HorizontalAlignment="Left"   VerticalAlignment="Center" Text="И 3"/>
+                    <TextBlock Grid.Row="3" Grid.Column="1" Margin=" 0, 0,20, 0" HorizontalAlignment="Right"  VerticalAlignment="Center" Text="И 4"/>
+                </Grid>
+
                 <TextBlock Grid.Row="00" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="RGB"/>
                 <TextBlock Grid.Row="00" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Text="C"/>
                 <TextBlock Grid.Row="00" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="M"/>
@@ -1072,7 +1107,7 @@
                 <TextBox                   Grid.Row="12" Grid.Column="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="cIntellectualColor4" />
                 <TextBox                   Grid.Row="12" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="mIntellectualColor4" />
                 <TextBox                   Grid.Row="12" Grid.Column="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="yIntellectualColor4" />
-                <TextBox                   Grid.Row="12" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kIntellectualColor4" /> 
+                <TextBox                   Grid.Row="12" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kIntellectualColor4" />
 
                 <Button Grid.Row="01" Grid.Column="3" Name="PhysicalButton1"     Click="CMYK2RGB_Click" Content="&lt;--" />
                 <Button Grid.Row="02" Grid.Column="3" Name="PhysicalButton2"     Click="CMYK2RGB_Click" Content="&lt;--" />
@@ -1097,7 +1132,7 @@
             <Grid Grid.Column="1" comment:Tab="People Filter"
                   DataContext="{StaticResource peopleFilterVM}"
                   Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}">
-                
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -1216,7 +1251,7 @@
             <Grid Grid.Column="1" comment:Tab="Preferences Filter" 
                   DataContext="{StaticResource preferenceFilterVM}"
                   Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
-                
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -1488,7 +1523,7 @@
             <Grid Grid.Column="1" comment:Tab="Feelings Filter"
                   DataContext="{StaticResource subjectiveFeelingFilterVM}"
                   Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
-                
+
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -1600,7 +1635,7 @@
                         </Expander>
                     </StackPanel>
                 </ScrollViewer>
-                
+
                 <Grid Grid.Row="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="40"/>
@@ -1617,5 +1652,5 @@
             </Grid>
 
         </Grid>
-    </Grid>
+        </Grid>
 </Window>
