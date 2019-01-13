@@ -61,8 +61,8 @@
             <!--<TabItem Header="{x:Static p:Resources.AddDataHeader}">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>-->
-            <TabItem x:Name="tabItem" IsSelected="True" DataContext="{StaticResource peopleVM}" Header="Люди" Margin="-2,-2,-2,0">
-                <Grid x:Name="PersonAddFormGrid" Background="#FFE5E5E5" Margin="0,0,0,0">
+            <TabItem x:Name="tabItem" IsSelected="True" DataContext="{StaticResource peopleVM}" Header="Люди">
+                <Grid x:Name="PersonAddFormGrid" Background="#FFE5E5E5">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="119"/>
                     </Grid.RowDefinitions>
@@ -576,7 +576,8 @@
                 <ColumnDefinition MaxWidth="250" Width="250"/>
             </Grid.ColumnDefinitions>
 
-            <DataGrid x:Name="PeopleDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetPeople}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False">
+            <DataGrid comment:Tab="People Grid"
+                      x:Name="PeopleDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetPeople}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
                     <DataGridTextColumn Width="auto" Header="Код" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
@@ -604,7 +605,8 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid x:Name="PreferencesDataGrid" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
+            <DataGrid comment:Tab="Preferences Grid"
+                      x:Name="PreferencesDataGrid" CanUserAddRows="False" RowHeight="40" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="График" Width="auto" ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
@@ -743,6 +745,7 @@
                     </DataGridTemplateColumn>
 
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                    
                     <!-- BioColor II (TwelveColor) -->
                     <DataGridTemplateColumn Header="Биоколор 2" Width="auto" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                                  Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIITwelve}, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -763,6 +766,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
+                   
                     <!-- BioColor II (TwelvePictures) -->
                     <DataGridTemplateColumn Header="Биоколор 2" Width="auto" ClipboardContentBinding="{x:Null}" MinWidth="280"
                                              Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIPictures}, Converter={StaticResource BooleanToVisibilityConverter}}">
@@ -795,6 +799,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
+              
                     <!-- BioColor II END -->
 
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
@@ -835,17 +840,6 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
-                    <DataGridTextColumn Header="Преф 1 и Преф 2" Width="auto" Binding="{Binding Compare, Converter={StaticResource BooleanToChecker}}" ClipboardContentBinding="{x:Null}">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style>
-                                <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
-                                <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
-                                <Setter Property="TextBlock.FontSize" Value="20" />
-
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Релакс 1" Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -863,8 +857,7 @@
 
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
                     <!-- Preference1 -->
-                    <DataGridTextColumn Header="Преференция 1" Width="auto" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}"
-                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
+                    <DataGridTextColumn Header="Преференция 1" Width="auto" Binding="{Binding Preference1}" ClipboardContentBinding="{x:Null}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Background" Value="{Binding Preference1, Converter={StaticResource PreferenceToBrushConverter}}" />
@@ -874,8 +867,7 @@
                     </DataGridTextColumn>
 
                     <!-- Preference2 -->
-                    <DataGridTextColumn Header="Преференция 2" Width="auto" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}"
-                                        Visibility="{Binding Path=IsChecked, Source={x:Reference BioColorIIHide}, Converter={StaticResource BooleanToNOTVisibilityConverter}}">
+                    <DataGridTextColumn Header="Преференция 2" Width="auto" Binding="{Binding Preference2}" ClipboardContentBinding="{x:Null}">
                         <DataGridTextColumn.ElementStyle>
                             <Style TargetType="{x:Type TextBlock}">
                                 <Setter Property="Background" Value="{Binding Preference2, Converter={StaticResource PreferenceToBrushConverter}}" />
@@ -884,8 +876,23 @@
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
 
-                    <!-- Compare Pref1 + Relax1-->
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                    
+                    <!-- Compare Preferences -->
+                    <DataGridTextColumn Header="Преф 1 и Преф 2" Width="auto" Binding="{Binding Compare, Converter={StaticResource BooleanToChecker}}" ClipboardContentBinding="{x:Null}">
+                        <DataGridTextColumn.ElementStyle>
+                            <Style>
+                                <Setter Property="TextBlock.HorizontalAlignment" Value="Center" />
+                                <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
+                                <Setter Property="TextBlock.FontSize" Value="20" />
+
+                            </Style>
+                        </DataGridTextColumn.ElementStyle>
+                    </DataGridTextColumn>
+
+                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}"/>
+                    
+                    <!-- Compare Pref1 + Relax1-->
                     <DataGridTextColumn Header="Преф 1 Релакс2" Width="auto" ClipboardContentBinding="{x:Null}">
                         <DataGridTextColumn.ElementStyle>
                             <Style>
@@ -903,6 +910,7 @@
                             </Style>
                         </DataGridTextColumn.ElementStyle>
                     </DataGridTextColumn>
+                    
                     <!-- Compare Pref2 + Relax2-->
                     <DataGridTextColumn Header="Преф 2 Релакс 2" Width="auto" ClipboardContentBinding="{x:Null}">
                         <DataGridTextColumn.ElementStyle>
@@ -940,7 +948,8 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid x:Name="SubjectiveFeelingDataGrid" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetFeelings}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
+            <DataGrid comment:Tab="Subjective Feelings Grid" 
+                      x:Name="SubjectiveFeelingDataGrid" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetFeelings}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden" />
                     <DataGridTextColumn Header="Код" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}"/>
@@ -968,13 +977,15 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Grid x:Name="BioColorGrid" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem3}" Grid.ColumnSpan="2" >
+            <Grid comment:Tab="Biocolor"
+                  x:Name="BioColorGrid" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem3}" Grid.ColumnSpan="2" >
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
             </Grid>
 
-            <Grid x:Name="ColorSettings" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=ColorSettingsTab}" Margin="2,-51,-2,-31" Grid.ColumnSpan="2" Panel.ZIndex="2">
+            <Grid comment:Tab="Colors Settings"
+                  x:Name="ColorSettings" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=ColorSettingsTab}" Margin="2,-51,-2,-31" Grid.ColumnSpan="2" Panel.ZIndex="2">
 
                 <Image Width="200" Height="200" Margin="25,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
                     <Image.Source>
@@ -1292,8 +1303,7 @@
 
             </Grid>
 
-            
-            <Grid Grid.Column="1" comment:Tab="People"
+            <Grid Grid.Column="1" comment:Tab="People Filter"
                   DataContext="{StaticResource peopleFilterVM}"
                   Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}">
                 
@@ -1400,16 +1410,19 @@
 
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
+                        <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
 
                     <Button Grid.Column="0" Margin="2" Click="ClearFilterPeopleTab_Click" Content="Сбосить фильтр"  />
                     <Button Grid.Column="1" Margin="2" Click="FilterPeople_Click"         Content="Применить фильтр"/>
                 </Grid>
             </Grid>
 
-            <Grid Grid.Column="1" comment:Tab="Preferences" 
+            <Grid Grid.Column="1" comment:Tab="Preferences Filter" 
                   DataContext="{StaticResource preferenceFilterVM}"
                   Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
                 
@@ -1640,9 +1653,9 @@
                 </Grid>
                 <Grid Grid.Row="3" comment:Group="Buttons">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -1673,18 +1686,17 @@
                         Margin="2"
                         Content="Диаграма преф.2"
                         Click="BildChartOnPreference2_Click" />
-                    <!--
                     <Button 
                         Grid.Row="2"
                         Grid.Column="0" 
                         Grid.ColumnSpan="2"
+                        Margin="2"
                         Content="Импорт"
                         Click="AddData_OnClick" />
-                    -->
                 </Grid>
             </Grid>
 
-            <Grid Grid.Column="1" comment:Tab="Feelings"
+            <Grid Grid.Column="1" comment:Tab="Feelings Filter"
                   DataContext="{StaticResource subjectiveFeelingFilterVM}"
                   Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
                 
@@ -1804,7 +1816,7 @@
                 
                 <Grid Grid.Row="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
+                        <RowDefinition Height="40"/>
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -1818,5 +1830,5 @@
             </Grid>
 
         </Grid>
-        </Grid>
+    </Grid>
 </Window>

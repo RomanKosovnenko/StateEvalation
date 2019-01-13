@@ -16,6 +16,7 @@ namespace StateEvaluation
         {
             List<string> list = new List<string>();
 
+            /// TODO Path selection!
             string filePath = "C:\\Users\\Vitalii.Kushch\\Desktop\\Шаблон для ежемесячной отправки XXI  .xlsx";
 
 
