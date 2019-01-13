@@ -83,7 +83,12 @@ namespace StateEvaluation
         /// <param name="e"></param>
         private void ClearFilterPeopleTab_Click(object sender, RoutedEventArgs e)
         {
-            filterBussinesManager.Clear(PeopleDataGrid, peopleFilter);
+            filterBussinesManager.Clear(PeopleDataGrid, peopleFilter, new System.Collections.Generic.List<ListBox> {
+                UserIdsFilterPeopleTab,
+                ExpeditionFilterPeopleTab,
+                NumberFilterPeopleTab,
+                ProfessionFilterPeopleTab
+            });
         }
 
         /// <summary>
@@ -96,17 +101,17 @@ namespace StateEvaluation
             filterBussinesManager.Filter(PeopleDataGrid, peopleFilter);
         }
 
-        private void UserIdsFilterPeopleCB_Selected(object sender, RoutedEventArgs e)
+        private void UserIdsFilterPeopleTab_Selected(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
             peopleFilter.SetUserState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
         }
-        private void ExpeditionFilterPeopleCB_Selected(object sender, RoutedEventArgs e)
+        private void ExpeditionFilterPeopleTab_Selected(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
             peopleFilter.SetExpeditionState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
         }
-        private void NumberFilterPeopleCB_Selected(object sender, RoutedEventArgs e)
+        private void NumberFilterPeopleTab_Selected(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = sender as CheckBox;
             peopleFilter.SetPeopleState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);

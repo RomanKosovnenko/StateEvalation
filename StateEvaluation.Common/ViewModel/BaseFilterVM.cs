@@ -5,14 +5,22 @@ namespace StateEvaluation.Common.ViewModel
 {
     public class BaseFilterVM : BaseVM
     {
-        private List<string> _userIds = new List<string>();
+        protected List<string> _userIds;
         private object _dateFrom;
         private object _dateTo;
-        private List<string> _expeditions = new List<string>();
-        private List<string> _people = new List<string>();
-        private List<string> _professions = new List<string>();
+        protected List<string> _expeditions;
+        protected List<string> _people;
+        protected List<string> _professions;
 
-        public List<string> UserIds { get => _userIds; }
+        public BaseFilterVM()
+        {
+            _userIds = new List<string>();
+            _expeditions = new List<string>();
+            _people = new List<string>();
+            _professions = new List<string>();
+        }
+
+        public List<string> UserIds { get => _userIds; set => _userIds = value; }
         public void SetUserState(string userId, bool state)
         {
             userId = userId.Trim();
@@ -45,7 +53,7 @@ namespace StateEvaluation.Common.ViewModel
             }
         }
 
-        public List<string> Expeditions { get => _expeditions; }
+        public List<string> Expeditions { get => _expeditions; set => _expeditions = value; }
         public void SetExpeditionState(string expedition, bool state)
         {
             expedition = expedition.Trim();
@@ -59,7 +67,7 @@ namespace StateEvaluation.Common.ViewModel
             }
         }
 
-        public List<string> People { get => _people; }
+        public List<string> People { get => _people; set => _people = value; }
         public void SetPeopleState(string people, bool state)
         {
             people = people.Trim();
@@ -73,7 +81,8 @@ namespace StateEvaluation.Common.ViewModel
             }
         }
 
-        public List<string> Professions { get => _professions; }
+        public List<string> Professions { get => _professions; set => _professions = value; }
+
         public void SetProfessionsState(string profession, bool state)
         {
             profession = profession.Trim();

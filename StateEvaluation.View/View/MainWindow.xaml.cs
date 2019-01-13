@@ -52,52 +52,51 @@ namespace StateEvaluation
 
             userIdListBoxes = new List<ListBox>()
             {
-                UserIdsFilterPeopleCB
+                UserIdsFilterPeopleTab,
+                UserIdsFilterPreferencesTab,
+                UserIdsFilterFeelingsTab
             };
 
             userIdComboBoxes = new List<ComboBox>()
             {
-                UserIdsFilterSubjFeelingCB,
-                UserIdsFilterPreferenceCB,
                 UserIdsInsertPreferenceCB,
                 UserIdsInsertSubjFeelCB
             };
 
             expeditionListBoxes = new List<ListBox>()
             {
-                ExpeditionFilterPeopleCB
+                ExpeditionFilterPeopleTab,
+                ExpeditionFilterPreferencesTab,
+                ExpeditionFilterFeelingsTab
             };
 
             expeditionComboBoxes = new List<ComboBox>()
             {
-                ExpeditionFromFilterSubjFeelCB,
-                ExpeditionToFilterSubjFeelCB,
-                ExpeditionFilterToPreferenceCB,
-                ExpeditionFromFilterPreferenceCB
+
             };
 
             numberOfPeopleListBoxes = new List<ListBox>()
             {
-                NumberFilterPeopleCB,
+                NumberFilterPeopleTab,
+                NumberFilterPreferencesTab,
+                NumberFilterFeelingsTab
             };
 
             numberOfPeopleComboBoxes = new List<ComboBox>()
             {
-                NumberFromFilterSubjFeelCB,
-                NumberToFilterSubjFeelCB,
-                NumberFromFilterPreferenceCB,
-                NumberToFilterPreferenceCB
+                
             };
 
             professionsListBoxes = new List<ListBox>()
             {
                 ProfessionFilterPeopleTab,
+                ProfessionFilterPreferencesTab,
+                ProfessionFilterFeelingsTab
             };
 
             professionsComboBoxes = new List<ComboBox>()
             {
-                ProfessionPreferenceTab,
-                ProfessionsSubjectiveFeelingTab
+
             };
 
             peopleFilter = (PeopleFilterVM)Resources["peopleFilterVM"];

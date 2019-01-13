@@ -88,7 +88,12 @@ namespace StateEvaluation
         /// <param name="e"></param>
         private void ClearFilterSubjFeelTab_Click(object sender, RoutedEventArgs e)
         {
-            filterBussinesManager.Clear(SubjectiveFeelingDataGrid, subjectiveFeelingFilter);
+            filterBussinesManager.Clear(SubjectiveFeelingDataGrid, subjectiveFeelingFilter, new System.Collections.Generic.List<ListBox> {
+                UserIdsFilterFeelingsTab,
+                ExpeditionFilterFeelingsTab,
+                NumberFilterFeelingsTab,
+                ProfessionFilterFeelingsTab
+            });
         }
 
         /// <summary>
@@ -99,6 +104,32 @@ namespace StateEvaluation
         private void FilterSubjectiveFeeling_Click(object sender, RoutedEventArgs e)
         {
             filterBussinesManager.Filter(SubjectiveFeelingDataGrid, subjectiveFeelingFilter);
+        }
+
+        private void UserIdsFilterFeelingsTab_Selected(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            subjectiveFeelingFilter.SetUserState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
+        }
+        private void ExpeditionFilterFeelingsTab_Selected(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            subjectiveFeelingFilter.SetExpeditionState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
+        }
+        private void NumberFilterFeelingsTab_Selected(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            subjectiveFeelingFilter.SetPeopleState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
+        }
+        private void ProfessionFilterFeelingsTab_Selected(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            subjectiveFeelingFilter.SetProfessionsState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
+        }
+
+        private void CheckBox_Selected(object sender, RoutedEventArgs e)
+        {
+            subjectiveFeelingFilter.IsFeeling = true;
         }
     }
 }

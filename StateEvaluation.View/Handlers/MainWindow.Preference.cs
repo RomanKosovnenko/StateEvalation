@@ -84,7 +84,13 @@ namespace StateEvaluation
         /// <param name="e"></param>
         private void ClearFilterPreferenceTab_Click(object sender, RoutedEventArgs e)
         {
-            filterBussinesManager.Clear(PreferencesDataGrid, preferenceFilter);
+            filterBussinesManager.Clear(PreferencesDataGrid, preferenceFilter, new System.Collections.Generic.List<ListBox> {
+                UserIdsFilterPreferencesTab,
+                ExpeditionFilterPreferencesTab,
+                NumberFilterPreferencesTab,
+                ProfessionFilterPreferencesTab,
+                PreferenceFilterPreferenceTab
+            });
         }
 
         /// <summary>
@@ -135,6 +141,33 @@ namespace StateEvaluation
             {
                 throw new System.Exception();
             }
+        }
+
+
+        private void UserIdsFilterPreferencesTab_Selected(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            preferenceFilter.SetUserState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
+        }
+        private void ExpeditionFilterPreferencesTab_Selected(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            preferenceFilter.SetExpeditionState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
+        }
+        private void NumberFilterPreferencesTab_Selected(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            preferenceFilter.SetPeopleState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
+        }
+        private void ProfessionFilterPreferencesTab_Selected(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            preferenceFilter.SetProfessionsState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
+        }
+        private void PreferenceFilterPreferencesTab_Selected(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = sender as CheckBox;
+            preferenceFilter.SetPreferenceState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
         }
     }
 }

@@ -36,18 +36,20 @@ namespace StateEvaluation.BussinesLayer.Providers
 
             return new string[0];
         }
-
+        public void Clear(object filter, List<System.Windows.Controls.ListBox> listBoxes)
+        {
+            foreach (System.Windows.Controls.ListBox listBox in listBoxes)
+            {
+                listBox.UnselectAll();
+            }
+            Clear(filter);
+        }
         public void Clear(object filter)
         {
             if (filter != null)
             {
                 foreach (var i in filter.GetType().GetProperties())
                 {
-                    if (i.Name.Contains("UserId") || i.Name.Contains("Expedition") || i.Name.Contains("Preference") || i.Name.Contains("People") || i.Name.Contains("Profession"))
-                    {
-                        i.SetValue(filter, FilterConstants.All);
-                        continue;
-                    }
                     if (i.Name.Contains("Date"))
                     {
                         i.SetValue(filter, null);
@@ -63,7 +65,7 @@ namespace StateEvaluation.BussinesLayer.Providers
                         i.SetValue(filter, false);
                         continue;
                     }
-                    i.SetValue(filter, string.Empty);
+                    // i.SetValue(filter, string.Empty);
                 }
             }
         }
@@ -161,7 +163,7 @@ namespace StateEvaluation.BussinesLayer.Providers
                     preferenceFilter.Color6in12Filter, preferenceFilter.Color7in12Filter, preferenceFilter.Color8in12Filter,
                     preferenceFilter.Color9in12Filter, preferenceFilter.Color10in12Filter, preferenceFilter.Color11in12Filter,
                     preferenceFilter.Color12in12Filter) &&
-                (preferenceFilter.PreferenceFilter == FilterConstants.All || _.Preference1.Trim() == preferenceFilter.PreferenceFilter) &&
+                (preferenceFilter.PreferenceFilter.Count() == 0 || preferenceFilter.PreferenceFilter.Contains(_.Preference1.Trim())) &&
                 allowedUserIds.Contains(_.UserId.Trim());
         }
 
@@ -170,15 +172,16 @@ namespace StateEvaluation.BussinesLayer.Providers
             var subjectiveFeelingFilter = (SubjectiveFeelingFilterVM)filter;
             return (SubjectiveFeeling _) =>
                 (dateFrom.Ticks == 0 || _.Date.Ticks >= dateFrom.Ticks) &&
-                (dateTo.Ticks == 0 || _.Date.Ticks <= dateTo.Ticks) && 
+                (dateTo.Ticks == 0 || _.Date.Ticks <= dateTo.Ticks) &&
                 allowedUserIds.Contains(_.UserId.Trim()) &&
-                (!subjectiveFeelingFilter.IsFeeling ? true : 
-                    ((subjectiveFeelingFilter.GeneralWeakness ? _.GeneralWeaknes == subjectiveFeelingFilter.GeneralWeakness : true) &&
-                    (subjectiveFeelingFilter.PoorAppetite ? _.PoorAppetite == subjectiveFeelingFilter.PoorAppetite : true) &&
-                    (subjectiveFeelingFilter.PoorSleep ? _.PoorSleep == subjectiveFeelingFilter.PoorSleep : true) &&
-                    (subjectiveFeelingFilter.BadMood ? _.BadMood == subjectiveFeelingFilter.BadMood : true) &&
-                    (subjectiveFeelingFilter.HeavyHead ? _.HeavyHead == subjectiveFeelingFilter.HeavyHead : true) &&
-                    (subjectiveFeelingFilter.SlowThink ? _.SlowThink == subjectiveFeelingFilter.SlowThink : true))
+                (subjectiveFeelingFilter.IsFeeling ? (
+                        (_.GeneralWeaknes == subjectiveFeelingFilter.GeneralWeakness) &&
+                        (_.PoorAppetite == subjectiveFeelingFilter.PoorAppetite) &&
+                        (_.PoorSleep == subjectiveFeelingFilter.PoorSleep) &&
+                        (_.BadMood == subjectiveFeelingFilter.BadMood) &&
+                        (_.HeavyHead == subjectiveFeelingFilter.HeavyHead) &&
+                        (_.SlowThink == subjectiveFeelingFilter.SlowThink)
+                    ) : true
                 );
         }
     }

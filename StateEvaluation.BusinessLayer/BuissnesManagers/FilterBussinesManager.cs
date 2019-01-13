@@ -1,6 +1,7 @@
 ﻿using StateEvaluation.BussinesLayer.Providers;
 using StateEvaluation.Repository.Providers;
 using System.Collections;
+using System.Collections.Generic;
 using System.Windows.Controls;
 
 namespace StateEvaluation.BussinesLayer.BuissnesManagers
@@ -21,9 +22,9 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             return filteredData;
         }
 
-        public void Clear(DataGrid dataGrid, object filter)
+        public void Clear(DataGrid dataGrid, object filter, List<ListBox> listBoxes)
         {
-            _filterProvider.Clear(filter);
+            _filterProvider.Clear(filter, listBoxes);
             var filteredData = _filterProvider.Filter(filter);
             dataGrid.ItemsSource = filteredData;
         }

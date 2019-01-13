@@ -9,7 +9,8 @@
         xmlns:repository="clr-namespace:StateEvaluation.Repository.Providers;assembly=StateEvaluation.Repository"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:viewModel="clr-namespace:StateEvaluation.Common.ViewModel;assembly=StateEvaluation.Common"
-        mc:Ignorable="d"
+        xmlns:comment="Tag to add comments"
+        mc:Ignorable="d comment"
         ContentRendered="WindowRendered_Click"
         Title="Оценка состояния" Height="768" Width="1366" WindowState="Maximized">
     <Window.Resources>
@@ -20,8 +21,8 @@
         <ObjectDataProvider x:Key="GetCodesForFilter" ObjectType="{x:Type repository:DataRepository}" MethodName="GetUserIdsFilter"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetPreferencesList" ObjectType="{x:Type repository:DataRepository}" MethodName="PreferencesFilters"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetProfessionsList" ObjectType="{x:Type repository:DataRepository}" MethodName="GetProfessionsFilter"></ObjectDataProvider>
-        
-        
+
+
         <!--here defined resourses' name for exact model-->
         <viewModel:PeopleFilterVM x:Key="peopleFilterVM" />
         <viewModel:SubjectiveFeelingVM x:Key="subjectiveFeelingVM" />
@@ -50,24 +51,25 @@
         <helpers:BooleanToNOTVisibilityConverter x:Key="BooleanToNOTVisibilityConverter" />
         <helpers:TextColorNumberToBrushConverter x:Key="TextColorNumberToBrushConverter"/>
     </Window.Resources>
+    
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="115"/>
             <RowDefinition/>
-            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <TabControl x:Name="tabControl" Height="150" VerticalAlignment="Top">
             <!--<TabItem Header="{x:Static p:Resources.AddDataHeader}">
                 <Grid Background="#FFE5E5E5"/>
             </TabItem>-->
-            <TabItem x:Name="tabItem" IsSelected="True" DataContext="{StaticResource peopleVM}" Header="Люди">
-                <Grid x:Name="PersonAddFormGrid" Background="#FFE5E5E5" Margin="0,0,0,33">
+            <TabItem x:Name="tabItem" IsSelected="True" DataContext="{StaticResource peopleVM}" Header="Люди" Margin="-2,-2,-2,0">
+                <Grid x:Name="PersonAddFormGrid" Background="#FFE5E5E5" Margin="0,0,0,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="119"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
+                    
                     <Label Content="Имя" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="10,11,0,82" HorizontalAlignment="Left" Width="193"/>
                     <Label Content="Фамилия" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="186,11,0,82" HorizontalAlignment="Left" Width="193"/>
                     <Label Content="Отчество" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="367,4,0,82" HorizontalAlignment="Left" Width="193"/>
@@ -133,447 +135,448 @@
                         <RowDefinition Height="73" />
                     </Grid.RowDefinitions>
                     <TextBlock
-                               Grid.Column="0"
-                               HorizontalAlignment="Center"
-                               Text="Код" Margin="28,7,0,48" Width="34" RenderTransformOrigin="-1.5,0.474" />
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Center"
+                                   Text="Код" Margin="28,7,0,48" Width="34" RenderTransformOrigin="-1.5,0.474" />
                     <TextBlock
-                               HorizontalAlignment="Center"
-                               Text="Дата" Margin="59,7,118,48" Width="28" RenderTransformOrigin="0.571,1.947" Grid.Column="1" />
+                                   HorizontalAlignment="Center"
+                                   Text="Дата" Margin="59,7,118,48" Width="28" RenderTransformOrigin="0.571,1.947" Grid.Column="1" />
                     <TextBlock
-                               Grid.Column="2"
-                               HorizontalAlignment="Center"
-                               Text="1" Margin="20,1,19,54" Width="6" Grid.ColumnSpan="2" />
+                                   Grid.Column="2"
+                                   HorizontalAlignment="Center"
+                                   Text="1" Margin="20,1,19,54" Width="6" Grid.ColumnSpan="2" />
                     <TextBlock
-                               Grid.Column="5"
-                               HorizontalAlignment="Center"
-                               Text="2" Margin="17,1,17,54" Width="6" />
+                                   Grid.Column="5"
+                                   HorizontalAlignment="Center"
+                                   Text="2" Margin="17,1,17,54" Width="6" />
                     <TextBlock
-                               Grid.Column="7"
-                               HorizontalAlignment="Center"
-                               Text="3" Margin="17,1,17,54" Width="6" />
+                                   Grid.Column="7"
+                                   HorizontalAlignment="Center"
+                                   Text="3" Margin="17,1,17,54" Width="6" />
                     <TextBlock
-                               Grid.Column="11"
-                               HorizontalAlignment="Center"
-                               Text="1" Margin="17,1,17,54" Width="6" />
+                                   Grid.Column="11"
+                                   HorizontalAlignment="Center"
+                                   Text="1" Margin="17,1,17,54" Width="6" />
                     <TextBlock
-                               Grid.Column="13"
-                               HorizontalAlignment="Center"
-                               Text="2" Margin="17,1,17,54" Width="6" />
+                                   Grid.Column="13"
+                                   HorizontalAlignment="Center"
+                                   Text="2" Margin="17,1,17,54" Width="6" />
                     <TextBlock
-                               Grid.Column="15"
-                               HorizontalAlignment="Center"
-                               Text="3" Margin="17,1,17,54" Width="6" />
+                                   Grid.Column="15"
+                                   HorizontalAlignment="Center"
+                                   Text="3" Margin="17,1,17,54" Width="6" />
                     <TextBlock
-                               Grid.Column="17"
-                               HorizontalAlignment="Center"
-                               Text="4" Margin="17,1,17,54" Width="6" />
+                                   Grid.Column="17"
+                                   HorizontalAlignment="Center"
+                                   Text="4" Margin="17,1,17,54" Width="6" />
                     <TextBlock
-                               Grid.Column="19"
-                               HorizontalAlignment="Center"
-                               Text="5" Margin="17,1,17,54" Width="6" />
+                                   Grid.Column="19"
+                                   HorizontalAlignment="Center"
+                                   Text="5" Margin="17,1,17,54" Width="6" />
                     <TextBlock
-                               Grid.Column="21"
-                               HorizontalAlignment="Center"
-                               Text="6" Margin="17,1,17,54" Width="6" />
+                                   Grid.Column="21"
+                                   HorizontalAlignment="Center"
+                                   Text="6" Margin="17,1,17,54" Width="6" />
                     <TextBlock
-                               Grid.Column="23"
-                               HorizontalAlignment="Center"
-                               Text="7" Margin="17,1,17,54" Width="6" />
+                                   Grid.Column="23"
+                                   HorizontalAlignment="Center"
+                                   Text="7" Margin="17,1,17,54" Width="6" />
                     <TextBlock
-                               Grid.Column="25"
-                               HorizontalAlignment="Center"
-                               Text="8" Margin="17,1,17,54" Width="6" />
+                                   Grid.Column="25"
+                                   HorizontalAlignment="Center"
+                                   Text="8" Margin="17,1,17,54" Width="6" />
                     <TextBlock
-                               Grid.Column="27"
-                               HorizontalAlignment="Center"
-                               Text="9" Margin="17,1,17,54" Width="6" />
+                                   Grid.Column="27"
+                                   HorizontalAlignment="Center"
+                                   Text="9" Margin="17,1,17,54" Width="6" />
                     <TextBlock
-                               Grid.Column="29"
-                               HorizontalAlignment="Center"
-                               Text="10" Margin="14,1,14,54" Width="12" />
+                                   Grid.Column="29"
+                                   HorizontalAlignment="Center"
+                                   Text="10" Margin="14,1,14,54" Width="12" />
                     <TextBlock
-                               Grid.Column="31"
-                               HorizontalAlignment="Center"
-                               Text="11" Margin="13,1,13,54" Width="14" />
+                                   Grid.Column="31"
+                                   HorizontalAlignment="Center"
+                                   Text="11" Margin="13,1,13,54" Width="14" />
                     <TextBlock
-                               Grid.Column="33"
-                               HorizontalAlignment="Center"
-                               Text="12" Margin="14,1,14,54" Width="12" />
+                                   Grid.Column="33"
+                                   HorizontalAlignment="Center"
+                                   Text="12" Margin="14,1,14,54" Width="12" />
                     <TextBlock
-                               Grid.Column="35"
-                               HorizontalAlignment="Center"
-                               Text="Красная" Width="45" Margin="13,1,342,54" />
+                                   Grid.Column="35"
+                                   HorizontalAlignment="Center"
+                                   Text="Красная" Width="45" Margin="13,1,342,54" />
                     <TextBlock
-                               Grid.Column="35"
-                               HorizontalAlignment="Center"
-                               Text="Желтая" Width="40" Margin="63,1,297,54" />
+                                   Grid.Column="35"
+                                   HorizontalAlignment="Center"
+                                   Text="Желтая" Width="40" Margin="63,1,297,54" />
                     <TextBlock
-                               Grid.Column="35"
-                               HorizontalAlignment="Center"
-                               Text="Синяя" Width="33" Margin="108,1,259,54" />
+                                   Grid.Column="35"
+                                   HorizontalAlignment="Center"
+                                   Text="Синяя" Width="33" Margin="108,1,259,54" />
                     <TextBlock
-                               Grid.Column="35"
-                               HorizontalAlignment="Center"
-                               Text="Смешанная" Width="64" Margin="146,1,190,54" />
+                                   Grid.Column="35"
+                                   HorizontalAlignment="Center"
+                                   Text="Смешанная" Width="64" Margin="146,1,190,54" />
                     <TextBlock
-                               Grid.Column="35"
-                               HorizontalAlignment="Center"
-                               Text="Релакс" Margin="221,1,135,54" Width="44" />
+                                   Grid.Column="35"
+                                   HorizontalAlignment="Center"
+                                   Text="Релакс" Margin="221,1,135,54" Width="44" />
 
                     <ComboBox x:Name="UserIdsInsertPreferenceCB"
-                              Grid.Column="0"
-                              Width="75"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Top"
-                              ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
-                              SelectedValue="{Binding UserId}" Height="22" Margin="5,29,0,0" Grid.ColumnSpan="2" />
+                                  Grid.Column="0"
+                                  Width="75"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Top"
+                                  ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
+                                  SelectedValue="{Binding UserId}" Height="22" Margin="5,29,0,0" Grid.ColumnSpan="2" />
                     <DatePicker x:Name="dateTimeForTest"
-                                VerticalAlignment="Top"
-                                SelectedDate="{Binding TestDate}" Height="24" HorizontalAlignment="Left" Width="100" Margin="28,29,0,0" Grid.Column="1" />
+                                    VerticalAlignment="Top"
+                                    SelectedDate="{Binding TestDate}" Height="24" HorizontalAlignment="Left" Width="100" Margin="28,29,0,0" Grid.Column="1" />
                     <TextBlock x:Name="TestID"
-                                VerticalAlignment="Top"
-                               Text="{Binding Id}"
-                                Height="24" HorizontalAlignment="Left" Width="100"
-                               Visibility="Hidden" Margin="23,46,0,0" Grid.Column="1"/>
+                                    VerticalAlignment="Top"
+                                   Text="{Binding Id}"
+                                    Height="24" HorizontalAlignment="Left" Width="100"
+                                   Visibility="Hidden" Margin="23,46,0,0" Grid.Column="1"/>
                     <!-- Bio1 - 3 -->
                     <ComboBox x:Name="selectorC1in3"
-                              Grid.Column="2"
-                              SelectedValue="{Binding Color1in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,18,0,29" Grid.ColumnSpan="2"
-                              />
+                                  Grid.Column="2"
+                                  SelectedValue="{Binding Color1in3}"
+                                  ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,18,0,29" Grid.ColumnSpan="2"
+                                  />
                     <ComboBox x:Name="selectorC2in3"
-                              Grid.Column="5"
-                              SelectedValue="{Binding Color2in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,18,0,29"
-                              />
+                                  Grid.Column="5"
+                                  SelectedValue="{Binding Color2in3}"
+                                  ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,18,0,29"
+                                  />
                     <ComboBox x:Name="selectorC3in3"
-                              Grid.Column="7"
-                              SelectedValue="{Binding Color3in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,18,0,29"
-                            />
+                                  Grid.Column="7"
+                                  SelectedValue="{Binding Color3in3}"
+                                  ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,18,0,29"
+                                />
 
                     <!-- Bio1 - 12 -->
                     <ComboBox x:Name="selectorC1in12"
-                              Grid.Column="11"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color1in12}" Margin="0,18,0,29" />
+                                  Grid.Column="11"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color1in12}" Margin="0,18,0,29" />
                     <ComboBox x:Name="selectorC2in12"
-                              Grid.Column="13"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color2in12}" Margin="0,18,0,29" />
+                                  Grid.Column="13"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color2in12}" Margin="0,18,0,29" />
                     <ComboBox x:Name="selectorC3in12"
-                              Grid.Column="15"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color3in12}" Margin="0,18,0,29" />
+                                  Grid.Column="15"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color3in12}" Margin="0,18,0,29" />
                     <ComboBox x:Name="selectorC4in12"
-                              Grid.Column="17"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color4in12}" Margin="0,18,0,29" />
+                                  Grid.Column="17"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color4in12}" Margin="0,18,0,29" />
                     <ComboBox x:Name="selectorC5in12"
-                              Grid.Column="19"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color5in12}" Margin="0,18,0,29" />
+                                  Grid.Column="19"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color5in12}" Margin="0,18,0,29" />
                     <ComboBox x:Name="selectorC6in12"
-                              Grid.Column="21"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color6in12}" Margin="0,18,0,29" />
+                                  Grid.Column="21"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color6in12}" Margin="0,18,0,29" />
                     <ComboBox x:Name="selectorC7in12"
-                              Grid.Column="23"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color7in12}" Margin="0,18,0,29" />
+                                  Grid.Column="23"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color7in12}" Margin="0,18,0,29" />
                     <ComboBox x:Name="selectorC8in12"
-                              Grid.Column="25"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color8in12}" Margin="0,18,0,29" />
+                                  Grid.Column="25"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color8in12}" Margin="0,18,0,29" />
                     <ComboBox x:Name="selectorC9in12"
-                              Grid.Column="27"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color9in12}" Margin="0,18,0,29" />
+                                  Grid.Column="27"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color9in12}" Margin="0,18,0,29" />
                     <ComboBox x:Name="selectorC10in12"
-                              Grid.Column="29"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color10in12}" Margin="0,18,0,29" />
+                                  Grid.Column="29"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color10in12}" Margin="0,18,0,29" />
                     <ComboBox x:Name="selectorC11in12"
-                              Grid.Column="31"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color11in12}" Margin="0,18,0,29" />
+                                  Grid.Column="31"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color11in12}" Margin="0,18,0,29" />
                     <ComboBox x:Name="selectorC12in12"
-                              Grid.Column="33"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color12in12}" Margin="0,18,0,29"/>
+                                  Grid.Column="33"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color12in12}" Margin="0,18,0,29"/>
                     <!-- Bio1 - Pref -->
                     <RadioButton x:Name="RedStat"
-                             Grid.Column="35"
-                             GroupName="Pref1" Margin="21,22,349,19"
-                             IsChecked="{Binding Preference1Red}"/>
+                                 Grid.Column="35"
+                                 GroupName="Pref1" Margin="21,22,349,19"
+                                 IsChecked="{Binding Preference1Red}"/>
                     <RadioButton x:Name="YellowStat"
-                             Grid.Column="35"
-                             GroupName="Pref1" Margin="69,22,301,19" 
-                             IsChecked="{Binding Preference1Yellow}"/>
+                                 Grid.Column="35"
+                                 GroupName="Pref1" Margin="69,22,301,19" 
+                                 IsChecked="{Binding Preference1Yellow}"/>
                     <RadioButton x:Name="BlueStat"
-                             Grid.Column="35"
-                             GroupName="Pref1" Margin="111,22,259,19" 
-                             IsChecked="{Binding Preference1Blue}"/>
+                                 Grid.Column="35"
+                                 GroupName="Pref1" Margin="111,22,259,19" 
+                                 IsChecked="{Binding Preference1Blue}"/>
                     <RadioButton x:Name="GrayStat"
-                             Grid.Column="35"
-                             GroupName="Pref1" Margin="164,22,206,19"
-                             IsChecked="{Binding Preference1Grey}"/>
+                                 Grid.Column="35"
+                                 GroupName="Pref1" Margin="164,22,206,19"
+                                 IsChecked="{Binding Preference1Grey}"/>
                     <!-- Bio1 - R -->
                     <ComboBox x:Name="selectorRelax1"
-                              Grid.Column="35"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding ColorRelax1}" Margin="220,18,140,29"/>
+                                  Grid.Column="35"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding ColorRelax1}" Margin="220,18,140,29"/>
 
                     <!-- Bio2 - 3 -->
                     <ComboBox x:Name="selectorC21in3"
-                              Grid.Column="2"
-                              SelectedValue="{Binding Color21in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,46,0,0" Grid.ColumnSpan="2"
-                              />
+                                  Grid.Column="2"
+                                  SelectedValue="{Binding Color21in3}"
+                                  ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,46,0,0" Grid.ColumnSpan="2"
+                                  />
                     <ComboBox x:Name="selectorC22in3"
-                              Grid.Column="5"
-                              SelectedValue="{Binding Color22in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,46,0,0"
-                              />
+                                  Grid.Column="5"
+                                  SelectedValue="{Binding Color22in3}"
+                                  ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,46,0,0"
+                                  />
                     <ComboBox x:Name="selectorC23in3"
-                              Grid.Column="7"
-                              SelectedValue="{Binding Color23in3}"
-                              ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,46,0,0"
-                            />
+                                  Grid.Column="7"
+                                  SelectedValue="{Binding Color23in3}"
+                                  ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" Margin="0,46,0,0"
+                                />
 
                     <!-- Bio2 - 12 -->
                     <ComboBox x:Name="selectorC21in12"
-                              Grid.Column="11"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color21in12}" Margin="0,46,0,0" />
+                                  Grid.Column="11"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color21in12}" Margin="0,46,0,0" />
                     <ComboBox x:Name="selectorC22in12"
-                              Grid.Column="13"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color22in12}" Margin="0,46,0,0" />
+                                  Grid.Column="13"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color22in12}" Margin="0,46,0,0" />
                     <ComboBox x:Name="selectorC23in12"
-                              Grid.Column="15"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color23in12}" Margin="0,46,0,0" />
+                                  Grid.Column="15"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color23in12}" Margin="0,46,0,0" />
                     <ComboBox x:Name="selectorC24in12"
-                              Grid.Column="17"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color24in12}" Margin="0,46,0,0" />
+                                  Grid.Column="17"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color24in12}" Margin="0,46,0,0" />
                     <ComboBox x:Name="selectorC25in12"
-                              Grid.Column="19"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color25in12}" Margin="0,46,0,0" />
+                                  Grid.Column="19"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color25in12}" Margin="0,46,0,0" />
                     <ComboBox x:Name="selectorC26in12"
-                              Grid.Column="21"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color26in12}" Margin="0,46,0,0" />
+                                  Grid.Column="21"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color26in12}" Margin="0,46,0,0" />
                     <ComboBox x:Name="selectorC27in12"
-                              Grid.Column="23"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color27in12}" Margin="0,46,0,0" />
+                                  Grid.Column="23"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color27in12}" Margin="0,46,0,0" />
                     <ComboBox x:Name="selectorC28in12"
-                              Grid.Column="25"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color28in12}" Margin="0,46,0,0" />
+                                  Grid.Column="25"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color28in12}" Margin="0,46,0,0" />
                     <ComboBox x:Name="selectorC29in12"
-                              Grid.Column="27"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color29in12}" Margin="0,46,0,0" />
+                                  Grid.Column="27"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color29in12}" Margin="0,46,0,0" />
                     <ComboBox x:Name="selectorC210in12"
-                              Grid.Column="29"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color210in12}" Margin="0,46,0,0" />
+                                  Grid.Column="29"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color210in12}" Margin="0,46,0,0" />
                     <ComboBox x:Name="selectorC211in12"
-                              Grid.Column="31"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color211in12}" Margin="0,46,0,0" />
+                                  Grid.Column="31"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color211in12}" Margin="0,46,0,0" />
                     <ComboBox x:Name="selectorC212in12"
-                              Grid.Column="33"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding Color212in12}" Margin="0,46,0,0" />
+                                  Grid.Column="33"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding Color212in12}" Margin="0,46,0,0" />
                     <!-- Bio2 - Pref -->
                     <RadioButton x:Name="Red2Stat"
-                             Grid.Column="35"
-                             GroupName="Pref2" Margin="21,50,349,-4"
-                             IsChecked="{Binding Preference2Red}"/>
+                                 Grid.Column="35"
+                                 GroupName="Pref2" Margin="21,50,349,-4"
+                                 IsChecked="{Binding Preference2Red}"/>
                     <RadioButton x:Name="Yellow2Stat"
-                             Grid.Column="35"
-                             GroupName="Pref2" Margin="69,50,301,-4"
-                             IsChecked="{Binding Preference2Yellow}"/>
+                                 Grid.Column="35"
+                                 GroupName="Pref2" Margin="69,50,301,-4"
+                                 IsChecked="{Binding Preference2Yellow}"/>
                     <RadioButton x:Name="Blue2Stat"
-                             Grid.Column="35"
-                             GroupName="Pref2" Margin="111,50,259,-4" 
-                             IsChecked="{Binding Preference2Blue}"/>
+                                 Grid.Column="35"
+                                 GroupName="Pref2" Margin="111,50,259,-4" 
+                                 IsChecked="{Binding Preference2Blue}"/>
                     <RadioButton x:Name="Gray2Stat"
-                             Grid.Column="35"
-                             GroupName="Pref2" Margin="164,50,206,-4"
-                             IsChecked="{Binding Preference2Grey}"/>
+                                 Grid.Column="35"
+                                 GroupName="Pref2" Margin="164,50,206,-4"
+                                 IsChecked="{Binding Preference2Grey}"/>
                     <!-- Bio2 - R -->
                     <ComboBox x:Name="selectorRelax2"
-                              Grid.Column="35"
-                              ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
-                              SelectedValue="{Binding ColorRelax2}" Margin="220,46,140,0"/>
+                                  Grid.Column="35"
+                                  ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}"
+                                  SelectedValue="{Binding ColorRelax2}" Margin="220,46,140,0"/>
                     <!-- End -->
                     <Button
-                            Grid.Column="35"
-                            Margin="0,1,291,22"
-                            Visibility="Hidden"
-                            Command="{Binding ChangeColors}"
-                            Content="Сменить раскраску" />
+                                Grid.Column="35"
+                                Margin="0,1,291,22"
+                                Visibility="Hidden"
+                                Command="{Binding ChangeColors}"
+                                Content="Сменить раскраску" />
 
                     <Button
-                            Grid.Column="35"
-                            Margin="281,9,10,42"
-                            Click="CreatePreferense_Click"
-                            Content="Добавить запись" />
+                                Grid.Column="35"
+                                Margin="281,9,10,42"
+                                Click="CreatePreferense_Click"
+                                Content="Добавить запись" />
 
                     <Button
-                            Grid.Column="35"
-                            Margin="281,34,10,16"
-                            Click="ClearPreferenceInputs_Click"
-                            Content="Сброс выбора"  />
+                                Grid.Column="35"
+                                Margin="281,34,10,16"
+                                Click="ClearPreferenceInputs_Click"
+                                Content="Сброс выбора"  />
                     <TextBlock
-                        HorizontalAlignment="Center"
-                        Text="Биоколор 1" Margin="137,24,42,30" Width="71" Grid.Column="1" Grid.ColumnSpan="3" />
+                            HorizontalAlignment="Center"
+                            Text="Биоколор 1" Margin="137,24,42,30" Width="71" Grid.Column="1" Grid.ColumnSpan="3" />
                     <TextBlock
-                        HorizontalAlignment="Center"
-                        Margin="137,50,2,-7" Width="66" Text="Биоколор 2" Grid.Column="1" />
+                            HorizontalAlignment="Center"
+                            Margin="137,50,2,-7" Width="66" Text="Биоколор 2" Grid.Column="1" />
                     <Button x:Name="UpdatePrefernceBtn"
-                        Grid.Column="35"
-                        Margin="281,60,10,-8"
-                        Click="UpdatePreference_Click"
-                        Content="Применить"
-                        Visibility="Hidden"/>
+                            Grid.Column="35"
+                            Margin="281,60,10,-8"
+                            Click="UpdatePreference_Click"
+                            Content="Применить"
+                            Visibility="Hidden"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabItem2" DataContext="{StaticResource subjectiveFeelingVM}" Header="Субъективные ощущения">
-                <Grid x:Name="DataFridSubjectiveFeelings" Background="#FFE5E5E5" Margin="0,0,0,31">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1352" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="122" />
-                    </Grid.RowDefinitions>
-                    <Button
-                            Margin="932,37,311,61"
-                            Click="CreateSubjectiveFeeling_Click"
-                            Content="Добавить запись" />
-                    <Button
-                        x:Name="UpdateSubjectiveFeelingBtn"
-                            Margin="1161,37,81,61"
-                            Click="UpdateSubjectiveFeeling_Click"
-                            Content="Применить" 
-                        Visibility="Hidden"/>
+            <Grid x:Name="DataFridSubjectiveFeelings" Background="#FFE5E5E5" Margin="0,0,0,31">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1352" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="122" />
+                </Grid.RowDefinitions>
+                <Button
+                                Margin="932,37,311,61"
+                                Click="CreateSubjectiveFeeling_Click"
+                                Content="Добавить запись" />
+                <Button
+                            x:Name="UpdateSubjectiveFeelingBtn"
+                                Margin="1161,37,81,61"
+                                Click="UpdateSubjectiveFeeling_Click"
+                                Content="Применить" 
+                            Visibility="Hidden"/>
 
-                    <TextBlock Grid.Row="0"
-                               Grid.Column="0"
-                               HorizontalAlignment="Center"
-                               Text="Код" Margin="66,17,1266,88" />
-                    <TextBlock
-                               HorizontalAlignment="Center"
-                               Text="Дата" Margin="177,14,1149,83" />
-                    <TextBlock
-                               HorizontalAlignment="Center"
-                               Text="Общая слабость" Margin="279,14,983,83" />
-                    <TextBlock
-                               HorizontalAlignment="Center"
-                               Text="Плохой аппетит" Margin="379,14,885,83" />
-                    <TextBlock
-                               HorizontalAlignment="Center"
-                               Text="Плохой сон" Margin="477,14,810,83" />
-                    <TextBlock
-                               HorizontalAlignment="Center"
-                               Text="Плохое настроение" Margin="551,14,692,83" />
-                    <TextBlock
-                               HorizontalAlignment="Center"
-                               Text="Тяжесть в голове" Margin="669,14,588,83" />
-                    <TextBlock
-                               HorizontalAlignment="Center"
-                               Text="Замедленное мышление" Margin="774,14,441,83" />
+                <TextBlock Grid.Row="0"
+                                   Grid.Column="0"
+                                   HorizontalAlignment="Center"
+                                   Text="Код" Margin="66,17,1266,88" />
+                <TextBlock
+                                   HorizontalAlignment="Center"
+                                   Text="Дата" Margin="177,14,1149,83" />
+                <TextBlock
+                                   HorizontalAlignment="Center"
+                                   Text="Общая слабость" Margin="279,14,983,83" />
+                <TextBlock
+                                   HorizontalAlignment="Center"
+                                   Text="Плохой аппетит" Margin="379,14,885,83" />
+                <TextBlock
+                                   HorizontalAlignment="Center"
+                                   Text="Плохой сон" Margin="477,14,810,83" />
+                <TextBlock
+                                   HorizontalAlignment="Center"
+                                   Text="Плохое настроение" Margin="551,14,692,83" />
+                <TextBlock
+                                   HorizontalAlignment="Center"
+                                   Text="Тяжесть в голове" Margin="669,14,588,83" />
+                <TextBlock
+                                   HorizontalAlignment="Center"
+                                   Text="Замедленное мышление" Margin="774,14,441,83" />
 
-                    <ComboBox x:Name="UserIdsInsertSubjFeelCB"
-                              Grid.Column="0"
-                              Width="80"
-                              HorizontalAlignment="Left"
-                              VerticalAlignment="Top"
-                              ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
-                              SelectedValue="{Binding UserId}" Margin="36,39,0,0"/>
+                <ComboBox x:Name="UserIdsInsertSubjFeelCB"
+                                  Grid.Column="0"
+                                  Width="80"
+                                  HorizontalAlignment="Left"
+                                  VerticalAlignment="Top"
+                                  ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}"
+                                  SelectedValue="{Binding UserId}" Margin="36,39,0,0"/>
 
 
-                    <DatePicker
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                x:Name="selectedDateInSubjectiveFeeling"
-                                SelectedDate="{Binding Date}" Margin="145,37,0,0" />
-                    <CheckBox
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              x:Name="markGeneralWeakness"
-                              IsChecked="{Binding GeneralWeaknes}" Margin="316,44,1020,63" />
-                    <CheckBox
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              x:Name="markBadAppetite"
-                              IsChecked="{Binding PoorAppetite}" Margin="415,44,921,63" />
-                    <CheckBox
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              x:Name="markBadDream"
-                              IsChecked="{Binding PoorSleep}" Margin="501,44,835,63" />
-                    <CheckBox
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              x:Name="markBadMood"
-                              IsChecked="{Binding BadMood}" Margin="597,44,739,63" />
-                    <CheckBox
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              x:Name="markHeavyHead"
-                              IsChecked="{Binding HeavyHead}" Margin="709,44,627,63" />
-                    <CheckBox
-                              HorizontalAlignment="Center"
-                              VerticalAlignment="Center"
-                              x:Name="markSlowThink"
-                              IsChecked="{Binding SlowThink}" Margin="834,44,502,63" />
+                <DatePicker
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    x:Name="selectedDateInSubjectiveFeeling"
+                                    SelectedDate="{Binding Date}" Margin="145,37,0,0" />
+                <CheckBox
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  x:Name="markGeneralWeakness"
+                                  IsChecked="{Binding GeneralWeaknes}" Margin="316,44,1020,63" />
+                <CheckBox
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  x:Name="markBadAppetite"
+                                  IsChecked="{Binding PoorAppetite}" Margin="415,44,921,63" />
+                <CheckBox
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  x:Name="markBadDream"
+                                  IsChecked="{Binding PoorSleep}" Margin="501,44,835,63" />
+                <CheckBox
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  x:Name="markBadMood"
+                                  IsChecked="{Binding BadMood}" Margin="597,44,739,63" />
+                <CheckBox
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  x:Name="markHeavyHead"
+                                  IsChecked="{Binding HeavyHead}" Margin="709,44,627,63" />
+                <CheckBox
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  x:Name="markSlowThink"
+                                  IsChecked="{Binding SlowThink}" Margin="834,44,502,63" />
 
-                    <TextBox Text="{Binding Id}"
-                             HorizontalAlignment="Center"
-                             VerticalAlignment="Center"
-                             Visibility="Hidden" Margin="837,57,505,47"/>
-                    <Button
-                        Margin="1046,37,196,61"
-                        Content="Сброс" 
-                        Visibility="Visible"
-                        Click="ClearSubjectiveFeelingInputs_Click"/>
-                </Grid>
-            </TabItem>
-
+                <TextBox Text="{Binding Id}"
+                                 HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Visibility="Hidden" Margin="837,57,505,47"/>
+                <Button
+                            Margin="1046,37,196,61"
+                            Content="Сброс" 
+                            Visibility="Visible"
+                            Click="ClearSubjectiveFeelingInputs_Click"/>
+            </Grid>
+        </TabItem>
             <TabItem x:Name="tabItem3" Header="Биоколор">
-                <Grid Background="#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0*"/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <Label  Height="25" VerticalAlignment="Top" Width="150" HorizontalAlignment="Left" Margin="26,10,0,0" Grid.ColumnSpan="2" Content="Дата рождения"/>
-                    <DatePicker Height="25" Width="111" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,34,0,0" Name="Date"     VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.ColumnSpan="2"/>
-                    <Label   Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="161,10,0,0" Grid.ColumnSpan="2" Content="Дата расчета"/>
+            <Grid Background="#FFE5E5E5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0*"/>
+                    <ColumnDefinition Width="7*"/>
+                    <ColumnDefinition Width="331*"/>
+                </Grid.ColumnDefinitions>
+                <Label  Height="25" VerticalAlignment="Top" Width="150" HorizontalAlignment="Left" Margin="26,10,0,0" Grid.ColumnSpan="3" Content="Дата рождения"/>
+                <DatePicker Height="25" Width="111" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="26,34,0,0" Name="Date"     VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Grid.ColumnSpan="3"/>
+                <Label   Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="133,10,0,0" Content="Дата расчета" Grid.Column="2"/>
 
-                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Prew_Click" Margin="569,34,0,0" Grid.ColumnSpan="2" Content="Назад" />
-                    <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Next_Click" Margin="658,34,0,0" Grid.ColumnSpan="2" Content="Вперед" />
+                <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Prew_Click" Margin="541,34,0,0" Content="Назад" Grid.Column="2" />
+                <Button   Height="25" Width="75" VerticalAlignment="Top" HorizontalAlignment="Left" Click = "Next_Click" Margin="630,34,0,0" Content="Вперед" Grid.Column="2" />
 
-                    <DatePicker Height="25" Width="102" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="161,34,0,0" Name="DateNow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}" Grid.ColumnSpan="2"/>
-                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="379,34,0,0" Click="DrawGraphs_Click" Grid.ColumnSpan="2">Построить графики</Button>
-                    <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="1026,26,0,0" Click="Generate_Click" Grid.ColumnSpan="2" Visibility="Hidden">Создать изображение</Button>
-                </Grid>
-            </TabItem>
+                <DatePicker Height="25" Width="102" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="133,34,0,0" Name="DateNow" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" SelectedDate="{x:Static sys:DateTime.Now}" Grid.Column="2"/>
+                <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="351,34,0,0" Click="DrawGraphs_Click" Grid.Column="2">Построить графики</Button>
+                <Button  Height="25" Width="150" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="998,26,0,0" Click="Generate_Click" Visibility="Hidden" Grid.Column="2">Создать изображение</Button>
+            </Grid>
+        </TabItem>
             <TabItem x:Name="ColorSettingsTab" Header="Цвета"/>
         </TabControl>
+        
         <Grid Margin="0" Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition MaxWidth="250" Width="250"/>
             </Grid.ColumnDefinitions>
 
-            <DataGrid x:Name="PeopleDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetPeople}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0,-35,0,-31">
+            <DataGrid x:Name="PeopleDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetPeople}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
                     <DataGridTextColumn Width="auto" Header="Код" Binding="{Binding UserId}"  ClipboardContentBinding="{x:Null}"/>
@@ -601,7 +604,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid x:Name="PreferencesDataGrid" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0,-35,0,-31" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
+            <DataGrid x:Name="PreferencesDataGrid" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="График" Width="auto" ClipboardContentBinding="{x:Null}">
                         <DataGridTemplateColumn.CellTemplate>
@@ -937,7 +940,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <DataGrid x:Name="SubjectiveFeelingDataGrid" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetFeelings}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Margin="0,-35,0,-31" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
+            <DataGrid x:Name="SubjectiveFeelingDataGrid" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetFeelings}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden" />
                     <DataGridTextColumn Header="Код" Binding="{Binding UserId}" ClipboardContentBinding="{x:Null}"/>
@@ -965,7 +968,7 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <Grid x:Name="BioColorGrid" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem3}" Margin="0,-35,0,-31" Grid.ColumnSpan="2" Panel.ZIndex="1">
+            <Grid x:Name="BioColorGrid" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem3}" Grid.ColumnSpan="2" >
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
@@ -1288,467 +1291,357 @@
                 <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="717,326,0,0" Click="SaveColors_Click" Content="Сохранить"/>
 
             </Grid>
-            <Grid Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto"  
-                                DataContext="{StaticResource peopleFilterVM}"
-                                Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}">
+
+            
+            <Grid Grid.Column="1" comment:Tab="People"
+                  DataContext="{StaticResource peopleFilterVM}"
+                  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}">
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="599"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Content="Фильтры" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightGray" Margin="0,-35,0,12"/>
-                <Grid Grid.Row="1" Margin="5,10,5,525" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
+                <Label Grid.Row="0" Content="Фильтры" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightGray"/>
 
-                    <Label Content="Дата рождения" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0,-6,0,6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,0"/>
-                    <Label Content="Начало" Margin="0,5,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
-                    <Label Content="Конец" Margin="0,5,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Padding="0" Grid.RowSpan="2"/>
-
-                    <DatePicker Grid.Row="1"
-                                x:Name="DateFromPeopleTab"
-                                SelectedDate="{Binding DateFrom}"
-                                Margin="0,10,5,7" Padding="5,2,2,2" Grid.RowSpan="2" />
-                    <DatePicker Grid.Row="1"
-                                x:Name="DateToPeopleTab"
-                                Grid.Column="1"
-                                SelectedDate="{Binding DateTo}"
-                                 Margin="5,0,0,7" VerticalAlignment="Bottom" Padding="2" Grid.RowSpan="2"/>
-                </Grid>
-                <Grid Grid.Row="1" Grid.ColumnSpan="2" Margin="5,70,5,110">
-                    <ScrollViewer>
-                        <StackPanel Margin="5">
-                            <Expander Header="Код человека">
-                                <ListBox 
-                                    x:Name="UserIdsFilterPeopleCB" 
+                <ScrollViewer Grid.Row="1">
+                    <StackPanel>
+                        <Expander Header="Код человека" Padding="5,2">
+                            <ListBox 
+                                    Margin="-5,0"
+                                    x:Name="UserIdsFilterPeopleTab" 
                                     ItemsSource="{Binding Source={StaticResource GetCodesForFilter}}" 
                                     SelectionMode="Multiple">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <CheckBox 
-                                                Checked="UserIdsFilterPeopleCB_Selected" 
-                                                Unchecked="UserIdsFilterPeopleCB_Selected" 
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
+                                                Checked="UserIdsFilterPeopleTab_Selected" 
+                                                Unchecked="UserIdsFilterPeopleTab_Selected" 
                                                 Content="{Binding}" 
                                                 IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"/>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </Expander>
-                            <Expander Header="Экспедиция">
-                                <ListBox 
-                                    x:Name="ExpeditionFilterPeopleCB" 
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                        <Expander Header="Дата рождения" Padding="5,2">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Дата рождения" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                <Label Grid.Row="1" Grid.Column="0" Content="Начало" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                <Label Grid.Row="1" Grid.Column="1" Content="Конец"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                                <DatePicker Grid.Row="2" Grid.Column="0" Margin="2,0" SelectedDate="{Binding DateFrom}" />
+                                <DatePicker Grid.Row="2" Grid.Column="1" Margin="2,0" SelectedDate="{Binding DateTo}"   />
+                            </Grid>
+                        </Expander>
+                        <Expander Header="Экспедиция" Padding="5,2">
+                            <ListBox 
+                                    Margin="-5,0"
+                                    x:Name="ExpeditionFilterPeopleTab" 
                                     ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}" 
                                     SelectionMode="Multiple">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <CheckBox 
-                                                Checked="ExpeditionFilterPeopleCB_Selected" 
-                                                Unchecked="ExpeditionFilterPeopleCB_Selected" 
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
+                                                Checked="ExpeditionFilterPeopleTab_Selected" 
+                                                Unchecked="ExpeditionFilterPeopleTab_Selected" 
                                                 Content="{Binding}" 
                                                 IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </Expander>
-                            <Expander Header="Номер человека">
-                                <ListBox 
-                                    x:Name="NumberFilterPeopleCB" 
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                        <Expander Header="Номер человека" Padding="5,2">
+                            <ListBox 
+                                    Margin="-5,0"
+                                    x:Name="NumberFilterPeopleTab" 
                                     ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
                                     SelectionMode="Multiple">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <CheckBox 
-                                                Checked="NumberFilterPeopleCB_Selected" 
-                                                Unchecked="NumberFilterPeopleCB_Selected" 
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
+                                                Checked="NumberFilterPeopleTab_Selected" 
+                                                Unchecked="NumberFilterPeopleTab_Selected" 
                                                 Content="{Binding}" 
                                                 IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </Expander>
-                            <Expander Header="Профессия">
-                                <ListBox 
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                        <Expander Header="Профессия" Padding="5,2">
+                            <ListBox 
+                                    Margin="-5,0"
                                     x:Name="ProfessionFilterPeopleTab" 
                                     ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" 
                                     SelectionMode="Multiple">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <CheckBox 
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
                                                 Checked="ProfessionFilterPeopleTab_Selected" 
                                                 Unchecked="ProfessionFilterPeopleTab_Selected" 
                                                 Content="{Binding}" 
                                                 IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                </ListBox>
-                            </Expander>
-                        </StackPanel>
-                    </ScrollViewer>
-                </Grid>
-                <Grid Grid.Row="1" Margin="5,0,5,80"   Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem}" Height="25" VerticalAlignment="Bottom">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                    </StackPanel>
+                </ScrollViewer>
 
+                <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0*" />
                         <ColumnDefinition/>
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Row="0"
-                                Grid.Column="0"
-                                Margin="2"
-                                Click="ClearFilterPeopleTab_Click"
-                                Content="Сбосить фильтр" Padding="0" Grid.ColumnSpan="2" />
-                    <Button Grid.Row="0"
-                        Grid.Column="2"
-                        Margin="2"
-                        Click="FilterPeople_Click"
-                        Content="Применить фильтр" Padding="0" />
+                    <Button Grid.Column="0" Margin="2" Click="ClearFilterPeopleTab_Click" Content="Сбосить фильтр"  />
+                    <Button Grid.Column="1" Margin="2" Click="FilterPeople_Click"         Content="Применить фильтр"/>
                 </Grid>
             </Grid>
-            <Grid Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                                DataContext="{StaticResource preferenceFilterVM}"
-                                Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
+
+            <Grid Grid.Column="1" comment:Tab="Preferences" 
+                  DataContext="{StaticResource preferenceFilterVM}"
+                  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto" MinHeight="91"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Фильтры" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightGray" Margin="0,-35,0,12"/>
+                <Label Grid.Row="0" Content="Фильтры" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightGray" />
 
-                <Grid Grid.Row="1" Margin="5,5,5,67" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
+                <ScrollViewer Grid.Row="1" comment:Group="Filters">
+                    <StackPanel>
+                        <Expander Header="Код человека" Padding="5,2">
+                            <ListBox 
+                                    Margin="-5,0"
+                                    x:Name="UserIdsFilterPreferencesTab" 
+                                    ItemsSource="{Binding Source={StaticResource GetCodesForFilter}}" 
+                                    SelectionMode="Multiple">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
+                                                Checked="UserIdsFilterPreferencesTab_Selected" 
+                                                Unchecked="UserIdsFilterPreferencesTab_Selected" 
+                                                Content="{Binding}" 
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                        <Expander Header="Дата рождения" Padding="5,2">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Дата рождения" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                <Label Grid.Row="1" Grid.Column="0" Content="Начало" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                <Label Grid.Row="1" Grid.Column="1" Content="Конец"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                                <DatePicker Grid.Row="2" Grid.Column="0" Margin="2,0" SelectedDate="{Binding DateFrom}" />
+                                <DatePicker Grid.Row="2" Grid.Column="1" Margin="2,0" SelectedDate="{Binding DateTo}"   />
+                            </Grid>
+                        </Expander>
+                        <Expander Header="Экспедиция" Padding="5,2">
+                            <ListBox 
+                                    Margin="-5,0"
+                                    x:Name="ExpeditionFilterPreferencesTab" 
+                                    ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}" 
+                                    SelectionMode="Multiple">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
+                                                Checked="ExpeditionFilterPreferencesTab_Selected" 
+                                                Unchecked="ExpeditionFilterPreferencesTab_Selected" 
+                                                Content="{Binding}" 
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                        <Expander Header="Номер человека" Padding="5,2">
+                            <ListBox 
+                                    Margin="-5,0"
+                                    x:Name="NumberFilterPreferencesTab" 
+                                    ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
+                                    SelectionMode="Multiple">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
+                                                Checked="NumberFilterPreferencesTab_Selected" 
+                                                Unchecked="NumberFilterPreferencesTab_Selected" 
+                                                Content="{Binding}" 
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                        <Expander Header="Профессия" Padding="5,2">
+                            <ListBox 
+                                    Margin="-5,0"
+                                    x:Name="ProfessionFilterPreferencesTab" 
+                                    ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" 
+                                    SelectionMode="Multiple">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
+                                                Checked="ProfessionFilterPreferencesTab_Selected" 
+                                                Unchecked="ProfessionFilterPreferencesTab_Selected" 
+                                                Content="{Binding}" 
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                        <Expander Header="Преференция" Padding="5,2">
+                            <ListBox 
+                                    Margin="-5,0"
+                                    x:Name="PreferenceFilterPreferenceTab" 
+                                    ItemsSource="{Binding Source={StaticResource GetPreferencesList}}" 
+                                    SelectionMode="Multiple">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
+                                                Checked="PreferenceFilterPreferencesTab_Selected" 
+                                                Unchecked="PreferenceFilterPreferencesTab_Selected" 
+                                                Content="{Binding}" 
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                        <Expander Header="Расположение карточек" Padding="5,2">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="22"   />
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Column="0" HorizontalAlignment="Center" Text="1" />
+                                    <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="2" />
+                                    <TextBlock Grid.Column="2" HorizontalAlignment="Center" Text="3" />
+                                    <TextBox Grid.Row="1" Grid.Column="0" Margin="15,0" Text="{Binding Color1in3Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="1" Margin="15,0" Text="{Binding Color1in3Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="2" Margin="15,0" Text="{Binding Color1in3Filter}" />
+                                </Grid>
+
+                                <Grid Margin="5">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="auto" />
+                                        <RowDefinition Height="auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center" Text="1"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" Text="2"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" Text="3"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" Text="4"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" Text="5"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Center" Text="6"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="6"  HorizontalAlignment="Center" Text="7"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="7"  HorizontalAlignment="Center" Text="8"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="8"  HorizontalAlignment="Center" Text="9"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="9"  HorizontalAlignment="Center" Text="10" />
+                                    <TextBlock Grid.Row="0" Grid.Column="10" HorizontalAlignment="Center" Text="11" />
+                                    <TextBlock Grid.Row="0" Grid.Column="11" HorizontalAlignment="Center" Text="12" />
+
+
+                                    <TextBox Grid.Row="1" Grid.Column="0"  Text="{Binding Color1in12Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="1"  Text="{Binding Color2in12Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="2"  Text="{Binding Color3in12Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="3"  Text="{Binding Color4in12Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="4"  Text="{Binding Color5in12Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="5"  Text="{Binding Color6in12Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="6"  Text="{Binding Color7in12Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="7"  Text="{Binding Color8in12Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="8"  Text="{Binding Color9in12Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="9"  Text="{Binding Color10in12Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="10" Text="{Binding Color11in12Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="11" Text="{Binding Color12in12Filter}" />
+
+                                </Grid>
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
+                </ScrollViewer>
+                <Grid Grid.Row="2" comment:Group="Biocolors">
+
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Label Content="Код" 
-                        FontWeight="Bold" Margin="0,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <ComboBox
-                        x:Name="UserIdsFilterPreferenceCB"
-                        Grid.Column="1"
-                        SelectedItem="{Binding UserId}"
-                        ItemsSource="{Binding Source={StaticResource GetCodesForFilter}}"
-                        SelectedIndex="0" Margin="5"/>
-                </Grid>
-                <Grid Grid.Row="1" Margin="5,47,5,5" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-
-                    <Label Content="Дата" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0,-6,0,6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,0"/>
-                    <Label Content="Начало" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
-                    <Label Content="Конец" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Padding="0" Grid.RowSpan="2"/>
-
-                    <DatePicker Grid.Row="1"
-                                SelectedDate="{Binding DateFrom}"
-                                Margin="0,5,5,7" Padding="5,2,2,2" Grid.RowSpan="2" />
-                    <DatePicker Grid.Row="1"
-                                Grid.Column="1"
-                                SelectedDate="{Binding DateTo}"
-                                Margin="5,0,0,7" VerticalAlignment="Bottom" Padding="2" Grid.RowSpan="2"/>
-                    <Grid Grid.ColumnSpan="2" Margin="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="2" Margin="5,0,5,10" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock
-                                   HorizontalAlignment="Center"
-                                   Padding="0"
-                                   Text="Экспедиция" Grid.ColumnSpan="2"
-                                   FontWeight="Bold" Margin="84,-10,84,10"
-                        />
-                    <Label Content="Начало" Margin="0,0,0,16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
-                    <Label Content="Конец" Margin="0,0,0,16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Column="1" Grid.RowSpan="2"/>
-                    <ComboBox Grid.Row="1"
-                              x:Name="ExpeditionFromFilterPreferenceCB"
-                              SelectedItem="{Binding ExpeditionFrom}"
-                                  ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
-                                  SelectedIndex="0"
-                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,6,2,0" />
-                    <ComboBox Grid.Row="1"
-                              x:Name="ExpeditionFilterToPreferenceCB"
-                                  Grid.Column="1"
-                              SelectedItem="{Binding ExpeditionTo}"
-                                  ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
-                                  SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,6,0,0" />
-                    <TextBlock Grid.Row="2"
-                                   HorizontalAlignment="Center"
-                                   Padding="0"
-                                   Text="Номер" Grid.ColumnSpan="2" 
-                                    FontWeight="Bold" Margin="100,5,100,14"/>
-                    <Label Content="Начало" Margin="0,19,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="2"/>
-                    <Label Content="Конец" Margin="0,18,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="1"/>
-                    <ComboBox Grid.Row="2"
-                              x:Name="NumberFromFilterPreferenceCB"
-                             SelectedIndex="0"
-                              SelectedItem="{Binding PeopleFrom}"
-                              ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
-                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,35,2,23" />
-                    <ComboBox Grid.Row="2"
-                              x:Name="NumberToFilterPreferenceCB"
-                              SelectedItem="{Binding PeopleTo}"    
-                              Grid.Column="1"
-                                  ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}"
-                                  SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,35,0,23" />
-                    <Label Content="Профессия" FontWeight="Bold" Margin="18,68,15,-11" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,0" Grid.Row="2" Grid.RowSpan="4"
-                           />
-                    <ComboBox Grid.Row="2"
-                              SelectedItem="{Binding Profession}"
-                        ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" 
-                        SelectedIndex="0" HorizontalContentAlignment="Center" Margin="2,0,2,-11" Grid.RowSpan="4" Grid.Column="1" Height="24" VerticalAlignment="Bottom" />
-                </Grid>
-                <Grid Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}" Grid.Row="4" Margin="5" UseLayoutRounding="False">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-
-                    <TextBlock
-                                   Grid.Column="0"
-                                   HorizontalAlignment="Center"
-                                   Text="1" />
-                    <TextBlock
-                                   Grid.Column="1"
-                                   HorizontalAlignment="Center"
-                                   Text="2" />
-                    <TextBlock
-                                   Grid.Column="2"
-                                   HorizontalAlignment="Center"
-                                   Text="3" />
-                    <TextBox Grid.Row="1"
-                                 Grid.Column="0"
-                                 Width="50"
-                                 Height="22"
-                                 Text="{Binding Color1in3Filter}" />
-                    <TextBox Grid.Row="1"
-                                 Grid.Column="1"
-                                 Width="50"
-                                 Text="{Binding Color2in3Filter}" />
-                    <TextBox Grid.Row="1"
-                                 Text="{Binding Color3in3Filter}"
-                                 Grid.Column="2"
-                                 Width="50" />
-                </Grid>
-                <Grid Grid.Row="5" Margin="0,2,2,2" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="301" />
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-
-                    <TextBlock
-                                       Grid.Column="0"
-                                       HorizontalAlignment="Center"
-                                       Padding="0"
-                                       Text="1" VerticalAlignment="Center" Margin="15,0,280,0" />
-                    <TextBlock
-                                       HorizontalAlignment="Center"
-                                       Padding="0"
-                                       Text="2" VerticalAlignment="Center" Margin="36,0,258,0" />
-                    <TextBlock
-                                       HorizontalAlignment="Right"
-                                       Padding="0"
-                                       Text="3" VerticalAlignment="Center" Margin="0,0,238,0" />
-                    <TextBlock
-                                       HorizontalAlignment="Center"
-                                       Padding="0"
-                                       Text="4" VerticalAlignment="Center" Margin="75,0,220,0" />
-                    <TextBlock
-                                       HorizontalAlignment="Center"
-                                       Padding="0"
-                                       Text="5" VerticalAlignment="Center" Margin="94,0,201,0" />
-                    <TextBlock
-                                       HorizontalAlignment="Center"
-                                       Padding="0"
-                                       Text="6" VerticalAlignment="Center" Margin="112,0,183,0" />
-                    <TextBlock
-                                       HorizontalAlignment="Center"
-                                       Padding="0"
-                                       Text="7" VerticalAlignment="Center" Margin="131,0,164,0" />
-                    <TextBlock
-                                       HorizontalAlignment="Center"
-                                       Padding="0"
-                                       Text="8" VerticalAlignment="Center" Margin="150,0,145,0" />
-                    <TextBlock
-                                       HorizontalAlignment="Center"
-                                       Padding="0"
-                                       Text="9" VerticalAlignment="Center" Margin="169,0,126,0" />
-                    <TextBlock
-                                       HorizontalAlignment="Center"
-                                       Padding="0"
-                                       Text="10" VerticalAlignment="Center" Margin="185,0,103,0" />
-                    <TextBlock
-                                       HorizontalAlignment="Center"
-                                       Padding="0"
-                                       Text="11" VerticalAlignment="Center" Margin="204,0,84,0" />
-
-
-
-
-                    <TextBox Grid.Row="1"
-                                     Grid.Column="0"
-                                     Width="20"
-                                     Text="{Binding Color1in12Filter}" Margin="11,0,270,0" />
-                    <TextBox Grid.Row="1"
-                                     Width="20"
-                                     Text="{Binding Color2in12Filter}" Margin="30,0,251,0" />
-                    <TextBox Grid.Row="1"
-                                     Width="20"
-                                     Text="{Binding Color3in12Filter}" Margin="49,0,232,0" />
-                    <TextBox Grid.Row="1"
-                                     Width="20"
-                                     Text="{Binding Color4in12Filter}" Margin="68,0,213,0" />
-                    <TextBox Grid.Row="1"
-                                     Width="20"
-                                     Text="{Binding Color5in12Filter}" Margin="87,0,194,0" />
-                    <TextBox Grid.Row="1"
-                                     Width="20"
-                                     Text="{Binding Color6in12Filter}" Margin="105,0,176,0" />
-                    <TextBox Grid.Row="1"
-                                     Width="20"
-                                     Text="{Binding Color7in12Filter}" Margin="124,0,157,0" />
-                    <TextBox Grid.Row="1"
-                                     Width="20"
-                                     Text="{Binding Color8in12Filter}" Margin="143,0,138,0" />
-                    <TextBox Grid.Row="1"
-                                     Width="20"
-                                     Text="{Binding Color9in12Filter}" Margin="162,0,119,0" />
-                    <TextBox Grid.Row="1"
-                                     Width="20"
-                                     Text="{Binding Color10in12Filter}" HorizontalAlignment="Left" Margin="181,0,0,0" />
-                    <TextBox Grid.Row="1"
-                                     Width="20"
-                                     Text="{Binding Color11in12Filter}" HorizontalAlignment="Left" Margin="200,0,0,0" />
-                    <TextBox Grid.Row="1"
-                                     Width="20"
-                                     Text="{Binding Color12in12Filter}" Margin="219,0,0,0" HorizontalAlignment="Left" />
-                    <TextBlock
-                        HorizontalAlignment="Center"
-                        Padding="0"
-                        Text="12" VerticalAlignment="Center" Margin="223,0,65,0" />
-                </Grid>
-
-                <Grid Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}" 
-                      Grid.Row="6" Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="125" />
-                        <ColumnDefinition Width="125"  />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <ListBox Padding="5,0,0,0" Grid.Column="0">
+                    <ListBox Grid.Column="0" Margin="2">
                         <TextBlock TextAlignment="Center" HorizontalAlignment="Center">Биоколор I</TextBlock>
-                        <RadioButton
-                            Name="BioColorIHide"
-                            Grid.Column="0"
-                            HorizontalAlignment="Center">
+                        <RadioButton Grid.Column="0" Name="BioColorIHide" HorizontalAlignment="Center">
                             Скрыть
                         </RadioButton>
-                        <RadioButton
-                            Name="BioColorIThree"
-                            Grid.Column="0"
-                            HorizontalAlignment="Center"
-                            IsChecked="True">
+                        <RadioButton Grid.Column="0" Name="BioColorIThree" HorizontalAlignment="Center" IsChecked="True">
                             3 цвета
                         </RadioButton>
-                        <RadioButton
-                            Name="BioColorITwelve"
-                            Grid.Column="0"
-                            HorizontalAlignment="Center">
+                        <RadioButton Grid.Column="0" Name="BioColorITwelve" HorizontalAlignment="Center">
                             12 цветов
                         </RadioButton>
                     </ListBox>
 
-                    <ListBox Padding="5,0,0,0" Grid.Column="1" Margin="0,0,10,0">
+                    <ListBox Grid.Column="1" Margin="2">
                         <TextBlock TextAlignment="Center" HorizontalAlignment="Center">Биоколор II</TextBlock>
-                        <RadioButton
-                            Name="BioColorIIHide"
-                            Grid.Column="0"
-                            HorizontalAlignment="Center">
+                        <RadioButton Name="BioColorIIHide" Grid.Column="0" HorizontalAlignment="Center">
                             Скрыть
                         </RadioButton>
-                        <RadioButton
-                            Name="BioColorIITwelve"
-                            Grid.Column="0"
-                            HorizontalAlignment="Center"
-                            IsChecked="True">
+                        <RadioButton Name="BioColorIITwelve" Grid.Column="0" HorizontalAlignment="Center" IsChecked="True">
                             3 цвета
                         </RadioButton>
-                        <RadioButton
-                            Name="BioColorIIPictures"
-                            Grid.Column="0"
-                            HorizontalAlignment="Center">
+                        <RadioButton Name="BioColorIIPictures" Grid.Column="0" HorizontalAlignment="Center">
                             Картинки
                         </RadioButton>
                     </ListBox>
                 </Grid>
-                <Grid Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}" Grid.Row="7" Margin="5,5,5,2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-
-                    <Label Content="Преференция" FontWeight="bold" Margin="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,0"/>
-
-                    <ComboBox Grid.Row="0"
-                                  Grid.Column="1"
-                              x:Name="ProfessionPreferenceTab"
-                                  SelectedItem="{Binding PreferenceFilter}"
-                                  ItemsSource="{Binding Source={StaticResource GetPreferencesList}}" 
-                                  SelectedIndex="0" HorizontalContentAlignment="Center" Margin="2" />
-                </Grid>
-                <Grid Grid.Row="9" Margin="5,8,5,-12">
+                <Grid Grid.Row="3" comment:Group="Buttons">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
@@ -1758,239 +1651,159 @@
                     </Grid.ColumnDefinitions>
 
                     <Button Grid.Row="0"
-                                Grid.Column="0"
-                                Margin="2"
-                                Click="ClearFilterPreferenceTab_Click"
-                                Content="Сбосить фильтр" Padding="0" 
-                                Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"/>
-                    <Button Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="2"
+                        Content="Сбосить фильтр" 
+                        Click="ClearFilterPreferenceTab_Click"/>
+                    <Button 
+                        Grid.Row="0"
                         Grid.Column="1"
                         Margin="2"
-                        Click="FilterPreference_Click"
-                        Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}"
-                        Content="Применить фильтр" Padding="0" />
-                    <Button Grid.Row="1"
-                            Click="BildChartOnPreference1_Click"
-                            Margin="2"
-                            Content="Диаграма преф.1" Padding="0" />
-                    <Button Grid.Row="1"
-                            Click="BildChartOnPreference2_Click"
-                            Margin="2"
-                            Content="Диаграма преф.2" Padding="0" Grid.Column="1" />
-                    <!--<Button Grid.Row="3"
-                        Click="AddData_OnClick"
-                        Margin="2,30,2,-49"
-                        Content="Импорт" Padding="0" Grid.ColumnSpan="2" />-->
+                        Content="Применить фильтр"
+                        Click="FilterPreference_Click" />
+                    <Button 
+                        Grid.Row="1"
+                        Grid.Column="0" 
+                        Margin="2"
+                        Content="Диаграма преф.1" 
+                        Click="BildChartOnPreference1_Click"/>
+                    <Button 
+                        Grid.Row="1"
+                        Grid.Column="1" 
+                        Margin="2"
+                        Content="Диаграма преф.2"
+                        Click="BildChartOnPreference2_Click" />
+                    <!--
+                    <Button 
+                        Grid.Row="2"
+                        Grid.Column="0" 
+                        Grid.ColumnSpan="2"
+                        Content="Импорт"
+                        Click="AddData_OnClick" />
+                    -->
                 </Grid>
             </Grid>
-            <Grid Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto" 
-                                DataContext="{StaticResource subjectiveFeelingFilterVM}"
-                                Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
+
+            <Grid Grid.Column="1" comment:Tab="Feelings"
+                  DataContext="{StaticResource subjectiveFeelingFilterVM}"
+                  Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
+                
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="104"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Label Content="Фильтры" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightGray" Margin="0,-35,0,12"/>
+                <Label Grid.Row="0" Content="Фильтры" FontSize="15" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="LightGray" />
 
-                <Grid Grid.Row="1" Margin="5,5,5,67">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Label Content="Код" 
-                        FontWeight="Bold" Margin="0,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                    <ComboBox
-                        x:Name="UserIdsFilterSubjFeelingCB"
-                        Grid.Column="1"
-                        SelectedItem="{Binding UserId}"
-                        ItemsSource="{Binding Source={StaticResource GetCodesForFilter}}"
-                        SelectedIndex="0" Margin="5"/>
-                </Grid>
-                <Grid Grid.Row="1" Margin="5,47,5,5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
+                <ScrollViewer Grid.Row="1">
+                    <StackPanel>
+                        <Expander Header="Код человека" Padding="5,2">
+                            <ListBox 
+                                    Margin="-5,0"
+                                    x:Name="UserIdsFilterFeelingsTab" 
+                                    ItemsSource="{Binding Source={StaticResource GetCodesForFilter}}" 
+                                    SelectionMode="Multiple">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
+                                                Checked="UserIdsFilterFeelingsTab_Selected" 
+                                                Unchecked="UserIdsFilterFeelingsTab_Selected" 
+                                                Content="{Binding}" 
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                        <Expander Header="Дата рождения" Padding="5,2">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <Label Grid.Row="0" Grid.ColumnSpan="2" Content="Дата рождения" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                                <Label Grid.Row="1" Grid.Column="0" Content="Начало" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                                <Label Grid.Row="1" Grid.Column="1" Content="Конец"  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+
+                                <DatePicker Grid.Row="2" Grid.Column="0" Margin="2,0" SelectedDate="{Binding DateFrom}" />
+                                <DatePicker Grid.Row="2" Grid.Column="1" Margin="2,0" SelectedDate="{Binding DateTo}"   />
+                            </Grid>
+                        </Expander>
+                        <Expander Header="Экспедиция" Padding="5,2">
+                            <ListBox 
+                                    Margin="-5,0"
+                                    x:Name="ExpeditionFilterFeelingsTab" 
+                                    ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}" 
+                                    SelectionMode="Multiple">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
+                                                Checked="ExpeditionFilterFeelingsTab_Selected" 
+                                                Unchecked="ExpeditionFilterFeelingsTab_Selected" 
+                                                Content="{Binding}" 
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                        <Expander Header="Номер человека" Padding="5,2">
+                            <ListBox 
+                                    Margin="-5,0"
+                                    x:Name="NumberFilterFeelingsTab" 
+                                    ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
+                                    SelectionMode="Multiple">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
+                                                Checked="NumberFilterFeelingsTab_Selected" 
+                                                Unchecked="NumberFilterFeelingsTab_Selected" 
+                                                Content="{Binding}" 
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                        <Expander Header="Профессия" Padding="5,2">
+                            <ListBox 
+                                    Margin="-5,0"
+                                    x:Name="ProfessionFilterFeelingsTab" 
+                                    ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" 
+                                    SelectionMode="Multiple">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox 
+                                                Checked="ProfessionFilterFeelingsTab_Selected" 
+                                                Unchecked="ProfessionFilterFeelingsTab_Selected" 
+                                                Content="{Binding}" 
+                                                IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Expander>
+                        <Expander Header="Ощущения" Padding="5,2">
+                            <Border BorderBrush="Gray" BorderThickness="0.5" Margin="-5,0" Padding="5">
+                                <StackPanel>
+                                    <CheckBox Margin="2" Checked="CheckBox_Selected" Content="Учитывать ощущения" IsChecked="{Binding IsFeeling}"  FontWeight="Bold" />
+                                    <CheckBox Margin="2" Checked="CheckBox_Selected" Content="Общая слабость" IsChecked="{Binding GeneralWeakness}" />
+                                    <CheckBox Margin="2" Checked="CheckBox_Selected" Content="Плохой аппетит" IsChecked="{Binding PoorAppetite}" />
+                                    <CheckBox Margin="2" Checked="CheckBox_Selected" Content="Плохой сон" IsChecked="{Binding PoorSleep}" />
+                                    <CheckBox Margin="2" Checked="CheckBox_Selected" Content="Плохое настроение" IsChecked="{Binding BadMood}" />
+                                    <CheckBox Margin="2" Checked="CheckBox_Selected" Content="Тяжесть в голове" IsChecked="{Binding HeavyHead}" />
+                                    <CheckBox Margin="2" Checked="CheckBox_Selected" Content="Замедленное мышление" IsChecked="{Binding SlowThink}" />
+                                </StackPanel>
+                            </Border>
+                        </Expander>
+                    </StackPanel>
+                </ScrollViewer>
+                
+                <Grid Grid.Row="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-
-                    <Label Content="Дата" FontWeight="Bold" Grid.ColumnSpan="2" Margin="0,-6,0,6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="5,0"/>
-                    <Label Content="Начало" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
-                    <Label Content="Конец" Margin="0,4,0,12" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1" Padding="0" Grid.RowSpan="2"/>
-
-                    <DatePicker Grid.Row="1"
-                                SelectedDate="{Binding DateFrom}"  Margin="0,5,5,7" Padding="5,2,2,2" Grid.RowSpan="2" />
-                    <DatePicker Grid.Row="1"
-                                Grid.Column="1"
-                                SelectedDate="{Binding DateTo}" Margin="5,0,0,7" VerticalAlignment="Bottom" Padding="2" Grid.RowSpan="2"/>
-                    <Grid Grid.ColumnSpan="2" Margin="0" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    </Grid>
-                </Grid>
-                <Grid Grid.Row="2" Margin="5,0,5,10" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                        <RowDefinition Height="auto" />
-                    </Grid.RowDefinitions>
-                    <TextBlock
-                                   HorizontalAlignment="Center"
-                                   Padding="0"
-                                   Text="Экспедиция" Grid.ColumnSpan="2"
-                                   FontWeight="Bold" Margin="84,-10,84,10"
-                        />
-                    <Label Content="Начало" Margin="0,0,0,16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.RowSpan="2"/>
-                    <Label Content="Конец" Margin="0,0,0,16" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Column="1" Grid.RowSpan="2"/>
-                    <ComboBox Grid.Row="1"
-                              x:Name="ExpeditionFromFilterSubjFeelCB"
-                              SelectedItem="{Binding ExpeditionFrom}"
-                                  ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
-                                  SelectedIndex="0"
-                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,6,2,0" />
-                    <ComboBox Grid.Row="1"
-                                  Grid.Column="1"
-                              x:Name="ExpeditionToFilterSubjFeelCB"
-                              SelectedItem="{Binding ExpeditionTo}"
-                                  ItemsSource="{Binding Source={StaticResource GetExpeditionCodes}}"
-                                  SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,6,0,0" />
-                    <TextBlock Grid.Row="2"
-                                   HorizontalAlignment="Center"
-                                   Padding="0"
-                                   Text="Номер" Grid.ColumnSpan="2" 
-                                    FontWeight="Bold" Margin="100,5,100,14"/>
-                    <Label Content="Начало" Margin="0,19,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="2"/>
-                    <Label Content="Конец" Margin="0,18,0,48" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" Grid.Row="2" Grid.Column="1"/>
-                    <ComboBox Grid.Row="2"
-                             SelectedIndex="0"
-                              x:Name="NumberFromFilterSubjFeelCB"
-                              SelectedItem="{Binding PeopleFrom}"
-                              ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}" 
-                              HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0,35,2,23" />
-                    <ComboBox Grid.Row="2"
-                              x:Name="NumberToFilterSubjFeelCB"
-                                  Grid.Column="1"
-                              SelectedItem="{Binding PeopleTo}"
-                                  ItemsSource="{Binding Source={StaticResource GetPeopleCodes}}"
-                                  SelectedIndex="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="2,35,0,23" />
-                    <Label Content="Профессия" FontWeight="Bold" Margin="18,68,15,-11" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5,0" Grid.Row="2" Grid.RowSpan="4"
-                           />
-                    <ComboBox Grid.Row="2"
-                              SelectedItem="{Binding Profession}"
-                              x:Name="ProfessionsSubjectiveFeelingTab"
-                        ItemsSource="{Binding Source={StaticResource GetProfessionsList}}" 
-                        SelectedIndex="0" HorizontalContentAlignment="Center" Margin="2,70,2,-11" Grid.RowSpan="4" Grid.Column="1" />
-                </Grid>
-                <Grid Grid.Row="5" Margin="15,20,5,304" Grid.RowSpan="2">
-                    <Border BorderBrush="Gray"  Height="135" BorderThickness="1" Margin="0,0,5,0" Padding="5,1,0,5">
-                        <Grid Height="135">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                                <RowDefinition Height="auto" />
-                            </Grid.RowDefinitions>
-                            <TextBlock
-                                   Grid.Column="0"
-                                   Padding="0"
-                                   Text="Общая слабость" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <TextBlock
-                                   Grid.Column="1"
-                                   Padding="0"
-                                   Text="Плохой аппетит" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <TextBlock Grid.Row="2"
-                                   Grid.Column="0"
-                                   Padding="0"
-                                   Text="Плохой сон" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <TextBlock Grid.Row="2"
-                                   Grid.Column="1"
-                                   Padding="0"
-                                   Text="Плохое настроение" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <TextBlock Grid.Row="4"
-                                   Grid.Column="0"
-                                   Padding="2,0,0,0"
-                                   Text="Тяжесть в голове" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <TextBlock Grid.Row="4"
-                                   Grid.Column="1"
-                                   Padding="0"
-                                   Text="Замедленное мышление" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" />
-                            <TextBlock Grid.Row="6"
-                                   Padding="0"
-                                   Text="Учитывать ощущения" FontWeight="Bold" FontSize="11" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.ColumnSpan="2" Margin="0,20,80,0" />
-
-                            <CheckBox Grid.Row="1"
-                                  x:Name="generalWeakness"
-                                  Grid.Column="0"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  IsChecked="{Binding GeneralWeakness}" />
-                            <CheckBox Grid.Row="1"
-                                  x:Name="poorAppetite"
-                                  Grid.Column="1"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  IsChecked="{Binding PoorAppetite}" />
-                            <CheckBox Grid.Row="3"
-                              x:Name="poorSleep"
-                                  Grid.Column="0"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  IsChecked="{Binding PoorSleep}" />
-                            <CheckBox Grid.Row="3"
-                              x:Name="badMood"
-                                  Grid.Column="1"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  IsChecked="{Binding BadMood}" />
-                            <CheckBox Grid.Row="5"
-                              x:Name="heavyHead"
-                                  Grid.Column="0"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  IsChecked="{Binding HeavyHead}" />
-                            <CheckBox Grid.Row="5"
-                              x:Name="slowThink"
-                                  Grid.Column="1"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  IsChecked="{Binding SlowThink}"/>
-                            <CheckBox Grid.Row="6"
-                                  Grid.Column="1"
-                                  FontWeight="Bold"
-                                  HorizontalAlignment="Center"
-                                  VerticalAlignment="Center"
-                                  IsChecked="{Binding IsFeeling}" Margin="0,20,0,0 "  />
-                        </Grid>
-                    </Border>
-                </Grid>
-                <Grid Grid.Row="6" Margin="5,20,5,-41">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
 
@@ -1999,18 +1812,11 @@
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Row="0"
-                                Grid.Column="0"
-                                Margin="2,10,2,188"
-                                Click="ClearFilterSubjFeelTab_Click"
-                                Content="Сбосить фильтр" Padding="0" />
-                    <Button Grid.Row="0"
-                        Grid.Column="1"
-                        Margin="2,10,2,188"
-                        Click="FilterSubjectiveFeeling_Click"
-                        Content="Применить фильтр" Padding="0" />
+                    <Button Grid.Column="0" Margin="2" Click="ClearFilterSubjFeelTab_Click" Content="Сбосить фильтр" />
+                    <Button Grid.Column="1" Margin="2" Click="FilterSubjectiveFeeling_Click" Content="Применить фильтр" />
                 </Grid>
             </Grid>
+
         </Grid>
-    </Grid>
+        </Grid>
 </Window>
