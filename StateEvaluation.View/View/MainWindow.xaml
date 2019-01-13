@@ -751,8 +751,35 @@
 
             <Grid comment:Tab="Colors Settings"
                   x:Name="ColorSettings" Background="White" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=ColorSettingsTab}" Grid.ColumnSpan="2" Panel.ZIndex="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="25"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="65"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                    <ColumnDefinition Width="50"/>
+                </Grid.ColumnDefinitions>
 
-                <Image Height="200" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Image Grid.Row="1" Grid.Column="0" Grid.RowSpan="12" Height="200" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <Image.Source>
                         <DrawingImage>
                             <DrawingImage.Drawing>
@@ -967,104 +994,103 @@
                     </Image.Source>
                 </Image>
 
+                <TextBlock Grid.Row="00" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="RGB"/>
+                <TextBlock Grid.Row="00" Grid.Column="4" HorizontalAlignment="Center" VerticalAlignment="Center" Text="C"/>
+                <TextBlock Grid.Row="00" Grid.Column="5" HorizontalAlignment="Center" VerticalAlignment="Center" Text="M"/>
+                <TextBlock Grid.Row="00" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Y"/>
+                <TextBlock Grid.Row="00" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" Text="K"/>
 
-                <TextBlock Width="100" Height="25" Name="pt1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,  0,0,0"  Text="Физическое: [1]"/>
-                <TextBlock Width="100" Height="25" Name="pt2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250, 25,0,0"  Text="Физическое: [2]"/>
-                <TextBlock Width="100" Height="25" Name="pt3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250, 50,0,0"  Text="Физическое: [3]"/>
-                <TextBlock Width="100" Height="25" Name="pt4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250, 75,0,0"  Text="Физическое: [4]"/>
+                <TextBlock Grid.Row="01" Grid.Column="1" Name="pt1" VerticalAlignment="Center" Text="Физическое: [1]"/>
+                <TextBlock Grid.Row="02" Grid.Column="1" Name="pt2" VerticalAlignment="Center" Text="Физическое: [2]"/>
+                <TextBlock Grid.Row="03" Grid.Column="1" Name="pt3" VerticalAlignment="Center" Text="Физическое: [3]"/>
+                <TextBlock Grid.Row="04" Grid.Column="1" Name="pt4" VerticalAlignment="Center" Text="Физическое: [4]"/>
+                <TextBlock Grid.Row="05" Grid.Column="1" Name="et1" VerticalAlignment="Center" Text="Эмоциональное: [1]"/>
+                <TextBlock Grid.Row="06" Grid.Column="1" Name="et2" VerticalAlignment="Center" Text="Эмоциональное: [2]"/>
+                <TextBlock Grid.Row="07" Grid.Column="1" Name="et3" VerticalAlignment="Center" Text="Эмоциональное: [3]"/>
+                <TextBlock Grid.Row="08" Grid.Column="1" Name="et4" VerticalAlignment="Center" Text="Эмоциональное: [4]"/>
+                <TextBlock Grid.Row="09" Grid.Column="1" Name="it1" VerticalAlignment="Center" Text="Интелекнуальное: [1]"/>
+                <TextBlock Grid.Row="10" Grid.Column="1" Name="it2" VerticalAlignment="Center" Text="Интелекнуальное: [2]"/>
+                <TextBlock Grid.Row="11" Grid.Column="1" Name="it3" VerticalAlignment="Center" Text="Интелекнуальное: [3]"/>
+                <TextBlock Grid.Row="12" Grid.Column="1" Name="it4" VerticalAlignment="Center" Text="Интелекнуальное: [4]"/>
 
-                <TextBlock Width="118" Height="25" Name="et1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,100,0,0"  Text="Эмоциональное: [1]"/>
-                <TextBlock Width="118" Height="25" Name="et2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,125,0,0"  Text="Эмоциональное: [2]"/>
-                <TextBlock Width="118" Height="25" Name="et3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,150,0,0"  Text="Эмоциональное: [3]"/>
-                <TextBlock Width="118" Height="25" Name="et4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,175,0,0"  Text="Эмоциональное: [4]"/>
+                <TextBox IsReadOnly="True" Grid.Row="01" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name= "PhysicalColor1" />
+                <TextBox                   Grid.Row="01" Grid.Column="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="cPhysicalColor1" />
+                <TextBox                   Grid.Row="01" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="mPhysicalColor1" />
+                <TextBox                   Grid.Row="01" Grid.Column="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="yPhysicalColor1" />
+                <TextBox                   Grid.Row="01" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kPhysicalColor1" />
+                <TextBox IsReadOnly="True" Grid.Row="02" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name= "PhysicalColor2" />
+                <TextBox                   Grid.Row="02" Grid.Column="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="cPhysicalColor2" />
+                <TextBox                   Grid.Row="02" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="mPhysicalColor2" />
+                <TextBox                   Grid.Row="02" Grid.Column="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="yPhysicalColor2" />
+                <TextBox                   Grid.Row="02" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kPhysicalColor2" />
+                <TextBox IsReadOnly="True" Grid.Row="03" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name= "PhysicalColor3" />
+                <TextBox                   Grid.Row="03" Grid.Column="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="cPhysicalColor3" />
+                <TextBox                   Grid.Row="03" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="mPhysicalColor3" />
+                <TextBox                   Grid.Row="03" Grid.Column="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="yPhysicalColor3" />
+                <TextBox                   Grid.Row="03" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kPhysicalColor3" />
+                <TextBox IsReadOnly="True" Grid.Row="04" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name= "PhysicalColor4" />
+                <TextBox                   Grid.Row="04" Grid.Column="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="cPhysicalColor4" />
+                <TextBox                   Grid.Row="04" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="mPhysicalColor4" />
+                <TextBox                   Grid.Row="04" Grid.Column="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="yPhysicalColor4" />
+                <TextBox                   Grid.Row="04" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kPhysicalColor4" />
+                <TextBox IsReadOnly="True" Grid.Row="05" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name= "EmotionalColor1" />
+                <TextBox                   Grid.Row="05" Grid.Column="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="cEmotionalColor1" />
+                <TextBox                   Grid.Row="05" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="mEmotionalColor1" />
+                <TextBox                   Grid.Row="05" Grid.Column="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="yEmotionalColor1" />
+                <TextBox                   Grid.Row="05" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kEmotionalColor1" />
+                <TextBox IsReadOnly="True" Grid.Row="06" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name= "EmotionalColor2" />
+                <TextBox                   Grid.Row="06" Grid.Column="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="cEmotionalColor2" />
+                <TextBox                   Grid.Row="06" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="mEmotionalColor2" />
+                <TextBox                   Grid.Row="06" Grid.Column="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="yEmotionalColor2" />
+                <TextBox                   Grid.Row="06" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kEmotionalColor2" />
+                <TextBox IsReadOnly="True" Grid.Row="07" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name= "EmotionalColor3" />
+                <TextBox                   Grid.Row="07" Grid.Column="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="cEmotionalColor3" />
+                <TextBox                   Grid.Row="07" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="mEmotionalColor3" />
+                <TextBox                   Grid.Row="07" Grid.Column="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="yEmotionalColor3" />
+                <TextBox                   Grid.Row="07" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kEmotionalColor3" />
+                <TextBox IsReadOnly="True" Grid.Row="08" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name= "EmotionalColor4" />
+                <TextBox                   Grid.Row="08" Grid.Column="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="cEmotionalColor4" />
+                <TextBox                   Grid.Row="08" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="mEmotionalColor4" />
+                <TextBox                   Grid.Row="08" Grid.Column="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="yEmotionalColor4" />
+                <TextBox                   Grid.Row="08" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kEmotionalColor4" />
+                <TextBox IsReadOnly="True" Grid.Row="09" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name= "IntellectualColor1" />
+                <TextBox                   Grid.Row="09" Grid.Column="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="cIntellectualColor1" />
+                <TextBox                   Grid.Row="09" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="mIntellectualColor1" />
+                <TextBox                   Grid.Row="09" Grid.Column="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="yIntellectualColor1" />
+                <TextBox                   Grid.Row="09" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kIntellectualColor1" />
+                <TextBox IsReadOnly="True" Grid.Row="10" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name= "IntellectualColor2" />
+                <TextBox                   Grid.Row="10" Grid.Column="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="cIntellectualColor2" />
+                <TextBox                   Grid.Row="10" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="mIntellectualColor2" />
+                <TextBox                   Grid.Row="10" Grid.Column="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="yIntellectualColor2" />
+                <TextBox                   Grid.Row="10" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kIntellectualColor2" />
+                <TextBox IsReadOnly="True" Grid.Row="11" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name= "IntellectualColor3" />
+                <TextBox                   Grid.Row="11" Grid.Column="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="cIntellectualColor3" />
+                <TextBox                   Grid.Row="11" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="mIntellectualColor3" />
+                <TextBox                   Grid.Row="11" Grid.Column="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="yIntellectualColor3" />
+                <TextBox                   Grid.Row="11" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kIntellectualColor3" />
+                <TextBox IsReadOnly="True" Grid.Row="12" Grid.Column="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name= "IntellectualColor4" />
+                <TextBox                   Grid.Row="12" Grid.Column="4" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="cIntellectualColor4" />
+                <TextBox                   Grid.Row="12" Grid.Column="5" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="mIntellectualColor4" />
+                <TextBox                   Grid.Row="12" Grid.Column="6" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="yIntellectualColor4" />
+                <TextBox                   Grid.Row="12" Grid.Column="7" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Name="kIntellectualColor4" /> 
 
-                <TextBlock Width="118" Height="25" Name="it1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,200,0,0"  Text="Интелекнуальное: [1]"/>
-                <TextBlock Width="118" Height="25" Name="it2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,225,0,0"  Text="Интелекнуальное: [2]"/>
-                <TextBlock Width="118" Height="25" Name="it3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,250,0,0"  Text="Интелекнуальное: [3]"/>
-                <TextBlock Width="118" Height="25" Name="it4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="250,275,0,0"  Text="Интелекнуальное: [4]"/>
-
-
-
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="PhysicalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,0,0,0" />
-                <TextBox                   Width="50" Height="25" Name="cPhysicalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,0,0,0" />
-                <TextBox                   Width="50" Height="25" Name="mPhysicalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,0,0,0" />
-                <TextBox                   Width="50" Height="25" Name="yPhysicalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,0,0,0" />
-                <TextBox                   Width="50" Height="25" Name="kPhysicalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,0,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="PhysicalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,25,0,0" />
-                <TextBox                   Width="50" Height="25" Name="cPhysicalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,25,0,0" />
-                <TextBox                   Width="50" Height="25" Name="mPhysicalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,25,0,0" />
-                <TextBox                   Width="50" Height="25" Name="yPhysicalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,25,0,0" />
-                <TextBox                   Width="50" Height="25" Name="kPhysicalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,25,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="PhysicalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,50,0,0" />
-                <TextBox                   Width="50" Height="25" Name="cPhysicalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,50,0,0" />
-                <TextBox                   Width="50" Height="25" Name="mPhysicalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,50,0,0" />
-                <TextBox                   Width="50" Height="25" Name="yPhysicalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,50,0,0" />
-                <TextBox                   Width="50" Height="25" Name="kPhysicalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,50,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="PhysicalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,75,0,0" />
-                <TextBox                   Width="50" Height="25" Name="cPhysicalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,75,0,0" />
-                <TextBox                   Width="50" Height="25" Name="mPhysicalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,75,0,0" />
-                <TextBox                   Width="50" Height="25" Name="yPhysicalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,75,0,0" />
-                <TextBox                   Width="50" Height="25" Name="kPhysicalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,75,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="EmotionalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,100,0,0" />
-                <TextBox                   Width="50" Height="25" Name="cEmotionalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,100,0,0" />
-                <TextBox                   Width="50" Height="25" Name="mEmotionalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,100,0,0" />
-                <TextBox                   Width="50" Height="25" Name="yEmotionalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,100,0,0" />
-                <TextBox                   Width="50" Height="25" Name="kEmotionalColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,100,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="EmotionalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,125,0,0" />
-                <TextBox                   Width="50" Height="25" Name="cEmotionalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,125,0,0" />
-                <TextBox                   Width="50" Height="25" Name="mEmotionalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,125,0,0" />
-                <TextBox                   Width="50" Height="25" Name="yEmotionalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,125,0,0" />
-                <TextBox                   Width="50" Height="25" Name="kEmotionalColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,125,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="EmotionalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,150,0,0" />
-                <TextBox                   Width="50" Height="25" Name="cEmotionalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,150,0,0" />
-                <TextBox                   Width="50" Height="25" Name="mEmotionalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,150,0,0" />
-                <TextBox                   Width="50" Height="25" Name="yEmotionalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,150,0,0" />
-                <TextBox                   Width="50" Height="25" Name="kEmotionalColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,150,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="EmotionalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,175,0,0" />
-                <TextBox                   Width="50" Height="25" Name="cEmotionalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,175,0,0" />
-                <TextBox                   Width="50" Height="25" Name="mEmotionalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,175,0,0" />
-                <TextBox                   Width="50" Height="25" Name="yEmotionalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,175,0,0" RenderTransformOrigin="0.98,0.48" />
-                <TextBox                   Width="50" Height="25" Name="kEmotionalColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,175,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="IntellectualColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,200,0,0" />
-                <TextBox                   Width="50" Height="25" Name="cIntellectualColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,200,0,0" />
-                <TextBox                   Width="50" Height="25" Name="mIntellectualColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,200,0,0" />
-                <TextBox                   Width="50" Height="25" Name="yIntellectualColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,200,0,0" />
-                <TextBox                   Width="50" Height="25" Name="kIntellectualColor1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,200,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="IntellectualColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,225,0,0" />
-                <TextBox                   Width="50" Height="25" Name="cIntellectualColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,225,0,0" />
-                <TextBox                   Width="50" Height="25" Name="mIntellectualColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,225,0,0" />
-                <TextBox                   Width="50" Height="25" Name="yIntellectualColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,225,0,0" />
-                <TextBox                   Width="50" Height="25" Name="kIntellectualColor2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,225,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="IntellectualColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,250,0,0" />
-                <TextBox                   Width="50" Height="25" Name="cIntellectualColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,250,0,0" />
-                <TextBox                   Width="50" Height="25" Name="mIntellectualColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,250,0,0" />
-                <TextBox                   Width="50" Height="25" Name="yIntellectualColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,250,0,0" />
-                <TextBox                   Width="50" Height="25" Name="kIntellectualColor3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,250,0,0" />
-                <TextBox IsReadOnly="True" Width="160" Height="25" Name="IntellectualColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="382,275,0,0" />
-                <TextBox                   Width="50" Height="25" Name="cIntellectualColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="607,275,0,0" />
-                <TextBox                   Width="50" Height="25" Name="mIntellectualColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="657,275,0,0" />
-                <TextBox                   Width="50" Height="25" Name="yIntellectualColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="707,275,0,0" />
-                <TextBox                   Width="50" Height="25" Name="kIntellectualColor4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="757,275,0,0" />
-
-                <Button Width="65"  Height="25" Name="PhysicalButton1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,0,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button Width="65"  Height="25" Name="PhysicalButton2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,25,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button Width="65"  Height="25" Name="PhysicalButton3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,50,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button Width="65"  Height="25" Name="PhysicalButton4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,75,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-
-                <Button    Width="65"  Height="25" Name="EmotionalButton1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,100,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="EmotionalButton2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,125,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="EmotionalButton3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,150,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="EmotionalButton4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,175,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-
-                <Button    Width="65"  Height="25" Name="IntellectualButton1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,200,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="IntellectualButton2" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,225,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="IntellectualButton3" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,250,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
-                <Button    Width="65"  Height="25" Name="IntellectualButton4" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="542,275,0,0" Click="CMYK2RGB_Click">&lt;--</Button>
+                <Button Grid.Row="01" Grid.Column="3" Name="PhysicalButton1"     Click="CMYK2RGB_Click" Content="&lt;--" />
+                <Button Grid.Row="02" Grid.Column="3" Name="PhysicalButton2"     Click="CMYK2RGB_Click" Content="&lt;--" />
+                <Button Grid.Row="03" Grid.Column="3" Name="PhysicalButton3"     Click="CMYK2RGB_Click" Content="&lt;--" />
+                <Button Grid.Row="04" Grid.Column="3" Name="PhysicalButton4"     Click="CMYK2RGB_Click" Content="&lt;--" />
+                <Button Grid.Row="05" Grid.Column="3" Name="EmotionalButton1"    Click="CMYK2RGB_Click" Content="&lt;--" />
+                <Button Grid.Row="06" Grid.Column="3" Name="EmotionalButton2"    Click="CMYK2RGB_Click" Content="&lt;--" />
+                <Button Grid.Row="07" Grid.Column="3" Name="EmotionalButton3"    Click="CMYK2RGB_Click" Content="&lt;--" />
+                <Button Grid.Row="08" Grid.Column="3" Name="EmotionalButton4"    Click="CMYK2RGB_Click" Content="&lt;--" />
+                <Button Grid.Row="09" Grid.Column="3" Name="IntellectualButton1" Click="CMYK2RGB_Click" Content="&lt;--" />
+                <Button Grid.Row="10" Grid.Column="3" Name="IntellectualButton2" Click="CMYK2RGB_Click" Content="&lt;--" />
+                <Button Grid.Row="11" Grid.Column="3" Name="IntellectualButton3" Click="CMYK2RGB_Click" Content="&lt;--" />
+                <Button Grid.Row="12" Grid.Column="3" Name="IntellectualButton4" Click="CMYK2RGB_Click" Content="&lt;--" />
 
 
-                <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="496,326,0,0" Click="ResetColors_Click" Content="Сброс"/>
-                <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="606,326,0,0" Click="RestoreColors_Click" Content="Восстановить" RenderTransformOrigin="0.494,0.64"/>
-                <Button Width="89"  Height="25" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="717,326,0,0" Click="SaveColors_Click" Content="Сохранить"/>
+                <Button Grid.Row="14" Grid.Column="2" Grid.ColumnSpan="1" Click="SaveColors_Click"    Content="Сохранить"/>
+                <Button Grid.Row="14" Grid.Column="4" Grid.ColumnSpan="2" Click="ResetColors_Click"   Content="Отменить"/>
+                <Button Grid.Row="14" Grid.Column="6" Grid.ColumnSpan="2" Click="RestoreColors_Click" Content="Восстановить"/>
 
             </Grid>
 
