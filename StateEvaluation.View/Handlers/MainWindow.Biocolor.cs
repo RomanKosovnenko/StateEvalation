@@ -59,7 +59,7 @@ namespace StateEvaluation
         
         private void RestoreColors_Click(object sender, RoutedEventArgs e)
         {
-            var dialogResult = MessageBox.Show(MessageBoxConstants.BiocolorReset, MessageBoxConstants.BiocolorResetTitle, MessageBoxButton.YesNo);
+            var dialogResult = MessageBox.Show(MessageBoxConstants.BiocolorRestore, MessageBoxConstants.BiocolorRestoreTitle, MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
             {
                 biocolorBusinessManager.RestoreColors(colors);
@@ -69,7 +69,7 @@ namespace StateEvaluation
 
         private void ResetColors_Click(object sender, RoutedEventArgs e)
         {
-            var dialogResult = MessageBox.Show(MessageBoxConstants.BiocolorRestore, MessageBoxConstants.BiocolorRestoreTitle, MessageBoxButton.YesNo);
+            var dialogResult = MessageBox.Show(MessageBoxConstants.BiocolorReset, MessageBoxConstants.BiocolorResetTitle, MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
             {
                 biocolorBusinessManager.ResetColors(colors);

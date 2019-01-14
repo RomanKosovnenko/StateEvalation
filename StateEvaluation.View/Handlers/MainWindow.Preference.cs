@@ -169,5 +169,32 @@ namespace StateEvaluation
             CheckBox checkBox = sender as CheckBox;
             preferenceFilter.SetPreferenceState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
         }
+
+
+
+        private void BioColor1_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
+            if (preferenceBuissnesManager.IsValidBioColorVM(preferenceVM, 1))
+            {
+                preferenceBuissnesManager.GeneratePreference(preferenceVM, 1);
+            }
+            else
+            {
+                preferenceBuissnesManager.ClearPreference(preferenceVM, 1);
+            }
+        }
+        private void BioColor2_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+            var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
+            if (preferenceBuissnesManager.IsValidBioColorVM(preferenceVM, 2))
+            {
+                preferenceBuissnesManager.GeneratePreference(preferenceVM, 2);
+            }
+            else
+            {
+                preferenceBuissnesManager.ClearPreference(preferenceVM, 2);
+            }
+        }
     }
 }

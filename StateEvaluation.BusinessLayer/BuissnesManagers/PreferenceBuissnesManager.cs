@@ -157,36 +157,135 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             _preferenceDataGrid.ItemsSource = _dataRepository.GetPreferenceTests();
         }
 
+        public bool IsValidPreferenceVM(PreferenceVM preferenceVM, int biocolor)
+        {
+            if (biocolor == 1)
+            {
+                _preference1 = new List<bool>() { preferenceVM.Preference1Blue == StringBooleanValues.True, preferenceVM.Preference1Yellow == StringBooleanValues.True,
+                    preferenceVM.Preference1Red == StringBooleanValues.True, preferenceVM.Preference1Grey == StringBooleanValues.True };
+                return _preference1.Any(x => x == true);
+            }
+            if (biocolor == 2)
+            {
+                _preference2 = new List<bool>() { preferenceVM.Preference2Blue == StringBooleanValues.True, preferenceVM.Preference2Yellow == StringBooleanValues.True,
+                    preferenceVM.Preference2Red == StringBooleanValues.True, preferenceVM.Preference2Grey == StringBooleanValues.True };
+                return _preference2.Any(x => x == true);
+            }
+            return false;
+
+        }
+        public bool IsValidBioColorVM(PreferenceVM preferenceVM, int biocolor)
+        {
+            if (biocolor == 1)
+            {
+                _color1in3s = new List<string>() { preferenceVM.Color1in3, preferenceVM.Color2in3, preferenceVM.Color3in3 };
+                _color1in12s = new List<string>() {
+                    preferenceVM.Color1in12, preferenceVM.Color2in12, preferenceVM.Color3in12,
+                    preferenceVM.Color4in12, preferenceVM.Color5in12, preferenceVM.Color6in12,
+                    preferenceVM.Color7in12, preferenceVM.Color8in12, preferenceVM.Color9in12,
+                    preferenceVM.Color10in12, preferenceVM.Color11in12, preferenceVM.Color12in12
+                };
+                return !(new List<List<string>> { _color1in3s, _color1in12s }.Any(x => x.Any(y => y == null) || x.Count != x.Distinct().Count()));
+            }
+            if (biocolor == 2)
+            {
+                _color2in3s = new List<string>() { preferenceVM.Color21in3, preferenceVM.Color22in3, preferenceVM.Color23in3 };
+                _color2in12s = new List<string>() {
+                    preferenceVM.Color21in12, preferenceVM.Color22in12, preferenceVM.Color23in12,
+                    preferenceVM.Color24in12,  preferenceVM.Color25in12, preferenceVM.Color26in12,
+                    preferenceVM.Color27in12, preferenceVM.Color28in12,  preferenceVM.Color29in12,
+                    preferenceVM.Color210in12,  preferenceVM.Color211in12, preferenceVM.Color212in12
+                };
+                return !(new List<List<string>> { _color2in3s, _color2in12s }.Any(x => x.Any(y => y == null) || x.Count != x.Distinct().Count()));
+            }
+            return false;
+        }
+        public void GeneratePreference(PreferenceVM preferenceVM, int biocolor)
+        {
+            if (biocolor == 1)
+            {
+                List<byte> Color1in3sByte = _color1in3s.Select(x => Byte.Parse(x)).ToList();
+                List<byte> Color1in12sByte = _color1in12s.Select(x => Byte.Parse(x)).ToList();
+                string preference = new StateEvaluationDLL.DataStructures.Preference(Color1in3sByte, Color1in12sByte).Type.ToString();
+                int index = Common.Enums.PreferenceValues.Preferences.ToList().IndexOf(preference);
+                if (index == 0)
+                {
+                    preferenceVM.Preference1Blue = StringBooleanValues.True;
+                }
+                else if (index == 1)
+                {
+                    preferenceVM.Preference1Yellow = StringBooleanValues.True;
+                }
+                else if (index == 2)
+                {
+                    preferenceVM.Preference1Red = StringBooleanValues.True;
+                }
+                else if (index == 3)
+                {
+                    preferenceVM.Preference1Grey = StringBooleanValues.True;
+                }
+            }
+            if (biocolor == 2)
+            {
+                List<byte> Color2in3sByte = _color2in3s.Select(x => Byte.Parse(x)).ToList();
+                List<byte> Color2in12sByte = _color2in12s.Select(x => Byte.Parse(x)).ToList();
+                string preference = new StateEvaluationDLL.DataStructures.Preference(Color2in3sByte, Color2in12sByte).Type.ToString();
+                int index = Common.Enums.PreferenceValues.Preferences.ToList().IndexOf(preference);
+                if (index == 0)
+                {
+                    preferenceVM.Preference2Blue = StringBooleanValues.True;
+                }
+                else if (index == 1)
+                {
+                    preferenceVM.Preference2Yellow = StringBooleanValues.True;
+                }
+                else if (index == 2)
+                {
+                    preferenceVM.Preference2Red = StringBooleanValues.True;
+                }
+                else if (index == 3)
+                {
+                    preferenceVM.Preference2Grey = StringBooleanValues.True;
+                }
+            }
+        }
+        public void ClearPreference(PreferenceVM preferenceVM, int biocolor)
+        {
+            if (biocolor == 1)
+            {
+                preferenceVM.Preference1Blue = StringBooleanValues.False;
+                preferenceVM.Preference1Yellow = StringBooleanValues.False;
+                preferenceVM.Preference1Red = StringBooleanValues.False;
+                preferenceVM.Preference1Grey = StringBooleanValues.False;
+            }
+            if (biocolor == 2)
+            {
+                preferenceVM.Preference2Blue = StringBooleanValues.False;
+                preferenceVM.Preference2Yellow = StringBooleanValues.False;
+                preferenceVM.Preference2Red = StringBooleanValues.False;
+                preferenceVM.Preference2Grey = StringBooleanValues.False;
+            }
+        }
         private bool IsValidPreferenseVM(PreferenceVM preferenceVM)
         {
-            _color1in3s = new List<string>() { preferenceVM.Color1in3, preferenceVM.Color2in3, preferenceVM.Color3in3 };
-
-            _color2in3s = new List<string>() { preferenceVM.Color21in3, preferenceVM.Color22in3, preferenceVM.Color23in3 };
-
-            _color1in12s = new List<string>() {
-                preferenceVM.Color1in12, preferenceVM.Color2in12, preferenceVM.Color3in12,
-                preferenceVM.Color4in12, preferenceVM.Color5in12, preferenceVM.Color6in12,
-                preferenceVM.Color7in12, preferenceVM.Color8in12, preferenceVM.Color9in12,
-                preferenceVM.Color10in12, preferenceVM.Color11in12, preferenceVM.Color12in12
-            };
-
-            _color2in12s = new List<string>() {
-                preferenceVM.Color21in12, preferenceVM.Color22in12, preferenceVM.Color23in12,
-                preferenceVM.Color24in12,  preferenceVM.Color25in12, preferenceVM.Color26in12,
-                preferenceVM.Color27in12, preferenceVM.Color28in12,  preferenceVM.Color29in12,
-                preferenceVM.Color210in12,  preferenceVM.Color211in12, preferenceVM.Color212in12
-            };
-
-            _preference1 = new List<bool>() { preferenceVM.Preference1Blue == StringBooleanValues.True, preferenceVM.Preference1Grey == StringBooleanValues.True,
-                preferenceVM.Preference1Yellow == StringBooleanValues.True, preferenceVM.Preference1Red == StringBooleanValues.True };
-            _preference2 = new List<bool>() { preferenceVM.Preference2Blue == StringBooleanValues.True, preferenceVM.Preference2Grey == StringBooleanValues.True,
-                preferenceVM.Preference2Yellow == StringBooleanValues.True, preferenceVM.Preference2Red == StringBooleanValues.True };
-
-            var userId = new List<string> { preferenceVM.UserId };
-
-            if (false && (new List<List<string>> { userId, _color1in3s, _color2in3s, _color1in12s, _color2in12s }.Any(x => x.Any(y => y == null) || x.Count != x.Distinct().Count())
-                || new List<List<bool>> { _preference1, _preference2 }.Any(x => x.All(y => y == false))
-                || preferenceVM.TestDate == null))
+            if (preferenceVM.UserId == String.Empty || preferenceVM.TestDate == null
+                || preferenceVM.ColorRelax1 == String.Empty || preferenceVM.ColorRelax2 == String.Empty)
+            {
+                return false;
+            }
+            if (!IsValidBioColorVM(preferenceVM, 1))
+            {
+                return false;
+            }
+            if (!IsValidBioColorVM(preferenceVM, 2))
+            {
+                return false;
+            }
+            if (!IsValidPreferenceVM(preferenceVM, 1))
+            {
+                return false;
+            }
+            if (!IsValidPreferenceVM(preferenceVM, 2))
             {
                 return false;
             }
@@ -195,13 +294,10 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         private Preference GetNewPreference(PreferenceVM preferenceVM, Guid? id = null)
         {
-            List<byte> Color1in3sByte = _color1in3s.Select(x => Byte.Parse(x)).ToList();
-            List<byte> Color1in12sByte = _color1in12s.Select(x => Byte.Parse(x)).ToList();
-            List<byte> Color2in3sByte = _color2in3s.Select(x => Byte.Parse(x)).ToList();
-            List<byte> Color2in12sByte = _color2in12s.Select(x => Byte.Parse(x)).ToList();
             
             var Preference1Index = _preference1.IndexOf(true);
             var Preference2Index = _preference2.IndexOf(true);
+
             Preference preference = new Preference()
             {
                 Id = id ?? Guid.NewGuid(),
@@ -210,10 +306,10 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 FavoriteColor = 0,
                 ShortOder1 = String.Join(",", _color1in3s),
                 Oder1 = String.Join(",", _color1in12s),
-                Preference1 = new StateEvaluationDLL.DataStructures.Preference(Color1in3sByte, Color2in3sByte).Type.ToString(), 
+                Preference1 = Common.Enums.PreferenceValues.Preferences.ToArray()[Preference1Index], 
                 ShortOder2 = String.Join(",", _color2in3s),
                 Oder2 = String.Join(",", _color2in12s),
-                Preference2 = new StateEvaluationDLL.DataStructures.Preference(Color2in3sByte, Color2in12sByte).Type.ToString(),
+                Preference2 = Common.Enums.PreferenceValues.Preferences.ToArray()[Preference2Index],
                 Compare = (_preference1.IndexOf(true) == _preference2.IndexOf(true)).ToString().ToLower(),
                 RelaxTable1 = (int?)int.Parse(preferenceVM.ColorRelax1),
                 RelaxTable2 = (int?)int.Parse(preferenceVM.ColorRelax2)
