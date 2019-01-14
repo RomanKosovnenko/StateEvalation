@@ -17,28 +17,28 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         private DataRepository _dataRepository;
 
         private IEnumerable<ListBox> _userIdComboBoxes { get; }
-        private IEnumerable<ComboBox> _expeditionComboBoxes { get; }
-        private IEnumerable<ComboBox> _userNumberComboBoxes { get; }
-        private IEnumerable<ComboBox> _professionsComboBoxes { get; }
+        private IEnumerable<ListBox> _expeditionComboBoxes { get; }
+        private IEnumerable<ListBox> _userNumberComboBoxes { get; }
+        private IEnumerable<ListBox> _professionsComboBoxes { get; }
         private DataGrid _peopleDataGrid { get; }
         private Button _updatePersonBtn { get; }
 
         public PeopleBuissnesManager(
             DataRepository dataRepository, 
-            IEnumerable<ListBox> userIdComboBoxes,
-            IEnumerable<ComboBox> expeditionComboBoxes,
-            IEnumerable<ComboBox> userNumberComboBoxes,
-            IEnumerable<ComboBox> professionsComboBoxes,
+            IEnumerable<ListBox> userIdListBoxes,
+            IEnumerable<ListBox> expeditionListBoxes,
+            IEnumerable<ListBox> userNumberListBoxes,
+            IEnumerable<ListBox> professionsListBoxes,
             DataGrid peopleDataGrid,
             Button updatePersonBtn)
         {
             _dataRepository = dataRepository;
-            _userIdComboBoxes = userIdComboBoxes;
-            _expeditionComboBoxes = expeditionComboBoxes;
-            _userNumberComboBoxes = userNumberComboBoxes;
+            _userIdComboBoxes = userIdListBoxes;
+            _expeditionComboBoxes = expeditionListBoxes;
+            _userNumberComboBoxes = userNumberListBoxes;
             _peopleDataGrid = peopleDataGrid;
             _updatePersonBtn = updatePersonBtn;
-            _professionsComboBoxes = professionsComboBoxes;
+            _professionsComboBoxes = professionsListBoxes;
         }
 
         public Dictionary<string, string> GetUserIdBirthPairs()

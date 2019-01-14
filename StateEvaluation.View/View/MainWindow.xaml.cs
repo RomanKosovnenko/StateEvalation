@@ -38,9 +38,6 @@ namespace StateEvaluation
         private IEnumerable<ListBox> professionsListBoxes;
 
         private IEnumerable<ComboBox> userIdComboBoxes;
-        private IEnumerable<ComboBox> expeditionComboBoxes;
-        private IEnumerable<ComboBox> numberOfPeopleComboBoxes;
-        private IEnumerable<ComboBox> professionsComboBoxes;
      
         #region ctor
         public MainWindow()
@@ -70,11 +67,6 @@ namespace StateEvaluation
                 ExpeditionFilterFeelingsTab
             };
 
-            expeditionComboBoxes = new List<ComboBox>()
-            {
-
-            };
-
             numberOfPeopleListBoxes = new List<ListBox>()
             {
                 NumberFilterPeopleTab,
@@ -82,21 +74,11 @@ namespace StateEvaluation
                 NumberFilterFeelingsTab
             };
 
-            numberOfPeopleComboBoxes = new List<ComboBox>()
-            {
-                
-            };
-
             professionsListBoxes = new List<ListBox>()
             {
                 ProfessionFilterPeopleTab,
                 ProfessionFilterPreferencesTab,
                 ProfessionFilterFeelingsTab
-            };
-
-            professionsComboBoxes = new List<ComboBox>()
-            {
-
             };
 
             peopleFilter = (PeopleFilterVM)Resources["peopleFilterVM"];
@@ -107,9 +89,9 @@ namespace StateEvaluation
             (
                 dataRepository,
                 userIdListBoxes,
-                expeditionComboBoxes,
-                numberOfPeopleComboBoxes,
-                professionsComboBoxes,
+                expeditionListBoxes,
+                numberOfPeopleListBoxes,
+                professionsListBoxes,
                 PeopleDataGrid,
                 UpdatePersonBtn
             );
@@ -124,6 +106,18 @@ namespace StateEvaluation
             preferenceBuissnesManager = new PreferenceBuissnesManager(dataRepository, PreferencesDataGrid, UpdatePrefernceBtn);
             filterBussinesManager = new FilterBussinesManager(dataRepository);
             subjectiveFeelingBuissnesManager = new SubjectiveFeelingBuissnesManager(dataRepository, SubjectiveFeelingDataGrid, UpdateSubjectiveFeelingBtn);
+
+            biocolor1ShortOrder = new List<ComboBox> { selectorC1in3, selectorC2in3, selectorC3in3 };
+            biocolor1LongOrder  = new List<ComboBox> { selectorC1in12, selectorC2in12, selectorC3in12, selectorC4in12, selectorC5in12, selectorC6in12,
+                                                       selectorC7in12, selectorC8in12, selectorC9in12, selectorC10in12, selectorC11in12, selectorC12in12 };
+            biocolor2ShortOrder = new List<ComboBox> { selectorC21in3, selectorC22in3, selectorC23in3 };
+            biocolor2LongOrder  = new List<ComboBox> { selectorC21in12, selectorC22in12, selectorC23in12, selectorC24in12, selectorC25in12, selectorC26in12,
+                                                       selectorC27in12, selectorC28in12, selectorC29in12, selectorC210in12, selectorC211in12, selectorC212in12 };
+            
+            RegenerateComboBoxItems(biocolor1ShortOrder);
+            RegenerateComboBoxItems(biocolor1LongOrder);
+            RegenerateComboBoxItems(biocolor2ShortOrder);
+            RegenerateComboBoxItems(biocolor2LongOrder);
 
             colors = new List<BiocolorProvider.ColorRow> {
                 new BiocolorProvider.ColorRow(PhysicalColor1, PhysicalButton1, cPhysicalColor1, mPhysicalColor1, yPhysicalColor1, kPhysicalColor1, PhysicalColorBackground1),

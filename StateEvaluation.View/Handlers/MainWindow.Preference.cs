@@ -2,6 +2,7 @@
 using StateEvaluation.Common.ViewModel;
 using StateEvaluation.Repository.Models;
 using StateEvaluation.View;
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -13,6 +14,11 @@ namespace StateEvaluation
     /// </summary>
     partial class MainWindow : Window
     {
+        private List<ComboBox> biocolor1ShortOrder;
+        private List<ComboBox> biocolor1LongOrder;
+        private List<ComboBox> biocolor2ShortOrder;
+        private List<ComboBox> biocolor2LongOrder;
+
         /// <summary>
         /// Create test of preference from interface
         /// </summary>
@@ -75,6 +81,10 @@ namespace StateEvaluation
         {
             var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
             preferenceBuissnesManager.ClearInputs(preferenceVM);
+            RegenerateComboBoxItems(biocolor1ShortOrder);
+            RegenerateComboBoxItems(biocolor1LongOrder);
+            RegenerateComboBoxItems(biocolor2ShortOrder);
+            RegenerateComboBoxItems(biocolor2LongOrder);
         }
 
         /// <summary>
@@ -170,31 +180,81 @@ namespace StateEvaluation
             preferenceFilter.SetPreferenceState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
         }
 
-
-
-        private void BioColor1_SelectionChanged(object sender, RoutedEventArgs e)
+        private void RegenerateComboBoxItems(List<ComboBox> comboBoxes)
         {
-            var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
-            if (preferenceBuissnesManager.IsValidBioColorVM(preferenceVM, 1))
+            List<string> strings = new List<string> { };
+            List<string> fullOrder;
+            if(comboBoxes.Count() == 3)
             {
-                preferenceBuissnesManager.GeneratePreference(preferenceVM, 1);
+                fullOrder = Common.Enums.PreferenceValues.ShortColorsNumbersList.ToList();
+            } else if(comboBoxes.Count() == 12)
+            {
+                fullOrder = Common.Enums.PreferenceValues.ColorsNumbersList.ToList();
+            } else
+            {
+                fullOrder = new List<string> { };
             }
-            else
+
+            foreach (ComboBox combo in comboBoxes)
             {
-                preferenceBuissnesManager.ClearPreference(preferenceVM, 1);
+                string value = combo.SelectedValue?.ToString();
+                if (value != string.Empty && value != null)
+                {
+                    strings.Add(value);
+                }
+            }
+
+            foreach (ComboBox combo in comboBoxes)
+            {
+                combo.SelectionChanged -= BioColor_SelectionChanged;
+                var selected = combo.SelectedItem;
+                combo.Items.Clear();
+                combo.Items.Add(string.Empty);
+                foreach (var value in fullOrder)
+                {
+                    if (selected != null && value == selected.ToString())
+                    {
+                        combo.Items.Add(selected);
+                    }
+                    if (!strings.Contains(value))
+                    {
+                        combo.Items.Add(value);
+                    }
+                }
+                combo.SelectedItem = selected;
+                combo.SelectionChanged += BioColor_SelectionChanged;
             }
         }
-        private void BioColor2_SelectionChanged(object sender, RoutedEventArgs e)
+
+        private void BioColor_SelectionChanged(object sender, RoutedEventArgs e)
         {
+            var combo = (sender as ComboBox);
+            List<ComboBox> list;
+            int biocolor;
+            switch (combo.Tag)
+            {
+                case "shortOrder1":
+                    list = biocolor1ShortOrder;
+                    biocolor = 1;
+                    break;
+                case "longOrder1":
+                    list = biocolor1LongOrder;
+                    biocolor = 1;
+                    break;
+                case "shortOrder2":
+                    list = biocolor2ShortOrder;
+                    biocolor = 2;
+                    break;
+                case "longOrder2":
+                    list = biocolor2LongOrder;
+                    biocolor = 2;
+                    break;
+                default:
+                    return;
+            }
             var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
-            if (preferenceBuissnesManager.IsValidBioColorVM(preferenceVM, 2))
-            {
-                preferenceBuissnesManager.GeneratePreference(preferenceVM, 2);
-            }
-            else
-            {
-                preferenceBuissnesManager.ClearPreference(preferenceVM, 2);
-            }
+            preferenceBuissnesManager.GeneratePreference(preferenceVM, biocolor);
+            RegenerateComboBoxItems(list);
         }
     }
 }

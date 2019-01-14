@@ -19,6 +19,8 @@ namespace StateEvaluation.BioColor.Helpers
             string color;
             switch (input)
             {
+                case "":
+                    return Brushes.White;
                 case "1":
                     color = biocolorSettings.I1; // Brushes.Violet;
                     break;

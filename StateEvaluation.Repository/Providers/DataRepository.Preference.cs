@@ -77,7 +77,7 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public IEnumerable<Preference> GetPreferenceTests(Func<Preference, bool> query)
         {
-            var preferences = this.Preference.Where(query).OrderByDescending(item => item.Date); ;
+            var preferences = this.Preference.Where(query).OrderByDescending(item => item.Date);
             return preferences;
         }
 

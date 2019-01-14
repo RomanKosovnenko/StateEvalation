@@ -37,15 +37,17 @@
         <ObjectDataProvider x:Key="GetExpeditionCodes" ObjectType="{x:Type repository:DataRepository}" MethodName="GetExpeditionCodesFilter"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetShortColorsNumbersList" ObjectType="{x:Type repository:DataRepository}" MethodName="GetShortColorsNumbersFilters"></ObjectDataProvider>
         <ObjectDataProvider x:Key="GetColorsNumbersList" ObjectType="{x:Type repository:DataRepository}" MethodName="GetColorsNumbersFilters"></ObjectDataProvider>
+         
+        
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
-        <helpers:StringToListConverter x:Key="StringToListConverter" />
         <biocolorhelpers:NameToBrushConverter x:Key="NameToBrushConverter" />
+        <biocolorhelpers:NameToMultiBrushConverter x:Key="NameToMultiBrushConverter" />
+        <helpers:StringToListConverter x:Key="StringToListConverter" />
         <helpers:NameToImageConverter x:Key="NameToImageConverter" />
         <helpers:DateToSin x:Key="DateToSin" />
         <helpers:BooleanToChecker x:Key="BooleanToChecker" />
         <helpers:NumberToRelax1Converter x:Key="NumberToRelax1Converter" />
         <helpers:NumberToRelax2Converter x:Key="NumberToRelax2Converter" />
-        <biocolorhelpers:NameToMultiBrushConverter x:Key="NameToMultiBrushConverter" />
         <helpers:PreferenceSameAsRelax x:Key="PreferenceSameAsRelax" />
         <helpers:PreferenceToBrushConverter x:Key="PreferenceToBrushConverter" />
         <helpers:ButtonToVisibilityConverter x:Key="ButtonToVisibilityConverter" />
@@ -78,6 +80,24 @@
                     <ScaleTransform ScaleX="2" ScaleY="2"/>
                 </Setter.Value>
             </Setter>
+        </Style>
+        
+        <Style TargetType="ComboBoxItem" x:Key="ComboBoxItemColored">
+            <Setter Property="Foreground" Value="{Binding Converter={StaticResource TextColorNumberToBrushConverter}}" />
+            <Setter Property="Background" Value="{Binding Converter={StaticResource NameToMultiBrushConverter}}" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Foreground" Value="Black" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="Black" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style TargetType="ComboBox" x:Key="ComboBoxColored">
+            <Setter Property="MaxDropDownHeight" Value="500"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ComboBoxItemColored}"/>
+            <Setter Property="Foreground" Value="{Binding Converter={StaticResource NameToMultiBrushConverter}}"/>
         </Style>
     </Window.Resources>
     
@@ -197,22 +217,22 @@
                     <ComboBox  Grid.Row="1" Grid.Column="1" Margin="0,2,10,2" x:Name="UserIdsInsertPreferenceCB" ItemsSource="{Binding Source={StaticResource GetCodesForInsert}}" SelectedValue="{Binding UserId}" />
                     <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Биоколор 1" />
                     <!-- Bio1 - 3 -->
-                    <ComboBox Grid.Row="1" Grid.Column="3" Margin="2" x:Name="selectorC1in3" SelectionChanged="BioColor1_SelectionChanged" SelectedValue="{Binding Color1in3}" ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" />
-                    <ComboBox Grid.Row="1" Grid.Column="4" Margin="2" x:Name="selectorC2in3" SelectionChanged="BioColor1_SelectionChanged" SelectedValue="{Binding Color2in3}" ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" />
-                    <ComboBox Grid.Row="1" Grid.Column="5" Margin="2" x:Name="selectorC3in3" SelectionChanged="BioColor1_SelectionChanged" SelectedValue="{Binding Color3in3}" ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" />
+                    <ComboBox Grid.Row="1" Grid.Column="3" Margin="2" x:Name="selectorC1in3" SelectionChanged="BioColor_SelectionChanged" Tag="shortOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color1in3}" />
+                    <ComboBox Grid.Row="1" Grid.Column="4" Margin="2" x:Name="selectorC2in3" SelectionChanged="BioColor_SelectionChanged" Tag="shortOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color2in3}" />
+                    <ComboBox Grid.Row="1" Grid.Column="5" Margin="2" x:Name="selectorC3in3" SelectionChanged="BioColor_SelectionChanged" Tag="shortOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color3in3}" />
                     <!-- Bio1 - 12 -->
-                    <ComboBox Grid.Row="1" Grid.Column="07" Margin="2" x:Name="selectorC1in12"  SelectionChanged="BioColor1_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color1in12}" />
-                    <ComboBox Grid.Row="1" Grid.Column="08" Margin="2" x:Name="selectorC2in12"  SelectionChanged="BioColor1_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color2in12}" />
-                    <ComboBox Grid.Row="1" Grid.Column="09" Margin="2" x:Name="selectorC3in12"  SelectionChanged="BioColor1_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color3in12}" />
-                    <ComboBox Grid.Row="1" Grid.Column="10" Margin="2" x:Name="selectorC4in12"  SelectionChanged="BioColor1_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color4in12}" />
-                    <ComboBox Grid.Row="1" Grid.Column="11" Margin="2" x:Name="selectorC5in12"  SelectionChanged="BioColor1_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color5in12}" />
-                    <ComboBox Grid.Row="1" Grid.Column="12" Margin="2" x:Name="selectorC6in12"  SelectionChanged="BioColor1_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color6in12}" />
-                    <ComboBox Grid.Row="1" Grid.Column="13" Margin="2" x:Name="selectorC7in12"  SelectionChanged="BioColor1_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color7in12}" />
-                    <ComboBox Grid.Row="1" Grid.Column="14" Margin="2" x:Name="selectorC8in12"  SelectionChanged="BioColor1_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color8in12}" />
-                    <ComboBox Grid.Row="1" Grid.Column="15" Margin="2" x:Name="selectorC9in12"  SelectionChanged="BioColor1_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color9in12}" />
-                    <ComboBox Grid.Row="1" Grid.Column="16" Margin="2" x:Name="selectorC10in12" SelectionChanged="BioColor1_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color10in12}" />
-                    <ComboBox Grid.Row="1" Grid.Column="17" Margin="2" x:Name="selectorC11in12" SelectionChanged="BioColor1_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color11in12}" />
-                    <ComboBox Grid.Row="1" Grid.Column="18" Margin="2" x:Name="selectorC12in12" SelectionChanged="BioColor1_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color12in12}" />
+                    <ComboBox Grid.Row="1" Grid.Column="07" Margin="2" x:Name="selectorC1in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color1in12}" />
+                    <ComboBox Grid.Row="1" Grid.Column="08" Margin="2" x:Name="selectorC2in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color2in12}" />
+                    <ComboBox Grid.Row="1" Grid.Column="09" Margin="2" x:Name="selectorC3in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color3in12}" />
+                    <ComboBox Grid.Row="1" Grid.Column="10" Margin="2" x:Name="selectorC4in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color4in12}" />
+                    <ComboBox Grid.Row="1" Grid.Column="11" Margin="2" x:Name="selectorC5in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color5in12}" />
+                    <ComboBox Grid.Row="1" Grid.Column="12" Margin="2" x:Name="selectorC6in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color6in12}" />
+                    <ComboBox Grid.Row="1" Grid.Column="13" Margin="2" x:Name="selectorC7in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color7in12}" />
+                    <ComboBox Grid.Row="1" Grid.Column="14" Margin="2" x:Name="selectorC8in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color8in12}" />
+                    <ComboBox Grid.Row="1" Grid.Column="15" Margin="2" x:Name="selectorC9in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color9in12}" />
+                    <ComboBox Grid.Row="1" Grid.Column="16" Margin="2" x:Name="selectorC10in12" SelectionChanged="BioColor_SelectionChanged" Tag="longOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color10in12}" />
+                    <ComboBox Grid.Row="1" Grid.Column="17" Margin="2" x:Name="selectorC11in12" SelectionChanged="BioColor_SelectionChanged" Tag="longOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color11in12}" />
+                    <ComboBox Grid.Row="1" Grid.Column="18" Margin="2" x:Name="selectorC12in12" SelectionChanged="BioColor_SelectionChanged" Tag="longOrder1" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color12in12}" />
                     <!-- Bio1 - Pref -->
                     <RadioButton Grid.Row="1" Grid.Column="19" Margin="2" x:Name="RedStat"    HorizontalAlignment="Center" VerticalAlignment="Center" GroupName="Pref1" IsChecked="{Binding Preference1Blue}"  />
                     <RadioButton Grid.Row="1" Grid.Column="20" Margin="2" x:Name="YellowStat" HorizontalAlignment="Center" VerticalAlignment="Center" GroupName="Pref1" IsChecked="{Binding Preference1Yellow}"/>
@@ -226,22 +246,22 @@
                     <DatePicker Grid.Row="2" Grid.Column="1" Margin="0,2,10,2" x:Name="dateTimeForTest" SelectedDate="{Binding TestDate}" />
                     <TextBlock  Grid.Row="2" Grid.Column="2" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Биоколор 2" />
                     <!-- Bio2 - 3 -->
-                    <ComboBox Grid.Row="2" Grid.Column="3" Margin="2" x:Name="selectorC21in3" SelectionChanged="BioColor2_SelectionChanged" SelectedValue="{Binding Color21in3}" ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" />
-                    <ComboBox Grid.Row="2" Grid.Column="4" Margin="2" x:Name="selectorC22in3" SelectionChanged="BioColor2_SelectionChanged" SelectedValue="{Binding Color22in3}" ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" />
-                    <ComboBox Grid.Row="2" Grid.Column="5" Margin="2" x:Name="selectorC23in3" SelectionChanged="BioColor2_SelectionChanged" SelectedValue="{Binding Color23in3}" ItemsSource="{Binding Source={StaticResource GetShortColorsNumbersList}}" />
+                    <ComboBox Grid.Row="2" Grid.Column="3" Margin="2" x:Name="selectorC21in3" SelectionChanged="BioColor_SelectionChanged" Tag="shortOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color21in3}" />
+                    <ComboBox Grid.Row="2" Grid.Column="4" Margin="2" x:Name="selectorC22in3" SelectionChanged="BioColor_SelectionChanged" Tag="shortOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color22in3}" />
+                    <ComboBox Grid.Row="2" Grid.Column="5" Margin="2" x:Name="selectorC23in3" SelectionChanged="BioColor_SelectionChanged" Tag="shortOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color23in3}" />
                     <!-- Bio2 - 12 -->
-                    <ComboBox Grid.Row="2" Grid.Column="07" Margin="2" x:Name="selectorC21in12"  SelectionChanged="BioColor2_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color21in12}" />
-                    <ComboBox Grid.Row="2" Grid.Column="08" Margin="2" x:Name="selectorC22in12"  SelectionChanged="BioColor2_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color22in12}" />
-                    <ComboBox Grid.Row="2" Grid.Column="09" Margin="2" x:Name="selectorC23in12"  SelectionChanged="BioColor2_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color23in12}" />
-                    <ComboBox Grid.Row="2" Grid.Column="10" Margin="2" x:Name="selectorC24in12"  SelectionChanged="BioColor2_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color24in12}" />
-                    <ComboBox Grid.Row="2" Grid.Column="11" Margin="2" x:Name="selectorC25in12"  SelectionChanged="BioColor2_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color25in12}" />
-                    <ComboBox Grid.Row="2" Grid.Column="12" Margin="2" x:Name="selectorC26in12"  SelectionChanged="BioColor2_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color26in12}" />
-                    <ComboBox Grid.Row="2" Grid.Column="13" Margin="2" x:Name="selectorC27in12"  SelectionChanged="BioColor2_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color27in12}" />
-                    <ComboBox Grid.Row="2" Grid.Column="14" Margin="2" x:Name="selectorC28in12"  SelectionChanged="BioColor2_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color28in12}" />
-                    <ComboBox Grid.Row="2" Grid.Column="15" Margin="2" x:Name="selectorC29in12"  SelectionChanged="BioColor2_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color29in12}" />
-                    <ComboBox Grid.Row="2" Grid.Column="16" Margin="2" x:Name="selectorC210in12" SelectionChanged="BioColor2_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color210in12}" />
-                    <ComboBox Grid.Row="2" Grid.Column="17" Margin="2" x:Name="selectorC211in12" SelectionChanged="BioColor2_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color211in12}" />
-                    <ComboBox Grid.Row="2" Grid.Column="18" Margin="2" x:Name="selectorC212in12" SelectionChanged="BioColor2_SelectionChanged" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding Color212in12}" />
+                    <ComboBox Grid.Row="2" Grid.Column="07" Margin="2" x:Name="selectorC21in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color21in12}" />
+                    <ComboBox Grid.Row="2" Grid.Column="08" Margin="2" x:Name="selectorC22in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color22in12}" />
+                    <ComboBox Grid.Row="2" Grid.Column="09" Margin="2" x:Name="selectorC23in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color23in12}" />
+                    <ComboBox Grid.Row="2" Grid.Column="10" Margin="2" x:Name="selectorC24in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color24in12}" />
+                    <ComboBox Grid.Row="2" Grid.Column="11" Margin="2" x:Name="selectorC25in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color25in12}" />
+                    <ComboBox Grid.Row="2" Grid.Column="12" Margin="2" x:Name="selectorC26in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color26in12}" />
+                    <ComboBox Grid.Row="2" Grid.Column="13" Margin="2" x:Name="selectorC27in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color27in12}" />
+                    <ComboBox Grid.Row="2" Grid.Column="14" Margin="2" x:Name="selectorC28in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color28in12}" />
+                    <ComboBox Grid.Row="2" Grid.Column="15" Margin="2" x:Name="selectorC29in12"  SelectionChanged="BioColor_SelectionChanged" Tag="longOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color29in12}" />
+                    <ComboBox Grid.Row="2" Grid.Column="16" Margin="2" x:Name="selectorC210in12" SelectionChanged="BioColor_SelectionChanged" Tag="longOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color210in12}" />
+                    <ComboBox Grid.Row="2" Grid.Column="17" Margin="2" x:Name="selectorC211in12" SelectionChanged="BioColor_SelectionChanged" Tag="longOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color211in12}" />
+                    <ComboBox Grid.Row="2" Grid.Column="18" Margin="2" x:Name="selectorC212in12" SelectionChanged="BioColor_SelectionChanged" Tag="longOrder2" Style="{StaticResource ComboBoxColored}" SelectedValue="{Binding Color212in12}" />
                     <!-- Bio2 - Pref -->
                     <RadioButton Grid.Row="2" Grid.Column="19" Margin="2" x:Name="Blue2Stat"   HorizontalAlignment="Center" VerticalAlignment="Center" GroupName="Pref2" IsChecked="{Binding Preference2Blue}"  />
                     <RadioButton Grid.Row="2" Grid.Column="20" Margin="2" x:Name="Yellow2Stat" HorizontalAlignment="Center" VerticalAlignment="Center" GroupName="Pref2" IsChecked="{Binding Preference2Yellow}"/>

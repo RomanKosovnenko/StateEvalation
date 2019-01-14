@@ -36,7 +36,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             try
             {
-                if (IsValidPreferenseVM(preferenceVM))
+                if (IsValidPreferenceVM(preferenceVM))
                 {
                     var preference = GetNewPreference(preferenceVM);
 
@@ -77,7 +77,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             {
                 if (HasChanges(preferenceVM))
                 {
-                    if (IsValidPreferenseVM(preferenceVM))
+                    if (IsValidPreferenceVM(preferenceVM))
                     {
                         var preference = GetNewPreference(preferenceVM, new Guid(preferenceVM.Id));
                         _dataRepository.UpdatePreferenceTest(preference);
@@ -157,7 +157,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             _preferenceDataGrid.ItemsSource = _dataRepository.GetPreferenceTests();
         }
 
-        public bool IsValidPreferenceVM(PreferenceVM preferenceVM, int biocolor)
+        public bool IsValidPreference(PreferenceVM preferenceVM, int biocolor)
         {
             if (biocolor == 1)
             {
@@ -185,7 +185,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                     preferenceVM.Color7in12, preferenceVM.Color8in12, preferenceVM.Color9in12,
                     preferenceVM.Color10in12, preferenceVM.Color11in12, preferenceVM.Color12in12
                 };
-                return !(new List<List<string>> { _color1in3s, _color1in12s }.Any(x => x.Any(y => y == null) || x.Count != x.Distinct().Count()));
+                return !(new List<List<string>> { _color1in3s, _color1in12s }.Any(x => x.Any(y => y == null || y == string.Empty) || x.Count != x.Distinct().Count()));
             }
             if (biocolor == 2)
             {
@@ -196,12 +196,17 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                     preferenceVM.Color27in12, preferenceVM.Color28in12,  preferenceVM.Color29in12,
                     preferenceVM.Color210in12,  preferenceVM.Color211in12, preferenceVM.Color212in12
                 };
-                return !(new List<List<string>> { _color2in3s, _color2in12s }.Any(x => x.Any(y => y == null) || x.Count != x.Distinct().Count()));
+                return !(new List<List<string>> { _color2in3s, _color2in12s }.Any(x => x.Any(y => y == null || y == string.Empty) || x.Count != x.Distinct().Count()));
             }
             return false;
         }
         public void GeneratePreference(PreferenceVM preferenceVM, int biocolor)
         {
+            if (!IsValidBioColorVM(preferenceVM, biocolor))
+            {
+                ClearPreference(preferenceVM, biocolor);
+                return;
+            }
             if (biocolor == 1)
             {
                 List<byte> Color1in3sByte = _color1in3s.Select(x => Byte.Parse(x)).ToList();
@@ -266,10 +271,10 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 preferenceVM.Preference2Grey = StringBooleanValues.False;
             }
         }
-        private bool IsValidPreferenseVM(PreferenceVM preferenceVM)
+        private bool IsValidPreferenceVM(PreferenceVM preferenceVM)
         {
-            if (preferenceVM.UserId == String.Empty || preferenceVM.TestDate == null
-                || preferenceVM.ColorRelax1 == String.Empty || preferenceVM.ColorRelax2 == String.Empty)
+            if (preferenceVM.UserId == string.Empty || preferenceVM.TestDate == null
+                || preferenceVM.ColorRelax1 == string.Empty || preferenceVM.ColorRelax2 == string.Empty)
             {
                 return false;
             }
@@ -281,11 +286,11 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             {
                 return false;
             }
-            if (!IsValidPreferenceVM(preferenceVM, 1))
+            if (!IsValidPreference(preferenceVM, 1))
             {
                 return false;
             }
-            if (!IsValidPreferenceVM(preferenceVM, 2))
+            if (!IsValidPreference(preferenceVM, 2))
             {
                 return false;
             }
