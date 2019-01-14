@@ -271,7 +271,6 @@
                     <ComboBox Grid.Row="2" Grid.Column="23" Margin="2" x:Name="selectorRelax2" ItemsSource="{Binding Source={StaticResource GetColorsNumbersList}}" SelectedValue="{Binding ColorRelax2}"/>
                     <!-- End -->
 
-                    <Button Grid.Row="0" Grid.Column="24" Margin="2" Visibility="Hidden" Command="{Binding ChangeColors}" Content="Сменить раскраску" />
                     <Button Grid.Row="1" Grid.Column="24" Margin="2" Click="CreatePreferense_Click" Content="Добавить запись" />
                     <Button Grid.Row="1" Grid.Column="24" Margin="2" x:Name="UpdatePrefernceBtn" Click="UpdatePreference_Click" Content="Применить" Visibility="Hidden"/>
                     <Button Grid.Row="2" Grid.Column="24" Margin="2" Click="ClearPreferenceInputs_Click" Content="Сброс выбора"  />
@@ -397,7 +396,7 @@
                 </DataGrid.Columns>
             </DataGrid>
             <DataGrid comment:Tab="Preferences Grid"
-                      x:Name="PreferencesDataGrid" CanUserAddRows="False" RowHeight="40" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
+                      x:Name="PreferencesDataGrid" SelectionChanged="PreferencesDataGrid_Selected" CanUserAddRows="False" RowHeight="40" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
@@ -411,17 +410,6 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button x:Name="EditPreferenceBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="BindPreferenceInForm_Click" Tag="{Binding Id}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    <DataGridTemplateColumn Header="График" ClipboardContentBinding="{x:Null}">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <Button
-                                Command="{Binding MakeIndividualChartCommand}"
-                                Content="&#xE929;"
-                                FontFamily="Segoe MDL2 Assets"
-                                ToolTip="{x:Static p:Resources.MakeChartToolTip}" Click="BuildInduvidualChart_Click" />
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -1503,9 +1491,17 @@
                         Grid.Row="0"
                         Grid.Column="0" 
                         Grid.ColumnSpan="2"
+                        Visibility="Hidden"
                         Margin="2"
                         Content="Импорт"
                         Click="AddData_OnClick" />
+                    <Button
+                        Grid.Row="0"
+                        Grid.Column="0" 
+                        Grid.ColumnSpan="2" 
+                        Margin="2"
+                        Content="Построить график человека" 
+                        Click="BuildInduvidualChart_Click" />
                     <Button 
                         Grid.Row="1"
                         Grid.Column="0" 

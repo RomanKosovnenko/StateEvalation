@@ -18,6 +18,7 @@ namespace StateEvaluation
         private List<ComboBox> biocolor1LongOrder;
         private List<ComboBox> biocolor2ShortOrder;
         private List<ComboBox> biocolor2LongOrder;
+        private Preference currentPreference;
 
         /// <summary>
         /// Create test of preference from interface
@@ -142,7 +143,6 @@ namespace StateEvaluation
         /// <param name="e"></param>
         private void BuildInduvidualChart_Click(object sender, RoutedEventArgs e)
         {
-            var currentPreference = (Preference)((Button)(e.Source)).BindingGroup.Items[0];
             if (preferenceBuissnesManager.IsExistsPreference(currentPreference))
             {
                 var subWindow = new IndividualChart(currentPreference, dataRepository);
@@ -151,6 +151,10 @@ namespace StateEvaluation
             {
                 throw new System.Exception();
             }
+        }
+        private void PreferencesDataGrid_Selected(object sender, RoutedEventArgs e)
+        {
+            currentPreference = (Preference)((DataGrid)(sender)).SelectedItem;
         }
 
 

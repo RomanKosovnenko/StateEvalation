@@ -9,16 +9,25 @@
         Width="700"
         Height="700"
         mc:Ignorable="d">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button x:Name="ChartChanger"
-                Click="ChartChanger_Click"
-                Content="Изменить график" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <CheckBox Grid.Column="0" x:Name="Graph1" IsChecked="True" Click="ChartChanger_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Длина волны"/>
+        <CheckBox Grid.Column="1" x:Name="Graph2" IsChecked="True" Click="ChartChanger_Click" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Интенсивность"/>
+        
         <lvc:LineChart Name="Chart"
-                       Grid.Row="2"
+                       Grid.Row="1"
+                       Grid.ColumnSpan="2"
                        LineSmoothness="0"
                        Series="{Binding Series}">
             <lvc:LineChart.AxisY>
