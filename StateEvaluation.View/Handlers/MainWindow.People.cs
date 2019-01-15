@@ -1,6 +1,7 @@
 ﻿using StateEvaluation.Common.Constants;
 using StateEvaluation.Common.ViewModel;
 using StateEvaluation.Repository.Models;
+using System;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
@@ -99,7 +100,14 @@ namespace StateEvaluation
         /// <param name="e"></param>
         private void FilterPeople_Click(object sender, RoutedEventArgs e)
         {
-            filterBussinesManager.Filter(PeopleDataGrid, peopleFilter);
+            if ((DateTime)peopleFilter.DateFrom > (DateTime)peopleFilter.DateTo)
+            {
+                MessageBox.Show(MessageBoxConstants.WrongDateFields);
+            }
+            else
+            {
+                filterBussinesManager.Filter(PeopleDataGrid, peopleFilter);
+            }
         }
 
         private void UserIdsFilterPeopleTab_Selected(object sender, RoutedEventArgs e)

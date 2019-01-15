@@ -2,6 +2,7 @@
 using StateEvaluation.Common.ViewModel;
 using StateEvaluation.Repository.Models;
 using StateEvaluation.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -111,7 +112,14 @@ namespace StateEvaluation
         /// <param name="e"></param>
         private void FilterPreference_Click(object sender, RoutedEventArgs e)
         {
-            filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter);
+            if ((DateTime)preferenceFilter.DateFrom > (DateTime)preferenceFilter.DateTo)
+            {
+                MessageBox.Show(MessageBoxConstants.WrongDateFields);
+            }
+            else
+            {
+                filterBussinesManager.Filter(PreferencesDataGrid, preferenceFilter);
+            }
         }
 
         /// <summary>

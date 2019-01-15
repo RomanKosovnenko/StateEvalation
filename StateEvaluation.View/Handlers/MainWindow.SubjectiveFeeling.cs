@@ -103,7 +103,14 @@ namespace StateEvaluation
         /// <param name="e"></param>
         private void FilterSubjectiveFeeling_Click(object sender, RoutedEventArgs e)
         {
-            filterBussinesManager.Filter(SubjectiveFeelingDataGrid, subjectiveFeelingFilter);
+            if ((DateTime)subjectiveFeelingFilter.DateFrom > (DateTime)subjectiveFeelingFilter.DateTo)
+            {
+                MessageBox.Show(MessageBoxConstants.WrongDateFields);
+            }
+            else
+            {
+                filterBussinesManager.Filter(SubjectiveFeelingDataGrid, subjectiveFeelingFilter);
+            }
         }
 
         private void UserIdsFilterFeelingsTab_Selected(object sender, RoutedEventArgs e)

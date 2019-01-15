@@ -55,6 +55,21 @@
         <helpers:TextColorNumberToBrushConverter x:Key="TextColorNumberToBrushConverter"/>
         <helpers:TextTrimmer x:Key="TextTrimmer"/>
         
+        <Style TargetType="DatePickerTextBox">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <TextBox x:Name="PART_TextBox" 
+                                 IsReadOnly="True"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 MinWidth="75"
+                                 HorizontalContentAlignment="Center"
+                                 Text="{Binding Path=SelectedDate, RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}, StringFormat=\{0:d\}, ConverterCulture=uk-UA}" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <Style x:Key="styleCalendar" TargetType="{x:Type Calendar}">
             <Setter Property="Template">
                 <Setter.Value>
