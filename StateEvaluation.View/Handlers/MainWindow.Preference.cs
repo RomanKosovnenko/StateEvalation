@@ -230,6 +230,28 @@ namespace StateEvaluation
             }
         }
 
+        private void ExpandImage(object sender, RoutedEventArgs e)
+        {
+            HideImage(sender, e);
+
+            var source = (sender as Button).Tag;
+            if (source != null)
+            {
+                BigImage.Visibility = Visibility.Visible;
+                System.Windows.Media.Imaging.BitmapImage bimage = new System.Windows.Media.Imaging.BitmapImage();
+                bimage.BeginInit();
+                bimage.UriSource = new System.Uri(source.ToString(), System.UriKind.Relative);
+                bimage.EndInit();
+                BigImage.Source = bimage;
+            }
+        }
+
+        private void HideImage(object sender, RoutedEventArgs e)
+        {
+            BigImage.Visibility = Visibility.Hidden;
+            BigImage.Source = null;
+        }
+
         private void BioColor_SelectionChanged(object sender, RoutedEventArgs e)
         {
             var combo = (sender as ComboBox);

@@ -99,6 +99,15 @@
             <Setter Property="ItemContainerStyle" Value="{StaticResource ComboBoxItemColored}"/>
             <Setter Property="Foreground" Value="{Binding Converter={StaticResource NameToMultiBrushConverter}}"/>
         </Style>
+        
+        <Style TargetType="Image" x:Key="ImageBigOnHover">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Height" Value="500"/>
+                    <Setter Property="Width" Value="500"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
     
     <Grid>
@@ -636,14 +645,18 @@
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Релакс 1" Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding RelaxTable1, Converter={StaticResource NumberToRelax1Converter}}"/>
+                                <Button Background="Transparent" Tag="{Binding RelaxTable1, Converter={StaticResource NumberToRelax1Converter}}" Click="ExpandImage">
+                                    <Image Source="{Binding RelaxTable1, Converter={StaticResource NumberToRelax1Converter}}"/>
+                                </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}" Header="Релакс 2" Width="60">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Image Source="{Binding RelaxTable2, Converter={StaticResource NumberToRelax2Converter}}"/>
+                                <Button Background="Transparent" Tag="{Binding RelaxTable2, Converter={StaticResource NumberToRelax2Converter}}" Click="ExpandImage">
+                                    <Image Source="{Binding RelaxTable2, Converter={StaticResource NumberToRelax2Converter}}"/>
+                                </Button>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
@@ -1131,6 +1144,22 @@
                 <Button Grid.Row="14" Grid.Column="6" Grid.ColumnSpan="2" Click="ResetColors_Click"   Content="Восстановить"/>
 
             </Grid>
+
+            <Border BorderBrush="Black" BorderThickness="2" 
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Visibility="{Binding Path=Visibility, ElementName=BigImage}"
+                    >
+                <Button Click="HideImage"
+                    Height="{Binding Path=Height, ElementName=BigImage}"
+                    Width="{Binding Path=Width, ElementName=BigImage}">
+                    <Image x:Name="BigImage" 
+                       Visibility="Hidden" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Center" 
+                       MaxHeight="500" MaxWidth="500"/>
+                </Button>
+            </Border>
             
             <Grid Grid.Column="1" comment:Tab="People Filter"
                   DataContext="{StaticResource peopleFilterVM}"
