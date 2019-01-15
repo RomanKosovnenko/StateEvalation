@@ -12,6 +12,7 @@ using StateEvaluation.BussinesLayer.BuissnesManagers;
 using StateEvaluation.BioColor.Providers;
 using StateEvaluation.BioColor.Helpers;
 using StateEvaluation.BusinessLayer.BuissnesManagers;
+using System.Text.RegularExpressions;
 
 namespace StateEvaluation
 {
@@ -135,5 +136,15 @@ namespace StateEvaluation
             };
         }
         #endregion
+
+        private void DatePicker_Checker(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            DatePicker datePicker = (DatePicker)sender;
+            var allowedChars= new Regex(@"[0-9\.]");
+            if (!allowedChars.IsMatch(e.Text.ToString()))
+            {
+                e.Handled = true;
+            }
+        }
     }
 }

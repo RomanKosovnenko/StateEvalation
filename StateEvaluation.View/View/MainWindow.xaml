@@ -73,6 +73,7 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="CalendarStyle" Value="{StaticResource styleCalendar}"/>
+            <EventSetter Event="PreviewTextInput" Handler="DatePicker_Checker"/>
         </Style>
         <Style TargetType="CheckBox" x:Key="BigCheckBox">
             <Setter Property="LayoutTransform">
