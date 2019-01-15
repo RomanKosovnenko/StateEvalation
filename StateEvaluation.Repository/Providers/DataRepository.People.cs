@@ -77,7 +77,7 @@ namespace StateEvaluation.Repository.Providers
         public IEnumerable<string> GetUserIds()
         {
             return People
-                .Select(item => item.UserId)
+                .Select(item => item.UserId.Trim())
                 .Distinct()
                 .OrderByDescending(item => item)
                 .ToList();
@@ -119,10 +119,10 @@ namespace StateEvaluation.Repository.Providers
         /// Get expedition codes of people for filters
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<string> GetExpeditionCodesFilter()
+        public IEnumerable<int> GetExpeditionCodesFilter()
         {
             return People
-                .Select(item => item.Expedition.ToString())
+                .Select(item => item.Expedition)
                 .Distinct()
                 .OrderByDescending(item => Convert.ToInt32(item))
                 .ToList();
@@ -132,10 +132,10 @@ namespace StateEvaluation.Repository.Providers
         /// Get people's numbers for filters
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<string> GetPeopleNumbersFilter()
+        public IEnumerable<int> GetPeopleNumbersFilter()
         {
             return People
-                .Select(item => item.Number.ToString())
+                .Select(item => item.Number)
                 .Distinct()
                 .OrderBy(item => Convert.ToInt32(item))
                 .ToList();

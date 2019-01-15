@@ -15,7 +15,7 @@ namespace StateEvaluation.View.Helpers
 
             try
             {
-                if (input?.Trim().Length != 0)
+                if (input?.Length != 0)
                 {
                     if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(new DependencyObject()))
                     {

@@ -141,8 +141,8 @@ namespace StateEvaluation
                 int? intValue = null;
                 
                 var property = e.Column.SortMemberPath.ToString();
-                var currentValue = currentPeople.GetType().GetProperty(property).GetValue(currentPeople).ToString().Trim();
-                var value = ((TextBox)e.EditingElement).Text.ToString().Trim();
+                var currentValue = currentPeople.GetType().GetProperty(property).GetValue(currentPeople).ToString();
+                var value = ((TextBox)e.EditingElement).Text.ToString();
                 var intProperty = property;
 
                 if (currentValue == value)

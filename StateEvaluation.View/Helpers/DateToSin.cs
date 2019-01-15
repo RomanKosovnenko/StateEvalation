@@ -18,12 +18,12 @@ namespace StateEvaluation.View.Helpers
                 return "-//-";
             }
             //    DateTime nw = DateTime.Today;
-            string userid = value.ToString().Trim();
+            string userid = value.ToString();
 
 
             MainWindow.userIdBirthPairs.TryGetValue(userid, out string birthday);
 
-            if (birthday == null || birthday.Trim().Length == 0)
+            if (birthday == null || birthday.Length == 0)
             {
                 return "---";
             }

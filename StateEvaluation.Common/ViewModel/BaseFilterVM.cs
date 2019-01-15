@@ -23,7 +23,6 @@ namespace StateEvaluation.Common.ViewModel
         public List<string> UserIds { get => _userIds; set => _userIds = value; }
         public void SetUserState(string userId, bool state)
         {
-            userId = userId.Trim();
             if (_userIds.Contains(userId) && !state)
             {
                 _userIds.Remove(userId);
@@ -56,7 +55,6 @@ namespace StateEvaluation.Common.ViewModel
         public List<string> Expeditions { get => _expeditions; set => _expeditions = value; }
         public void SetExpeditionState(string expedition, bool state)
         {
-            expedition = expedition.Trim();
             if (_expeditions.Contains(expedition) && !state)
             {
                 _expeditions.Remove(expedition);
@@ -70,7 +68,6 @@ namespace StateEvaluation.Common.ViewModel
         public List<string> People { get => _people; set => _people = value; }
         public void SetPeopleState(string people, bool state)
         {
-            people = people.Trim();
             if (_people.Contains(people) && !state)
             {
                 _people.Remove(people);
@@ -85,7 +82,6 @@ namespace StateEvaluation.Common.ViewModel
 
         public void SetProfessionsState(string profession, bool state)
         {
-            profession = profession.Trim();
             if (_professions.Contains(profession) && !state)
             {
                 _professions.Remove(profession);

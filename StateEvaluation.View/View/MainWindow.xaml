@@ -427,13 +427,13 @@
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Header="Код" Binding="{Binding UserId}" x:Name="PeopleUserId"/>
-                    <DataGridTextColumn Header="Имя" Binding="{Binding Firstname, Converter={StaticResource TextTrimmer}}" />
-                    <DataGridTextColumn Header="Фамилия" Binding="{Binding Lastname, Converter={StaticResource TextTrimmer}}" />
-                    <DataGridTextColumn Header="Отчество" Binding="{Binding Middlename, Converter={StaticResource TextTrimmer}}" />
+                    <DataGridTextColumn Header="Имя" Binding="{Binding Firstname}" />
+                    <DataGridTextColumn Header="Фамилия" Binding="{Binding Lastname}" />
+                    <DataGridTextColumn Header="Отчество" Binding="{Binding Middlename}" />
                     <DataGridTextColumn Header="День рождения" Binding="{Binding Birthday, StringFormat=\{0:d\}}" />
-                    <DataGridTextColumn Header="Профессия" Binding="{Binding Workposition, Converter={StaticResource TextTrimmer}, UpdateSourceTrigger=PropertyChanged}" />
-                    <DataGridTextColumn Header="Експедиция" Binding="{Binding Expedition, Converter={StaticResource TextTrimmer}}" />
-                    <DataGridTextColumn Header="Номер" Binding="{Binding Number, Converter={StaticResource TextTrimmer}}" />
+                    <DataGridTextColumn Header="Профессия" Binding="{Binding Workposition}" />
+                    <DataGridTextColumn Header="Експедиция" Binding="{Binding Expedition}" />
+                    <DataGridTextColumn Header="Номер" Binding="{Binding Number}" />
                 </DataGrid.Columns>
             </DataGrid>
             <DataGrid comment:Tab="Preferences Grid"
@@ -1177,7 +1177,7 @@
 
             </Grid>
 
-            <Grid x:Name="Loader" Visibility="Hidden">
+            <Grid x:Name="Loader" Visibility="Hidden" Grid.ColumnSpan="2">
                 <TextBox
                     FontSize="24"
                     HorizontalContentAlignment="Center"
@@ -1456,9 +1456,9 @@
                                     <TextBlock Grid.Column="0" HorizontalAlignment="Center" Text="1" />
                                     <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="2" />
                                     <TextBlock Grid.Column="2" HorizontalAlignment="Center" Text="3" />
-                                    <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding Color1in3Filter}" />
-                                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Color1in3Filter}" />
-                                    <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Color1in3Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="0" Margin="5,0" Text="{Binding Color1in3Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5,0" Text="{Binding Color1in3Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="2" Margin="5,0" Text="{Binding Color1in3Filter}" />
                                 </Grid>
 
                                 <Grid Margin="5">

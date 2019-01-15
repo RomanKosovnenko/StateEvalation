@@ -44,7 +44,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         public Dictionary<string, string> GetUserIdBirthPairs()
         {
            return _dataRepository.GetPeople()
-               .Select(item => new { UserId = item.UserId.ToString().Trim(), item.Birthday })
+               .Select(item => new { UserId = item.UserId.ToString(), item.Birthday })
                .ToDictionary(i => i.UserId, i => i.Birthday);
         }
 
@@ -271,13 +271,13 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         private void SetValueInTabs(People person, PeopleVM personVM)
         {
             personVM.Id = person.Id.ToString();
-            personVM.FirstName = person.Firstname?.Trim();
-            personVM.LastName = person.Lastname?.Trim();
-            personVM.MiddleName = person.Middlename?.Trim();
-            personVM.Birthday = string.IsNullOrEmpty(person.Birthday.Trim()) ? new DateTime() : DateTime.Parse(person.Birthday);
-            personVM.Workposition = person.Workposition?.Trim();
-            personVM.Expedition = person.Expedition.ToString().Trim();
-            personVM.PersonNumber = person.Number.ToString().Trim();
+            personVM.FirstName = person.Firstname;
+            personVM.LastName = person.Lastname;
+            personVM.MiddleName = person.Middlename;
+            personVM.Birthday = string.IsNullOrEmpty(person.Birthday) ? new DateTime() : DateTime.Parse(person.Birthday);
+            personVM.Workposition = person.Workposition;
+            personVM.Expedition = person.Expedition.ToString();
+            personVM.PersonNumber = person.Number.ToString();
         }
         #endregion
     }

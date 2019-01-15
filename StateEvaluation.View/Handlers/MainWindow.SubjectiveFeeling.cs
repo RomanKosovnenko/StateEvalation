@@ -146,7 +146,7 @@ namespace StateEvaluation
             try
             {
                 var property = e.Column.SortMemberPath.ToString();
-                var currentValue = currentFeeling.GetType().GetProperty(property).GetValue(currentFeeling).ToString().Trim();
+                var currentValue = currentFeeling.GetType().GetProperty(property).GetValue(currentFeeling).ToString();
                 var value = ((CheckBox)e.EditingElement).IsChecked.ToString();
 
                 if (currentValue == value)

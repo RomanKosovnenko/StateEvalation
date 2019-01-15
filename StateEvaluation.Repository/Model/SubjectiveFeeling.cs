@@ -7,10 +7,12 @@ namespace StateEvaluation.Repository.Models
     [Table(Name = "dbo.SubjectiveFeelings")]
     public class SubjectiveFeeling
     {
+        private string _userId;
+
         [Column(Name = "ID", DbType = "uniqueidentifier", IsPrimaryKey = true)]
         public Guid Id { get; set; }
         [Column(Name = "UserID")]
-        public string UserId { get; set; }
+        public string UserId { get => _userId; set => _userId = value?.Trim(); }
         [Column]
         public DateTime Date { get; set; }
         [Column]

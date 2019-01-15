@@ -166,7 +166,6 @@ namespace StateEvaluation.Common.ViewModel
 
         public void SetPreferenceState(string preference, bool state)
         {
-            preference = preference.Trim();
             if (_preferencesFilter.Contains(preference) && !state)
             {
                 _preferencesFilter.Remove(preference);

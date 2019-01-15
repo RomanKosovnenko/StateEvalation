@@ -14,8 +14,8 @@ namespace StateEvaluation.View.Helpers
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            string preference = values[0].ToString().Trim();
-            int.TryParse(values[1]?.ToString()?.Trim(), out int relax);
+            string preference = values[0].ToString();
+            int.TryParse(values[1]?.ToString(), out int relax);
 
             bool selector = false;
 

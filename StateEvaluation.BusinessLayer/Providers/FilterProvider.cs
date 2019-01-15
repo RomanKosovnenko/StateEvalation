@@ -105,7 +105,7 @@ namespace StateEvaluation.BussinesLayer.Providers
                 var people = _dataRepository.GetPeople(GetBaseQuery(preferenceFilter));
                 foreach (var person in people.ToList())
                 {
-                    allowedUserIds.Add(person.UserId.ToString().Trim());
+                    allowedUserIds.Add(person.UserId);
                 }
                 
                 preferences = _dataRepository.GetPreferenceTests(GetPreferenceQuery(preferenceFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
@@ -131,7 +131,7 @@ namespace StateEvaluation.BussinesLayer.Providers
                 var people = _dataRepository.GetPeople(GetBaseQuery(subjectiveFeelingFilter));
                 foreach (var person in people.ToList())
                 {
-                    allowedUserIds.Add(person.UserId.ToString().Trim());
+                    allowedUserIds.Add(person.UserId);
                 }
             
                 subjectiveFeelings = _dataRepository.GetSubjecriveFeelings(GetSubjectiveFeelingQuery(subjectiveFeelingFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
@@ -145,11 +145,11 @@ namespace StateEvaluation.BussinesLayer.Providers
         {
             var peopleFilter = (BaseFilterVM)filter;
             return (People _) =>
-                (peopleFilter.Professions.Count == 0 || peopleFilter.Professions.Contains(_.Workposition.Trim())) &&
+                (peopleFilter.Professions.Count == 0 || peopleFilter.Professions.Contains(_.Workposition)) &&
                 (peopleFilter.UserIds.Count == 0 ? (
                     (peopleFilter.Expeditions.Count == 0 || peopleFilter.Expeditions.Contains(_.Expedition.ToString())) &&
                     (peopleFilter.People.Count == 0 || peopleFilter.People.Contains(_.Number.ToString()))
-                ) : peopleFilter.UserIds.Contains(_.UserId.Trim()));
+                ) : peopleFilter.UserIds.Contains(_.UserId));
         }
 
         private Func<Preference, bool> GetPreferenceQuery(object filter, DateTime dateTo, DateTime dateFrom, string[] allowedUserIds)
@@ -163,8 +163,8 @@ namespace StateEvaluation.BussinesLayer.Providers
                     preferenceFilter.Color6in12Filter, preferenceFilter.Color7in12Filter, preferenceFilter.Color8in12Filter,
                     preferenceFilter.Color9in12Filter, preferenceFilter.Color10in12Filter, preferenceFilter.Color11in12Filter,
                     preferenceFilter.Color12in12Filter) &&
-                (preferenceFilter.PreferenceFilter.Count() == 0 || preferenceFilter.PreferenceFilter.Contains(_.Preference1.Trim())) &&
-                allowedUserIds.Contains(_.UserId.Trim());
+                (preferenceFilter.PreferenceFilter.Count() == 0 || preferenceFilter.PreferenceFilter.Contains(_.Preference1)) &&
+                allowedUserIds.Contains(_.UserId);
         }
 
         private Func<SubjectiveFeeling, bool> GetSubjectiveFeelingQuery(object filter, DateTime dateTo, DateTime dateFrom, string[] allowedUserIds)
@@ -173,7 +173,7 @@ namespace StateEvaluation.BussinesLayer.Providers
             return (SubjectiveFeeling _) =>
                 (dateFrom.Ticks == 0 || _.Date.Ticks >= dateFrom.Ticks) &&
                 (dateTo.Ticks == 0 || _.Date.Ticks <= dateTo.Ticks) &&
-                allowedUserIds.Contains(_.UserId.Trim()) &&
+                allowedUserIds.Contains(_.UserId) &&
                 (subjectiveFeelingFilter.IsFeeling ? (
                         (_.GeneralWeaknes == subjectiveFeelingFilter.GeneralWeakness) &&
                         (_.PoorAppetite == subjectiveFeelingFilter.PoorAppetite) &&

@@ -380,7 +380,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             var preferenceValues = new List<string>() { preference.Preference1, preference.Preference2 };
             foreach(var preferenceValue in preferenceValues)
             {
-                switch (preferenceValue.Trim())
+                switch (preferenceValue)
                 {
                     case PreferenceColors.Red:
                         preferenceVM.GetType().GetProperty($"Preference{counter}Red").SetValue(preferenceVM, StringBooleanValues.True);
