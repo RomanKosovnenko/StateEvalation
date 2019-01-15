@@ -412,21 +412,21 @@
                       x:Name="PeopleDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetPeople}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                    <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button x:Name="RemovePersonBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="RemovePerson_Click"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
+                    <DataGridTemplateColumn Visibility="Hidden">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button x:Name="EditPersonBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="BindPersonInForm_Click" Tag="{Binding Id}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Код" Binding="{Binding UserId}" x:Name="PeopleUserId"/>
+                    <DataGridTextColumn Header="Код" Binding="{Binding UserId}" x:Name="PeopleUserId" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Имя" Binding="{Binding Firstname}" />
                     <DataGridTextColumn Header="Фамилия" Binding="{Binding Lastname}" />
                     <DataGridTextColumn Header="Отчество" Binding="{Binding Middlename}" />
@@ -781,7 +781,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTemplateColumn>
+                    <DataGridTemplateColumn Visibility="Hidden">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <Button x:Name="EditFeelingsBtn" Content="&#xE70F;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="White" Background="White" Foreground="Black" FontSize="14" Click="BindSubjectiveFeelingInForm_Click" Tag="{Binding Id}"/>
