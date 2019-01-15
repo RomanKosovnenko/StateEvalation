@@ -155,26 +155,30 @@ namespace StateEvaluation.View
                 new BarSeries
                 {
                     Title = PreferenceValues.Blue,
-                    Values = new ChartValues<SalesData>()
+                    Values = new ChartValues<SalesData>(),
+                    DataLabels = true
                 });
             SalesmenSeries.Add(
                 new BarSeries
                 {
                     Title = PreferenceValues.Red,
-                    Values = new ChartValues<SalesData>()
+                    Values = new ChartValues<SalesData>(),
+                    DataLabels = true
                 });
             SalesmenSeries.Add(
                 new BarSeries
                 {
                     Title = PreferenceValues.Yellow,
-                    Values = new ChartValues<SalesData>()
+                    Values = new ChartValues<SalesData>(),
+                    DataLabels = true
                 });
 
             SalesmenSeries.Add(
                 new BarSeries
                 {
                     Title = PreferenceValues.Gray,
-                    Values = new ChartValues<SalesData>()
+                    Values = new ChartValues<SalesData>(),
+                    DataLabels = true
                 });
             SalesmenSeries.Setup(new SeriesConfiguration<SalesData>().Y(data => data.Count)); // Setup a default configuration for all series in this collection.
             int i = 0;
