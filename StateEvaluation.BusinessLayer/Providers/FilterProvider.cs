@@ -19,19 +19,19 @@ namespace StateEvaluation.BussinesLayer.Providers
             _dataRepository = dataRepository;
         }
 
-        public IEnumerable Filter(object filter)
+        public IList Filter(object filter)
         {
             if (filter.GetType().Name == typeof(PeopleFilterVM).Name)
             {
-                return FilterPeople(filter);
+                return (IList)FilterPeople(filter);
             }
             if(filter.GetType().Name == typeof(PreferenceFilterVM).Name)
             {
-                return FilterPreference(filter);
+                return (IList)FilterPreference(filter);
             }
             if (filter.GetType().Name == typeof(SubjectiveFeelingFilterVM).Name)
             {
-                return FilterSubjectiveFeeling(filter);
+                return (IList)FilterSubjectiveFeeling(filter);
             }
 
             return new string[0];
@@ -70,7 +70,7 @@ namespace StateEvaluation.BussinesLayer.Providers
             }
         }
 
-        private IEnumerable<People> FilterPeople(object filter)
+        private IList<People> FilterPeople(object filter)
         {
             IEnumerable<People> people;
             if (filter != null)
@@ -84,13 +84,13 @@ namespace StateEvaluation.BussinesLayer.Providers
                     .Where(_ => (dateFrom.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks >= dateFrom.Ticks)
                         && (dateTo.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks <= dateTo.Ticks));
 
-                return people;
+                return people.ToList();
             }
             people = _dataRepository.GetPeople();
-            return people;
+            return people.ToList();
         }
 
-        private IEnumerable<Preference> FilterPreference(object filter)
+        private IList<Preference> FilterPreference(object filter)
         {
             IEnumerable<Preference> preferences;
             if (filter != null)
@@ -110,13 +110,13 @@ namespace StateEvaluation.BussinesLayer.Providers
                 
                 preferences = _dataRepository.GetPreferenceTests(GetPreferenceQuery(preferenceFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
                 
-                return preferences;
+                return preferences.ToList();
             }
             preferences = _dataRepository.GetPreferenceTests();
-            return preferences;
+            return preferences.ToList();
         }
 
-        private IEnumerable<SubjectiveFeeling> FilterSubjectiveFeeling(object filter)
+        private IList<SubjectiveFeeling> FilterSubjectiveFeeling(object filter)
         {
             IEnumerable<SubjectiveFeeling> subjectiveFeelings;
             if (filter != null)
@@ -135,10 +135,10 @@ namespace StateEvaluation.BussinesLayer.Providers
                 }
             
                 subjectiveFeelings = _dataRepository.GetSubjecriveFeelings(GetSubjectiveFeelingQuery(subjectiveFeelingFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
-                return subjectiveFeelings;
+                return subjectiveFeelings.ToList();
             }
             subjectiveFeelings = _dataRepository.GetSubjecriveFeelings();
-            return subjectiveFeelings;
+            return subjectiveFeelings.ToList();
         }
 
         private Func<People, bool> GetBaseQuery(object filter)

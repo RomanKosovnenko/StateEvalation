@@ -53,6 +53,7 @@
         <helpers:ButtonToVisibilityConverter x:Key="ButtonToVisibilityConverter" />
         <helpers:BooleanToNOTVisibilityConverter x:Key="BooleanToNOTVisibilityConverter" />
         <helpers:TextColorNumberToBrushConverter x:Key="TextColorNumberToBrushConverter"/>
+        <helpers:TextTrimmer x:Key="TextTrimmer"/>
         
         <Style x:Key="styleCalendar" TargetType="{x:Type Calendar}">
             <Setter Property="Template">
@@ -377,7 +378,7 @@
                 <ColumnDefinition MaxWidth="250"/>
             </Grid.ColumnDefinitions>
 
-            <DataGrid comment:Tab="People Grid"
+            <DataGrid comment:Tab="People Grid" CellEditEnding="PeopleDataGrid_CellEditEnding"
                       x:Name="PeopleDataGrid" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding Source={StaticResource GetPeople}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
@@ -395,18 +396,18 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Код" Binding="{Binding UserId}" IsReadOnly="True"/>
-                    <DataGridTextColumn Header="Имя" Binding="{Binding Firstname}" />
-                    <DataGridTextColumn Header="Фамилия" Binding="{Binding Lastname}" />
-                    <DataGridTextColumn Header="Отчество" Binding="{Binding Middlename}" />
+                    <DataGridTextColumn Header="Код" Binding="{Binding UserId}" x:Name="PeopleUserId"/>
+                    <DataGridTextColumn Header="Имя" Binding="{Binding Firstname, Converter={StaticResource TextTrimmer}}" />
+                    <DataGridTextColumn Header="Фамилия" Binding="{Binding Lastname, Converter={StaticResource TextTrimmer}}" />
+                    <DataGridTextColumn Header="Отчество" Binding="{Binding Middlename, Converter={StaticResource TextTrimmer}}" />
                     <DataGridTextColumn Header="День рождения" Binding="{Binding Birthday, StringFormat=\{0:d\}}" />
-                    <DataGridTextColumn Header="Профессия" Binding="{Binding Workposition, UpdateSourceTrigger=PropertyChanged}" />
-                    <DataGridTextColumn Header="Експедиция" Binding="{Binding Expedition}" />
-                    <DataGridTextColumn Header="Номер" Binding="{Binding Number}" />
+                    <DataGridTextColumn Header="Профессия" Binding="{Binding Workposition, Converter={StaticResource TextTrimmer}, UpdateSourceTrigger=PropertyChanged}" />
+                    <DataGridTextColumn Header="Експедиция" Binding="{Binding Expedition, Converter={StaticResource TextTrimmer}}" />
+                    <DataGridTextColumn Header="Номер" Binding="{Binding Number, Converter={StaticResource TextTrimmer}}" />
                 </DataGrid.Columns>
             </DataGrid>
             <DataGrid comment:Tab="Preferences Grid"
-                      x:Name="PreferencesDataGrid" SelectionChanged="PreferencesDataGrid_Selected" CanUserAddRows="False" RowHeight="40" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
+                      x:Name="PreferencesDataGrid" IsReadOnly="True" SelectionChanged="PreferencesDataGrid_Selected" CanUserAddRows="False" RowHeight="40" ItemsSource="{Binding Source={StaticResource GetPreferences}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem1}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
                     <DataGridTemplateColumn ClipboardContentBinding="{x:Null}">
@@ -739,8 +740,8 @@
 
                 </DataGrid.Columns>
             </DataGrid>
-            <DataGrid comment:Tab="Subjective Feelings Grid" 
-                      x:Name="SubjectiveFeelingDataGrid" IsReadOnly="True" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetFeelings}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
+            <DataGrid comment:Tab="Subjective Feelings Grid" CellEditEnding="FeelingsDataGrid_CellEditEnding"
+                      x:Name="SubjectiveFeelingDataGrid" CanUserAddRows="False" ItemsSource="{Binding Source={StaticResource GetFeelings}}" IsSynchronizedWithCurrentItem="True" AutoGenerateColumns="False" Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=tabItem2}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden" />
                     <DataGridTemplateColumn>
@@ -757,7 +758,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Header="Код" Binding="{Binding UserId}" />
+                    <DataGridTextColumn IsReadOnly="True" Header="Код" Binding="{Binding UserId}" />
                     <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=\{0:d\}, ConverterCulture=uk-UA}" />
                     <DataGridCheckBoxColumn Header="Общая слабость" Binding="{Binding GeneralWeaknes}" />
                     <DataGridCheckBoxColumn Header="Плохой апетит" Binding="{Binding PoorAppetite}" />

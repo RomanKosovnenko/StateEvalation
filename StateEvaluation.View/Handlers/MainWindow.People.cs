@@ -1,6 +1,7 @@
 ﻿using StateEvaluation.Common.Constants;
 using StateEvaluation.Common.ViewModel;
 using StateEvaluation.Repository.Models;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -120,6 +121,57 @@ namespace StateEvaluation
         {
             CheckBox checkBox = sender as CheckBox;
             peopleFilter.SetProfessionsState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
+        }
+
+        private void PeopleDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            var currentPeople = (People)((DataGrid)(sender)).SelectedItem;
+            try
+            {
+                int? intValue = null;
+                
+                var property = e.Column.SortMemberPath.ToString();
+                var currentValue = currentPeople.GetType().GetProperty(property).GetValue(currentPeople).ToString().Trim();
+                var value = ((TextBox)e.EditingElement).Text.ToString().Trim();
+                var intProperty = property;
+
+                if (currentValue == value)
+                {
+                    return;
+                }
+
+                switch (property)
+                {
+                    case "Expedition":
+                        intValue = int.Parse(value);
+                        property = "UserId";
+                        value = "Ex" + intValue.ToString() + "#" + currentPeople.Number;
+                        break;
+                    case "Number":
+                        intValue = int.Parse(value);
+                        property = "UserId";
+                        value = "Ex" + currentPeople.Expedition + "#" + value;
+                        break;
+                    case "Birthday":
+                        value = System.DateTime.Parse(value).ToShortDateString();
+                        break;
+                }
+                if (intValue != null)
+                {
+                    currentPeople.GetType().GetProperty(intProperty).SetValue(currentPeople, intValue);
+                    ((TextBox)e.EditingElement).Text = intValue.ToString();
+                }
+                else
+                {
+                    ((TextBox)e.EditingElement).Text = value;
+                }
+                currentPeople.GetType().GetProperty(property).SetValue(currentPeople, value);
+                dataRepository.UpdatePerson(currentPeople);
+            }
+            catch (System.Exception)
+            {
+                MessageBox.Show(MessageBoxConstants.ErrorUpdating);
+            }
         }
     }
 }

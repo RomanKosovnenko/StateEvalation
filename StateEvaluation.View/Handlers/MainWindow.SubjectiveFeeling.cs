@@ -131,5 +131,41 @@ namespace StateEvaluation
         {
             subjectiveFeelingFilter.IsFeeling = true;
         }
+
+
+        private void FeelingsDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            var currentFeeling = (SubjectiveFeeling)((DataGrid)(sender)).SelectedItem;
+            try
+            {
+                var property = e.Column.SortMemberPath.ToString();
+                var currentValue = currentFeeling.GetType().GetProperty(property).GetValue(currentFeeling).ToString().Trim();
+                var value = ((CheckBox)e.EditingElement).IsChecked.ToString();
+
+                if (currentValue == value)
+                {
+                    return;
+                }
+
+                switch (property)
+                {
+                    case "Date":
+                        value = System.DateTime.Parse(value).ToShortDateString();
+                        currentFeeling.GetType().GetProperty(property).SetValue(currentFeeling, value);
+                        ((TextBox)e.EditingElement).Text = value;
+                        break;
+                    default:
+                        bool v = bool.Parse(value);
+                        currentFeeling.GetType().GetProperty(property).SetValue(currentFeeling, v);
+                        break;
+                }
+                
+                dataRepository.UpdateSubjectiveFeeling(currentFeeling);
+            }
+            catch (System.Exception)
+            {
+                MessageBox.Show(MessageBoxConstants.ErrorUpdating);
+            }
+        }
     }
 }
