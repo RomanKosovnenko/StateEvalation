@@ -103,7 +103,7 @@ namespace StateEvaluation
         /// <param name="e"></param>
         private void FilterSubjectiveFeeling_Click(object sender, RoutedEventArgs e)
         {
-            if ((DateTime)subjectiveFeelingFilter.DateFrom > (DateTime)subjectiveFeelingFilter.DateTo)
+            if (subjectiveFeelingFilter.DateFrom != null && subjectiveFeelingFilter.DateTo != null && (DateTime)subjectiveFeelingFilter.DateFrom > (DateTime)subjectiveFeelingFilter.DateTo)
             {
                 MessageBox.Show(MessageBoxConstants.WrongDateFields);
             }

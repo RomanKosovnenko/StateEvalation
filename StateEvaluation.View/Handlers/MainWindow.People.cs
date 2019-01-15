@@ -100,7 +100,8 @@ namespace StateEvaluation
         /// <param name="e"></param>
         private void FilterPeople_Click(object sender, RoutedEventArgs e)
         {
-            if ((DateTime)peopleFilter.DateFrom > (DateTime)peopleFilter.DateTo)
+            SetLoaderVisibility(Visibility.Visible);
+            if (peopleFilter.DateFrom != null && peopleFilter.DateTo != null && (DateTime)peopleFilter.DateFrom > (DateTime)peopleFilter.DateTo)
             {
                 MessageBox.Show(MessageBoxConstants.WrongDateFields);
             }
@@ -108,6 +109,7 @@ namespace StateEvaluation
             {
                 filterBussinesManager.Filter(PeopleDataGrid, peopleFilter);
             }
+            SetLoaderVisibility(Visibility.Hidden);
         }
 
         private void UserIdsFilterPeopleTab_Selected(object sender, RoutedEventArgs e)

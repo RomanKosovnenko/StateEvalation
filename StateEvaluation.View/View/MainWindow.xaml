@@ -55,6 +55,10 @@
         <helpers:TextColorNumberToBrushConverter x:Key="TextColorNumberToBrushConverter"/>
         <helpers:TextTrimmer x:Key="TextTrimmer"/>
         
+        <Style TargetType="Button">
+            <EventSetter Event="PreviewMouseDown" Handler="Button_MouseDown"/>
+            <EventSetter Event="PreviewMouseUp" Handler="Button_MouseUp"/>
+        </Style>
         <Style TargetType="DatePickerTextBox">
             <Setter Property="Control.Template">
                 <Setter.Value>
@@ -85,11 +89,22 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
         <Style TargetType="DatePicker">
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="CalendarStyle" Value="{StaticResource styleCalendar}"/>
-            <EventSetter Event="PreviewTextInput" Handler="DatePicker_Checker"/>
+            <Style.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Control.Template">
+                        <Setter.Value>
+                            <ControlTemplate>
+                                <Button x:Name="PART_Button" />
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Style.Resources>
         </Style>
         <Style TargetType="CheckBox" x:Key="BigCheckBox">
             <Setter Property="LayoutTransform">
@@ -1162,6 +1177,18 @@
 
             </Grid>
 
+            <Grid x:Name="Loader" Visibility="Hidden">
+                <TextBox
+                    FontSize="24"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Text="Загрузка..."
+                    IsReadOnly="True">
+                    <TextBox.Background>
+                        <SolidColorBrush Color="White" Opacity="0.8" />
+                    </TextBox.Background>
+                </TextBox>
+            </Grid>
             <Border BorderBrush="Black" BorderThickness="2" 
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"

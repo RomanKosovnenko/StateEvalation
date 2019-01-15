@@ -112,7 +112,7 @@ namespace StateEvaluation
         /// <param name="e"></param>
         private void FilterPreference_Click(object sender, RoutedEventArgs e)
         {
-            if ((DateTime)preferenceFilter.DateFrom > (DateTime)preferenceFilter.DateTo)
+            if (preferenceFilter.DateFrom != null && preferenceFilter.DateTo != null && (DateTime)preferenceFilter.DateFrom > (DateTime)preferenceFilter.DateTo)
             {
                 MessageBox.Show(MessageBoxConstants.WrongDateFields);
             }

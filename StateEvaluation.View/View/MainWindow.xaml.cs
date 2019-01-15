@@ -136,15 +136,21 @@ namespace StateEvaluation
             };
         }
         #endregion
-
-        private void DatePicker_Checker(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        
+        public void SetLoaderVisibility(Visibility visibility)
         {
-            DatePicker datePicker = (DatePicker)sender;
-            var allowedChars= new Regex(@"[0-9\.]");
-            if (!allowedChars.IsMatch(e.Text.ToString()))
-            {
-                e.Handled = true;
-            }
+            Loader.Visibility = visibility;
+            // Loader.Loaded += new RoutedEventHandler();
+        }
+
+        private void Button_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            SetLoaderVisibility(Visibility.Visible);
+        }
+
+        private void Button_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            SetLoaderVisibility(Visibility.Hidden);
         }
     }
 }
