@@ -1,4 +1,4 @@
-﻿using StateEvaluation.BussinesLayer.Extensions;
+using StateEvaluation.BussinesLayer.Extensions;
 using StateEvaluation.Common.Constants;
 using StateEvaluation.Common.Helpers;
 using StateEvaluation.Common.ViewModel;
@@ -15,6 +15,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
     public class PeopleBuissnesManager
     {
         private DataRepository _dataRepository;
+        private Repository1.DataRepository _newDataRepository;
 
         private IEnumerable<ListBox> _userIdComboBoxes { get; }
         private IEnumerable<ListBox> _expeditionComboBoxes { get; }
@@ -24,6 +25,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         private Button _updatePersonBtn { get; }
 
         public PeopleBuissnesManager(
+            Repository1.DataRepository newDataRepository,
             DataRepository dataRepository, 
             IEnumerable<ListBox> userIdListBoxes,
             IEnumerable<ListBox> expeditionListBoxes,
@@ -32,6 +34,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             DataGrid peopleDataGrid,
             Button updatePersonBtn)
         {
+            _newDataRepository = newDataRepository;
             _dataRepository = dataRepository;
             _userIdComboBoxes = userIdListBoxes;
             _expeditionComboBoxes = expeditionListBoxes;

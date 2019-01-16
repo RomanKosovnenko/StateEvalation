@@ -87,6 +87,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                     else
                     {
                         MessageBox.Show(MessageBoxConstants.WrongFields);
+                        return;
                     }
                 }
 

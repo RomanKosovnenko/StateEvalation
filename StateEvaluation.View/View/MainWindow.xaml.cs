@@ -32,6 +32,7 @@ namespace StateEvaluation
         private SubjectiveFeelingFilterVM subjectiveFeelingFilter;
         private FilterBussinesManager filterBussinesManager;
         private DataRepository dataRepository;
+        private Repository1.DataRepository newDataRepository;
 
         private IEnumerable<ListBox> userIdListBoxes;
         private IEnumerable<ListBox> expeditionListBoxes;
@@ -47,6 +48,7 @@ namespace StateEvaluation
             this.DataContext = this;
 
             this.dataRepository = new DataRepository();
+            newDataRepository = new Repository1.DataRepository();
 
             userIdListBoxes = new List<ListBox>()
             {
@@ -88,6 +90,7 @@ namespace StateEvaluation
 
             peopleBuissnesManager = new PeopleBuissnesManager
             (
+                newDataRepository,
                 dataRepository,
                 userIdListBoxes,
                 expeditionListBoxes,
