@@ -21,6 +21,7 @@ namespace StateEvaluation
         {
             var subjectiveFeeling = (SubjectiveFeelingVM)this.Resources["subjectiveFeelingVM"];
             subjectiveFeelingBuissnesManager.Create(subjectiveFeeling);
+            FilterSubjectiveFeeling_Click(sender, e);
         }
 
         /// <summary>
@@ -43,8 +44,9 @@ namespace StateEvaluation
         /// </summary>
         /// <param name="sender">sender</param>
         /// <param name="e">routed event arguments</param>
-        private void DeleteSSubjectiveFeeling_Click(object sender, RoutedEventArgs e)
+        private void DeleteSubjectiveFeeling_Click(object sender, RoutedEventArgs e)
         {
+            SetLoaderVisibility(Visibility.Visible);
             var butonContext = ((Button)sender).DataContext;
             var subjectiveFeelingId = ((SubjectiveFeeling)butonContext).Id;
 
@@ -53,6 +55,7 @@ namespace StateEvaluation
             {
                 subjectiveFeelingBuissnesManager.Remove(subjectiveFeelingId);
             }
+            SetLoaderVisibility(Visibility.Hidden);
         }
 
         /// <summary>

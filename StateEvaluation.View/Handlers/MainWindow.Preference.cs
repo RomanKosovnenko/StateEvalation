@@ -30,6 +30,7 @@ namespace StateEvaluation
         {
             var preferenceVM = (PreferenceVM)Resources["preferenceVM"];
             preferenceBuissnesManager.Create(preferenceVM);
+            FilterPreference_Click(sender, e);
         }
 
         /// <summary>
@@ -64,6 +65,7 @@ namespace StateEvaluation
         /// <param name="e">routed event arguments</param>
         private void RemovePreference_Click(object sender, RoutedEventArgs e)
         {
+            SetLoaderVisibility(Visibility.Visible);
             var butonContext = ((Button)sender).DataContext;
             var preferenceId = ((Preference)butonContext).Id;
             var dialogResult = MessageBox.Show(MessageBoxConstants.DeleteSure, MessageBoxConstants.DeleteSureTitle, MessageBoxButton.YesNo);
@@ -72,6 +74,7 @@ namespace StateEvaluation
             {
                 preferenceBuissnesManager.RemovePreference(preferenceId.ToString());
             }
+            SetLoaderVisibility(Visibility.Hidden);
         }
 
         /// <summary>

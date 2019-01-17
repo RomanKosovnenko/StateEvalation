@@ -90,6 +90,7 @@ namespace StateEvaluation
             (
                 dataRepository,
                 userIdListBoxes,
+                userIdComboBoxes,
                 expeditionListBoxes,
                 numberOfPeopleListBoxes,
                 professionsListBoxes,

@@ -22,6 +22,7 @@ namespace StateEvaluation
         {
             var newPerson = (PeopleVM)Resources["peopleVM"];
             peopleBuissnesManager.CreatePerson(newPerson);
+            FilterPeople_Click(sender, e);
         }
 
         /// <summary>
@@ -68,6 +69,7 @@ namespace StateEvaluation
         /// <param name="e">routed event arguments</param>
         private void RemovePerson_Click(object sender, RoutedEventArgs e)
         {
+            SetLoaderVisibility(Visibility.Visible);
             var butonContext = ((Button)sender).DataContext;
             var personId = ((People)butonContext).Id;
 
@@ -75,7 +77,9 @@ namespace StateEvaluation
             if (dialogResult == MessageBoxResult.Yes)
             {
                 peopleBuissnesManager.DeletePerson(personId.ToString());
+                MessageBox.Show(MessageBoxConstants.PersonDeleted);
             }
+            SetLoaderVisibility(Visibility.Hidden);
         }
 
         /// <summary>
