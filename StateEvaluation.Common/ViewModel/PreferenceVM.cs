@@ -36,13 +36,13 @@ namespace StateEvaluation.Common.ViewModel
         private string _color210in12;
         private string _color211in12;
         private string _color212in12;
-        private string _preference1Red;
-        private string _preference1Yellow;
         private string _preference1Blue;
+        private string _preference1Yellow;
+        private string _preference1Red;
         private string _preference1Grey;
-        private string _preference2Red;
-        private string _preference2Yellow;
         private string _preference2Blue;
+        private string _preference2Yellow;
+        private string _preference2Red;
         private string _preference2Grey;
         private string _colorRelax1;
         private string _colorRelax2;

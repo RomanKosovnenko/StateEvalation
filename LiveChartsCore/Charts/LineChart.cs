@@ -66,8 +66,8 @@ namespace LiveCharts
             {
                 yi.CalculateSeparator(this, AxisTags.Y);
                 if (Invert) continue;
-                if (yi.MaxValue == null) yi.MaxLimit = (Math.Round(yi.MaxLimit/yi.S) + 1)*yi.S;
-                if (yi.MinValue == null) yi.MinLimit = (Math.Truncate(yi.MinLimit/yi.S) - 1)*yi.S;
+                if (yi.MaxValue == null) yi.MaxLimit = yi.MaxLimit == 0 ? 1 : (Math.Round(yi.MaxLimit/yi.S) + 1)*yi.S;
+                if (yi.MinValue == null) yi.MinLimit = yi.MinLimit == 0 ? 1 : (Math.Truncate(yi.MinLimit/yi.S) - 1)*yi.S;
             }
 
             CalculateComponentsAndMargin();

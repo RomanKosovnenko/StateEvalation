@@ -11,7 +11,7 @@ namespace StateEvaluation.View.Helpers
             {
                 return "---";
             }
-            return value.ToString().Trim() == "true" ? "✓" : "✘";
+            return value.ToString() == "true" ? "✓" : "✘";
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)

@@ -16,7 +16,7 @@ namespace StateEvaluation.View.Helpers
         }
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            string input = value?.ToString()?.Trim();
+            string input = value?.ToString();
             string color;
             switch (input)
             {

@@ -76,9 +76,11 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public IEnumerable<string> GetUserIds()
         {
-            var items = this.People.Select(item => item.UserId).Distinct().OrderByDescending(item => item);
-            var list = items.ToList();
-            return list;
+            return People
+                .Select(item => item.UserId.Trim())
+                .Distinct()
+                .OrderByDescending(item => item)
+                .ToList();
         }
 
         /// <summary>
@@ -88,8 +90,7 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public IEnumerable<People> GetPeople(Func<People, bool> query)
         {
-            var person = this.People.Where(query).OrderByDescending(item => item.UserId);
-            return person;
+            return People.Where(query).OrderByDescending(item => item.UserId);
         }
 
         /// <summary>
@@ -98,9 +99,7 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public IEnumerable<string> GetUserIdsFilter()
         {
-            var list = GetUserIds().ToList();
-            list.Insert(0, FilterConstants.All);
-            return list;
+            return GetUserIds().ToList();
         }
 
         /// <summary>
@@ -109,33 +108,37 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public IEnumerable<string> GetProfessionsFilter()
         {
-            var list = this.People.Select(item => item.Workposition.Trim()).Distinct().OrderBy(item => item).ToList();
-            list.Insert(0, FilterConstants.All);
-            return list;
+            return People
+                .Select(item => item.Workposition.Trim())
+                .Distinct()
+                .OrderBy(item => item)
+                .ToList();
         }
 
         /// <summary>
         /// Get expedition codes of people for filters
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<string> GetExpeditionCodesFilter()
+        public IEnumerable<int> GetExpeditionCodesFilter()
         {
-            IEnumerable<string> items = this.People.Select(item => item.Expedition.ToString()).Distinct().OrderByDescending(item => Convert.ToInt32(item));
-            List<string> list = items.ToList().ToList();
-
-            list.Insert(0, FilterConstants.All);
-            return list;
+            return People
+                .Select(item => item.Expedition)
+                .Distinct()
+                .OrderByDescending(item => Convert.ToInt32(item))
+                .ToList();
         }
 
         /// <summary>
         /// Get people's numbers for filters
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<string> GetPeopleNumbersFilter()
+        public IEnumerable<int> GetPeopleNumbersFilter()
         {
-            var list = this.People.Select(item => item.Number.ToString()).Distinct().OrderBy(item => Convert.ToInt32(item)).ToList();
-            list.Insert(0, FilterConstants.All);
-            return list;
+            return People
+                .Select(item => item.Number)
+                .Distinct()
+                .OrderBy(item => Convert.ToInt32(item))
+                .ToList();
         }
     }
 }

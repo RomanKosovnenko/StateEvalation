@@ -1,8 +1,14 @@
 ﻿
+using System.Collections.Generic;
+
 namespace StateEvaluation.Common.ViewModel
 {
     public class PreferenceFilterVM : BaseFilterVM
     {
+        public PreferenceFilterVM() : base()
+        {
+            _preferencesFilter = new List<string>();
+        }
         private string _color1in3Filter;
         private string _color2in3Filter;
         private string _color3in3Filter;
@@ -18,7 +24,7 @@ namespace StateEvaluation.Common.ViewModel
         private string _color10in12Filter;
         private string _color11in12Filter;
         private string _color12in12Filter;
-        private string _preferenceFilter;
+        private List<string> _preferencesFilter;
 
         public string Color1in3Filter
         {
@@ -155,13 +161,18 @@ namespace StateEvaluation.Common.ViewModel
                 OnPropertyChanged("Color12in12Filter");
             }
         }
-        public string PreferenceFilter
+
+        public List<string> PreferenceFilter { get => _preferencesFilter; set => _preferencesFilter = value; }
+
+        public void SetPreferenceState(string preference, bool state)
         {
-            get => _preferenceFilter;
-            set
+            if (_preferencesFilter.Contains(preference) && !state)
             {
-                _preferenceFilter = value;
-                OnPropertyChanged("PreferenceFilter");
+                _preferencesFilter.Remove(preference);
+            }
+            else if (!_preferencesFilter.Contains(preference) && state)
+            {
+                _preferencesFilter.Add(preference);
             }
         }
     }

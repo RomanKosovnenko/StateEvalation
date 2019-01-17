@@ -16,35 +16,35 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
     {
         private DataRepository _dataRepository;
 
-        private IEnumerable<ComboBox> _userIdComboBoxes { get; }
-        private IEnumerable<ComboBox> _expeditionComboBoxes { get; }
-        private IEnumerable<ComboBox> _userNumberComboBoxes { get; }
-        private IEnumerable<ComboBox> _professionsComboBoxes { get; }
+        private IEnumerable<ListBox> _userIdComboBoxes { get; }
+        private IEnumerable<ListBox> _expeditionComboBoxes { get; }
+        private IEnumerable<ListBox> _userNumberComboBoxes { get; }
+        private IEnumerable<ListBox> _professionsComboBoxes { get; }
         private DataGrid _peopleDataGrid { get; }
         private Button _updatePersonBtn { get; }
 
         public PeopleBuissnesManager(
             DataRepository dataRepository, 
-            IEnumerable<ComboBox> userIdComboBoxes,
-            IEnumerable<ComboBox> expeditionComboBoxes,
-            IEnumerable<ComboBox> userNumberComboBoxes,
-            IEnumerable<ComboBox> professionsComboBoxes,
+            IEnumerable<ListBox> userIdListBoxes,
+            IEnumerable<ListBox> expeditionListBoxes,
+            IEnumerable<ListBox> userNumberListBoxes,
+            IEnumerable<ListBox> professionsListBoxes,
             DataGrid peopleDataGrid,
             Button updatePersonBtn)
         {
             _dataRepository = dataRepository;
-            _userIdComboBoxes = userIdComboBoxes;
-            _expeditionComboBoxes = expeditionComboBoxes;
-            _userNumberComboBoxes = userNumberComboBoxes;
+            _userIdComboBoxes = userIdListBoxes;
+            _expeditionComboBoxes = expeditionListBoxes;
+            _userNumberComboBoxes = userNumberListBoxes;
             _peopleDataGrid = peopleDataGrid;
             _updatePersonBtn = updatePersonBtn;
-            _professionsComboBoxes = professionsComboBoxes;
+            _professionsComboBoxes = professionsListBoxes;
         }
 
         public Dictionary<string, string> GetUserIdBirthPairs()
         {
            return _dataRepository.GetPeople()
-               .Select(item => new { UserId = item.UserId.ToString().Trim(), item.Birthday })
+               .Select(item => new { UserId = item.UserId.ToString(), item.Birthday })
                .ToDictionary(i => i.UserId, i => i.Birthday);
         }
 
@@ -271,13 +271,13 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         private void SetValueInTabs(People person, PeopleVM personVM)
         {
             personVM.Id = person.Id.ToString();
-            personVM.FirstName = person.Firstname?.Trim();
-            personVM.LastName = person.Lastname?.Trim();
-            personVM.MiddleName = person.Middlename?.Trim();
-            personVM.Birthday = string.IsNullOrEmpty(person.Birthday.Trim()) ? new DateTime() : DateTime.Parse(person.Birthday);
-            personVM.Workposition = person.Workposition?.Trim();
-            personVM.Expedition = person.Expedition.ToString().Trim();
-            personVM.PersonNumber = person.Number.ToString().Trim();
+            personVM.FirstName = person.Firstname;
+            personVM.LastName = person.Lastname;
+            personVM.MiddleName = person.Middlename;
+            personVM.Birthday = string.IsNullOrEmpty(person.Birthday) ? new DateTime() : DateTime.Parse(person.Birthday);
+            personVM.Workposition = person.Workposition;
+            personVM.Expedition = person.Expedition.ToString();
+            personVM.PersonNumber = person.Number.ToString();
         }
         #endregion
     }

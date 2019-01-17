@@ -16,17 +16,21 @@ namespace StateEvaluation
         {
             List<string> list = new List<string>();
 
+            /// TODO Path selection!
             string filePath = "C:\\Users\\Vitalii.Kushch\\Desktop\\Шаблон для ежемесячной отправки XXI  .xlsx";
 
 
-            Microsoft.Office.Interop.Excel.Application ExcelApp = new Microsoft.Office.Interop.Excel.Application();
-            ExcelApp.Visible = true;
+            Microsoft.Office.Interop.Excel.Application application = new Microsoft.Office.Interop.Excel.Application
+            {
+                Visible = true
+            };
+            Microsoft.Office.Interop.Excel.Application ExcelApp = application;
             Microsoft.Office.Interop.Excel.Workbook wb = ExcelApp.Workbooks.Open(filePath, Missing.Value, false, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value, Missing.Value);
 
             Microsoft.Office.Interop.Excel.Worksheet sh = (Microsoft.Office.Interop.Excel.Worksheet)wb.Sheets["Кольорова преференція початок"];
 
             Range excelRange = sh.UsedRange;
-
+            
             int i0 = 7, j0 = 45;
 
             Range xlRng = sh.UsedRange;
@@ -120,7 +124,6 @@ namespace StateEvaluation
                 {
                     foreach (var od in lessSequences2[index])
                     {
-                        if (od == null) break;
                         shorder2 += od + ",";
                     }
                     shorder2 = shorder2.Remove(shorder2.Length - 1);
@@ -134,7 +137,6 @@ namespace StateEvaluation
                 {
                     foreach (var od in Sequences2[index])
                     {
-                        if (od == null) break;
                         order2 += od + ",";
                     }
                     order2 = order2.Remove(order2.Length - 1);

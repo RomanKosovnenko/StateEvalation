@@ -4,6 +4,7 @@ namespace StateEvaluation.Common.Constants
     public static class MessageBoxConstants
     {
         public static string
+            WrongDateFields = "Дата начала больше даты конца",
             WrongFields = "Ошибка, проверьте введенные поля",
             ErrorBinding = "Ошибка при биндинге полей",
             ErrorUpdating = "Ой, ошибка обновления",

@@ -19,35 +19,37 @@ namespace StateEvaluation.BussinesLayer.Providers
             _dataRepository = dataRepository;
         }
 
-        public IEnumerable Filter(object filter)
+        public IList Filter(object filter)
         {
             if (filter.GetType().Name == typeof(PeopleFilterVM).Name)
             {
-                return FilterPeople(filter);
+                return (IList)FilterPeople(filter);
             }
             if(filter.GetType().Name == typeof(PreferenceFilterVM).Name)
             {
-                return FilterPreference(filter);
+                return (IList)FilterPreference(filter);
             }
             if (filter.GetType().Name == typeof(SubjectiveFeelingFilterVM).Name)
             {
-                return FilterSubjectiveFeeling(filter);
+                return (IList)FilterSubjectiveFeeling(filter);
             }
 
             return new string[0];
         }
-
+        public void Clear(object filter, List<System.Windows.Controls.ListBox> listBoxes)
+        {
+            foreach (System.Windows.Controls.ListBox listBox in listBoxes)
+            {
+                listBox.UnselectAll();
+            }
+            Clear(filter);
+        }
         public void Clear(object filter)
         {
             if (filter != null)
             {
                 foreach (var i in filter.GetType().GetProperties())
                 {
-                    if (i.Name.Contains("UserId") || i.Name.Contains("Expedition") || i.Name.Contains("Preference") || i.Name.Contains("People") || i.Name.Contains("Profession"))
-                    {
-                        i.SetValue(filter, FilterConstants.All);
-                        continue;
-                    }
                     if (i.Name.Contains("Date"))
                     {
                         i.SetValue(filter, null);
@@ -63,12 +65,12 @@ namespace StateEvaluation.BussinesLayer.Providers
                         i.SetValue(filter, false);
                         continue;
                     }
-                    i.SetValue(filter, string.Empty);
+                    // i.SetValue(filter, string.Empty);
                 }
             }
         }
 
-        private IEnumerable<People> FilterPeople(object filter)
+        private IList<People> FilterPeople(object filter)
         {
             IEnumerable<People> people;
             if (filter != null)
@@ -82,13 +84,13 @@ namespace StateEvaluation.BussinesLayer.Providers
                     .Where(_ => (dateFrom.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks >= dateFrom.Ticks)
                         && (dateTo.Ticks == 0 || DateTime.Parse(_.Birthday).Ticks <= dateTo.Ticks));
 
-                return people;
+                return people.ToList();
             }
             people = _dataRepository.GetPeople();
-            return people;
+            return people.ToList();
         }
 
-        private IEnumerable<Preference> FilterPreference(object filter)
+        private IList<Preference> FilterPreference(object filter)
         {
             IEnumerable<Preference> preferences;
             if (filter != null)
@@ -103,18 +105,18 @@ namespace StateEvaluation.BussinesLayer.Providers
                 var people = _dataRepository.GetPeople(GetBaseQuery(preferenceFilter));
                 foreach (var person in people.ToList())
                 {
-                    allowedUserIds.Add(person.UserId.ToString().Trim());
+                    allowedUserIds.Add(person.UserId);
                 }
                 
                 preferences = _dataRepository.GetPreferenceTests(GetPreferenceQuery(preferenceFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
                 
-                return preferences;
+                return preferences.ToList();
             }
             preferences = _dataRepository.GetPreferenceTests();
-            return preferences;
+            return preferences.ToList();
         }
 
-        private IEnumerable<SubjectiveFeeling> FilterSubjectiveFeeling(object filter)
+        private IList<SubjectiveFeeling> FilterSubjectiveFeeling(object filter)
         {
             IEnumerable<SubjectiveFeeling> subjectiveFeelings;
             if (filter != null)
@@ -129,28 +131,25 @@ namespace StateEvaluation.BussinesLayer.Providers
                 var people = _dataRepository.GetPeople(GetBaseQuery(subjectiveFeelingFilter));
                 foreach (var person in people.ToList())
                 {
-                    allowedUserIds.Add(person.UserId.ToString().Trim());
+                    allowedUserIds.Add(person.UserId);
                 }
             
                 subjectiveFeelings = _dataRepository.GetSubjecriveFeelings(GetSubjectiveFeelingQuery(subjectiveFeelingFilter, dateTo, dateFrom, allowedUserIds.ToArray()));
-                return subjectiveFeelings;
+                return subjectiveFeelings.ToList();
             }
             subjectiveFeelings = _dataRepository.GetSubjecriveFeelings();
-            return subjectiveFeelings;
+            return subjectiveFeelings.ToList();
         }
 
         private Func<People, bool> GetBaseQuery(object filter)
         {
             var peopleFilter = (BaseFilterVM)filter;
-
             return (People _) =>
-                (_.Workposition.Trim() == peopleFilter.Profession || peopleFilter.Profession == FilterConstants.All)
-                && (peopleFilter.UserId == FilterConstants.All
-                    ? (peopleFilter.PeopleFrom == FilterConstants.All || _.Number >= int.Parse(peopleFilter.PeopleFrom)) && (peopleFilter.PeopleTo == FilterConstants.All || _.Number <= int.Parse(peopleFilter.PeopleTo))
-                    : _.UserId.Trim() == peopleFilter.UserId.Trim())
-                && (peopleFilter.UserId == FilterConstants.All
-                    ? (peopleFilter.ExpeditionFrom == FilterConstants.All || _.Expedition >= int.Parse(peopleFilter.ExpeditionFrom)) && (peopleFilter.ExpeditionTo == FilterConstants.All || _.Expedition <= int.Parse(peopleFilter.ExpeditionTo))
-                    : _.UserId.Trim() == peopleFilter.UserId.Trim());
+                (peopleFilter.Professions.Count == 0 || peopleFilter.Professions.Contains(_.Workposition)) &&
+                (peopleFilter.UserIds.Count == 0 ? (
+                    (peopleFilter.Expeditions.Count == 0 || peopleFilter.Expeditions.Contains(_.Expedition.ToString())) &&
+                    (peopleFilter.People.Count == 0 || peopleFilter.People.Contains(_.Number.ToString()))
+                ) : peopleFilter.UserIds.Contains(_.UserId));
         }
 
         private Func<Preference, bool> GetPreferenceQuery(object filter, DateTime dateTo, DateTime dateFrom, string[] allowedUserIds)
@@ -164,8 +163,8 @@ namespace StateEvaluation.BussinesLayer.Providers
                     preferenceFilter.Color6in12Filter, preferenceFilter.Color7in12Filter, preferenceFilter.Color8in12Filter,
                     preferenceFilter.Color9in12Filter, preferenceFilter.Color10in12Filter, preferenceFilter.Color11in12Filter,
                     preferenceFilter.Color12in12Filter) &&
-                (preferenceFilter.PreferenceFilter == FilterConstants.All || _.Preference1.Trim() == preferenceFilter.PreferenceFilter) &&
-                allowedUserIds.Contains(_.UserId.Trim());
+                (preferenceFilter.PreferenceFilter.Count() == 0 || preferenceFilter.PreferenceFilter.Contains(_.Preference1)) &&
+                allowedUserIds.Contains(_.UserId);
         }
 
         private Func<SubjectiveFeeling, bool> GetSubjectiveFeelingQuery(object filter, DateTime dateTo, DateTime dateFrom, string[] allowedUserIds)
@@ -173,15 +172,16 @@ namespace StateEvaluation.BussinesLayer.Providers
             var subjectiveFeelingFilter = (SubjectiveFeelingFilterVM)filter;
             return (SubjectiveFeeling _) =>
                 (dateFrom.Ticks == 0 || _.Date.Ticks >= dateFrom.Ticks) &&
-                (dateTo.Ticks == 0 || _.Date.Ticks <= dateTo.Ticks) && 
-                allowedUserIds.Contains(_.UserId.Trim()) &&
-                (!subjectiveFeelingFilter.IsFeeling ? true : 
-                    ((subjectiveFeelingFilter.GeneralWeakness ? _.GeneralWeaknes == subjectiveFeelingFilter.GeneralWeakness : true) &&
-                    (subjectiveFeelingFilter.PoorAppetite ? _.PoorAppetite == subjectiveFeelingFilter.PoorAppetite : true) &&
-                    (subjectiveFeelingFilter.PoorSleep ? _.PoorSleep == subjectiveFeelingFilter.PoorSleep : true) &&
-                    (subjectiveFeelingFilter.BadMood ? _.BadMood == subjectiveFeelingFilter.BadMood : true) &&
-                    (subjectiveFeelingFilter.HeavyHead ? _.HeavyHead == subjectiveFeelingFilter.HeavyHead : true) &&
-                    (subjectiveFeelingFilter.SlowThink ? _.SlowThink == subjectiveFeelingFilter.SlowThink : true))
+                (dateTo.Ticks == 0 || _.Date.Ticks <= dateTo.Ticks) &&
+                allowedUserIds.Contains(_.UserId) &&
+                (subjectiveFeelingFilter.IsFeeling ? (
+                        (_.GeneralWeaknes == subjectiveFeelingFilter.GeneralWeakness) &&
+                        (_.PoorAppetite == subjectiveFeelingFilter.PoorAppetite) &&
+                        (_.PoorSleep == subjectiveFeelingFilter.PoorSleep) &&
+                        (_.BadMood == subjectiveFeelingFilter.BadMood) &&
+                        (_.HeavyHead == subjectiveFeelingFilter.HeavyHead) &&
+                        (_.SlowThink == subjectiveFeelingFilter.SlowThink)
+                    ) : true
                 );
         }
     }

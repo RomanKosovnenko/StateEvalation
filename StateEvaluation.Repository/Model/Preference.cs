@@ -6,6 +6,15 @@ namespace StateEvaluation.Repository.Models
     [Table(Name = "dbo.Preference")]
     public class Preference
     {
+        private string _userId;
+        private string _shortOrder1;
+        private string _shortOrder2;
+        private string _order1;
+        private string _order2;
+        private string _preference1;
+        private string _preference2;
+        private string _compare;
+
         [Column(IsPrimaryKey = true)]
         public Guid Id { get; set; }
         [Column]
@@ -13,25 +22,26 @@ namespace StateEvaluation.Repository.Models
         [Column]
         public int FavoriteColor { get; set; }
         [Column]
-        public string ShortOder1 { get; set; }
+        public string ShortOder1 { get => _shortOrder1; set => _shortOrder1 = value?.Trim(); }
         [Column]
-        public string Oder1 { get; set; }
+        public string Oder1 { get => _order1; set => _order1 = value?.Trim(); }
         [Column]
-        public string Preference1 { get; set; }
+        public string Preference1 { get => _preference1; set => _preference1 = value?.Trim(); }
         [Column]
-        public string ShortOder2 { get; set; }
+        public string ShortOder2 { get => _shortOrder2; set => _shortOrder2 = value?.Trim(); }
         [Column]
-        public string Oder2 { get; set; }
+        public string Oder2 { get => _order2; set => _order2 = value?.Trim(); }
         [Column]
-        public string Preference2 { get; set; }
+        public string Preference2 { get => _preference2; set => _preference2 = value?.Trim(); }
         [Column]
-        public string Compare { get; set; }
+        public string Compare { get => _compare; set => _compare = value?.Trim(); }
         [Column]
         public int? RelaxTable1 { get; set; }
         [Column]
         public int? RelaxTable2 { get; set; }
 
-        [Column(Name = "UserID")] public string UserId { get; set; }
+        [Column(Name = "UserID")]
+        public string UserId { get => _userId; set => _userId = value?.Trim(); }
     //    private EntityRef<People> _people = new EntityRef<People>();
 
     //    [Association(Name = "FK_Preferences_People", IsForeignKey = true, Storage = "_people", ThisKey = "UserId")]

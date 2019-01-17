@@ -1,24 +1,35 @@
 ﻿
+using System.Collections.Generic;
+
 namespace StateEvaluation.Common.ViewModel
 {
     public class BaseFilterVM : BaseVM
     {
-        private string _userId;
+        protected List<string> _userIds;
         private object _dateFrom;
         private object _dateTo;
-        private string _expeditionFrom;
-        private string _expeditionTo;
-        private string _peopleFrom;
-        private string _peopleTo;
-        private string _profession;
-        
-        public string UserId
+        protected List<string> _expeditions;
+        protected List<string> _people;
+        protected List<string> _professions;
+
+        public BaseFilterVM()
         {
-            get => _userId;
-            set
+            _userIds = new List<string>();
+            _expeditions = new List<string>();
+            _people = new List<string>();
+            _professions = new List<string>();
+        }
+
+        public List<string> UserIds { get => _userIds; set => _userIds = value; }
+        public void SetUserState(string userId, bool state)
+        {
+            if (_userIds.Contains(userId) && !state)
             {
-                _userId = value;
-                OnPropertyChanged("UserId");
+                _userIds.Remove(userId);
+            }
+            else if (!_userIds.Contains(userId) && state)
+            {
+                _userIds.Add(userId);
             }
         }
 
@@ -40,49 +51,44 @@ namespace StateEvaluation.Common.ViewModel
                 OnPropertyChanged("DateTo");
             }
         }
-        public string ExpeditionFrom
+
+        public List<string> Expeditions { get => _expeditions; set => _expeditions = value; }
+        public void SetExpeditionState(string expedition, bool state)
         {
-            get => _expeditionFrom;
-            set
+            if (_expeditions.Contains(expedition) && !state)
             {
-                _expeditionFrom = value;
-                OnPropertyChanged("ExpeditionFrom");
+                _expeditions.Remove(expedition);
+            }
+            else if (!_expeditions.Contains(expedition) && state)
+            {
+                _expeditions.Add(expedition);
             }
         }
-        public string ExpeditionTo
+
+        public List<string> People { get => _people; set => _people = value; }
+        public void SetPeopleState(string people, bool state)
         {
-            get => _expeditionTo;
-            set
+            if (_people.Contains(people) && !state)
             {
-                _expeditionTo = value;
-                OnPropertyChanged("ExpeditionTo");
+                _people.Remove(people);
+            }
+            else if (!_people.Contains(people) && state)
+            {
+                _people.Add(people);
             }
         }
-        public string PeopleFrom
+
+        public List<string> Professions { get => _professions; set => _professions = value; }
+
+        public void SetProfessionsState(string profession, bool state)
         {
-            get => _peopleFrom;
-            set
+            if (_professions.Contains(profession) && !state)
             {
-                _peopleFrom = value;
-                OnPropertyChanged("PeopleFrom");
+                _professions.Remove(profession);
             }
-        }
-        public string PeopleTo
-        {
-            get => _peopleTo;
-            set
+            else if (!_professions.Contains(profession) && state)
             {
-                _peopleTo = value;
-                OnPropertyChanged("PeopleTo");
-            }
-        }
-        public string Profession
-        {
-            get => _profession;
-            set
-            {
-                _profession = value;
-                OnPropertyChanged("Profession");
+                _professions.Add(profession);
             }
         }
     }

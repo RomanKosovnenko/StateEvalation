@@ -1,5 +1,4 @@
-﻿using Microsoft.Office.Interop.Excel;
-using StateEvaluation.Repository.Providers;
+﻿using StateEvaluation.Repository.Providers;
 using StateEvaluation.Common.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -13,6 +12,7 @@ using StateEvaluation.BussinesLayer.BuissnesManagers;
 using StateEvaluation.BioColor.Providers;
 using StateEvaluation.BioColor.Helpers;
 using StateEvaluation.BusinessLayer.BuissnesManagers;
+using System.Text.RegularExpressions;
 
 namespace StateEvaluation
 {
@@ -33,10 +33,12 @@ namespace StateEvaluation
         private FilterBussinesManager filterBussinesManager;
         private DataRepository dataRepository;
 
+        private IEnumerable<ListBox> userIdListBoxes;
+        private IEnumerable<ListBox> expeditionListBoxes;
+        private IEnumerable<ListBox> numberOfPeopleListBoxes;
+        private IEnumerable<ListBox> professionsListBoxes;
+
         private IEnumerable<ComboBox> userIdComboBoxes;
-        private IEnumerable<ComboBox> expeditionComboBoxes;
-        private IEnumerable<ComboBox> numberOfPeopleComboBoxes;
-        private IEnumerable<ComboBox> professionsComboBoxes;
      
         #region ctor
         public MainWindow()
@@ -46,41 +48,38 @@ namespace StateEvaluation
 
             this.dataRepository = new DataRepository();
 
+            userIdListBoxes = new List<ListBox>()
+            {
+                UserIdsFilterPeopleTab,
+                UserIdsFilterPreferencesTab,
+                UserIdsFilterFeelingsTab
+            };
+
             userIdComboBoxes = new List<ComboBox>()
             {
-                UserIdsFilterPeopleCB,
-                UserIdsFilterSubjFeelingCB,
-                UserIdsFilterPreferenceCB,
                 UserIdsInsertPreferenceCB,
                 UserIdsInsertSubjFeelCB
             };
 
-            expeditionComboBoxes = new List<ComboBox>()
+            expeditionListBoxes = new List<ListBox>()
             {
-                ExpeditionFromFilterPeopleCB,
-                ExpeditionToFilterPeopleCB,
-                ExpeditionFromFilterSubjFeelCB,
-                ExpeditionToFilterSubjFeelCB,
-                ExpeditionFilterToPreferenceCB,
-                ExpeditionFromFilterPreferenceCB
+                ExpeditionFilterPeopleTab,
+                ExpeditionFilterPreferencesTab,
+                ExpeditionFilterFeelingsTab
             };
 
-            numberOfPeopleComboBoxes = new List<ComboBox>()
+            numberOfPeopleListBoxes = new List<ListBox>()
             {
-                NumberFromFilterPeopleCB,
-                NumberToFilterPeopleCB,
-                NumberFromFilterSubjFeelCB,
-                NumberToFilterSubjFeelCB,
-                NumberFromFilterPreferenceCB,
-                NumberToFilterPreferenceCB
-
+                NumberFilterPeopleTab,
+                NumberFilterPreferencesTab,
+                NumberFilterFeelingsTab
             };
 
-            professionsComboBoxes = new List<ComboBox>()
+            professionsListBoxes = new List<ListBox>()
             {
                 ProfessionFilterPeopleTab,
-                ProfessionPreferenceTab,
-                ProfessionsSubjectiveFeelingTab
+                ProfessionFilterPreferencesTab,
+                ProfessionFilterFeelingsTab
             };
 
             peopleFilter = (PeopleFilterVM)Resources["peopleFilterVM"];
@@ -90,10 +89,10 @@ namespace StateEvaluation
             peopleBuissnesManager = new PeopleBuissnesManager
             (
                 dataRepository,
-                userIdComboBoxes,
-                expeditionComboBoxes,
-                numberOfPeopleComboBoxes,
-                professionsComboBoxes,
+                userIdListBoxes,
+                expeditionListBoxes,
+                numberOfPeopleListBoxes,
+                professionsListBoxes,
                 PeopleDataGrid,
                 UpdatePersonBtn
             );
@@ -108,6 +107,18 @@ namespace StateEvaluation
             preferenceBuissnesManager = new PreferenceBuissnesManager(dataRepository, PreferencesDataGrid, UpdatePrefernceBtn);
             filterBussinesManager = new FilterBussinesManager(dataRepository);
             subjectiveFeelingBuissnesManager = new SubjectiveFeelingBuissnesManager(dataRepository, SubjectiveFeelingDataGrid, UpdateSubjectiveFeelingBtn);
+
+            biocolor1ShortOrder = new List<ComboBox> { selectorC1in3, selectorC2in3, selectorC3in3 };
+            biocolor1LongOrder  = new List<ComboBox> { selectorC1in12, selectorC2in12, selectorC3in12, selectorC4in12, selectorC5in12, selectorC6in12,
+                                                       selectorC7in12, selectorC8in12, selectorC9in12, selectorC10in12, selectorC11in12, selectorC12in12 };
+            biocolor2ShortOrder = new List<ComboBox> { selectorC21in3, selectorC22in3, selectorC23in3 };
+            biocolor2LongOrder  = new List<ComboBox> { selectorC21in12, selectorC22in12, selectorC23in12, selectorC24in12, selectorC25in12, selectorC26in12,
+                                                       selectorC27in12, selectorC28in12, selectorC29in12, selectorC210in12, selectorC211in12, selectorC212in12 };
+            
+            RegenerateComboBoxItems(biocolor1ShortOrder);
+            RegenerateComboBoxItems(biocolor1LongOrder);
+            RegenerateComboBoxItems(biocolor2ShortOrder);
+            RegenerateComboBoxItems(biocolor2LongOrder);
 
             colors = new List<BiocolorProvider.ColorRow> {
                 new BiocolorProvider.ColorRow(PhysicalColor1, PhysicalButton1, cPhysicalColor1, mPhysicalColor1, yPhysicalColor1, kPhysicalColor1, PhysicalColorBackground1),
@@ -125,5 +136,21 @@ namespace StateEvaluation
             };
         }
         #endregion
+        
+        public void SetLoaderVisibility(Visibility visibility)
+        {
+            Loader.Visibility = visibility;
+            // Loader.Loaded += new RoutedEventHandler();
+        }
+
+        private void Button_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            SetLoaderVisibility(Visibility.Visible);
+        }
+
+        private void Button_MouseUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            SetLoaderVisibility(Visibility.Hidden);
+        }
     }
 }
