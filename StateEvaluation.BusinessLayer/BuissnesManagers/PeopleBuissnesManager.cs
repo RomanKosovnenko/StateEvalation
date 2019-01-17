@@ -16,7 +16,8 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
     {
         private DataRepository _dataRepository;
 
-        private IEnumerable<ListBox> _userIdComboBoxes { get; }
+        private IEnumerable<ListBox> _userIdListBoxes { get; }
+        private IEnumerable<ComboBox> _userIdComboBoxes { get; }
         private IEnumerable<ListBox> _expeditionComboBoxes { get; }
         private IEnumerable<ListBox> _userNumberComboBoxes { get; }
         private IEnumerable<ListBox> _professionsComboBoxes { get; }
@@ -26,6 +27,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         public PeopleBuissnesManager(
             DataRepository dataRepository, 
             IEnumerable<ListBox> userIdListBoxes,
+            IEnumerable<ComboBox> userIdComboBoxes,
             IEnumerable<ListBox> expeditionListBoxes,
             IEnumerable<ListBox> userNumberListBoxes,
             IEnumerable<ListBox> professionsListBoxes,
@@ -33,7 +35,8 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             Button updatePersonBtn)
         {
             _dataRepository = dataRepository;
-            _userIdComboBoxes = userIdListBoxes;
+            _userIdListBoxes = userIdListBoxes;
+            _userIdComboBoxes = userIdComboBoxes;
             _expeditionComboBoxes = expeditionListBoxes;
             _userNumberComboBoxes = userNumberListBoxes;
             _peopleDataGrid = peopleDataGrid;
@@ -222,6 +225,10 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             foreach(var comboBox in _userIdComboBoxes)
             {
                 comboBox.ItemsSource = _dataRepository.GetUserIdsFilter();
+            }
+            foreach(var listBox in _userIdListBoxes)
+            {
+                listBox.ItemsSource = _dataRepository.GetUserIdsFilter();
             }
         }
 

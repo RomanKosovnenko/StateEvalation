@@ -777,7 +777,7 @@
                     <DataGridTemplateColumn>
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <Button x:Name="RemoveFeelingsBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="DeleteSSubjectiveFeeling_Click"/>
+                                <Button x:Name="RemoveFeelingsBtn" Content="&#xE107;" FontFamily="Segoe MDL2 Assets" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="White" Background="White" Foreground="Red" FontSize="14" Click="DeleteSubjectiveFeeling_Click"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
