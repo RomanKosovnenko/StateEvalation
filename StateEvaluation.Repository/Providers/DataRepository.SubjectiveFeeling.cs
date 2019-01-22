@@ -1,4 +1,4 @@
-﻿using StateEvaluation.Repository.Models;
+using StateEvaluation.Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

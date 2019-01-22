@@ -1,4 +1,4 @@
-﻿using StateEvaluation.Repository.Providers;
+using StateEvaluation.Repository.Providers;
 using StateEvaluation.Common.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -89,7 +89,6 @@ namespace StateEvaluation
 
             peopleBuissnesManager = new PeopleBuissnesManager
             (
-                dataRepository,
                 userIdListBoxes,
                 userIdComboBoxes,
                 expeditionListBoxes,
@@ -106,9 +105,9 @@ namespace StateEvaluation
             biocolorProvider.InitBiocolor(BioColorGrid, Date, DateNow);
 
             biocolorBusinessManager = new BiocolorBusinessManager(BioColorGrid, Date, DateNow, biocolorSettings);
-            preferenceBuissnesManager = new PreferenceBuissnesManager(dataRepository, PreferencesDataGrid, UpdatePrefernceBtn);
-            filterBussinesManager = new FilterBussinesManager(dataRepository);
-            subjectiveFeelingBuissnesManager = new SubjectiveFeelingBuissnesManager(dataRepository, SubjectiveFeelingDataGrid, UpdateSubjectiveFeelingBtn);
+            preferenceBuissnesManager = new PreferenceBuissnesManager(PreferencesDataGrid, UpdatePrefernceBtn);
+            filterBussinesManager = new FilterBussinesManager();
+            subjectiveFeelingBuissnesManager = new SubjectiveFeelingBuissnesManager(SubjectiveFeelingDataGrid, UpdateSubjectiveFeelingBtn);
 
             biocolor1ShortOrder = new List<ComboBox> { selectorC1in3, selectorC2in3, selectorC3in3 };
             biocolor1LongOrder  = new List<ComboBox> { selectorC1in12, selectorC2in12, selectorC3in12, selectorC4in12, selectorC5in12, selectorC6in12,

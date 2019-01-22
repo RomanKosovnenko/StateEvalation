@@ -14,7 +14,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 {
     public class PeopleBuissnesManager
     {
-        private DataRepository _dataRepository;
+        private DataRepository _dataRepository = new DataRepository();
 
         private IEnumerable<ListBox> _userIdListBoxes { get; }
         private IEnumerable<ComboBox> _userIdComboBoxes { get; }
@@ -25,7 +25,6 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         private Button _updatePersonBtn { get; }
 
         public PeopleBuissnesManager(
-            DataRepository dataRepository, 
             IEnumerable<ListBox> userIdListBoxes,
             IEnumerable<ComboBox> userIdComboBoxes,
             IEnumerable<ListBox> expeditionListBoxes,
@@ -34,7 +33,6 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             DataGrid peopleDataGrid,
             Button updatePersonBtn)
         {
-            _dataRepository = dataRepository;
             _userIdListBoxes = userIdListBoxes;
             _userIdComboBoxes = userIdComboBoxes;
             _expeditionComboBoxes = expeditionListBoxes;
@@ -121,12 +119,39 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             }
         }
 
+        public void UpdatePerson(People person, string changedProperty, string newValue)
+        {
+            if (
+               string.IsNullOrEmpty(person.Firstname) ||
+               string.IsNullOrEmpty(person.Middlename) ||
+               string.IsNullOrEmpty(person.Lastname) ||
+               !DateTime.TryParse(person.Birthday.ToString(), out DateTime birthday) ||
+               string.IsNullOrEmpty(person.Workposition)
+               )
+            {
+                MessageBox.Show(MessageBoxConstants.WrongFields);
+                return;
+            }
+            try
+            {
+                person.GetType().GetProperty(changedProperty).SetValue(person, newValue);
+                _dataRepository.UpdatePerson(person);
+
+                MessageBox.Show(MessageBoxConstants.PersonUpdated);
+            }
+            catch
+            {
+                MessageBox.Show(MessageBoxConstants.ErrorUpdating);
+            }
+        }
+
         public void DeletePerson(string id)
         {
             try
             {
                 _dataRepository.DeletePerson(id);
                 Refresh();
+                MessageBox.Show(MessageBoxConstants.PersonDeleted);
             }
             catch
             {
