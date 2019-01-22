@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:helpers="clr-namespace:StateEvaluation.View.Helpers"
         xmlns:biocolorhelpers="clr-namespace:StateEvaluation.BioColor.Helpers;assembly=StateEvaluation.Biocolor"
-        xmlns:p="clr-namespace:StateEvaluation.Properties"
         xmlns:repository="clr-namespace:StateEvaluation.Repository.Providers;assembly=StateEvaluation.Repository"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:viewModel="clr-namespace:StateEvaluation.Common.ViewModel;assembly=StateEvaluation.Common"

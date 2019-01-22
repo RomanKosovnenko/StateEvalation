@@ -1,13 +1,14 @@
-﻿using StateEvaluation.Common.Constants;
-using StateEvaluation.Repository.Models;
+﻿using StateEvaluation.Repository.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Linq;
+using System.Data.Entity;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace StateEvaluation.Repository.Providers
 {
-    public partial class DataRepository : DataContext
+    public partial class DataRepository : DbContext
     {
         /// <summary>
         /// Get person by id
@@ -26,7 +27,7 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public IEnumerable<People> GetPeople()
         {
-            var people = this.People.Select(item => item).OrderByDescending(item => item.UserId);
+            var people = this.People.Select(item => item).OrderByDescending(item => item.UserId).ToList();
             return people;
         }
 
@@ -34,19 +35,20 @@ namespace StateEvaluation.Repository.Providers
         /// Update person
         /// </summary>
         /// <param name="person">newPerson</param>
-        public void UpdatePerson(People person)
+        public void UpdatePerson(People newPerson)
         {
-            var items = this.People.Where(item => item.Id == person.Id).Single<People>();
-            items.Id = person.Id;
-            items.Firstname = person.Firstname;
-            items.Lastname = person.Lastname;
-            items.Middlename = person.Middlename;
-            items.Birthday = person.Birthday;
-            items.Workposition = person.Workposition;
-            items.Expedition = person.Expedition;
-            items.Number = person.Number;
-            items.UserId = person.UserId;
-            SubmitChanges();
+            var person = this.People.Single(item => item.Id == newPerson.Id);
+            person.Id = newPerson.Id;
+            person.Firstname = newPerson.Firstname;
+            person.Lastname = newPerson.Lastname;
+            person.Middlename = newPerson.Middlename;
+            person.Birthday = newPerson.Birthday;
+            person.Workposition = newPerson.Workposition;
+            person.Expedition = newPerson.Expedition;
+            person.Number = newPerson.Number;
+            person.UserId = newPerson.UserId;
+            this.Entry(person).State = EntityState.Modified;
+            this.SaveChanges();
         }
 
         /// <summary>
@@ -55,8 +57,8 @@ namespace StateEvaluation.Repository.Providers
         /// <param name="person"></param>
         public void CreatePerson(People person)
         {
-            People.InsertOnSubmit(person);
-            SubmitChanges();
+            People.Add(person);
+            SaveChanges();
         }
 
         /// <summary>
@@ -66,8 +68,8 @@ namespace StateEvaluation.Repository.Providers
         public void DeletePerson(string id)
         {
             var person = People.Single(item => item.Id.ToString() == id);
-            People.DeleteOnSubmit(person);
-            SubmitChanges();
+            People.Remove(person);
+            SaveChanges();
         }
 
         /// <summary>
@@ -76,11 +78,12 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public IEnumerable<string> GetUserIds()
         {
-            return People
+            var res = People
                 .Select(item => item.UserId.Trim())
                 .Distinct()
                 .OrderByDescending(item => item)
                 .ToList();
+            return res;
         }
 
         /// <summary>
@@ -90,7 +93,7 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public IEnumerable<People> GetPeople(Func<People, bool> query)
         {
-            return People.Where(query).OrderByDescending(item => item.UserId);
+            return People.Where(query).OrderByDescending(item => item.UserId).ToList();
         }
 
         /// <summary>
@@ -124,7 +127,7 @@ namespace StateEvaluation.Repository.Providers
             return People
                 .Select(item => item.Expedition)
                 .Distinct()
-                .OrderByDescending(item => Convert.ToInt32(item))
+                .OrderByDescending(item => item)
                 .ToList();
         }
 
@@ -137,7 +140,7 @@ namespace StateEvaluation.Repository.Providers
             return People
                 .Select(item => item.Number)
                 .Distinct()
-                .OrderBy(item => Convert.ToInt32(item))
+                .OrderBy(item => item)
                 .ToList();
         }
     }

@@ -160,8 +160,8 @@ namespace StateEvaluation
 
             foreach (var pref in prefinTable)
             {
-                dataRepository.Preference.InsertOnSubmit(pref);
-                dataRepository.SubmitChanges();
+                dataRepository.Preference.Add(pref);
+                dataRepository.SaveChanges();
             }
 
             Console.WriteLine(excelRange);

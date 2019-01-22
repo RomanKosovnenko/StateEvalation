@@ -13,6 +13,7 @@ using StateEvaluation.BioColor.Providers;
 using StateEvaluation.BioColor.Helpers;
 using StateEvaluation.BusinessLayer.BuissnesManagers;
 using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace StateEvaluation
 {
