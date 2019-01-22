@@ -21,7 +21,7 @@ namespace StateEvaluation
         {
             var subjectiveFeeling = (SubjectiveFeelingVM)this.Resources["subjectiveFeelingVM"];
             subjectiveFeelingBuissnesManager.Create(subjectiveFeeling);
-            //FilterSubjectiveFeeling_Click(sender, e);
+            FilterSubjectiveFeeling_Click(sender, e);
         }
 
         /// <summary>
