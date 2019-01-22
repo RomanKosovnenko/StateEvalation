@@ -10,14 +10,13 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 {
     public class SubjectiveFeelingBuissnesManager
     {
-        private DataRepository _dataRepository;
+        private DataRepository _dataRepository = new DataRepository();
 
         private DataGrid _subjectiveFeelingDataGrid { get; }
         private Button _updateSubjectiveFeelingBtn { get; }
 
-        public SubjectiveFeelingBuissnesManager(DataRepository dataRepository, DataGrid subjectiveFeelingDataGrid, Button updateSubjectiveFeelingBtn)
+        public SubjectiveFeelingBuissnesManager(DataGrid subjectiveFeelingDataGrid, Button updateSubjectiveFeelingBtn)
         {
-            _dataRepository = dataRepository;
             _subjectiveFeelingDataGrid = subjectiveFeelingDataGrid;
             _updateSubjectiveFeelingBtn = updateSubjectiveFeelingBtn;
         }

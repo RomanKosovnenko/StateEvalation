@@ -13,7 +13,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 {
     public class PreferenceBuissnesManager
     {
-        private DataRepository _dataRepository;
+        private DataRepository _dataRepository = new DataRepository();
         private List<string> _color1in3s = new List<string>();
         private List<string> _color2in3s = new List<string>();
         private List<string> _color1in12s = new List<string>();
@@ -25,9 +25,8 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         private DataGrid _preferenceDataGrid { get; }
         private Button _updatePrefernceBtn { get; }
 
-        public PreferenceBuissnesManager(DataRepository dataRepository, DataGrid preferenceDataGrid, Button updatePrefernceBtn)
+        public PreferenceBuissnesManager(DataGrid preferenceDataGrid, Button updatePrefernceBtn)
         {
-            _dataRepository = dataRepository;
             _preferenceDataGrid = preferenceDataGrid;
             _updatePrefernceBtn = updatePrefernceBtn;
         }
@@ -87,6 +86,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                     else
                     {
                         MessageBox.Show(MessageBoxConstants.WrongFields);
+                        return;
                     }
                 }
 

@@ -2,12 +2,14 @@
 using StateEvaluation.Repository.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Linq;
+using System.Data.Entity;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace StateEvaluation.Repository.Providers
 {
-    public partial class DataRepository : DataContext
+    public partial class DataRepository : DbContext
     {
         /// <summary>
         /// Create Preference test
@@ -15,8 +17,8 @@ namespace StateEvaluation.Repository.Providers
         /// <param name="preference">preference</param>
         public void CreatePreferenceTest(Preference preference)
         {
-            Preference.InsertOnSubmit(preference);
-            SubmitChanges();
+            Preference.Add(preference);
+            this.SaveChanges();
         }
 
         /// <summary>
@@ -36,7 +38,7 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public IEnumerable<Preference> GetPreferenceTests()
         {
-            var items = this.Preference.Select(item => item).OrderByDescending(item => item.Date);
+            var items = this.Preference.Select(item => item).OrderByDescending(item => item.Date).ToList();
             return items;
         }
 
@@ -47,8 +49,8 @@ namespace StateEvaluation.Repository.Providers
         public void DeletePreferenceTest(string id)
         {
             var preference = Preference.Single(item => item.Id.ToString() == id);
-            Preference.DeleteOnSubmit(preference);
-            SubmitChanges();
+            Preference.Remove(preference);
+            SaveChanges();
         }
 
         /// <summary>
@@ -57,17 +59,19 @@ namespace StateEvaluation.Repository.Providers
         /// <param name="newPreference">newPreference</param>
         public void UpdatePreferenceTest(Preference newPreference)
         {
-            var items = Preference.Single(item => item.Id == newPreference.Id);
-            items.Oder1 = newPreference.Oder1;
-            items.Oder2 = newPreference.Oder2;
-            items.Preference1 = newPreference.Preference1;
-            items.Preference2 = newPreference.Preference2;
-            items.RelaxTable1 = newPreference.RelaxTable1;
-            items.RelaxTable2 = newPreference.RelaxTable2;
-            items.ShortOder1 = newPreference.ShortOder1;
-            items.ShortOder2 = newPreference.ShortOder2;
-            items.Compare = newPreference.Preference1 == newPreference.Preference2 ? StringBooleanValues.True : StringBooleanValues.False;
-            SubmitChanges();
+            var preference = Preference.Single(item => item.Id == newPreference.Id);
+            preference.Oder1 = newPreference.Oder1;
+            preference.Oder2 = newPreference.Oder2;
+            preference.Preference1 = newPreference.Preference1;
+            preference.Preference2 = newPreference.Preference2;
+            preference.RelaxTable1 = newPreference.RelaxTable1;
+            preference.RelaxTable2 = newPreference.RelaxTable2;
+            preference.ShortOder1 = newPreference.ShortOder1;
+            preference.ShortOder2 = newPreference.ShortOder2;
+            preference.Compare = newPreference.Preference1 == newPreference.Preference2 ? StringBooleanValues.True : StringBooleanValues.False;
+
+            this.Entry(preference).State = EntityState.Modified;
+            SaveChanges();
         }
 
         /// <summary>
@@ -77,7 +81,7 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public IEnumerable<Preference> GetPreferenceTests(Func<Preference, bool> query)
         {
-            var preferences = this.Preference.Where(query).OrderByDescending(item => item.Date);
+            var preferences = this.Preference.Where(query).OrderByDescending(item => item.Date).ToList();
             return preferences;
         }
 

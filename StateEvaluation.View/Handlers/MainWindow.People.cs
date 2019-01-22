@@ -77,7 +77,6 @@ namespace StateEvaluation
             if (dialogResult == MessageBoxResult.Yes)
             {
                 peopleBuissnesManager.DeletePerson(personId.ToString());
-                MessageBox.Show(MessageBoxConstants.PersonDeleted);
             }
             SetLoaderVisibility(Visibility.Hidden);
         }
@@ -137,55 +136,17 @@ namespace StateEvaluation
             peopleFilter.SetProfessionsState(checkBox.Content.ToString(), (bool)checkBox.IsChecked);
         }
 
+        /// <summary>
+        /// Quick edit person by field
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PeopleDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             var currentPeople = (People)((DataGrid)(sender)).SelectedItem;
-            try
-            {
-                int? intValue = null;
-                
-                var property = e.Column.SortMemberPath.ToString();
-                var currentValue = currentPeople.GetType().GetProperty(property).GetValue(currentPeople).ToString();
-                var value = ((TextBox)e.EditingElement).Text.ToString();
-                var intProperty = property;
-
-                if (currentValue == value)
-                {
-                    return;
-                }
-
-                switch (property)
-                {
-                    case "Expedition":
-                        intValue = int.Parse(value);
-                        property = "UserId";
-                        value = "Ex" + intValue.ToString() + "#" + currentPeople.Number;
-                        break;
-                    case "Number":
-                        intValue = int.Parse(value);
-                        property = "UserId";
-                        value = "Ex" + currentPeople.Expedition + "#" + value;
-                        break;
-                    case "Birthday":
-                        value = System.DateTime.Parse(value).ToShortDateString();
-                        break;
-                }
-                if (intValue != null)
-                {
-                    currentPeople.GetType().GetProperty(intProperty).SetValue(currentPeople, intValue);
-                    ((TextBox)e.EditingElement).Text = intValue.ToString();
-                }
-                else
-                {
-                    ((TextBox)e.EditingElement).Text = value;
-                }
-                currentPeople.GetType().GetProperty(property).SetValue(currentPeople, value);
-                dataRepository.UpdatePerson(currentPeople);
-            }
-            catch (System.Exception)
-            {
-                MessageBox.Show(MessageBoxConstants.ErrorUpdating);
-            }
+            var changedProperty = e.Column.SortMemberPath.ToString();
+            var newValue = ((TextBox)e.EditingElement).Text.ToString();
+            peopleBuissnesManager.UpdatePerson(currentPeople, changedProperty, newValue);
         }
     }
 }

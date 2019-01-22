@@ -1,35 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Linq;
-using System.Data.Linq.Mapping;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace StateEvaluation.Repository.Models
 {
-    [Table(Name = "dbo.RelaxTable1")]
-    public class RelaxTable1
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    public partial class RelaxTable1
     {
-        [Column(IsPrimaryKey = true)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public RelaxTable1()
+        {
+            Preference = new HashSet<Preference>();
+        }
+
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int Id { get; set; }
-        [Column]
+
         public int Number { get; set; }
 
-        //private EntitySet<Preference> _preferences1 = new EntitySet<Preference>();
-        //[Association(Name = "FK_Preference_RelaxTable1", Storage = "_preferences1", OtherKey = "relaxTable1", ThisKey = "Id")]
-        //public ICollection<Preference> Preferences1
-        //{
-        //    get => _preferences1;
-        //    set => _preferences1.Assign(value);
-        //}
+        [Column(TypeName = "image")]
+        public byte[] Table { get; set; }
 
-        //private EntitySet<Preference> _preferences2 = new EntitySet<Preference>();
-        //[Association(Name = "FK_Preference_RelaxTable2", Storage = "_preferences2", OtherKey = "relaxTable2", ThisKey = "Id")]
-        //public ICollection<Preference> Preferences2
-        //{
-        //    get => _preferences2;
-        //    set => _preferences2.Assign(value);
-        //}
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Preference> Preference { get; set; }
     }
 }

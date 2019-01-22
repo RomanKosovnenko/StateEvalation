@@ -47,7 +47,7 @@ namespace StateEvaluation.View
 
         private double GetIntensiveByNumber(byte v)
         {
-            return DataRepository.Color.Single(item => item.ColorNumber == Convert.ToInt32(v)).Intensity;
+            return DataRepository.Colors.Single(item => item.ColorNumber == Convert.ToInt32(v)).Intensity;
         }
 
         public SeriesCollection Series { get; set; }
@@ -60,7 +60,7 @@ namespace StateEvaluation.View
         }
         private int GetWaveByNumber(byte number)
         {
-            return DataRepository.Color.Single(item => item.ColorNumber == Convert.ToInt32(number)).WaveLengthMax;
+            return DataRepository.Colors.Single(item => item.ColorNumber == Convert.ToInt32(number)).Wavelengthmax;
         }
 
         private void DrawGraph()

@@ -1,12 +1,14 @@
-﻿using StateEvaluation.Repository.Models;
+using StateEvaluation.Repository.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.Linq;
+using System.Data.Entity;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace StateEvaluation.Repository.Providers
 {
-    public partial class DataRepository : DataContext
+    public partial class DataRepository : DbContext
     {
         /// <summary>
         /// Remove subjective feeling
@@ -14,9 +16,9 @@ namespace StateEvaluation.Repository.Providers
         /// <param name="subjectiveFeelingId">subjectiveFeelingId</param>
         public void RemoveSubjectiveFeeling(Guid subjectiveFeelingId)
         {
-            var subjectiveFeeling = SubjectiveFeeling.Single(item => item.Id == subjectiveFeelingId);
-            SubjectiveFeeling.DeleteOnSubmit(subjectiveFeeling);
-            SubmitChanges();
+            var subjectiveFeeling = SubjectiveFeelings.Single(item => item.Id == subjectiveFeelingId);
+            SubjectiveFeelings.Remove(subjectiveFeeling);
+            SaveChanges();
         }
 
         /// <summary>
@@ -26,7 +28,7 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public SubjectiveFeeling GetSubjectiveFeeling(Guid subjectiveFeelingId)
         {
-            var subjectiveFeeling = SubjectiveFeeling.Single(item => item.Id == subjectiveFeelingId);
+            var subjectiveFeeling = SubjectiveFeelings.Single(item => item.Id == subjectiveFeelingId);
             return subjectiveFeeling;
         }
 
@@ -36,8 +38,8 @@ namespace StateEvaluation.Repository.Providers
         /// <param name="subjectiveFeeling">subjectiveFeeling</param>
         public void CreateSubjectiveFeeling(SubjectiveFeeling subjectiveFeeling)
         {
-            SubjectiveFeeling.InsertOnSubmit(subjectiveFeeling);
-            SubmitChanges();
+            SubjectiveFeelings.Add(subjectiveFeeling);
+            SaveChanges();
         }
 
         /// <summary>
@@ -46,7 +48,7 @@ namespace StateEvaluation.Repository.Providers
         /// <param name="newSubjectiveFeeling">newSubjectiveFeeling</param>
         public void UpdateSubjectiveFeeling(SubjectiveFeeling newSubjectiveFeeling)
         {
-            var subjectiveFeeling = SubjectiveFeeling.Single(item => item.Id == newSubjectiveFeeling.Id);
+            var subjectiveFeeling = SubjectiveFeelings.Single(item => item.Id == newSubjectiveFeeling.Id);
             subjectiveFeeling.BadMood = newSubjectiveFeeling.BadMood;
             subjectiveFeeling.Date = newSubjectiveFeeling.Date;
             subjectiveFeeling.GeneralWeaknes = newSubjectiveFeeling.GeneralWeaknes;
@@ -54,6 +56,9 @@ namespace StateEvaluation.Repository.Providers
             subjectiveFeeling.PoorAppetite = newSubjectiveFeeling.PoorAppetite;
             subjectiveFeeling.SlowThink = newSubjectiveFeeling.SlowThink;
             subjectiveFeeling.UserId = newSubjectiveFeeling.UserId;
+
+            this.Entry(subjectiveFeeling).State = EntityState.Modified;
+            SaveChanges();
         }
 
         /// <summary>
@@ -62,7 +67,7 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public IEnumerable<SubjectiveFeeling> GetSubjecriveFeelings()
         {
-            var items = this.SubjectiveFeeling.Select(item => item).OrderBy(item => item.Date);
+            var items = this.SubjectiveFeelings.Select(item => item).OrderBy(item => item.Date).ToList();
             return items;
         }
 
@@ -73,7 +78,7 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public IEnumerable<SubjectiveFeeling> GetSubjecriveFeelings(Func<SubjectiveFeeling, bool> query)
         {
-            var items = SubjectiveFeeling.Where(query).OrderByDescending(item => item.Date);
+            var items = SubjectiveFeelings.Where(query).OrderByDescending(item => item.Date).ToList();
             return items;
         }
     }

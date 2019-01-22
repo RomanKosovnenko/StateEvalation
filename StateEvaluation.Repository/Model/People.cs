@@ -1,49 +1,52 @@
-﻿using System;
-using System.Data.Linq;
-using System.Data.Linq.Mapping;
-
 namespace StateEvaluation.Repository.Models
 {
-    [Table(Name = "dbo.People")]
-    public class People
-    {
-        private string _userId;
-        private string _firstName;
-        private string _middleName;
-        private string _lastName;
-        private string _birthday;
-        private string _workposition;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
-        [Column(IsPrimaryKey = true)]
+    public partial class People
+    {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public People()
+        {
+            Preference = new HashSet<Preference>();
+            SubjectiveFeelings = new HashSet<SubjectiveFeeling>();
+        }
+
         public Guid Id { get; set; }
-        [Column(Name = "UserID")]
-        public string UserId { get => _userId; set => _userId = value?.Trim(); }
-        [Column]
-        public string Firstname { get => _firstName; set => _firstName = value?.Trim(); }
-        [Column]
-        public string Middlename { get => _middleName; set => _middleName = value?.Trim(); }
-        [Column]
-        public string Lastname { get => _lastName; set => _lastName = value?.Trim(); }
-        [Column]
-        public string Birthday { get => _birthday; set => _birthday = value?.Trim(); }
-        [Column]
-        public string Workposition { get => _workposition; set => _workposition = value?.Trim(); }
-        [Column]
+
+        [Key]
+        [StringLength(10)]
+        [Column("UserID")]
+        public string UserId { get; set; }
+
+        [StringLength(20)]
+        public string Firstname { get; set; }
+
+        [Required]
+        [StringLength(30)]
+        public string Lastname { get; set; }
+
+        [Required]
+        [StringLength(10)]
+        public string Birthday { get; set; }
+
         public int Expedition { get; set; }
-        [Column]
+
         public int Number { get; set; }
 
-        internal object Substring(int v1, int v2)
-        {
-            throw new NotImplementedException();
-        }
+        [StringLength(20)]
+        public string Workposition { get; set; }
 
-        private EntitySet<SubjectiveFeeling> _subjectiveFeelings = new EntitySet<SubjectiveFeeling>();
-        [Association(Storage = "_subjectiveFeelings", OtherKey = "UserId")]
-        public EntitySet<SubjectiveFeeling> SubjectiveFeelings
-        {
-            get { return this._subjectiveFeelings; }
-            set { this._subjectiveFeelings.Assign(value); }
-        }
+        [StringLength(30)]
+        public string Middlename { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Preference> Preference { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SubjectiveFeeling> SubjectiveFeelings { get; set; }
     }
 }

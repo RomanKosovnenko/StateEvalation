@@ -9,10 +9,11 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
     public class FilterBussinesManager
     {
         private FilterProvider _filterProvider;
+        private DataRepository _dataRepository = new DataRepository();
 
-        public FilterBussinesManager(DataRepository dataRepository)
+        public FilterBussinesManager()
         {
-            _filterProvider = new FilterProvider(dataRepository);
+            _filterProvider = new FilterProvider(_dataRepository);
         }
 
         public IEnumerable Filter(DataGrid dataGrid, object filter)
