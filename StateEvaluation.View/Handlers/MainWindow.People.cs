@@ -154,14 +154,14 @@ namespace StateEvaluation
                 SetLoaderVisibility(Visibility.Hidden);
                 return;
             }
-
+            bool updated = false;
             var dialogResult = MessageBox.Show(MessageBoxConstants.UpdateSure, MessageBoxConstants.UpdateSureTitle, MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
             {
-                peopleBuissnesManager.UpdatePerson(currentPeople, changedProperty, newValue);
+                updated = peopleBuissnesManager.TryUpdatePerson(currentPeople, changedProperty, newValue);
                 ((TextBox)e.EditingElement).Text = newValue;
             }
-            else
+            if (!updated)
             {
                 ((TextBox)e.EditingElement).Text = currentValue;
             }

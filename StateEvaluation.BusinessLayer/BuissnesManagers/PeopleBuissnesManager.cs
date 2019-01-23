@@ -119,7 +119,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             }
         }
 
-        public void UpdatePerson(People person, string changedProperty, string newValue)
+        public bool TryUpdatePerson(People person, string changedProperty, string newValue)
         {
             if (
                string.IsNullOrEmpty(person.Firstname) ||
@@ -130,18 +130,51 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                )
             {
                 MessageBox.Show(MessageBoxConstants.WrongFields);
-                return;
+                return false;
             }
             try
             {
-                person.GetType().GetProperty(changedProperty).SetValue(person, newValue);
+
+                if (changedProperty == "Birthday")
+                {
+                    if (DateTime.TryParse(newValue.ToString(), out DateTime result))
+                    {
+                        newValue = result.ToShortDateString();
+                    }
+                    else
+                    {
+                        MessageBox.Show(MessageBoxConstants.WrongFields);
+                        return false;
+                    }
+                }
+                if (changedProperty == "Expedition" || changedProperty == "Number")
+                {
+                    if (int.TryParse(newValue, out int result))
+                    {
+                        person.GetType().GetProperty(changedProperty).SetValue(person, result);
+                    }
+                    else
+                    {
+                        MessageBox.Show(MessageBoxConstants.WrongFields);
+                        return false;
+                    }
+                    // UserId cannot be changed due to DataBase references
+                    // person.UserId = "Ex" + person.Expedition + "#" + person.Number;
+                }
+                else
+                {
+                    person.GetType().GetProperty(changedProperty).SetValue(person, newValue);
+                }
+  
                 _dataRepository.UpdatePerson(person);
 
                 MessageBox.Show(MessageBoxConstants.PersonUpdated);
+                return true;
             }
-            catch
+            catch (Exception e)
             {
                 MessageBox.Show(MessageBoxConstants.ErrorUpdating);
+                return false;
             }
         }
 

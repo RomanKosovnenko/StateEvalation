@@ -433,8 +433,8 @@
                     <DataGridTextColumn Header="Отчество" Binding="{Binding Middlename}" />
                     <DataGridTextColumn Header="День рождения" Binding="{Binding Birthday, StringFormat=\{0:d\}}" />
                     <DataGridTextColumn Header="Профессия" Binding="{Binding Workposition}" />
-                    <DataGridTextColumn Header="Експедиция" Binding="{Binding Expedition}" />
-                    <DataGridTextColumn Header="Номер" Binding="{Binding Number}" />
+                    <DataGridTextColumn IsReadOnly="True" Header="Експедиция" Binding="{Binding Expedition}" />
+                    <DataGridTextColumn IsReadOnly="True" Header="Номер" Binding="{Binding Number}" />
                 </DataGrid.Columns>
             </DataGrid>
             <DataGrid comment:Tab="Preferences Grid"
