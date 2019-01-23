@@ -155,11 +155,6 @@ namespace StateEvaluation
                 return;
             }
 
-            if (changedProperty == "Birthday")
-            {
-                newValue = DateTime.Parse(newValue).ToShortDateString();
-            }
-
             var dialogResult = MessageBox.Show(MessageBoxConstants.UpdateSure, MessageBoxConstants.UpdateSureTitle, MessageBoxButton.YesNo);
             if (dialogResult == MessageBoxResult.Yes)
             {
