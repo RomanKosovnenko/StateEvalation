@@ -148,9 +148,17 @@ namespace StateEvaluation
             var currentFeeling = (SubjectiveFeeling)((DataGrid)(sender)).SelectedItem;
             try
             {
-                var property = e.Column.SortMemberPath.ToString();
-                var currentValue = currentFeeling.GetType().GetProperty(property).GetValue(currentFeeling).ToString();
-                var newValue = ((CheckBox)e.EditingElement).IsChecked.ToString();
+                var changedProperty = e.Column.SortMemberPath.ToString();
+                var currentValue = currentFeeling.GetType().GetProperty(changedProperty).GetValue(currentFeeling).ToString();
+                string newValue;
+                if (e.EditingElement is CheckBox)
+                {
+                    newValue = ((CheckBox)e.EditingElement).IsChecked.ToString();
+                }
+                else
+                {
+                    newValue = ((TextBox)e.EditingElement).Text.ToString();
+                }
 
                 if (currentValue == newValue)
                 {
@@ -158,31 +166,26 @@ namespace StateEvaluation
                     return;
                 }
 
-                switch (property)
-                {
-                    case "Date":
-                        newValue = System.DateTime.Parse(newValue).ToShortDateString();
-                        currentFeeling.GetType().GetProperty(property).SetValue(currentFeeling, newValue);
-                        ((TextBox)e.EditingElement).Text = newValue;
-                        break;
-                    default:
-                        bool v = bool.Parse(newValue);
-                        currentFeeling.GetType().GetProperty(property).SetValue(currentFeeling, v);
-                        break;
-                }
-
+                bool updated = false;
                 var dialogResult = MessageBox.Show(MessageBoxConstants.UpdateSure, MessageBoxConstants.UpdateSureTitle, MessageBoxButton.YesNo);
                 if (dialogResult == MessageBoxResult.Yes)
                 {
-                    dataRepository.UpdateSubjectiveFeeling(currentFeeling);
+                    updated = subjectiveFeelingBuissnesManager.TryUpdateFeeling(currentFeeling, changedProperty, newValue);
                 }
-                else
+                if (!updated)
                 {
-                    ((CheckBox)e.EditingElement).IsChecked = bool.Parse(currentValue);
+                    if (e.EditingElement is CheckBox)
+                    {
+                        ((CheckBox)e.EditingElement).IsChecked = bool.Parse(currentValue);
+                    }
+                    else if (e.EditingElement is TextBox)
+                    {
+                        ((TextBox)e.EditingElement).Text = currentValue;
+                    }
                 }
 
             }
-            catch (System.Exception)
+            catch
             {
                 MessageBox.Show(MessageBoxConstants.ErrorUpdating);
             }

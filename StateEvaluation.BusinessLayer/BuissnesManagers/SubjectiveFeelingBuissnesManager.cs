@@ -21,6 +21,29 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             _updateSubjectiveFeelingBtn = updateSubjectiveFeelingBtn;
         }
 
+        public bool TryUpdateFeeling(SubjectiveFeeling feeling, string changedProperty, string newValue)
+        {
+            try
+            {
+                if (changedProperty == "Date")
+                {
+                    feeling.GetType().GetProperty(changedProperty).SetValue(feeling, DateTime.Parse(newValue));
+                }
+                else
+                {
+                    feeling.GetType().GetProperty(changedProperty).SetValue(feeling, bool.Parse(newValue));
+                }
+                _dataRepository.UpdateSubjectiveFeeling(feeling);
+                MessageBox.Show(MessageBoxConstants.FeelUpdated);
+                return true;
+            }
+            catch
+            {
+                MessageBox.Show(MessageBoxConstants.WrongFields);
+                return false;
+            }
+        }
+
         public void Update(SubjectiveFeelingVM subjectiveFeelingMV, Guid subjectiveFeelingId)
         {
             try

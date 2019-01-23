@@ -171,7 +171,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 MessageBox.Show(MessageBoxConstants.PersonUpdated);
                 return true;
             }
-            catch (Exception e)
+            catch
             {
                 MessageBox.Show(MessageBoxConstants.ErrorUpdating);
                 return false;
