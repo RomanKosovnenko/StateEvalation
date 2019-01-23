@@ -142,40 +142,51 @@ namespace StateEvaluation
             subjectiveFeelingFilter.IsFeeling = true;
         }
 
-
         private void FeelingsDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
+            SetLoaderVisibility(Visibility.Visible);
             var currentFeeling = (SubjectiveFeeling)((DataGrid)(sender)).SelectedItem;
             try
             {
                 var property = e.Column.SortMemberPath.ToString();
                 var currentValue = currentFeeling.GetType().GetProperty(property).GetValue(currentFeeling).ToString();
-                var value = ((CheckBox)e.EditingElement).IsChecked.ToString();
+                var newValue = ((CheckBox)e.EditingElement).IsChecked.ToString();
 
-                if (currentValue == value)
+                if (currentValue == newValue)
                 {
+                    SetLoaderVisibility(Visibility.Hidden);
                     return;
                 }
 
                 switch (property)
                 {
                     case "Date":
-                        value = System.DateTime.Parse(value).ToShortDateString();
-                        currentFeeling.GetType().GetProperty(property).SetValue(currentFeeling, value);
-                        ((TextBox)e.EditingElement).Text = value;
+                        newValue = System.DateTime.Parse(newValue).ToShortDateString();
+                        currentFeeling.GetType().GetProperty(property).SetValue(currentFeeling, newValue);
+                        ((TextBox)e.EditingElement).Text = newValue;
                         break;
                     default:
-                        bool v = bool.Parse(value);
+                        bool v = bool.Parse(newValue);
                         currentFeeling.GetType().GetProperty(property).SetValue(currentFeeling, v);
                         break;
                 }
-                
-                dataRepository.UpdateSubjectiveFeeling(currentFeeling);
+
+                var dialogResult = MessageBox.Show(MessageBoxConstants.UpdateSure, MessageBoxConstants.UpdateSureTitle, MessageBoxButton.YesNo);
+                if (dialogResult == MessageBoxResult.Yes)
+                {
+                    dataRepository.UpdateSubjectiveFeeling(currentFeeling);
+                }
+                else
+                {
+                    ((CheckBox)e.EditingElement).IsChecked = bool.Parse(currentValue);
+                }
+
             }
             catch (System.Exception)
             {
                 MessageBox.Show(MessageBoxConstants.ErrorUpdating);
             }
+            SetLoaderVisibility(Visibility.Hidden);
         }
     }
 }

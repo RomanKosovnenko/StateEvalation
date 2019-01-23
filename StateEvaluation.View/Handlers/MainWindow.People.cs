@@ -143,10 +143,34 @@ namespace StateEvaluation
         /// <param name="e"></param>
         private void PeopleDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
+            SetLoaderVisibility(Visibility.Visible);
             var currentPeople = (People)((DataGrid)(sender)).SelectedItem;
             var changedProperty = e.Column.SortMemberPath.ToString();
+            var currentValue = currentPeople.GetType().GetProperty(changedProperty).GetValue(currentPeople).ToString();
             var newValue = ((TextBox)e.EditingElement).Text.ToString();
-            peopleBuissnesManager.UpdatePerson(currentPeople, changedProperty, newValue);
+            
+            if (currentValue == newValue)
+            {
+                SetLoaderVisibility(Visibility.Hidden);
+                return;
+            }
+
+            if (changedProperty == "Birthday")
+            {
+                newValue = DateTime.Parse(newValue).ToShortDateString();
+            }
+
+            var dialogResult = MessageBox.Show(MessageBoxConstants.UpdateSure, MessageBoxConstants.UpdateSureTitle, MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                peopleBuissnesManager.UpdatePerson(currentPeople, changedProperty, newValue);
+                ((TextBox)e.EditingElement).Text = newValue;
+            }
+            else
+            {
+                ((TextBox)e.EditingElement).Text = currentValue;
+            }
+            SetLoaderVisibility(Visibility.Hidden);
         }
     }
 }

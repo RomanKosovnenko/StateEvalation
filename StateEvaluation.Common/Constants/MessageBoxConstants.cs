@@ -8,6 +8,8 @@ namespace StateEvaluation.Common.Constants
             WrongFields = "Ошибка, проверьте введенные поля",
             ErrorBinding = "Ошибка при биндинге полей",
             ErrorUpdating = "Ой, ошибка обновления",
+            UpdateSure = "Применить изменения?",
+            UpdateSureTitle = "Обновить элемент",
             DeleteSure = "Вы уверены?",
             DeleteSureTitle = "Удалить элемент",
 

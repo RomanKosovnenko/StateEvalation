@@ -106,21 +106,24 @@
             </Style.Resources>
         </Style>
         <Style TargetType="CheckBox" x:Key="BigCheckBox">
+            <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="LayoutTransform">
                 <Setter.Value>
-                    <ScaleTransform ScaleX="2" ScaleY="2"/>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                 </Setter.Value>
             </Setter>
         </Style>
         
         <Style TargetType="ComboBoxItem" x:Key="ComboBoxItemColored">
+            <!--
             <Setter Property="Foreground" Value="{Binding Converter={StaticResource TextColorNumberToBrushConverter}}" />
             <Setter Property="Background" Value="{Binding Converter={StaticResource NameToMultiBrushConverter}}" />
+            -->
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Foreground" Value="Black" />
                 </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
+                <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Foreground" Value="Black" />
                 </Trigger>
             </Style.Triggers>
@@ -128,7 +131,6 @@
         <Style TargetType="ComboBox" x:Key="ComboBoxColored">
             <Setter Property="MaxDropDownHeight" Value="500"/>
             <Setter Property="ItemContainerStyle" Value="{StaticResource ComboBoxItemColored}"/>
-            <Setter Property="Foreground" Value="{Binding Converter={StaticResource NameToMultiBrushConverter}}"/>
         </Style>
         
         <Style TargetType="Image" x:Key="ImageBigOnHover">
@@ -358,9 +360,9 @@
                 <CheckBox   Grid.Row="2" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BigCheckBox}" x:Name="markHeavyHead"       IsChecked="{Binding HeavyHead}"      />
                 <CheckBox   Grid.Row="2" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BigCheckBox}" x:Name="markSlowThink"       IsChecked="{Binding SlowThink}"      />
 
-                <Button Grid.Row="1" Grid.Column="8" Margin="2" Click="ClearSubjectiveFeelingInputs_Click" Content="Сброс" />
-                <Button Grid.Row="2" Grid.Column="8" Margin="2" Click="CreateSubjectiveFeeling_Click" Content="Добавить запись" Visibility="Visible" />
-                <Button Grid.Row="2" Grid.Column="8" Margin="2" Click="UpdateSubjectiveFeeling_Click" Content="Применить"       Visibility="Hidden"  x:Name="UpdateSubjectiveFeelingBtn"/>
+                <Button Grid.Row="1" Grid.Column="8" Margin="2" Click="CreateSubjectiveFeeling_Click" Content="Добавить запись" Visibility="Visible" />
+                <Button Grid.Row="1" Grid.Column="8" Margin="2" Click="UpdateSubjectiveFeeling_Click" Content="Применить"       Visibility="Hidden"  x:Name="UpdateSubjectiveFeelingBtn"/>
+                <Button Grid.Row="2" Grid.Column="8" Margin="2" Click="ClearSubjectiveFeelingInputs_Click" Content="Сброс" />
             </Grid>
         </TabItem>
         <TabItem Header="Биоколор" 
