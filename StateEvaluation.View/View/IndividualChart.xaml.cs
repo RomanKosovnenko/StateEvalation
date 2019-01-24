@@ -60,7 +60,7 @@ namespace StateEvaluation.View
         }
         private int GetWaveByNumber(byte number)
         {
-            return DataRepository.Colors.Single(item => item.ColorNumber == Convert.ToInt32(number)).Wavelengthmax;
+            return DataRepository.Colors.Single(item => item.ColorNumber == number).Wavelengthmax;
         }
 
         private void DrawGraph()

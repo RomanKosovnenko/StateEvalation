@@ -80,10 +80,6 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                     MessageBox.Show(MessageBoxConstants.ErrorPersonCreate);
                 }
             }
-            else
-            {
-                MessageBox.Show(MessageBoxConstants.ErrorPersonCreate);
-            }
         }
 
         public void UpdatePerson(PeopleVM editedPerson)
@@ -183,14 +179,24 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         {
             try
             {
-                _dataRepository.DeletePerson(id);
-                Refresh();
-                MessageBox.Show(MessageBoxConstants.PersonDeleted);
+                var person = _dataRepository.GetPerson(id);
+                var relatedPrefrences = _dataRepository.Preference.Where(_ => _.UserId == person.UserId);
+                var relatedSubjFeeling = _dataRepository.SubjectiveFeelings.Where(_ => _.UserId == person.UserId);
+
+                if(!(relatedPrefrences.Any() || relatedSubjFeeling.Any()))
+                {
+                    _dataRepository.DeletePerson(id);
+                    Refresh();
+                    MessageBox.Show(MessageBoxConstants.PersonDeleted);
+                    return;
+                }
             }
             catch
             {
                 MessageBox.Show(MessageBoxConstants.ErrorPersonDelete);
+                return;
             }
+            MessageBox.Show(MessageBoxConstants.ErrorPersonDelete);
         }
 
         public void PrepareInputForm(PeopleVM personVM, Guid id)
@@ -305,27 +311,27 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         private bool CheckFildAddedPersonOnLenght(People person)
         {
-            if (person.UserId.Length > 11)
+            if (person.UserId.Length > 10)
             {
                 MessageBox.Show(MessageBoxConstants.ErrorPersonUserID);
                 return false;
             }
-            else if (person.Lastname.Length > 21)
+            else if (person.Lastname.Length > 20)
             {
                 MessageBox.Show(MessageBoxConstants.ErrorPersonLastname);
                 return false;
             }
-            else if (person.Firstname.Length > 21)
+            else if (person.Firstname.Length > 20)
             {
                 MessageBox.Show(MessageBoxConstants.ErrorPersonFirstname);
                 return false;
             }
-            else if (person.Middlename.Length > 21)
+            else if (person.Middlename.Length > 20)
             {
                 MessageBox.Show(MessageBoxConstants.ErrorPersonMiddlename);
                 return false;
             }
-            else if (person.Workposition.Length > 21)
+            else if (person.Workposition.Length > 20)
             {
                 MessageBox.Show(MessageBoxConstants.ErrorPersonWorkposition);
                 return false;
