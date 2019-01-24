@@ -14,6 +14,7 @@ namespace StateEvaluation.Repository.Models
 
         [Required]
         [StringLength(20)]
+        [Column("Color")]
         public string Colors { get; set; }
 
         [Column("wavelengthmin")]
