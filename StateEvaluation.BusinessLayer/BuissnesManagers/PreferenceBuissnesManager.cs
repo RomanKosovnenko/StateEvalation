@@ -122,6 +122,10 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
 
         public bool IsExistsPreference(Preference preference)
         {
+            if (preference == null)
+            {
+                return false;
+            }
             var existPref = _dataRepository.GetPreferenceTest(preference.Id);
             if(existPref.Oder1 == preference.Oder1 &&
             existPref.Oder2 == preference.Oder2 &&

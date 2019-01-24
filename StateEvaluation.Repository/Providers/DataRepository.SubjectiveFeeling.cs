@@ -67,7 +67,7 @@ namespace StateEvaluation.Repository.Providers
         /// <returns></returns>
         public IEnumerable<SubjectiveFeeling> GetSubjecriveFeelings()
         {
-            var items = this.SubjectiveFeelings.Select(item => item).OrderBy(item => item.Date).ToList();
+            var items = this.SubjectiveFeelings.Select(item => item).OrderByDescending(item => item.Date).ToList();
             return items;
         }
 

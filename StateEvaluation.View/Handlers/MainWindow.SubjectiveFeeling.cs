@@ -142,40 +142,54 @@ namespace StateEvaluation
             subjectiveFeelingFilter.IsFeeling = true;
         }
 
-
         private void FeelingsDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
+            SetLoaderVisibility(Visibility.Visible);
             var currentFeeling = (SubjectiveFeeling)((DataGrid)(sender)).SelectedItem;
             try
             {
-                var property = e.Column.SortMemberPath.ToString();
-                var currentValue = currentFeeling.GetType().GetProperty(property).GetValue(currentFeeling).ToString();
-                var value = ((CheckBox)e.EditingElement).IsChecked.ToString();
-
-                if (currentValue == value)
+                var changedProperty = e.Column.SortMemberPath.ToString();
+                var currentValue = currentFeeling.GetType().GetProperty(changedProperty).GetValue(currentFeeling).ToString();
+                string newValue;
+                if (e.EditingElement is CheckBox)
                 {
+                    newValue = ((CheckBox)e.EditingElement).IsChecked.ToString();
+                }
+                else
+                {
+                    newValue = ((TextBox)e.EditingElement).Text.ToString();
+                }
+
+                if (currentValue == newValue)
+                {
+                    SetLoaderVisibility(Visibility.Hidden);
                     return;
                 }
 
-                switch (property)
+                bool updated = false;
+                var dialogResult = MessageBox.Show(MessageBoxConstants.UpdateSure, MessageBoxConstants.UpdateSureTitle, MessageBoxButton.YesNo);
+                if (dialogResult == MessageBoxResult.Yes)
                 {
-                    case "Date":
-                        value = System.DateTime.Parse(value).ToShortDateString();
-                        currentFeeling.GetType().GetProperty(property).SetValue(currentFeeling, value);
-                        ((TextBox)e.EditingElement).Text = value;
-                        break;
-                    default:
-                        bool v = bool.Parse(value);
-                        currentFeeling.GetType().GetProperty(property).SetValue(currentFeeling, v);
-                        break;
+                    updated = subjectiveFeelingBuissnesManager.TryUpdateFeeling(currentFeeling, changedProperty, newValue);
                 }
-                
-                dataRepository.UpdateSubjectiveFeeling(currentFeeling);
+                if (!updated)
+                {
+                    if (e.EditingElement is CheckBox)
+                    {
+                        ((CheckBox)e.EditingElement).IsChecked = bool.Parse(currentValue);
+                    }
+                    else if (e.EditingElement is TextBox)
+                    {
+                        ((TextBox)e.EditingElement).Text = currentValue;
+                    }
+                }
+
             }
-            catch (System.Exception)
+            catch
             {
                 MessageBox.Show(MessageBoxConstants.ErrorUpdating);
             }
+            SetLoaderVisibility(Visibility.Hidden);
         }
     }
 }

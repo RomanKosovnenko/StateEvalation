@@ -22,6 +22,7 @@ namespace StateEvaluation
         {
             var newPerson = (PeopleVM)Resources["peopleVM"];
             peopleBuissnesManager.CreatePerson(newPerson);
+            userIdBirthPairs = peopleBuissnesManager.GetUserIdBirthPairs();
             FilterPeople_Click(sender, e);
         }
 
@@ -143,10 +144,29 @@ namespace StateEvaluation
         /// <param name="e"></param>
         private void PeopleDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
+            SetLoaderVisibility(Visibility.Visible);
             var currentPeople = (People)((DataGrid)(sender)).SelectedItem;
             var changedProperty = e.Column.SortMemberPath.ToString();
+            var currentValue = currentPeople.GetType().GetProperty(changedProperty).GetValue(currentPeople).ToString();
             var newValue = ((TextBox)e.EditingElement).Text.ToString();
-            peopleBuissnesManager.UpdatePerson(currentPeople, changedProperty, newValue);
+            
+            if (currentValue == newValue)
+            {
+                SetLoaderVisibility(Visibility.Hidden);
+                return;
+            }
+            bool updated = false;
+            var dialogResult = MessageBox.Show(MessageBoxConstants.UpdateSure, MessageBoxConstants.UpdateSureTitle, MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                updated = peopleBuissnesManager.TryUpdatePerson(currentPeople, changedProperty, newValue);
+                ((TextBox)e.EditingElement).Text = newValue;
+            }
+            if (!updated)
+            {
+                ((TextBox)e.EditingElement).Text = currentValue;
+            }
+            SetLoaderVisibility(Visibility.Hidden);
         }
     }
 }

@@ -106,21 +106,24 @@
             </Style.Resources>
         </Style>
         <Style TargetType="CheckBox" x:Key="BigCheckBox">
+            <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="LayoutTransform">
                 <Setter.Value>
-                    <ScaleTransform ScaleX="2" ScaleY="2"/>
+                    <ScaleTransform ScaleX="1.5" ScaleY="1.5"/>
                 </Setter.Value>
             </Setter>
         </Style>
         
         <Style TargetType="ComboBoxItem" x:Key="ComboBoxItemColored">
+            <!--
             <Setter Property="Foreground" Value="{Binding Converter={StaticResource TextColorNumberToBrushConverter}}" />
             <Setter Property="Background" Value="{Binding Converter={StaticResource NameToMultiBrushConverter}}" />
+            -->
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Foreground" Value="Black" />
                 </Trigger>
-                <Trigger Property="IsMouseOver" Value="True">
+                <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Foreground" Value="Black" />
                 </Trigger>
             </Style.Triggers>
@@ -128,7 +131,6 @@
         <Style TargetType="ComboBox" x:Key="ComboBoxColored">
             <Setter Property="MaxDropDownHeight" Value="500"/>
             <Setter Property="ItemContainerStyle" Value="{StaticResource ComboBoxItemColored}"/>
-            <Setter Property="Foreground" Value="{Binding Converter={StaticResource NameToMultiBrushConverter}}"/>
         </Style>
         
         <Style TargetType="Image" x:Key="ImageBigOnHover">
@@ -358,9 +360,9 @@
                 <CheckBox   Grid.Row="2" Grid.Column="6" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BigCheckBox}" x:Name="markHeavyHead"       IsChecked="{Binding HeavyHead}"      />
                 <CheckBox   Grid.Row="2" Grid.Column="7" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource BigCheckBox}" x:Name="markSlowThink"       IsChecked="{Binding SlowThink}"      />
 
-                <Button Grid.Row="1" Grid.Column="8" Margin="2" Click="ClearSubjectiveFeelingInputs_Click" Content="Сброс" />
-                <Button Grid.Row="2" Grid.Column="8" Margin="2" Click="CreateSubjectiveFeeling_Click" Content="Добавить запись" Visibility="Visible" />
-                <Button Grid.Row="2" Grid.Column="8" Margin="2" Click="UpdateSubjectiveFeeling_Click" Content="Применить"       Visibility="Hidden"  x:Name="UpdateSubjectiveFeelingBtn"/>
+                <Button Grid.Row="1" Grid.Column="8" Margin="2" Click="CreateSubjectiveFeeling_Click" Content="Добавить запись" Visibility="Visible" />
+                <Button Grid.Row="1" Grid.Column="8" Margin="2" Click="UpdateSubjectiveFeeling_Click" Content="Применить"       Visibility="Hidden"  x:Name="UpdateSubjectiveFeelingBtn"/>
+                <Button Grid.Row="2" Grid.Column="8" Margin="2" Click="ClearSubjectiveFeelingInputs_Click" Content="Сброс" />
             </Grid>
         </TabItem>
         <TabItem Header="Биоколор" 
@@ -431,8 +433,8 @@
                     <DataGridTextColumn Header="Отчество" Binding="{Binding Middlename}" />
                     <DataGridTextColumn Header="День рождения" Binding="{Binding Birthday, StringFormat=\{0:d\}}" />
                     <DataGridTextColumn Header="Профессия" Binding="{Binding Workposition}" />
-                    <DataGridTextColumn Header="Експедиция" Binding="{Binding Expedition}" />
-                    <DataGridTextColumn Header="Номер" Binding="{Binding Number}" />
+                    <DataGridTextColumn IsReadOnly="True" Header="Експедиция" Binding="{Binding Expedition}" />
+                    <DataGridTextColumn IsReadOnly="True" Header="Номер" Binding="{Binding Number}" />
                 </DataGrid.Columns>
             </DataGrid>
             <DataGrid comment:Tab="Preferences Grid"
@@ -1455,9 +1457,9 @@
                                     <TextBlock Grid.Column="0" HorizontalAlignment="Center" Text="1" />
                                     <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="2" />
                                     <TextBlock Grid.Column="2" HorizontalAlignment="Center" Text="3" />
-                                    <TextBox Grid.Row="1" Grid.Column="0" Margin="5,0" Text="{Binding Color1in3Filter}" />
-                                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5,0" Text="{Binding Color1in3Filter}" />
-                                    <TextBox Grid.Row="1" Grid.Column="2" Margin="5,0" Text="{Binding Color1in3Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="0" Margin="5,0" TextAlignment="Center" Text="{Binding Color1in3Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5,0" TextAlignment="Center" Text="{Binding Color2in3Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="2" Margin="5,0" TextAlignment="Center" Text="{Binding Color3in3Filter}" />
                                 </Grid>
 
                                 <Grid Margin="5">
@@ -1482,18 +1484,18 @@
                                         <RowDefinition Height="auto" />
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center" Text="1"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" Text="2"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" Text="3"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" Text="4"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" Text="5"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Center" Text="6"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="6"  HorizontalAlignment="Center" Text="7"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="7"  HorizontalAlignment="Center" Text="8"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="8"  HorizontalAlignment="Center" Text="9"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="9"  HorizontalAlignment="Center" Text="10" />
-                                    <TextBlock Grid.Row="0" Grid.Column="10" HorizontalAlignment="Center" Text="11" />
-                                    <TextBlock Grid.Row="0" Grid.Column="11" HorizontalAlignment="Center" Text="12" />
+                                    <TextBlock Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center" TextAlignment="Center" Text="1"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" TextAlignment="Center" Text="2"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" TextAlignment="Center" Text="3"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" TextAlignment="Center" Text="4"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" TextAlignment="Center" Text="5"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Center" TextAlignment="Center" Text="6"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="6"  HorizontalAlignment="Center" TextAlignment="Center" Text="7"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="7"  HorizontalAlignment="Center" TextAlignment="Center" Text="8"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="8"  HorizontalAlignment="Center" TextAlignment="Center" Text="9"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="9"  HorizontalAlignment="Center" TextAlignment="Center" Text="10" />
+                                    <TextBlock Grid.Row="0" Grid.Column="10" HorizontalAlignment="Center" TextAlignment="Center" Text="11" />
+                                    <TextBlock Grid.Row="0" Grid.Column="11" HorizontalAlignment="Center" TextAlignment="Center" Text="12" />
 
 
                                     <TextBox Grid.Row="1" Grid.Column="0"  Text="{Binding Color1in12Filter}" />
