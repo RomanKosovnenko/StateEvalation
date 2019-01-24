@@ -4,6 +4,8 @@ namespace StateEvaluation.Common.Constants
     public static class MessageBoxConstants
     {
         public static string
+            ErrorFileSelecting = "Файл не был выбран!",
+
             WrongDateFields = "Дата начала больше даты конца",
             WrongFields = "Ошибка, проверьте введенные поля",
             ErrorBinding = "Ошибка при биндинге полей",

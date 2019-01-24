@@ -167,6 +167,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 }
   
                 _dataRepository.UpdatePerson(person);
+                Refresh();
 
                 MessageBox.Show(MessageBoxConstants.PersonUpdated);
                 return true;

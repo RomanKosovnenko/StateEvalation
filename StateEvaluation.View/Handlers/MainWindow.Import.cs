@@ -1,4 +1,6 @@
 ﻿using Microsoft.Office.Interop.Excel;
+using Microsoft.Win32;
+using StateEvaluation.Common.Constants;
 using StateEvaluation.Repository.Models;
 using System;
 using System.Collections.Generic;
@@ -17,8 +19,12 @@ namespace StateEvaluation
             List<string> list = new List<string>();
 
             /// TODO Path selection!
-            string filePath = "C:\\Users\\Vitalii.Kushch\\Desktop\\Шаблон для ежемесячной отправки XXI  .xlsx";
-
+            bool fileSelected = TryGetFile(out string filePath);
+            if (!fileSelected)
+            {
+                MessageBox.Show(MessageBoxConstants.ErrorFileSelecting);
+                return;
+            }
 
             Microsoft.Office.Interop.Excel.Application application = new Microsoft.Office.Interop.Excel.Application
             {
@@ -170,6 +176,23 @@ namespace StateEvaluation
             {
                 string values = sh.Cells[i, 2].ToString();
             }
+        }
+        private bool TryGetFile(out string path)
+        { 
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm";
+            openFileDialog.Title = "Select a Excel File";
+
+            bool selected = openFileDialog.ShowDialog() ?? false;
+            if (selected)
+            {
+                path = openFileDialog.FileName;
+            }
+            else
+            {
+                path = "";
+            }
+            return selected;
         }
     }
 }
