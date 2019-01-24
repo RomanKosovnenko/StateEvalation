@@ -160,7 +160,7 @@ namespace StateEvaluation
             }
             else
             {
-                throw new System.Exception();
+                MessageBox.Show(MessageBoxConstants.ErrorIndividualChartNotFound);
             }
         }
         private void PreferencesDataGrid_Selected(object sender, RoutedEventArgs e)

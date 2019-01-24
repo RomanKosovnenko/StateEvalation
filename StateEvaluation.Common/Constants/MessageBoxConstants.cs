@@ -13,6 +13,7 @@ namespace StateEvaluation.Common.Constants
             DeleteSure = "Вы уверены?",
             DeleteSureTitle = "Удалить элемент",
 
+            ErrorIndividualChartNotFound = "Преференция для построения индивидуального графика не была найдена",
             TestCreated = "Преференция была создана",
             TestDeleted = "Преференция была удалена",
             TestUpdated = "Преференция была обновлена",
