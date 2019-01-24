@@ -1457,9 +1457,9 @@
                                     <TextBlock Grid.Column="0" HorizontalAlignment="Center" Text="1" />
                                     <TextBlock Grid.Column="1" HorizontalAlignment="Center" Text="2" />
                                     <TextBlock Grid.Column="2" HorizontalAlignment="Center" Text="3" />
-                                    <TextBox Grid.Row="1" Grid.Column="0" Margin="5,0" Text="{Binding Color1in3Filter}" />
-                                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5,0" Text="{Binding Color1in3Filter}" />
-                                    <TextBox Grid.Row="1" Grid.Column="2" Margin="5,0" Text="{Binding Color1in3Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="0" Margin="5,0" TextAlignment="Center" Text="{Binding Color1in3Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="1" Margin="5,0" TextAlignment="Center" Text="{Binding Color2in3Filter}" />
+                                    <TextBox Grid.Row="1" Grid.Column="2" Margin="5,0" TextAlignment="Center" Text="{Binding Color3in3Filter}" />
                                 </Grid>
 
                                 <Grid Margin="5">
@@ -1484,18 +1484,18 @@
                                         <RowDefinition Height="auto" />
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center" Text="1"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" Text="2"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" Text="3"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" Text="4"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" Text="5"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Center" Text="6"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="6"  HorizontalAlignment="Center" Text="7"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="7"  HorizontalAlignment="Center" Text="8"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="8"  HorizontalAlignment="Center" Text="9"  />
-                                    <TextBlock Grid.Row="0" Grid.Column="9"  HorizontalAlignment="Center" Text="10" />
-                                    <TextBlock Grid.Row="0" Grid.Column="10" HorizontalAlignment="Center" Text="11" />
-                                    <TextBlock Grid.Row="0" Grid.Column="11" HorizontalAlignment="Center" Text="12" />
+                                    <TextBlock Grid.Row="0" Grid.Column="0"  HorizontalAlignment="Center" TextAlignment="Center" Text="1"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="1"  HorizontalAlignment="Center" TextAlignment="Center" Text="2"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="2"  HorizontalAlignment="Center" TextAlignment="Center" Text="3"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="3"  HorizontalAlignment="Center" TextAlignment="Center" Text="4"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="4"  HorizontalAlignment="Center" TextAlignment="Center" Text="5"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="5"  HorizontalAlignment="Center" TextAlignment="Center" Text="6"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="6"  HorizontalAlignment="Center" TextAlignment="Center" Text="7"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="7"  HorizontalAlignment="Center" TextAlignment="Center" Text="8"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="8"  HorizontalAlignment="Center" TextAlignment="Center" Text="9"  />
+                                    <TextBlock Grid.Row="0" Grid.Column="9"  HorizontalAlignment="Center" TextAlignment="Center" Text="10" />
+                                    <TextBlock Grid.Row="0" Grid.Column="10" HorizontalAlignment="Center" TextAlignment="Center" Text="11" />
+                                    <TextBlock Grid.Row="0" Grid.Column="11" HorizontalAlignment="Center" TextAlignment="Center" Text="12" />
 
 
                                     <TextBox Grid.Row="1" Grid.Column="0"  Text="{Binding Color1in12Filter}" />

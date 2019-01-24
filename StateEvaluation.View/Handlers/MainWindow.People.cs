@@ -22,6 +22,7 @@ namespace StateEvaluation
         {
             var newPerson = (PeopleVM)Resources["peopleVM"];
             peopleBuissnesManager.CreatePerson(newPerson);
+            userIdBirthPairs = peopleBuissnesManager.GetUserIdBirthPairs();
             FilterPeople_Click(sender, e);
         }
 

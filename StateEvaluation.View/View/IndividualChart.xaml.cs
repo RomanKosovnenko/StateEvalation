@@ -47,7 +47,7 @@ namespace StateEvaluation.View
 
         private double GetIntensiveByNumber(byte v)
         {
-            return DataRepository.Colors.Single(item => item.ColorNumber == Convert.ToInt32(v)).Intensity;
+            return DataRepository.Colors.Single(item => item.ColorNumber == v).Intensity;
         }
 
         public SeriesCollection Series { get; set; }
