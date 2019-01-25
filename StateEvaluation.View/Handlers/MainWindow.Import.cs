@@ -59,9 +59,9 @@ namespace StateEvaluation
             List<string> fornames = new List<string>();
             for (int i = i0; i < i0 + 12; ++i)
             {
-                fornames.Add(xlRng[i, 2].Value2);
+                //fornames.Add(xlRng[i, 2].Value2);
             }
-            for (int i = i0; i < xlRng.Rows.Count; ++i)
+            for (int i = i0; i <= xlRng.Rows.Count; ++i)
             {
                 tabl1.Add(xlRng[i, 44].Value2.ToString());
                 tabl2.Add(xlRng[i, 45].Value2.ToString());
@@ -152,7 +152,7 @@ namespace StateEvaluation
                     Date = DateTime.Parse(dates[index]),
                     //FavoriteColor = int.Parse(favcolor[index]),
                     Id = Guid.NewGuid(),
-                    Preference1 = "Золотая",
+                    Preference1 = pref1[index] ?? "null",
                     Oder1 = order1,
                     Oder2 = order2,
                     ShortOder1 = shorder1,
