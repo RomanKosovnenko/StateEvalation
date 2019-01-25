@@ -277,8 +277,7 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
         }
         private bool IsValidPreferenceVM(PreferenceVM preferenceVM)
         {
-            if (preferenceVM.UserId == string.Empty || preferenceVM.TestDate == null
-                || preferenceVM.ColorRelax1 == string.Empty || preferenceVM.ColorRelax2 == string.Empty)
+            if (preferenceVM.UserId == null || preferenceVM.TestDate == null)
             {
                 return false;
             }
@@ -306,6 +305,8 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
             
             var Preference1Index = _preference1.IndexOf(true);
             var Preference2Index = _preference2.IndexOf(true);
+            bool isColorRelax1 = int.TryParse(preferenceVM.ColorRelax1, out int colorRelax1);
+            bool isColorRelax2 = int.TryParse(preferenceVM.ColorRelax1, out int colorRelax2);
 
             Preference preference = new Preference()
             {
@@ -320,8 +321,8 @@ namespace StateEvaluation.BussinesLayer.BuissnesManagers
                 Oder2 = String.Join(",", _color2in12s),
                 Preference2 = Common.Enums.PreferenceValues.Preferences.ToArray()[Preference2Index],
                 Compare = (_preference1.IndexOf(true) == _preference2.IndexOf(true)).ToString().ToLower(),
-                RelaxTable1 = (int?)int.Parse(preferenceVM.ColorRelax1),
-                RelaxTable2 = (int?)int.Parse(preferenceVM.ColorRelax2)
+                RelaxTable1 = isColorRelax1 ? (int?)colorRelax1 : null,
+                RelaxTable2 = isColorRelax2 ? (int?)colorRelax2 : null
             };
 
             return preference;
